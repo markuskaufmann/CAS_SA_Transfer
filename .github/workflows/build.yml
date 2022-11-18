@@ -1,0 +1,23 @@
+name: build
+run-name: Build Documentation
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Generate diagrams and documentation
+        run: docker-compose up
+
+      - name: Test
+        id: test
+        run: |
+          REPO_ROOT=${{ env.GITHUB_WORKSPACE }}
+          if ls "$REPO_ROOT/diagrams/*.puml" 1> /dev/null 2>&1 && ls "$REPO_ROOT/documentation/*.pdf" 1> /dev/null 2>&1
+          then
+            exit 0
+          else
+            exit 1
+          fi
