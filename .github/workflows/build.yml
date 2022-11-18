@@ -13,13 +13,12 @@ jobs:
 
       - name: Check for generated files
         run: |
-          REPO_ROOT=${{ env.GITHUB_WORKSPACE }}
-          echo $REPO_ROOT
+          echo $PWD
 
-          ls "$REPO_ROOT/diagrams" -a
-          ls "$REPO_ROOT/documentation" -a
+          ls "$PWD/diagrams" -a
+          ls "$PWD/documentation" -a
 
-          if ls "$REPO_ROOT/diagrams/*.puml" 1> /dev/null 2>&1 && ls "$REPO_ROOT/documentation/*.pdf" 1> /dev/null 2>&1
+          if ls "$PWD/diagrams/*.puml" 1> /dev/null 2>&1 && ls "$PWD/documentation/*.pdf" 1> /dev/null 2>&1
           then
             exit 0
           else
