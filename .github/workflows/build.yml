@@ -12,15 +12,19 @@ jobs:
         run: docker-compose up
 
       - name: Check for generated files
+        shell: pwsh
         run: |
-          echo $PWD
+          Write-Host $PWD
 
-          ls "$PWD/diagrams" -a
-          ls "$PWD/documentation" -a
+          dir "$PWD/diagrams"
+          dir "$PWD/documentation"
 
-          if ls "$PWD/diagrams/*.puml" 1> /dev/null 2>&1 && ls "$PWD/documentation/*.pdf" 1> /dev/null 2>&1
-          then
-            exit 0
-          else
-            exit 1
-          fi
+          $diagramsExist = Test-Path -Path "$PWD/diagrams/*.puml" -PathType leaf
+          $pdfExists = Test-Path -Path "$PWD/documentation/*.pdf*" -PathType leaf
+
+          Write-Host "Diagrams found: $diagramsExist"
+          Write-Host "Documentation (PDF) found: $pdfExists"
+
+          if (!$diagramsExist -or !$pdfExists) {
+            Exit 1
+          }
