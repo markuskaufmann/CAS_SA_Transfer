@@ -1,0 +1,28 @@
+@startuml Therapie Lifecicle
+title Therapie Lifecicle Version 1
+
+State Entwurf
+State WartenAufPatient
+State Bereit
+State Gestartet
+State Abgeschlossen
+State Archiviert
+State Unterbrochen
+State Abgebrochen
+
+ [*] --> Entwurf
+
+ Entwurf --> WartenAufPatient
+ Entwurf --> Bereit
+ WartenAufPatient --> Bereit
+ Bereit --> Gestartet
+ Gestartet --> Unterbrochen
+ Gestartet --> Abgebrochen
+ Unterbrochen --> Gestartet
+ Unterbrochen --> Abgebrochen
+ Gestartet --> Abgeschlossen
+ Abgebrochen --> Archiviert
+ Abgeschlossen --> Archiviert
+Archiviert --> [*]
+
+ @enduml
