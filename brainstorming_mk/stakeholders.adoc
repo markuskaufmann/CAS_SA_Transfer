@@ -1,0 +1,115 @@
+[[section-stakeholders]]
+== Stakeholders
+
+Die nachfolgende Tabelle gibt einen Gesamtüberblick über die bestehenden Stakeholder sowie die jeweiligen Systemaspekte, welche von ihnen als besonders wichtig erachtet werden.
+
+[options="header",cols="4,6"]
+|===
+|Stakeholder|Systemaspekte
+|Physiotherapeut
+a|
+* Intuitive Benutzeroberfläche
+* Schnittstelle Planungssoftware - Integration Layer (Datenimport)
+* Therapie- / Sessionverwaltung
+* Übungsverwaltung
+* Patientenverwaltung
+* Monitoring
+* Reporting
+
+|Patient
+a|
+* Intuitive Benutzerschnittstelle
+* Hohe Kompatibilität mit bestehender Hard- und Software (Smartphone, Fitnesstracker)
+* Zweckmässige und zeitlich eingeschränkte Aufzeichnung der persönlichen Gesundheitsdaten
+* Sichere und rechtlich anerkannte Ablage der persönlichen Gesundheitsdaten
+* Explizite Einwilligung zur Datenweitergabe an Drittpersonen (z.b. medizinische Forschung)
+* Zuverlässige Datenübermittlung (auch bei Netzwerkunterbrüchen)
+
+|Vorgesetzter des Physiotherapeuten
+(z.B. Abteilungsleiter innerhalb eines Spitals)
+a|
+* Monitoring
+* Reporting
+* Patient Progress Tracking
+
+|Kunde (finanziert die Verwendung des Integration Layers, z.B. Spitalleitung)
+a|
+* Gesamtsystem soll möglichst kosteneffizient sein
+* Minimaler Integrationsaufwand mit verwendeter Planungssoftware
+* Intuitive Benutzerschnittstelle soll zu guter Resonanz bei Hauptbenutzergruppen (Physiotherapeut, Patient) führen
+* Hoher Automatisierungsgrad soll Auslastungslücken bei Physiotherapeuten minimieren (= möglichst viele Patienten mit möglichst wenigen Therapeuten behandeln)
+
+|Staat
+a|
+* Gesamtsystem:
+Einhaltung existierender Datenschutzverordnungen und -gesetze. Betrifft die Aufzeichnung, Ablage und Weitergabe der persönlichen Gesundheitsdaten
+* Datenschnittstelle für die Bereitstellung der Gesundheitsdaten an das https://www.patientendossier.ch/[Elektronische Patientendossier (EPD)]
+
+|Krankenversicherung
+a|
+* Datenschnittstelle für die Bereitstellung der Therapiedaten zu Marketingzwecken
+** Aktivitäten ermöglichen Vergünstigungen / Prämienreduktionen (VVG)
+** (Fitness-)Challenges
+
+|Medizinische Forschung
+a|
+* Datenschnittstelle für die Bereitstellung anonymisierter Gesundheitsdaten
+** für (Langzeit-)Studien und Analysen
+** für das Training von AI-Modellen
+
+|Medizinische Einrichtung (z.B. Spital)
+a|
+* Datenschnittstelle für die Bereitstellung der Gesundheitsdaten als Hilfsmittel für
+** Ambulante / Stationäre Untersuchungen und Eingriffe
+** Diagnosen
+** Verschreibung von Medikamenten / Therapien
+
+|Hausarzt
+a|
+* Datenschnittstelle für die Bereitstellung der Gesundheitsdaten als Hilfsmittel für
+** Untersuchungen
+** Konsultationen
+** Diagnosen
+** Verschreibung von Medikamenten / Therapien
+
+|Anbieter des Integration Layers / Product Owner
+a|
+* Kurzer Time-to-Market
+* Kostengünstige Entwicklung und Erweiterung
+
+|Entwickler des Integration Layers
+a|
+* Einfache Erweiterbarkeit bei neuen Features
+* Möglichst hoher Automatisierungsgrad (Entwicklung, Testing, CI/CD)
+* Möglichst effizientes Onboarding neuer Entwickler (aufgrund guter Verständlichkeit und Einfachheit der Architektur und Codebase)
+
+|Technische Integratoren des Integration Layers
+a|
+* Minimaler Integrationsaufwand
+* Schnittstellen des Integration Layers, mit welchen kommuniziert werden soll
+* Technische Dokumentation als Integrationshilfe
+* Stages / Umgebungen (z.B. Sandbox, INT, PROD)
+|===
+
+=== Stakeholder Powergrid
+
+Für die erweiterte Analyse und Verwaltung der bestehenden Stakeholder werden diese im Nachfolgenden im Rahmen eines Powergrids eingestuft.
+
+image::stakeholder_powergrid.svg[Static]
+
+
+=== Auswahl der primären Stakeholder
+
+Basierend auf dem Stakeholder Powergrid lassen sich folgende Akteure als besonders relevant einstufen:
+
+* Kunde
+* Physiotherapeut
+* Vorgesetzter des Physiotherapeuten
+* Patient
+* Anbieter des Integration Layers / Product Owner
+
+Zudem gilt es speziell die folgenden Anspruchsgruppen zu berücksichtigen:
+
+* Staat
+* Entwickler des Integration Layers
+* Technische Integratoren des Integration Layers
