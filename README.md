@@ -11,3 +11,8 @@ docker-compose up
 ```
 
 The resulting [Structurizr DSL](https://structurizr.com/dsl) diagrams are stored in `./c4_diagrams/generated`, the exported [AsciiDoc](https://asciidoc.org/) PDF documentation (via [AsciiDoctor](https://asciidoctor.org/)) in `./arc42_documentation`.
+
+## Build Workflow Status (currently manual trigger)
+(C4 diagrams & arc42 PDF generated)
+
+![build status](https://github.com/markuskaufmann/CAS_SA_Transfer/actions/workflows/build.yml/badge.svg)
