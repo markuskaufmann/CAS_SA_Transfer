@@ -3,13 +3,14 @@ version: '3.8'
 services:
   structurizr:
     image: structurizr/cli:latest
-    command: export -w template.dsl -format plantuml/structurizr -output diagrams
+    command: export -w template.dsl -format plantuml/structurizr -output generated
     volumes:
-      - .:/usr/local/structurizr
+      - ./c4_diagrams:/usr/local/structurizr/
   asciidoctor:
     image: asciidoctor/docker-asciidoctor:latest
     depends_on:
-      - structurizr
+      structurizr:
+        condition: service_completed_successfully
     command: asciidoctor -b pdf -r asciidoctor-diagram -r asciidoctor-pdf arc42-template.adoc
     volumes:
-      - ./documentation:/usr/local/documents
+      - ./arc42_documentation:/documents/

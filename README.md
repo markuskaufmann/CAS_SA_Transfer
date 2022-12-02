@@ -10,4 +10,4 @@ Launch a terminal in the repository root and execute the following command:
 docker-compose up
 ```
 
-The resulting [Structurizr DSL](https://structurizr.com/dsl) diagrams are stored in `./diagrams`, the exported [AsciiDoc](https://asciidoc.org/) PDF documentation (via [AsciiDoctor](https://asciidoctor.org/)) in `./documentation`.
+The resulting [Structurizr DSL](https://structurizr.com/dsl) diagrams are stored in `./c4_diagrams`, the exported [AsciiDoc](https://asciidoc.org/) PDF documentation (via [AsciiDoctor](https://asciidoctor.org/)) in `./arc42_documentation`.

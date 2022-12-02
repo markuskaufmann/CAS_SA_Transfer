@@ -1,6 +1,4 @@
-diagrams/
-bin/structurizr-cli/
-documentation/images/diag-*.png
+c4_diagrams/generated/
 *.cache
 *.pdf
 *.html
