@@ -1,5 +1,7 @@
-[[section-introduction-and-goals]]
-== Introduction and Goals
+[[section-functional-requirements]]
+== Funktionale Anforderungen
+
+Das nachfolgende Kapitel gibt einen Gesamtüberblick über die 
 
 [role="arc42help"]
 ****

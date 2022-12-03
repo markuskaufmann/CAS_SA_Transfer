@@ -28,9 +28,9 @@ a|
 |Vorgesetzter des Physiotherapeuten
 (z.B. Abteilungsleiter innerhalb eines Spitals)
 a|
+* Therapeutenverwaltung
 * Monitoring
 * Reporting
-* Patient Progress Tracking
 
 |Kunde (finanziert die Verwendung des Integration Layers, z.B. Spitalleitung)
 a|
@@ -57,17 +57,10 @@ a|
 ** für (Langzeit-)Studien und Analysen
 ** für das Training von AI-Modellen
 
-|Medizinische Einrichtung (z.B. Spital)
+|Medizinische Einrichtung (z.B. Spital), Hausarzt
 a|
 * Datenschnittstelle für die Bereitstellung der Gesundheitsdaten als Hilfsmittel für
 ** Ambulante / Stationäre Untersuchungen und Eingriffe
-** Diagnosen
-** Verschreibung von Medikamenten / Therapien
-
-|Hausarzt
-a|
-* Datenschnittstelle für die Bereitstellung der Gesundheitsdaten als Hilfsmittel für
-** Untersuchungen
 ** Konsultationen
 ** Diagnosen
 ** Verschreibung von Medikamenten / Therapien
@@ -88,7 +81,7 @@ a|
 * Minimaler Integrationsaufwand
 * Schnittstellen des Integration Layers, mit welchen kommuniziert werden soll
 * Technische Dokumentation als Integrationshilfe
-* Stages / Umgebungen (z.B. Sandbox, INT, PROD)
+* Stages / Umgebungen, welche angebunden werden können (z.B. Sandbox, INT, PROD)
 |===
 
 === Stakeholder Powergrid
@@ -98,18 +91,21 @@ Für die erweiterte Analyse und Verwaltung der bestehenden Stakeholder werden di
 image::stakeholder_powergrid.svg[Static]
 
 
-=== Auswahl der primären Stakeholder
+=== Priorisierung der Stakeholder
 
-Basierend auf dem Stakeholder Powergrid lassen sich folgende Akteure als besonders relevant einstufen:
+Basierend auf dem Verhältnis zwischen Einfluss (Power) und Interessensgrad (Level of Interest) des Stakeholder Powergrids werden die Bedürfnisse der nachfolgenden Stakeholder prioritär berücksichtigt:
 
+* Anbieter des Integration Layers / Product Owner
 * Kunde
 * Physiotherapeut
-* Vorgesetzter des Physiotherapeuten
 * Patient
-* Anbieter des Integration Layers / Product Owner
 
-Zudem gilt es speziell die folgenden Anspruchsgruppen zu berücksichtigen:
+__Zufriedenstellen__
 
 * Staat
+
+__Informiert halten__
+
 * Entwickler des Integration Layers
+* Vorgesetzter des Physiotherapeuten
 * Technische Integratoren des Integration Layers
