@@ -5,7 +5,7 @@ services:
     image: structurizr/cli:latest
     command: export -w template.dsl -format plantuml/structurizr -output generated
     volumes:
-      - ./c4_diagrams:/usr/local/structurizr/
+      - ./physio_connect_c4:/usr/local/structurizr/
   asciidoctor:
     image: asciidoctor/docker-asciidoctor:latest
     depends_on:
