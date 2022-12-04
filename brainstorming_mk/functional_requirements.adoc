@@ -1,42 +1,107 @@
 [[section-functional-requirements]]
 == Funktionale Anforderungen
 
-Das nachfolgende Kapitel gibt einen Gesamtüberblick über die 
+Das nachfolgende Kapitel enthält eine Auflistung der bestehenden funktionalen Anforderungen (Requirements), welche im Rahmen einer ersten Iteration auf Basis der Anwendungsszenarien definiert wurden und sich in der Gesamtfunktionalität des Systems wiederspiegeln sollen. Die Requirements werden dabei gemäss der Relevanz der betroffenen Stakeholder mit "E" (essentiell) oder "O" (optional) priorisiert.
 
-[role="arc42help"]
-****
-Describes the relevant requirements and the driving forces that software architects and development team must consider. 
-These include
+=== Physiotherapeut
+[options="header",cols="2,1,3,4,6"]
+|===
+|ID|Relevanz|Szenario|Name|Beschreibung
+|FR-IPT-1|E|SZ-PHY-1|Datenimport via API|Geplante Therapien sowie mit den Patienten terminierte Sitzungen (Sessions) können aus der Planungssoftware via definierter Integration Layer API importiert werden. Auf Patienten und Übungen, welche im Integration Layer bereits hinterlegt sind, kann mittels fachlichem Identifikator referenziert werden, um Datenredundanz bestmöglichst zu vermeiden.
+|FR-IPT-2|E|SZ-PHY-1|Datenimport via File Upload|Geplante Therapien sowie mit den Patienten terminierte Sitzungen (Sessions) können aus der Planungssoftware via File Upload (z.B. Excel) importiert werden. Dabei muss seitens Integration Layer eine vordefinierte File-Struktur vordefiniert werden, welche für den Import eingehalten werden muss. Diese Schnittstelle bietet ebenfalls an, spezifische Übungen (welche nicht innerhalb des Standard-Übungskatalogs existieren) inkl. Beschreibung zu importieren.
+|FR-IPT-3|E|SZ-PHY-1|Import von Übungsinformationen zu spezifischen Übungen via File Upload|Für spezifische Übungen, welche nicht innerhalb des Standard-Übungskatalogs existieren, wird eine Schnittstelle für den Upload der damit assoziierten Übungsinformationen bereitgestellt. Die Schnittstelle soll Text, Bilder, Audio und Video akzeptieren; die jeweiligen Dateiformate werden vom Integration Layer vordefiniert und können auf Wunsch erweitert werden.
+|FR-MTP-1|E|SZ-PHY-2|Therapiedaten anpassen|-
+|FR-MTP-2|E|SZ-PHY-2|Patienten / -gruppen einer Therapie zuweisen / entfernen|-
+|FR-MTP-3|E|SZ-PHY-2|Therapie starten / freigeben|-
+|FR-MTP-4|O|SZ-PHY-2|Therapie unterbrechen / fortsetzen|-
+|FR-MTP-5|E|SZ-PHY-2|Therapie abbrechen|-
+|FR-MTP-6|E|SZ-PHY-2|Therapie abschliessen|-
+|FR-MTP-7|O|SZ-PHY-2|Therapie archivieren|-
+|FR-MPA-1|E|SZ-PHY-3|Patient erstellen (Admin)|-
+|FR-MPA-2|E|SZ-PHY-3|Patient bearbeiten (Admin)|-
+|FR-MPA-3|E|SZ-PHY-3|Patient löschen (Admin)|-
+|FR-MPG-1|E|SZ-PHY-4|Patientengruppe erstellen|-
+|FR-MPG-2|E|SZ-PHY-4|Patientengruppe bearbeiten|-
+|FR-MPG-3|E|SZ-PHY-4|Patienten einer bestehenden Gruppe zuweisen / entfernen|-
+|FR-MPG-4|E|SZ-PHY-4|Patientengruppe löschen|-
+|FR-MEX-1|E|SZ-PHY-5|Übung erstellen (Admin)|-
+|FR-MEX-2|E|SZ-PHY-5|Übung bearbeiten (Admin)|-
+|FR-MEX-3|E|SZ-PHY-5|Detailinformationen zu Übung hinzufügen (Admin)|-
+|FR-MEX-4|E|SZ-PHY-5|Detailinformationen einer Übung bearbeiten (Admin)|-
+|FR-MEX-5|E|SZ-PHY-5|Detailinformationen aus Übung entfernen (Admin)|-
+|FR-MEX-6|E|SZ-PHY-5|Übung löschen (Admin)|-
+|FR-MTS-1|E|SZ-PHY-6|Therapie-Session erstellen|-
+|FR-MTS-2|E|SZ-PHY-6|Therapie-Session bearbeiten|-
+|FR-MTS-3|E|SZ-PHY-6|Therapie-Session löschen|-
+|FR-MTS-4|E|SZ-PHY-6|Therapie-Session freigeben|-
+|FR-MTS-5|O|SZ-PHY-6|Status einer aktiven Therapie-Session übersteuern|-
+|FR-CTS-1|E|SZ-PHY-7|Fortschritt innerhalb einer aktiven Therapie-Session überwachen (pro Patient)|-
+|FR-ATS-1|E|SZ-PHY-8|Messdaten von abgeschlossener Therapie-Session einsehen (pro Patient)|-
+|FR-ATS-2|E|SZ-PHY-8|Messdaten mehrerer Patienten vergleichen / gegenüberstellen|-
+|FR-CTP-1|O|SZ-PHY-9|Ganzheitlichen Therapiefortschritt eines Patienten einsehen|-
+|===
 
-* underlying business goals, 
-* essential features, 
-* essential functional requirements, 
-* quality goals for the architecture and
-* relevant stakeholders and their expectations
-****
+=== Patient
+[options="header",cols="2,1,3,4,6"]
+|===
+|ID|Relevanz|Szenario|Name|Beschreibung
+|FR-ETS-1|E|SZ-PAT-1|Therapie-Session starten|-
+|FR-ETS-2|E|SZ-PAT-1|Messdaten während aktiver Therapie-Session kontinuierlich aufzeichnen (Fitnesstracker)|-
+|FR-ETS-3|O|SZ-PAT-1|Therapie-Session unterbrechen / fortsetzen|-
+|FR-ETS-4|E|SZ-PAT-1|Therapie-Session abbrechen|-
+|FR-ETS-5|E|SZ-PAT-1|Therapie-Session abschliessen|-
+|FR-SEI-1|E|SZ-PAT-2|Übungsinformationen während aktiver Therapie-Session anzeigen / wiedergeben (Smartphone App)|-
+|FR-STS-1|O|SZ-PAT-3|Therapie-Session überspringen|-
+|FR-SEC-1|O|SZ-PAT-4|Übung überspringen|-
+|FR-SFR-1|E|SZ-PAT-5|Feedback / Bewertung / Begründung angeben|-
+|===
 
-=== Requirements Overview
+=== Vorgesetzter des Physiotherapeuten
+[options="header",cols="2,1,3,4,6"]
+|===
+|ID|Relevanz|Szenario|Name|Beschreibung
+|FR-MPT-1|E|SZ-VRG-1|Physiotherapeut erstellen (Admin)|-
+|FR-MPT-2|E|SZ-VRG-1|Physiotherapeut bearbeiten (Admin)|-
+|FR-MPT-3|E|SZ-VRG-1|Physiotherapeut löschen (Admin)|-
+|FR-MPT-4|O|SZ-VRG-1|Therapeuten-Team erstellen|-
+|FR-MPT-5|O|SZ-VRG-1|Therapeuten-Team bearbeiten|-
+|FR-MPT-6|O|SZ-VRG-1|Physiotherapeuten einem bestehenden Therapeuten-Team zuweisen / entfernen|-
+|FR-MPT-7|O|SZ-VRG-1|Therapeuten-Team löschen|-
+|FR-CPS-1|E|SZ-VRG-2|Leistungskriterien für Physiotherapeut / -team definieren|-
+|FR-CPS-2|E|SZ-VRG-2|Aktuelle Werte der Leistungskriterien abfragen (pro Therapeut)|-
+|FR-APP-1|E|SZ-VRG-3|Aggregierte Werte der Leistungskriterien eines Therapeuten pro Zeitintervall einsehen|-
+|FR-CTP-1|O|SZ-VRG-4|Ganzheitlichen Therapiefortschritt eines Patienten einsehen|-
+|===
 
-[role="arc42help"]
-****
-.Contents
-Short description of the functional requirements, driving forces, extract (or abstract)
-of requirements. Link to (hopefully existing) requirements documents
-(with version number and information where to find it).
+=== Staat
+[options="header",cols="2,1,3,4,6"]
+|===
+|ID|Relevanz|Szenario|Name|Beschreibung
+|FR-EPD-1|O|SZ-STA-1|Aggregierte Messdaten nach Abschluss der Therapie-Session an EPD übermitteln|-
+|===
 
-.Motivation
-From the point of view of the end users a system is created or modified to
-improve support of a business activity and/or improve the quality.
+=== Krankenversicherung
+[options="header",cols="2,1,3,4,6"]
+|===
+|ID|Relevanz|Szenario|Name|Beschreibung
+|FR-STD-1|O|SZ-KRA-1|Mitteilung über Therapiestart an Krankenversicherung senden|-
+|FR-STD-2|O|SZ-KRA-1|Monatliche Mitteilung über Therapiestatus an Krankenversicherung senden (solange Therapie aktiv ist)|-
+|FR-STD-3|O|SZ-KRA-1|Mitteilung über Therapieabschluss an Krankenversicherung senden|-
+|===
 
-.Form
-Short textual description, probably in tabular use-case format.
-If requirements documents exist this overview should refer to these documents.
+=== Medizinische Forschung
+[options="header",cols="2,1,3,4,6"]
+|===
+|ID|Relevanz|Szenario|Name|Beschreibung
+|FR-PRD-1|O|SZ-FOR-1|Messdaten eines Patienten werden in anonymisierter Form persistieren|-
+|FR-PRD-2|O|SZ-FOR-1|Anonymisierte Messdaten über API bereitstellen|-
+|FR-LRD-1|O|SZ-FOR-2|API für Eingabe von Datenlabels bereitstellen|-
+|FR-LRD-2|O|SZ-FOR-2|Anonymisierte Messdaten mit Labels ergänzen|-
+|===
 
-Keep these excerpts as short as possible. Balance readability of this document with potential redundancy w.r.t to requirements documents.
-
-
-.Further Information
-
-See https://docs.arc42.org/section-1/[Introduction and Goals] in the arc42 documentation.
-
-****
+=== Medizinische Einrichtung (z.B. Spital), Hausarzt
+[options="header",cols="2,1,3,4,6"]
+|===
+|ID|Relevanz|Szenario|Name|Beschreibung
+|FR-PPD-1|O|SZ-MED-1|Aggregierte Messdaten nach Abschluss der Therapie-Session an Schnittstelle übermitteln|-
+|===
