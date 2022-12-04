@@ -43,7 +43,9 @@ BoundedContext TherapieContext {
 
 			ValueObject Messdaten {
 				String bezeichnung
-
+				List<Voraussetzungen> voraussetzungen
+				Messart messart
+				Daten daten
 			}
 
 			ValueObject Durchfuehrung {
