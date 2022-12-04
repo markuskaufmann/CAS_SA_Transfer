@@ -8,61 +8,66 @@ Die Szenarien bilden dabei die Grundlage für die genauere Ausarbeitung und Prio
 [options="header",cols="2,4,6"]
 |===
 |ID|Name|Beschreibung
-|SZ-PHY-1|Datenimport aus Planungssoftware|-
-|SZ-PHY-2|Verwaltung von Therapiedaten und -lebenszyklus|-
-|SZ-PHY-3|Verwaltung von Patienten / -gruppen|-
-|SZ-PHY-4|Verwaltung von Übungsinformationen|-
-|SZ-PHY-5|Verwaltung von Therapie-Sessions|-
-|SZ-PHY-6|Überwachung / Kontrolle laufender Therapie-Sessions (Monitoring)|-
-|SZ-PHY-7|Analyse und Auswertung abgeschlossener Therapie-Sessions (Reporting)|-
-|SZ-PHY-8|Kontrolle des Therapiefortschritts pro Patient|-
+|SZ-PHY-1|Datenimport aus Planungssoftware|Der Therapeut kann geplante Therapien sowie mit den Patienten terminierte Sitzungen (Sessions) von der Planungssoftware importieren. Übungen und -detailinformationen können entweder mittels einer Referenz (SZ-PHY-5) oder mittels dedizierter Upload-Funktionalität (z.b. via File) importiert werden.
+|SZ-PHY-2|Verwaltung von Therapiedaten und -lebenszyklus|Nach dem Datenimport (SZ-PHY-1) können die bestehenden Therapien aktiv verwaltet werden. So werden beispielsweise Patienten (-gruppen) einer Therapie zugeordnet und entsprechend eingeladen, um daran teilnehmen zu können. Der Lebenszyklus einer Therapie kann entsprechend verwaltet werden (z.B. Gestartet, Unterbrochen, Abgebrochen, Abgeschlossen, Archiviert).
+|SZ-PHY-3|Verwaltung von Patienten|Der Therapeut kann Patienten(-accounts) erstellen, bearbeiten und löschen. Bei der initialen Erstellung erhält der betroffene Patient eine Benachrichtigung zur Registrierung.
+|SZ-PHY-4|Verwaltung von Patientengruppen|Der Therapeut kann Patientengruppen (verwendet für Gruppentherapien) erstellen, bearbeiten und löschen. Ebenfalls können bestehende Patienten einer Gruppe hinzugefügt oder aus einer Gruppe entfernt werden.
+|SZ-PHY-5|Verwaltung von Übungen und Detailinformationen|Übungen und damit assoziierte Detailinformationen können erstellt, bearbeitet und gelöscht werden. Die Übungen werden in einem dedizierten Teilsystem verwaltet und abgelegt, damit sie für alle bestehenden Therapien referenzier- und wiederverwendbar sind.
+|SZ-PHY-6|Verwaltung von Therapie-Sessions|Einzelne Sitzungen (Sessions) einer Therapie können erstellt, bearbeitet und gelöscht werden. Zudem kann der Lebenszyklus einer Session definiert bzw. übersteuert werden (z.B. Startbereit, Gestartet, Abgebrochen, Unterbrochen, Abgeschlossen).
+|SZ-PHY-7|Überwachung / Kontrolle laufender Therapie-Sessions (Monitoring)|Im Rahmen einer aktiven Therapie-Session kann der Therapeut den Fortschritt jedes Patienten kontrollieren - z.B. ob die Session bereits gestartet wurde oder welches die aktuell absolvierte Übung ist.
+|SZ-PHY-8|Analyse und Auswertung abgeschlossener Therapie-Sessions (Reporting)|Im Rahmen einer abgeschlossenen Therapie-Session kann der Therapeut die pro Patient aufgezeichneten Messdaten auswerten und entsprechend analysieren (z.B. Gegenüberstellung der Messdaten zwischen den Patienten, um etwaige Auffälligkeiten zu registrieren).
+|SZ-PHY-9|Kontrolle des Therapiefortschritts pro Patient|Der Therapeut kann den generellen Fortschritt eines Patienten über mehrere Therapie-Sessions hinweg eruieren, um die Gesamteffektivität der Therapie besser einschätzen und entsprechende Massnahmen (z.B. andere Übungen) vornehmen zu können.
 |===
 
 === Patient
 [options="header",cols="2,4,6"]
 |===
 |ID|Name|Beschreibung
-|SZ-PAT-1|Durchführung einer Therapie-Session|-
-|SZ-PAT-2|Einsicht detaillierter Übungsinformationen während Therapie-Session|-
-|SZ-PAT-3|Überspringen einer Therapie-Session|-
-|SZ-PAT-4|Abgabe eines Feedbacks / Bewertung|-
+|SZ-PAT-1|Durchführung einer Therapie-Session|Nachdem eine geplante Therapie-Session durch den Physiotherapeuten freigegeben wurde (SZ-PHY-6), kann der Patient diese individuell starten, unterbrechen oder ganzheitlich abbrechen. Für die Durchführung einer Session wird eine Kombination aus Fitnesstracker (Aufzeichnung therapierelevanter Daten wie Puls oder Blutdruck) und Smartphone App (Einsicht der Übungsinformationen) verwendet. Nach Abschluss der letzten Übung einer Session wird Letztere automatisch als abgeschlossen markiert. 
+|SZ-PAT-2|Einsicht detaillierter Übungsinformationen während Therapie-Session|Während der Durchführung der als Teil der Therapie-Session definierten Übungen kann der Patient mithilfe der Smartphone App alle vorhandenen Detailinformationen zur aktuellen Übung einsehen. Detailinformationen können beispielsweise Beschreibungen, Schritt-für-Schritt-Anleitungen, Bilder und / oder Videos sein.
+|SZ-PAT-3|Überspringen einer Therapie-Session|Der Patient kann einzelne Therapie-Sessions überspringen, wenn sie von ihm als obsolet oder nicht zielführend erachtet werden. In diesem Fall ist eine entsprechende Begründung an den Physiotherapeuten abzugeben (SZ-PAT-5).
+|SZ-PAT-4|Überspringen einer Übung|Der Patient kann einzelne Übungen innerhalb einer Therapie-Session überspringen, wenn sie von ihm als obsolet oder nicht zielführend erachtet werden. In diesem Fall ist eine entsprechende Begründung an den Physiotherapeuten abzugeben (SZ-PAT-5).
+|SZ-PAT-5|Abgabe eines Feedbacks / Bewertung|Nach dem ordnungsgemässen Abschluss, frühzeitigen Abbruch oder Überspringen einer Therapie-Session sowie dem Überspringen einzelner Übungen wird der Patient aufgefordert, ein entsprechendes Feedback / Bewertung oder eine entsprechende Begründung (bei Abbruch und Überspringen) anzugeben. Dies hilft dem Physiotherapeuten, entsprechende Massnahmen zur Optimierung der Therapie, -Session und / oder Übung vorzunehmen.
 |===
 
 === Vorgesetzter des Physiotherapeuten
-[options="header",cols="1,2,6"]
+[options="header",cols="2,4,6"]
 |===
 |ID|Name|Beschreibung
-|SZ-VRG-1|Verwaltung von Physiotherapeuten|-
-|SZ-VRG-2|Überwachung von Physiotherapeuten (Monitoring)|-
-|SZ-VRG-3|Analyse und Auswertung der Leistungswerte pro Physiotherapeut (Reporting)|-
-|SZ-VRG-4|Kontrolle des Therapiefortschritts pro Patient|-
+|SZ-VRG-1|Verwaltung von Physiotherapeuten|Der Vorgesetzte kann die Accounts der unterstellten Physiotherapeuten erstellen (bei einem Neueintritt), bearbeiten und löschen (bei einem Austritt). Zudem können Teams definiert werden, um die Therapeuten der Organisationsstruktur entsprechend zu gliedern.
+|SZ-VRG-2|Überwachung von Physiotherapeuten (Monitoring)|Der Vorgesetzte kann den aktuellen Stand der ihm unterstellten Physiotherapeuten anhand konkret definierter Leistungsmerkmale laufend überwachen. Letztere können beispielsweise die Anzahl der laufenden Therapien, die Anzahl der betreuten Patienten oder die Effektivität der zugewiesenen Übungen (innerhalb der Therapie-Sessions) pro Patient sein.
+|SZ-VRG-3|Analyse und Auswertung der Leistungsziele pro Physiotherapeut (Reporting)|Die pro Physiotherapeut definierten Leistungs- / Performanceziele (z.B. Mindestanzahl der betreuten Patienten pro Quartal) sollen innerhalb eines festgelegten Zeitintervalls ausgewertet und vom Vorgesetzten entsprechend analysiert werden können. Diese Auswertung kann unter anderem als Grundlage für geplante Zielbesprechungen und Mitarbeitergespräche verwendet werden.
+|SZ-VRG-4|Kontrolle des Therapiefortschritts pro Patient|Der Vorgesetzte kann den generellen Fortschritt eines Patienten über mehrere Therapie-Sessions hinweg eruieren, um die Gesamteffektivität der Therapie besser einschätzen und dadurch die Leistung des zuständigen Physiotherapeuten eruieren zu können.
 |===
 
 === Staat
-[options="header",cols="1,2,6"]
+[options="header",cols="2,4,6"]
 |===
 |ID|Name|Beschreibung
-|SZ-STA-1|Übermittlung der Gesundheitsdaten an das elektronische Patientendossier (EPD)|-
+|SZ-STA-1|Übermittlung der Gesundheitsdaten an das elektronische Patientendossier (EPD)|Die während einer Therapie-Session aufgezeichneten Messdaten eines Patienten (z.B. Puls, Blutdruck) sollen in einer zusammengefassten Form mitsamt einer Therapie- und Übungsbeschreibung an das https://www.patientendossier.ch/[Elektronische Patientendossier (EPD)] weitergeleitet werden, um sie weiteren Gesundheitsfachpersonen und medizinischen Einrichtungen (z.B. Spital, Hausarzt) zur Verfügung zu stellen. Letztere können die bereitgestellten Gesundheitsdaten als potentielles Hilfsmittel für ambulante / stationäre Untersuchungen und Eingriffe, Konsultationen, Diagnosen und / oder Verschreibungen von Medikamenten / weiteren Therapien nutzen.
+Somit könnte SZ-MED-1 ebenfalls durch dieses Szenario abgedeckt werden.
 |===
 
 === Krankenversicherung
-[options="header",cols="1,2,6"]
+[options="header",cols="2,4,6"]
 |===
 |ID|Name|Beschreibung
-|SZ-KRA-1|Übermittlung der Therapiedaten zu Marketingzwecken|-
+|SZ-KRA-1|Übermittlung der Therapiedaten zu Marketingzwecken|Wenn ein Patient eine neue Therapie beginnt, sich inmitten dieser befindet oder sie erfolgreich abgeschlossen hat, soll dies den Krankenversicherungen über eine definierte Schnittstelle mitgeteilt werden. Diese Informationen können wiederum zu Marketingzwecken weiterverwendet werden. Beispielsweise kann eine Versicherung definieren, ob gewisse Aktivitäten zu möglichen Vergünstigungen oder Prämienreduktionen gemäss https://www.fedlex.admin.ch/eli/cc/24/719_735_717/de[Versicherungsvertragsgesetzes (VVG)] führen, oder die Versicherung kann dem Patienten (Fitness-)Challenges vorschlagen, welche zu der aktuellen oder abgeschlossenen Physiotherapie passen.
+Hierbei ist anzumerken, dass die übermittelten Informationen keine aufgezeichneten Gesundheitsdaten beinhalten.
 |===
 
 === Medizinische Forschung
-[options="header",cols="1,2,6"]
+[options="header",cols="2,4,6"]
 |===
 |ID|Name|Beschreibung
-|SZ-FOR-1|Ablage und Bereitstellung anonymisierter Gesundheitsdaten|-
-|SZ-FOR-2|Nachträgliche Optimierung der abgelegten Daten für Training von AI-Modellen|-
+|SZ-FOR-1|Bereitstellung anonymisierter Gesundheitsdaten|Die während einer Therapie-Session aufgezeichneten Messdaten eines Patienten werden in anonymisierter Form persistiert und in Form einer definierten Datenschnittstelle für die medizinische Forschung bereitgestellt. Die gesammelten Daten können als zusätzliches Messinstrument für medizinische (Langzeit-)Studien und Analysen verwendet werden. Des Weiteren können die Daten als Grundlage für das Training von medizinischen AI-Modellen eingesetzt werden.
+|SZ-FOR-2|Nachträgliches Labeling der abgelegten Daten für das Training von AI-Modellen|Für die Benutzer der in SZ-FOR-1 definierten Datenschnittstelle, welche die bereitgestellten Messdaten für das Training von AI-Modellen mittels https://www.ibm.com/cloud/learn/supervised-learning[Supervised / Semi-Supervised Learning] verwenden, sollen die Daten nachträglich mit sinnvollen Labels ergänzt werden (Supervised Machine Learning). Die besagten Labels können je nach Forschungszweck variieren und müssen daher in direkter Kommunikation mit den Forschenden definiert werden, um sie als Teil der Messdaten abzulegen und schlussendlich zur Verfügung zu stellen.
 |===
 
 === Medizinische Einrichtung (z.B. Spital), Hausarzt
-[options="header",cols="1,2,6"]
+[options="header",cols="2,4,6"]
 |===
 |ID|Name|Beschreibung
-|SZ-MED-1|Bereitstellung von Gesundheitsdaten als Hilfsmittel für weitere Behandlungen|-
+|SZ-MED-1|Bereitstellung von Gesundheitsdaten als Hilfsmittel für weitere Behandlungen|Die während einer Therapie-Session aufgezeichneten Messdaten eines Patienten (z.B. Puls, Blutdruck) sollen in einer zusammengefassten Form mitsamt einer Therapie- und Übungsbeschreibung an weitere Gesundheitsfachpersonen und medizinische Einrichtungen (z.B. Spital, Hausarzt) weitergeleitet werden. Letztere können die bereitgestellten Gesundheitsdaten als potentielles Hilfsmittel für ambulante / stationäre Untersuchungen und Eingriffe, Konsultationen, Diagnosen und / oder Verschreibungen von Medikamenten / weiteren Therapien nutzen.
+Dieses Szenario könnte durch SZ-STA-1 abgedeckt werden.
 |===
