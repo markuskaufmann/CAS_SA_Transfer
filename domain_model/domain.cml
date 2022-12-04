@@ -13,9 +13,9 @@ BoundedContext TherapieContext {
 				aggregateRoot
 				
 				TherapieId therapieId
-				- Person person
+				- Patient patient
 				- Therapeut therapeut
-                - Session session
+                - List<Session> session
 				- TherapieStatus status
 
                 Repository TherapieRepository {
@@ -26,21 +26,24 @@ BoundedContext TherapieContext {
             Entity Session {
                 SessionId sessionId
 				- SessionsStatus status
-                - Uebung uebung
+                - List<Uebung> uebung
             }
 
             Entity Uebung {
                 UebungId uebungId
 				- UebungsStatus status
                 - UebungsBeschreibung beschreibung
-				- GewuenschteMessdaten gewuenschteMessdaten
 				- Durchfuehrung durchfuehrung
             }
 
-			ValueObject GewuenschteMessdaten {
-				boolean blutdruck
-				boolean herzschlag
-				boolean erweitert
+			ValueObject UebungMessdaten {
+				- List<Uebung> uebungen
+				- List<Messdaten> messdaten
+			}
+
+			ValueObject Messdaten {
+				String bezeichnung
+
 			}
 
 			ValueObject Durchfuehrung {
@@ -49,9 +52,10 @@ BoundedContext TherapieContext {
 				Boolean eigenangabeMoeglich
 			}
 
-			ValueObject Person {
+			Entity Patient {
 				AhvNummer id
 				- Name name
+				- PatientStatus patientStatus
 			}
 
 			ValueObject Therapeut {
@@ -68,10 +72,18 @@ BoundedContext TherapieContext {
 			
 			ValueObject UebungsBeschreibung {
 				String titel
-				Url bild
-				Url video
-				String beschreibungstext
-				Url audio
+				- List<BeschreibungsTeil> beschreibungsTeile
+			}
+
+			ValueObject BeschreibungsTeil {
+				- BeschreibungsTyp beschreibungsTyp
+				String untertitel
+				String text
+				Url resource
+			}
+
+			enum BeschreibungsTyp {
+				TEXT_BLOCK, VIDEO, BILD, AUDIO
 			}
 			
 			enum TherapieStatus {
@@ -84,6 +96,10 @@ BoundedContext TherapieContext {
 
 			enum UebungsStatus {
 				ERSTELLT, GESTARTET, PAUSIERT, UNTERBROCHEN, ABGEBROCHEN, ABGESCHLOSSEN
+			}
+
+			enum PatientStatus {
+				EINGELADEN, BEREIT, IN_THERAPIE, DEAKTIVIERT, GELOESCHT
 			}
 		}
 	}
