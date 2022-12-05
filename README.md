@@ -10,7 +10,7 @@ Launch a terminal in the repository root and execute the following command:
 docker-compose up
 ```
 
-The resulting [Structurizr DSL](https://structurizr.com/dsl) diagrams are stored in `./c4_diagrams/generated`, the exported [AsciiDoc](https://asciidoc.org/) PDF documentation (via [AsciiDoctor](https://asciidoctor.org/)) in `./arc42_documentation`.
+The resulting [Structurizr DSL](https://structurizr.com/dsl) diagrams are stored in `./physio_connect_c4/generated`, the exported [AsciiDoc](https://asciidoc.org/) PDF documentation (via [AsciiDoctor](https://asciidoctor.org/)) in `./arc42_documentation`.
 
 ## Build Workflow Status (currently manual trigger)
 (C4 diagrams & arc42 PDF generated)
