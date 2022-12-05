@@ -15,29 +15,75 @@ These include
 
 === Requirements Overview
 
-[role="arc42help"]
-****
-.Contents
-Short description of the functional requirements, driving forces, extract (or abstract)
-of requirements. Link to (hopefully existing) requirements documents
-(with version number and information where to find it).
+Das nachfolgende Kapitel gibt einen Gesamtüberblick über die High Level-Features, welche von mindestens einem Stakeholder als relevant erachtet werden und sich in der Gesamtfunktionalität des Systems wiederspiegeln sollen.
 
-.Motivation
-From the point of view of the end users a system is created or modified to
-improve support of a business activity and/or improve the quality.
+==== Physiotherapeut
+[options="header",cols="2,4,6"]
+|===
+|ID|Name|Beschreibung
+|FR-PHY-1|Datenimport aus Planungssoftware|Der Therapeut kann geplante Therapien sowie mit den Patienten terminierte Sitzungen (Sessions) von der Planungssoftware importieren. Übungen und -detailinformationen können entweder mittels einer Referenz (FR-PHY-5) oder mittels dedizierter Upload-Funktionalität (z.b. via File) importiert werden.
+|FR-PHY-2|Verwaltung von Therapiedaten und -lebenszyklus|Nach dem Datenimport (FR-PHY-1) können die bestehenden Therapien aktiv verwaltet werden. So werden beispielsweise Patienten (-gruppen) einer Therapie zugeordnet und entsprechend eingeladen, um daran teilnehmen zu können. Der Lebenszyklus einer Therapie kann entsprechend verwaltet werden (z.B. Gestartet, Unterbrochen, Abgebrochen, Abgeschlossen, Archiviert).
+|FR-PHY-3|Verwaltung von Patienten|Der Therapeut kann Patienten(-accounts) erstellen, bearbeiten und löschen. Bei der initialen Erstellung erhält der betroffene Patient eine Benachrichtigung zur Registrierung.
+|FR-PHY-4|Verwaltung von Patientengruppen|Der Therapeut kann Patientengruppen (verwendet für Gruppentherapien) erstellen und löschen. Ebenfalls können bestehende Patienten einer Gruppe hinzugefügt oder aus einer Gruppe entfernt werden.
+|FR-PHY-5|Verwaltung von Übungen und Detailinformationen|Übungen und damit assoziierte Detailinformationen können erstellt, bearbeitet und gelöscht werden. Die Übungen werden in einem dedizierten Teilsystem verwaltet und abgelegt, damit sie für alle bestehenden Therapien referenzier- und wiederverwendbar sind.
+|FR-PHY-6|Verwaltung von Therapie-Sessions|Einzelne Sitzungen (Sessions) einer Therapie können erstellt, bearbeitet und gelöscht werden. Zudem kann der Lebenszyklus einer Session definiert bzw. übersteuert werden (z.B. Startbereit, Gestartet, Abgebrochen, Unterbrochen, Abgeschlossen).
+|FR-PHY-7|Überwachung / Kontrolle laufender Therapie-Sessions (Monitoring)|Im Rahmen einer aktiven Therapie-Session kann der Therapeut den Fortschritt jedes Patienten kontrollieren - z.B. ob die Session bereits gestartet wurde oder welches die aktuell absolvierte Übung ist.
+|FR-PHY-8|Analyse und Auswertung abgeschlossener Therapie-Sessions (Reporting)|Im Rahmen einer abgeschlossenen Therapie-Session kann der Therapeut die pro Patient aufgezeichneten Messdaten auswerten und entsprechend analysieren (z.B. Gegenüberstellung der Messdaten zwischen den Patienten, um etwaige Auffälligkeiten zu registrieren).
+|FR-PHY-9|Kontrolle des Therapiefortschritts pro Patient|Der Therapeut kann den generellen Fortschritt eines Patienten über mehrere Therapie-Sessions hinweg eruieren, um die Gesamteffektivität der Therapie besser einschätzen und entsprechende Massnahmen (z.B. andere Übungen) vornehmen zu können.
+|===
 
-.Form
-Short textual description, probably in tabular use-case format.
-If requirements documents exist this overview should refer to these documents.
+==== Patient
+[options="header",cols="2,4,6"]
+|===
+|ID|Name|Beschreibung
+|FR-PAT-1|Durchführung einer Therapie-Session|Nachdem eine geplante Therapie-Session durch den Physiotherapeuten freigegeben wurde (FR-PHY-6), kann der Patient diese individuell starten, unterbrechen oder ganzheitlich abbrechen. Für die Durchführung einer Session wird eine Kombination aus Fitnesstracker (Aufzeichnung therapierelevanter Daten wie Puls oder Blutdruck) und Smartphone App (Einsicht der Übungsinformationen) verwendet. Nach Abschluss der letzten Übung einer Session wird Letztere automatisch als abgeschlossen markiert. 
+|FR-PAT-2|Einsicht detaillierter Übungsinformationen während Therapie-Session|Während der Durchführung der als Teil der Therapie-Session definierten Übungen kann der Patient mithilfe der Smartphone App alle vorhandenen Detailinformationen zur aktuellen Übung einsehen. Detailinformationen können beispielsweise Beschreibungen, Schritt-für-Schritt-Anleitungen, Bilder und / oder Videos sein.
+|FR-PAT-3|Überspringen einer Therapie-Session|Der Patient kann einzelne Therapie-Sessions überspringen, wenn sie von ihm als obsolet oder nicht zielführend erachtet werden. In diesem Fall ist eine entsprechende Begründung an den Physiotherapeuten abzugeben (FR-PAT-5).
+|FR-PAT-4|Überspringen einer Übung|Der Patient kann einzelne Übungen innerhalb einer Therapie-Session überspringen, wenn sie von ihm als obsolet oder nicht zielführend erachtet werden. In diesem Fall ist eine entsprechende Begründung an den Physiotherapeuten abzugeben (FR-PAT-5).
+|FR-PAT-5|Abgabe eines Feedbacks / Bewertung|Nach dem ordnungsgemässen Abschluss, frühzeitigen Abbruch oder Überspringen einer Therapie-Session sowie dem Überspringen einzelner Übungen wird der Patient aufgefordert, ein entsprechendes Feedback / Bewertung oder eine entsprechende Begründung (bei Abbruch und Überspringen) anzugeben. Dies hilft dem Physiotherapeuten, entsprechende Massnahmen zur Optimierung der Therapie, -Session und / oder Übung vorzunehmen.
+|===
 
-Keep these excerpts as short as possible. Balance readability of this document with potential redundancy w.r.t to requirements documents.
+==== Vorgesetzter des Physiotherapeuten
+[options="header",cols="2,4,6"]
+|===
+|ID|Name|Beschreibung
+|FR-VRG-1|Verwaltung von Physiotherapeuten|Der Vorgesetzte kann die Accounts der unterstellten Physiotherapeuten erstellen (bei einem Neueintritt), bearbeiten und löschen (bei einem Austritt). Zudem können Teams definiert werden, um die Therapeuten der Organisationsstruktur entsprechend zu gliedern.
+|FR-VRG-2|Überwachung von Physiotherapeuten (Monitoring)|Der Vorgesetzte kann den aktuellen Stand der ihm unterstellten Physiotherapeuten anhand konkret definierter Leistungskriterien laufend überwachen. Letztere können beispielsweise die Anzahl der laufenden Therapien, die Anzahl der betreuten Patienten oder die Effektivität der zugewiesenen Übungen (innerhalb der Therapie-Sessions) pro Patient sein.
+|FR-VRG-3|Analyse und Auswertung der Leistungsziele pro Physiotherapeut (Reporting)|Die pro Physiotherapeut definierten Leistungs- / Performanceziele (z.B. Mindestanzahl der betreuten Patienten pro Quartal) sollen innerhalb eines festgelegten Zeitintervalls ausgewertet und vom Vorgesetzten entsprechend analysiert werden können. Diese Auswertung kann unter anderem als Grundlage für geplante Zielbesprechungen und Mitarbeitergespräche verwendet werden.
+|FR-VRG-4|Kontrolle des Therapiefortschritts pro Patient|Der Vorgesetzte kann den generellen Fortschritt eines Patienten über mehrere Therapie-Sessions hinweg eruieren, um die Gesamteffektivität der Therapie und dadurch die Leistung des zuständigen Physiotherapeuten besser einschätzen zu können.
+|===
 
+==== Staat
+[options="header",cols="2,4,6"]
+|===
+|ID|Name|Beschreibung
+|FR-STA-1|Übermittlung der Gesundheitsdaten an das elektronische Patientendossier (EPD)|Die während einer Therapie-Session aufgezeichneten Messdaten eines Patienten (z.B. Puls, Blutdruck) sollen in einer kompatiblen Form mitsamt einer Therapie- und Übungsbeschreibung an das https://www.patientendossier.ch/[Elektronische Patientendossier (EPD)] weitergeleitet werden, um sie weiteren Gesundheitsfachpersonen und medizinischen Einrichtungen (z.B. Spital, Hausarzt) zur Verfügung zu stellen. Letztere können die bereitgestellten Gesundheitsdaten als potentielles Hilfsmittel für ambulante / stationäre Untersuchungen und Eingriffe, Konsultationen, Diagnosen und / oder Verschreibungen von Medikamenten / weiteren Therapien nutzen.
+Somit könnte FR-MED-1 ebenfalls durch dieses Requirement abgedeckt werden.
+|===
 
-.Further Information
+==== Krankenversicherung
+[options="header",cols="2,4,6"]
+|===
+|ID|Name|Beschreibung
+|FR-KRA-1|Übermittlung einer Therapiebeschreibung zu Marketingzwecken|Wenn ein Patient eine neue Therapie beginnt, sich inmitten dieser befindet oder sie erfolgreich abgeschlossen hat, soll dies den Krankenversicherungen über eine definierte Schnittstelle mitgeteilt werden. Diese Informationen können wiederum zu Marketingzwecken weiterverwendet werden. Beispielsweise kann eine Versicherung definieren, ob gewisse Aktivitäten zu möglichen Vergünstigungen oder Prämienreduktionen gemäss https://www.fedlex.admin.ch/eli/cc/24/719_735_717/de[Versicherungsvertragsgesetzes (VVG)] führen, oder die Versicherung kann dem Patienten (Fitness-)Challenges vorschlagen, welche zu der aktuellen oder abgeschlossenen Physiotherapie passen.
+Hierbei ist anzumerken, dass die übermittelten Informationen keine aufgezeichneten Gesundheitsdaten beinhalten.
+|===
 
-See https://docs.arc42.org/section-1/[Introduction and Goals] in the arc42 documentation.
+==== Medizinische Forschung
+[options="header",cols="2,4,6"]
+|===
+|ID|Name|Beschreibung
+|FR-FOR-1|Bereitstellung anonymisierter Gesundheitsdaten|Die während einer Therapie-Session aufgezeichneten Messdaten eines Patienten werden in anonymisierter Form persistiert und in Form einer definierten Datenschnittstelle für die medizinische Forschung bereitgestellt. Die gesammelten Daten können als zusätzliches Messinstrument für medizinische (Langzeit-)Studien und Analysen verwendet werden. Des Weiteren können die Daten als Grundlage für das Training von medizinischen AI-Modellen eingesetzt werden.
+|FR-FOR-2|Nachträgliches Labeling der abgelegten Daten für das Training von AI-Modellen|Für die Benutzer der in FR-FOR-1 definierten Datenschnittstelle, welche die bereitgestellten Messdaten für das Training von AI-Modellen mittels https://www.ibm.com/cloud/learn/supervised-learning[Supervised / Semi-Supervised Learning] verwenden, sollen die Daten nachträglich mit sinnvollen Labels ergänzt werden (Supervised Machine Learning). Die besagten Labels können je nach Forschungszweck variieren und müssen daher in direkter Kommunikation mit den Forschenden definiert werden, um sie als Teil der Messdaten abzulegen und schlussendlich zur Verfügung zu stellen.
+|===
 
-****
+==== Medizinische Einrichtung (z.B. Spital), Hausarzt
+[options="header",cols="2,4,6"]
+|===
+|ID|Name|Beschreibung
+|FR-MED-1|Übermittlung der Gesundheitsdaten als Hilfsmittel für weitere Behandlungen|Die während einer Therapie-Session aufgezeichneten Messdaten eines Patienten (z.B. Puls, Blutdruck) sollen in einer kompatiblen Form mitsamt einer Therapie- und Übungsbeschreibung an weitere Gesundheitsfachpersonen und medizinische Einrichtungen (z.B. Spital, Hausarzt) weitergeleitet werden. Letztere können die bereitgestellten Gesundheitsdaten als potentielles Hilfsmittel für ambulante / stationäre Untersuchungen und Eingriffe, Konsultationen, Diagnosen und / oder Verschreibungen von Medikamenten / weiteren Therapien nutzen.
+Dieses Requirement könnte durch FR-STA-1 abgedeckt werden.
+|===
 
 === Quality Goals
 
