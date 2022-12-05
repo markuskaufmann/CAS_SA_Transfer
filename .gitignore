@@ -1,5 +1,7 @@
 c4_diagrams/generated/
+physio_connect_c4/generated/
 *.cache
 *.pdf
 *.html
+*.bkp
 .DS_Store
