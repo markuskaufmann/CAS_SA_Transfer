@@ -88,8 +88,7 @@ a|
 
 Für die erweiterte Analyse und Verwaltung der bestehenden Stakeholder werden diese im Nachfolgenden im Rahmen eines Powergrids eingestuft.
 
-image::stakeholder_powergrid.svg[Static]
-
+image::stakeholder_powergrid.drawio.svg[Static]
 
 === Priorisierung der Stakeholder
 
