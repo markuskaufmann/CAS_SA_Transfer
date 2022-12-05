@@ -16,10 +16,10 @@ jobs:
         run: |
           Write-Host $PWD
 
-          dir "$PWD/c4_diagrams/generated"
+          dir "$PWD/physio_connect_c4/generated"
           dir "$PWD/arc42_documentation"
 
-          $diagramsExist = Test-Path -Path "$PWD/c4_diagrams/generated/*.puml" -PathType leaf
+          $diagramsExist = Test-Path -Path "$PWD/physio_connect_c4/generated/*.puml" -PathType leaf
           $pdfExists = Test-Path -Path "$PWD/arc42_documentation/*.pdf*" -PathType leaf
 
           Write-Host "Diagrams found: $diagramsExist"
