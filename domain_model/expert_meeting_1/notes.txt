@@ -1,0 +1,76 @@
+Erkenntnisse:
+
+Therapie ist kein eindeutiges Word. Sowohl der gesamtprozess als auch einzelne Termine werden als Therapie bezeichnet. Höchstwahrscheinlich sollte ein eindeutigerer Begriff verwendet werden.
+
+Unterscheidung Planungssoftware und Dokumentationssystem
+
+Planungssoftware: 
+- Terminplanung. 
+- Zuweisung Zeit, Patient und Therapeut inklusive Art der Therapie
+Dokumentationssystem:
+- Was wurde effektiv mit dem Patienten gemacht
+- Ausfüllen häufig nach der Therapiesession
+- Oft wird das nächste Dokument vorbereitet nach abgeschlossener Übung
+- Subjektive und Objektive Sachen.
+- Viele Praxen verwenden weiterhin Papier, keine digitalen Systeme
+
+Arten von Therapien
+- Spital
+-- Patient befindet sich im Spital
+-- Hauptsächlich betreute Therapien
+- Reha
+-- Hauptsächlich betreute Therapien
+-- Bei Entlassung werden oft Übungen nach Hause mitgegeben
+-- Evtl. können von uns spezialisierte Übungskataloge zur Verfügung gestellt werden
+-- Physio hat kein Interesse an Abarbeitung der Übungen nach Abgabe
+-- Patient sollte höchstwahrscheinlich die Möglichkeit haben, für sich selbst Sessions zu erstellen
+- Ambulant
+-- Hauptsächlich in Praxen
+-- Patient hat eine Verordnung (normalerweise 9x30, evtl. auch spezielle)
+-- Oft 1x pro Woche plus zusätzliche "Hausaufgaben" --> unsere Spezialisierung
+
+Lifecicle von Patienten
+Gesund -> "Hausarzt/Spezialist" Reha
+Gesund -> "Hausarzt/Spezialist" Ambulant
+Gesund -> "Notfall/Hausarzt/Spezialist" Spital
+
+Reha -> "Verordnung nach abgeschlossener Reha" Ambulant
+Reha -> "Lage verschlechtert" Spital
+Reha -> "genesen" Gesund
+
+Ambulant -> "Lage verschlechtert" Spital
+Ambulant -> "genesen" Gesund
+
+Wollen wir den Status wirklich im Patient abbilden oder einfach als Status in der Therapie?
+Hätte es Einschränkungen auf die Funktionalität, wenn ein Patient einen expliziten Status hat?
+
+Die Patientendaten sollen geteilt werden können. z.B. der Reha im App zeigen, welche Übungen während dem Spitalaufenthalt gemacht wurden.
+
+Patienten werden NICHT durch die AHV-Nummer identifiziert, sondern einer Patientennummer, welche bei jeder Stelle (Spital, Reha usw.) anders sein kann
+Ein Fall (z.B. Unfall Bein gebrochen) hat eine FallID. Diese wird nicht über Stellen hinweg verwendet, daher für uns kaum von Nutzen.
+
+Verordnungen enthalten
+- Personalien
+- Diagnose
+- Limitationen
+- (theoretisch) Verbindliche Behandlungsvorschläge
+- Ausgestellt von (Arzt)
+
+Dies hat Konsequenzen:
+- Patientendaten müssen global gehostet werden
+- Abgearbeitete Übungen müssen global gehostet werden
+
+Ausführliche Rückmeldungen von Patienten sind gewünscht
+- Effektiv ausgeführte Wiederholungen / Zeit angeben
+- Schmerzpatienten Angabe via Schmerzskala
+- Andere Patienten Anstrengungsskalen
+- Es existieren "etablierte" Skalen, welche oft verwendet werden
+- Zeiten für Übungen und gesamte Session
+- Rückmeldung von Physio auf ausgeführte Session soll möglich sein, von "Thumbs up" bis zu Kommentar. Evt. Kommentar auf Kommentar von Patienten geben..
+- Chatmöglichkeit?
+
+- Übungen werden oft via Skizzen vermittelt, z.B. Strichmännchen. Möglichkeit zum Ad-Hoc Übungen Erstellen von Physios sollte erlaubt sein, nicht nur als Admin im System.
+- Übungsbeschreibung sollte von Physios pro Patienten angepasst werden. Für verschiedene Patienten verschiedene Hinweise für die gleiche Übung
+
+Im Spital / Reha ist ein Physio dem Patienten zugewiesen. Kann natürlich in speziellen Fällen vertreten werden.
+Es gibt bereits "self checkout" Praxen. Bei solchen Konstrukten ist es höchstwahrscheinlich schwer, einen Physio als zuständigen zuzuweisen.
