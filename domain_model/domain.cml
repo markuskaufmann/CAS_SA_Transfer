@@ -5,6 +5,33 @@ ContextMap PhysioContextMap {
 
 /* The original booking application context */
 BoundedContext TherapieContext {
+	Module Benutzerverwaltung {
+
+		basePackage = ch.hslu.physio
+		Aggregate Benutzer {
+			Entity Benutzer {
+				aggregateRoot
+				List<Rolle> rollen
+				List<Gruppe> gruppen
+				- Personalien personalien
+				- BenutzerStatus status
+				List<Attribut> zusaetzlicheAttribute
+			}
+
+			enum BenutzerStatus {
+				ERSTELLT, MAIL_VERIFIZIERT, DEAKTIVIERT
+			}
+
+			ValueObject Personalien {
+				String vorname
+				String zwischenname
+				String nachname
+				String anzeigename
+				String mailAdresse
+			}
+		}
+	}
+
 	Module PhysioConnectV2 {
 		basePackage = ch.hslu.physio
 
@@ -49,8 +76,8 @@ BoundedContext TherapieContext {
 				
 				TherapieId therapieId
 				- TherapieTyp therapieTyp
-				- Patient patient
-				- Therapeut therapeut
+				- Benutzer patient
+				- Benutzer hauptTherapeut
                 - List<TherapieSession> session
 				- TherapieStatus status
 
@@ -92,24 +119,6 @@ BoundedContext TherapieContext {
 				Boolean eigenangabeMoeglich
 			}
 
-			Entity Patient {
-				AhvNummer id
-				- Name name
-				- PatientStatus patientStatus
-			}
-
-			ValueObject Therapeut {
-				MitarbeiterNummer id
-				- Name name
-			}
-
-			ValueObject Name {
-				String vorname
-				String zwischenname
-				String nachname
-				String anzeigename
-			}
-
 			ValueObject PatientenRueckmeldung {
 				RueckmeldungsWert effektiveRueckmeldung
 				- TherapeutenKommentar antwortVomTherapeuten
@@ -129,6 +138,7 @@ BoundedContext TherapieContext {
 			ValueObject TherapeutenKommentar {
 				String text
 				Url resource
+				- Benutzer therapeut
 			}
 			
 			enum TherapieStatus {
@@ -145,10 +155,6 @@ BoundedContext TherapieContext {
 
 			enum UebungsStatus {
 				ERSTELLT, UEBERSPRUNGEN, GESTARTET, PAUSIERT, UNTERBROCHEN, ABGEBROCHEN, ABGESCHLOSSEN
-			}
-
-			enum PatientStatus {
-				EINGELADEN, BEREIT, IN_THERAPIE, DEAKTIVIERT, GELOESCHT
 			}
 		}
 	}
