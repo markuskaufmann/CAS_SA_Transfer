@@ -7,6 +7,41 @@ ContextMap PhysioContextMap {
 BoundedContext TherapieContext {
 	Module PhysioConnectV2 {
 		basePackage = ch.hslu.physio
+
+		Aggregate UebungsKollektion {
+			Entity UebungsKollektion {
+				aggregateRoot
+				- List<BeispielSession> beispielTherapieSessionen
+				- List<UebungsBeschreibung> uebungsListe
+			}
+
+			ValueObject BeispielSession {
+				- List<UebungsBeschreibung> uebungsBeschreibungen
+			}
+		}
+
+		Aggregate UebungsKatalog {
+			Entity UebungsBeschreibung {
+				aggregateRoot
+				String titel
+				boolean istVorlage
+				- UebungsBeschreibung verwendeteVorage 
+				- List<BeschreibungsTeil> beschreibungsTeile
+			}
+
+			ValueObject BeschreibungsTeil {
+				boolean istVorlage
+				String untertitel
+				String text
+				Url resource
+				- BeschreibungsTeil verwendeteVorlage
+				- BeschreibungsTyp beschreibungsTyp
+			}
+
+			enum BeschreibungsTyp {
+				TEXT_BLOCK, VIDEO, BILD, AUDIO
+			}
+		}
 		
 		Aggregate TherapieSession {
 			Entity GesamtTherapie {
@@ -27,11 +62,11 @@ BoundedContext TherapieContext {
             Entity TherapieSession {
                 SessionId sessionId
 				- TherapieSessionsStatus status
-                - List<Uebung> uebung
+                - List<TherapieUebung> uebung
 				- List<PatientenRueckmeldung> rueckmeldung
             }
 
-            Entity Uebung {
+            Entity TherapieUebung {
                 UebungId uebungId
 				- UebungsStatus status
                 - UebungsBeschreibung beschreibung
@@ -40,7 +75,7 @@ BoundedContext TherapieContext {
             }
 
 			ValueObject UebungMessdaten {
-				- List<Uebung> uebungen
+				- List<TherapieUebung> uebungen
 				- List<Messdaten> messdaten
 			}
 
@@ -96,32 +131,12 @@ BoundedContext TherapieContext {
 				Url resource
 			}
 			
-			ValueObject UebungsBeschreibung {
-				String titel
-				boolean istVorlage
-				- UebungsBeschreibung verwendeteVorage 
-				- List<BeschreibungsTeil> beschreibungsTeile
-			}
-
-			ValueObject BeschreibungsTeil {
-				boolean istVorlage
-				String untertitel
-				String text
-				Url resource
-				- BeschreibungsTeil verwendeteVorlage
-				- BeschreibungsTyp beschreibungsTyp
-			}
-
-			enum BeschreibungsTyp {
-				TEXT_BLOCK, VIDEO, BILD, AUDIO
-			}
-			
 			enum TherapieStatus {
 	            ENTWURF, WARTEN_AUF_PATIENT, BEREIT, GESTARTET, UNTERBROCHEN, ABGESCHLOSSEN, ABGEBROCHEN, ARCHIVIERT
 			}
 
 			enum TherapieTyp {
-				HOSPITALISIERT, REHABILITATION, AMBULANT
+				HOSPITALISIERT, REHABILITATION, AMBULANT, EIGENSTAENDIG
 			}
 
 			enum TherapieSessionsStatus {
