@@ -42,6 +42,10 @@ Gesund -> "Hausarzt/Spezialist" Ambulant
 
 Gesund -> "Notfall/Hausarzt/Spezialist" Spital
 
+Spital --> "U Reha" InRehabilitation
+
+Spital --> "Entlassung nach Hause" InAmbulanterBehandlung
+
 Reha -> "Verordnung nach abgeschlossener Reha" Ambulant
 
 Reha -> "Lage verschlechtert" Spital
@@ -82,10 +86,16 @@ Dies hat Konsequenzen:
 - Chatmöglichkeit?
 
 === Übungen ad hoc erstelltn
-- Übungen werden oft via Skizzen vermittelt, z.B. Strichmännchen. Möglichkeit zum Ad-Hoc Übungen Erstellen von Physios sollte erlaubt sein, nicht nur als Admin im System.
+
+Übungen werden oft via Skizzen vermittelt, z.B. Strichmännchen. Möglichkeit zum Ad-Hoc Übungen Erstellen von Physios sollte erlaubt sein, nicht nur als Admin im System.
 
 === Übungsbeschreibungen pro Patient
-- Übungsbeschreibung sollte von Physios pro Patienten angepasst werden. Für verschiedene Patienten verschiedene Hinweise für die gleiche Übung
+
+Übungsbeschreibung sollte von Physios pro Patienten angepasst werden. Für verschiedene Patienten verschiedene Hinweise für die gleiche Übung
+
+=== Als therapieübergeordnetes Dokumentationssystem
+
+Auf dem App sollen alle durchgeführten Übungen dokumentiert werden können, sodass beim Übergang von Therapien einfach und effektiv mit den neuen Therapeuten kommuniziert werden kann.
 
 == Weiteres
 
