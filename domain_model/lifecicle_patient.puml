@@ -1,0 +1,28 @@
+@startuml Therapie Lifecicle
+title Patient Lifecicle Version 1
+
+State Gesund
+State Hospitalisiert
+State InAmbulanterBehandlung
+State InRehabilitation
+
+[*] --> Gesund
+
+Gesund -->  Hospitalisiert : Eingewiesen oder via Notfall
+Gesund -->  InRehabilitation : Eingewiesen
+Gesund -->  InAmbulanterBehandlung : Verordnet
+
+Hospitalisiert --> InRehabilitation : Verschoben in Reha
+Hospitalisiert --> InAmbulanterBehandlung : Entlassen mit Verordnung
+Hospitalisiert --> SelbstständigeBehandlung : Entlassen ohne Verordnung
+
+InRehabilitation --> InAmbulanterBehandlung : Entlassen mit Verordnung
+InRehabilitation --> Hospitalisiert : Lage verschlechtert
+InRehabilitation --> SelbstständigeBehandlung : Entlassen ohne Verordnung
+
+InAmbulanterBehandlung --> Hospitalisiert : Lage verschlechtert
+InAmbulanterBehandlung --> SelbstständigeBehandlung : Verordnung abgeschlossen
+
+SelbstständigeBehandlung --> [*]
+
+@enduml
