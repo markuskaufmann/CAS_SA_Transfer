@@ -1,0 +1,126 @@
+@startuml
+
+skinparam componentStyle uml2
+
+package ch.hslu.physio.PhysioConnect {
+	package "'TherapieSession' Aggregate" <<Rectangle>> {
+		class Therapie <<(A,#fffab8) Aggregate Root>> {
+			TherapieId therapieId
+			Patient patient
+			Therapeut therapeut
+			List<Session> session
+			TherapieStatus status
+		}
+		class Session <<(E,DarkSeaGreen) Entity>> {
+			SessionId sessionId
+			SessionsStatus status
+			List<Uebung> uebung
+		}
+		class Uebung <<(E,DarkSeaGreen) Entity>> {
+			UebungId uebungId
+			UebungsStatus status
+			UebungsBeschreibung beschreibung
+			Durchfuehrung durchfuehrung
+		}
+		class UebungMessdaten <<(V,DarkSeaGreen) Value Object>> {
+			List<Uebung> uebungen
+			List<Messdaten> messdaten
+		}
+		class Messdaten <<(V,DarkSeaGreen) Value Object>> {
+			String bezeichnung
+			List<Voraussetzungen> voraussetzungen
+			Messart messart
+			Daten daten
+		}
+		class Durchfuehrung <<(V,DarkSeaGreen) Value Object>> {
+			Zeit zeit
+			Wiederholungen wiederholungen
+			Boolean eigenangabeMoeglich
+		}
+		class Patient <<(E,DarkSeaGreen) Entity>> {
+			AhvNummer id
+			Name name
+			PatientStatus patientStatus
+		}
+		class Therapeut <<(V,DarkSeaGreen) Value Object>> {
+			MitarbeiterNummer id
+			Name name
+		}
+		class Name <<(V,DarkSeaGreen) Value Object>> {
+			String vorname
+			String zwischenname
+			String nachname
+			String anzeigename
+		}
+		class UebungsBeschreibung <<(V,DarkSeaGreen) Value Object>> {
+			String titel
+			List<BeschreibungsTeil> beschreibungsTeile
+		}
+		class BeschreibungsTeil <<(V,DarkSeaGreen) Value Object>> {
+			String untertitel
+			String text
+			Url resource
+			BeschreibungsTyp beschreibungsTyp
+		}
+		enum BeschreibungsTyp {
+			TEXT_BLOCK
+			VIDEO
+			BILD
+			AUDIO
+		}
+		enum TherapieStatus {
+			ENTWURF
+			WARTEN_AUF_PATIENT
+			BEREIT
+			GESTARTET
+			UNTERBROCHEN
+			ABGESCHLOSSEN
+			ABGEBROCHEN
+			ARCHIVIERT
+		}
+		enum SessionsStatus {
+			ERSTELLT
+			UEBERSPRUNGEN
+			STARTBEREIT
+			GESTARTET
+			UNTERBROCHEN
+			ABGEBROCHEN
+			ABGESCHLOSSEN
+		}
+		enum UebungsStatus {
+			ERSTELLT
+			UEBERSPRUNGEN
+			GESTARTET
+			PAUSIERT
+			UNTERBROCHEN
+			ABGEBROCHEN
+			ABGESCHLOSSEN
+		}
+		enum PatientStatus {
+			EINGELADEN
+			BEREIT
+			IN_THERAPIE
+			DEAKTIVIERT
+			GELOESCHT
+		}
+	}
+}
+Therapie --> TherapieStatus : status
+Therapie --> Patient : patient
+BeschreibungsTeil --> BeschreibungsTyp : beschreibungsTyp
+Patient --> Name : name
+Therapie --> Therapeut : therapeut
+Therapie "1" *--> "*" Session : session
+Therapeut --> Name : name
+Uebung --> UebungsBeschreibung : beschreibung
+UebungsBeschreibung "1" *--> "*" BeschreibungsTeil : beschreibungsTeile
+Session --> SessionsStatus : status
+Uebung --> Durchfuehrung : durchfuehrung
+UebungMessdaten "1" *--> "*" Messdaten : messdaten
+Session "1" *--> "*" Uebung : uebung
+Patient --> PatientStatus : patientStatus
+UebungMessdaten "1" *--> "*" Uebung : uebungen
+Uebung --> UebungsStatus : status
+
+
+@enduml
