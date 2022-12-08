@@ -5,28 +5,29 @@ ContextMap PhysioContextMap {
 
 /* The original booking application context */
 BoundedContext TherapieContext {
-	Module PhysioConnect {
+	Module PhysioConnectV2 {
 		basePackage = ch.hslu.physio
 		
 		Aggregate TherapieSession {
-			Entity Therapie {
+			Entity GesamtTherapie {
 				aggregateRoot
 				
 				TherapieId therapieId
 				- Patient patient
 				- Therapeut therapeut
-                - List<Session> session
+                - List<TherapieSession> session
 				- TherapieStatus status
 
                 Repository TherapieRepository {
-	                 @Therapie find(TrackingId trackingId) throws TherapieNotFoundException;
+	                 @GesamtTherapie find(TrackingId trackingId) throws TherapieNotFoundException;
 				}
 			}
 
-            Entity Session {
+            Entity TherapieSession {
                 SessionId sessionId
-				- SessionsStatus status
+				- TherapieSessionsStatus status
                 - List<Uebung> uebung
+				- List<PatientenRueckmeldung> rueckmeldung
             }
 
             Entity Uebung {
@@ -34,6 +35,7 @@ BoundedContext TherapieContext {
 				- UebungsStatus status
                 - UebungsBeschreibung beschreibung
 				- Durchfuehrung durchfuehrung
+				- List<PatientenRueckmeldung> rueckmeldung
             }
 
 			ValueObject UebungMessdaten {
@@ -71,17 +73,42 @@ BoundedContext TherapieContext {
 				String nachname
 				String anzeigename
 			}
+
+			ValueObject PatientenRueckmeldung {
+				RueckmeldungsWert effektiveRueckmeldung
+				- TherapeutenKommentar antwortVomTherapeuten
+				- PatientenRueckmeldungsTyp rueckmeldungsTyp				
+			}
+
+			ValueObject PatientenRueckmeldungsTyp {
+				String titel
+				String anzeigetext
+				boolean quantitativ
+				Url resource
+				int minimumWert
+				int maximumWert
+				int interval
+			}
+
+			ValueObject TherapeutenKommentar {
+				String text
+				Url resource
+			}
 			
 			ValueObject UebungsBeschreibung {
 				String titel
+				boolean istVorlage
+				- UebungsBeschreibung verwendeteVorage 
 				- List<BeschreibungsTeil> beschreibungsTeile
 			}
 
 			ValueObject BeschreibungsTeil {
-				- BeschreibungsTyp beschreibungsTyp
+				boolean istVorlage
 				String untertitel
 				String text
 				Url resource
+				- BeschreibungsTeil verwendeteVorlage
+				- BeschreibungsTyp beschreibungsTyp
 			}
 
 			enum BeschreibungsTyp {
@@ -92,7 +119,7 @@ BoundedContext TherapieContext {
 	            ENTWURF, WARTEN_AUF_PATIENT, BEREIT, GESTARTET, UNTERBROCHEN, ABGESCHLOSSEN, ABGEBROCHEN, ARCHIVIERT
 			}
 
-			enum SessionsStatus {
+			enum TherapieSessionsStatus {
 	            ERSTELLT, UEBERSPRUNGEN, STARTBEREIT, GESTARTET, UNTERBROCHEN, ABGEBROCHEN, ABGESCHLOSSEN
 			}
 
