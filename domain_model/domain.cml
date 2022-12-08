@@ -13,6 +13,7 @@ BoundedContext TherapieContext {
 				aggregateRoot
 				
 				TherapieId therapieId
+				- TherapieTyp therapieTyp
 				- Patient patient
 				- Therapeut therapeut
                 - List<TherapieSession> session
@@ -117,6 +118,10 @@ BoundedContext TherapieContext {
 			
 			enum TherapieStatus {
 	            ENTWURF, WARTEN_AUF_PATIENT, BEREIT, GESTARTET, UNTERBROCHEN, ABGESCHLOSSEN, ABGEBROCHEN, ARCHIVIERT
+			}
+
+			enum TherapieTyp {
+				HOSPITALISIERT, REHABILITATION, AMBULANT
 			}
 
 			enum TherapieSessionsStatus {
