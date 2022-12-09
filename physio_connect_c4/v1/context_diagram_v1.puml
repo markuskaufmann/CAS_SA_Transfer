@@ -1,0 +1,106 @@
+@startuml
+title System Landscape for Physio Connect
+
+top to bottom direction
+
+skinparam {
+  shadowing false
+  arrowFontSize 10
+  defaultTextAlignment center
+  wrapWidth 200
+  maxMessageSize 100
+}
+
+hide stereotype
+
+skinparam person<<Administrator>> {
+  BackgroundColor #444444
+  FontColor #ffffff
+  BorderColor #2f2f2f
+}
+skinparam person<<DataScientist>> {
+  BackgroundColor #444444
+  FontColor #ffffff
+  BorderColor #2f2f2f
+}
+skinparam rectangle<<IntegrationsSchicht>> {
+  BackgroundColor #000000
+  FontColor #ffffff
+  BorderColor #000000
+}
+skinparam rectangle<<MobileApp>> {
+  BackgroundColor #1168bd
+  FontColor #ffffff
+  BorderColor #0b4884
+}
+skinparam person<<Patientin>> {
+  BackgroundColor #444444
+  FontColor #ffffff
+  BorderColor #2f2f2f
+}
+skinparam rectangle<<PlanungssoftwareFile>> {
+  BackgroundColor #1168bd
+  FontColor #ffffff
+  BorderColor #0b4884
+}
+skinparam rectangle<<PlanungssoftwarePull>> {
+  BackgroundColor #1168bd
+  FontColor #ffffff
+  BorderColor #0b4884
+}
+skinparam rectangle<<PlanungssoftwarePush>> {
+  BackgroundColor #1168bd
+  FontColor #ffffff
+  BorderColor #0b4884
+}
+skinparam person<<Therapeutin>> {
+  BackgroundColor #444444
+  FontColor #ffffff
+  BorderColor #2f2f2f
+}
+skinparam rectangle<<TherapieFile>> {
+  BackgroundColor #1168bd
+  FontColor #ffffff
+  BorderColor #0b4884
+}
+skinparam rectangle<<UebungsKatalog>> {
+  BackgroundColor #1168bd
+  FontColor #ffffff
+  BorderColor #0b4884
+}
+
+package "Physio Connect" <<enterprise>> {
+  skinparam PackageBorderColor<<enterprise>> #444444
+  skinparam PackageFontColor<<enterprise>> #444444
+
+  rectangle "==Mobile App\n<size:10>[Software System]</size>" <<MobileApp>> as MobileApp
+  rectangle "==Uebungs Katalog\n<size:10>[Software System]</size>" <<UebungsKatalog>> as UebungsKatalog
+  rectangle "==Integrations Schicht\n<size:10>[Software System]</size>\n\nSchnittstelle für Planungssoftwaren und Fitnesstrackern" <<IntegrationsSchicht>> as IntegrationsSchicht
+}
+
+person "==Patient: in\n<size:10>[Person]</size>\n\nPatient der jeweiligen Physio Organisation" <<Patientin>> as Patientin
+person "==Therapeut: in\n<size:10>[Person]</size>\n\nPerson, welche Physiotherapien leitet" <<Therapeutin>> as Therapeutin
+person "==Administrator\n<size:10>[Person]</size>" <<Administrator>> as Administrator
+person "==Data Scientist\n<size:10>[Person]</size>" <<DataScientist>> as DataScientist
+rectangle "==Planungssoftware File\n<size:10>[Software System]</size>" <<PlanungssoftwareFile>> as PlanungssoftwareFile
+rectangle "==Planungssoftware Pull\n<size:10>[Software System]</size>" <<PlanungssoftwarePull>> as PlanungssoftwarePull
+rectangle "==Planungssoftware Push\n<size:10>[Software System]</size>" <<PlanungssoftwarePush>> as PlanungssoftwarePush
+rectangle "==Therapie File\n<size:10>[Software System]</size>" <<TherapieFile>> as TherapieFile
+
+IntegrationsSchicht .[#707070,thickness=2].> Patientin : "<color:#707070>Erhält einladung für Therapie"
+Patientin .[#707070,thickness=2].> IntegrationsSchicht : "<color:#707070>Registriert sich"
+Administrator .[#707070,thickness=2].> IntegrationsSchicht : "<color:#707070>Administriert Personal und Uebungen"
+Therapeutin .[#707070,thickness=2].> PlanungssoftwareFile : "<color:#707070>Plant Therapien"
+Therapeutin .[#707070,thickness=2].> PlanungssoftwarePush : "<color:#707070>Plant Therapien"
+Therapeutin .[#707070,thickness=2].> PlanungssoftwarePull : "<color:#707070>Plant Therapien"
+Therapeutin .[#707070,thickness=2].> TherapieFile : "<color:#707070>Editiert"
+DataScientist .[#707070,thickness=2].> IntegrationsSchicht : "<color:#707070>Benutzt Daten"
+Patientin .[#707070,thickness=2].> MobileApp : "<color:#707070>installiert app"
+PlanungssoftwareFile .[#707070,thickness=2].> TherapieFile : "<color:#707070>Exportiert"
+IntegrationsSchicht .[#707070,thickness=2].> PlanungssoftwarePull : "<color:#707070>Erhält Therapie via API aufruf"
+PlanungssoftwarePush .[#707070,thickness=2].> IntegrationsSchicht : "<color:#707070>Published neue Therapien auf die Therapiesoftware"
+MobileApp .[#707070,thickness=2].> IntegrationsSchicht : "<color:#707070>Sendet Session updates mit Messdaten"
+IntegrationsSchicht .[#707070,thickness=2].> MobileApp : "<color:#707070>Sendet Therapien, Sessions und Uebungen"
+IntegrationsSchicht .[#707070,thickness=2].> UebungsKatalog : "<color:#707070>Importiert Uebungen"
+IntegrationsSchicht .[#707070,thickness=2].> TherapieFile : "<color:#707070>importiert Uebungen"
+@enduml
