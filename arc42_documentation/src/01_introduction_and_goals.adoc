@@ -15,6 +15,10 @@ These include
 
 === Übersicht der funktionalen Anforderungen
 
+**TODO**:
+Update requirements & extract to dedicated document incl. use case diagrams
+(only specify essential features here)
+
 Das nachfolgende Kapitel gibt einen Gesamtüberblick über die High Level-Features, welche von mindestens einem Stakeholder als relevant erachtet werden und sich in der Gesamtfunktionalität des Systems wiederspiegeln sollen.
 
 ==== Physiotherapeut
@@ -105,6 +109,9 @@ In der nachfolgenden Tabelle sind die primären Qualitätsziele absteigend nach 
 Die Qualitätsszenarien in link:10_quality_requirements.adoc#section-quality-scenarios[Kapitel 10] konkretisieren die oben genannten Qualitätsziele und dienen aufgrund von definierten Metriken auch dazu, ihren Erfüllungsgrad zu bewerten.
 
 === Stakeholders
+
+**TODO**:
+Update stakeholders
 
 Die nachfolgende Tabelle gibt einen Gesamtüberblick über die bestehenden Stakeholder sowie die jeweiligen Systemaspekte, welche von ihnen als besonders wichtig erachtet werden.
 
