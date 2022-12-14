@@ -1,0 +1,21 @@
+name: publish_confluence
+run-name: Publish documentation to Confluence
+on: workflow_dispatch
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Generate diagrams and documentation
+        run: docker-compose up
+
+      - name: Publish documentation to Confluence
+        uses: addnab/docker-run-action@v3
+        with:
+          image: asciidoctor/docker-asciidoctor:latest
+          options: -v ${{ github.workspace }}/arc42_documentation:/documents/
+          run: asciidoctor-confluence --host https://physio-connect.atlassian.net/ --spaceKey PIL --title arc42 --username markus.kaufmann --password $CONFLUENCE_ACCESSTOKEN arc42-template.adoc
+        env:
+          CONFLUENCE_ACCESSTOKEN: ${{ secrets.CONFLUENCE_ACCESSTOKEN }}
