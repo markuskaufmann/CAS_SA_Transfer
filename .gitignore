@@ -5,3 +5,4 @@ physio_connect_c4/generated/
 *.html
 *.bkp
 .DS_Store
+src-gen/
