@@ -110,90 +110,120 @@ Die Qualitätsszenarien in link:10_quality_requirements.adoc#section-quality-sce
 
 === Stakeholders
 
-**TODO**:
-Update stakeholders
-
-Die nachfolgende Tabelle gibt einen Gesamtüberblick über die bestehenden Stakeholder sowie die jeweiligen Systemaspekte, welche von ihnen als besonders wichtig erachtet werden.
+Die nachfolgende Tabelle repräsentiert eine Zusammenfassung der bestehenden Stakeholder sowie der jeweiligen Systemaspekte und -komponenten, welche von ihnen im Kontext von PhysioConnect als relevant erachtet werden.
 
 [options="header",cols="4,6"]
 |===
-|Stakeholder|Systemaspekte
+|Stakeholder|Systemaspekte / -komponenten
 |Physiotherapeut
 a|
+__Erforderlich__
+
 * Intuitive Benutzeroberfläche
-* Schnittstelle Planungssoftware - Integration Layer (Datenimport)
-* Therapie- / Sessionverwaltung
+* Therapieverwaltung
 * Übungsverwaltung
 * Patientenverwaltung
 * Monitoring
 * Reporting
 
+__Optional__
+
+* Schnittstelle für den Datenimport aus dem verwendeten Dokumentationssystem (Mitigation von redundanter Datenerfassung)
+
 |Patient
 a|
-* Intuitive Benutzerschnittstelle
-* Hohe Kompatibilität mit bestehender Hard- und Software (Smartphone, Fitnesstracker)
+__Erforderlich__
+
 * Zweckmässige und zeitlich eingeschränkte Aufzeichnung der persönlichen Gesundheitsdaten
 * Sichere und rechtlich anerkannte Ablage der persönlichen Gesundheitsdaten
-* Explizite Einwilligung zur Datenweitergabe an Drittpersonen (z.b. medizinische Forschung)
-* Zuverlässige Datenübermittlung (auch bei Netzwerkunterbrüchen)
+* Explizite Einwilligung zur Datenweitergabe an Drittpersonen (z.B. medizinische Forschung)
+* Verwaltung persönlicher Therapiesessions und Übungskollektionen
 
 |Vorgesetzter des Physiotherapeuten
 (z.B. Abteilungsleiter innerhalb eines Spitals)
 a|
+__Erforderlich__
+
 * Therapeutenverwaltung
 * Monitoring
 * Reporting
 
-|Kunde (finanziert die Verwendung des Integration Layers, z.B. Spitalleitung)
+|Kunde (finanziert die Verwendung von PhysioConnect, z.B. Spitalleitung)
 a|
-* Gesamtsystem soll möglichst kosteneffizient sein
-* Minimaler Integrationsaufwand mit verwendeter Planungssoftware
+__Erforderlich__
+
+* Möglichst hohe Kosteneffizienz bezüglich Installation, Betrieb und Wartung
 * Intuitive Benutzerschnittstelle soll zu guter Resonanz bei Hauptbenutzergruppen (Physiotherapeut, Patient) führen
 * Hoher Automatisierungsgrad soll Auslastungslücken bei Physiotherapeuten minimieren (= möglichst viele Patienten mit möglichst wenigen Therapeuten behandeln)
 
+__Optional__
+
+* Schnittstelle für den Datenimport aus dem verwendeten Dokumentationssystem (Mitigation von redundanter Datenerfassung und -haltung)
+
 |Staat
 a|
-* Gesamtsystem:
-Einhaltung existierender Datenschutzverordnungen und -gesetze. Betrifft die Aufzeichnung, Ablage und Weitergabe der persönlichen Gesundheitsdaten
-* Datenschnittstelle für die Bereitstellung der Gesundheitsdaten an das https://www.patientendossier.ch/[Elektronische Patientendossier (EPD)]
+__Erforderlich__
+
+* Einhaltung existierender Datenschutzverordnungen und -gesetze. Betrifft die Aufzeichnung, Ablage und Weitergabe der persönlichen Gesundheitsdaten
+
+__Optional__
+
+* Schnittstelle für die Übermittlung der Gesundheitsdaten an das https://www.patientendossier.ch/[Elektronische Patientendossier (EPD)]
 
 |Krankenversicherung
 a|
-* Datenschnittstelle für die Bereitstellung der Therapiedaten zu Marketingzwecken
+__Optional__
+
+* Schnittstelle für die Übermittlung der Therapiedaten zu Marketingzwecken
 ** Aktivitäten ermöglichen Vergünstigungen / Prämienreduktionen (VVG)
 ** (Fitness-)Challenges
 
 |Medizinische Forschung
 a|
-* Datenschnittstelle für die Bereitstellung anonymisierter Gesundheitsdaten
+__Optional__
+
+* Schnittstelle für die Bereitstellung anonymisierter Gesundheitsdaten
 ** für (Langzeit-)Studien und Analysen
 ** für das Training von AI-Modellen
 
 |Medizinische Einrichtung (z.B. Spital), Hausarzt
 a|
-* Datenschnittstelle für die Bereitstellung der Gesundheitsdaten als Hilfsmittel für
+__Optional__
+
+* Schnittstelle für die Bereitstellung der Gesundheitsdaten als Hilfsmittel für
 ** Ambulante / Stationäre Untersuchungen und Eingriffe
 ** Konsultationen
 ** Diagnosen
 ** Verschreibung von Medikamenten / Therapien
 
-|Anbieter des Integration Layers / Product Owner
+Die von staatlicher Seite gewünschte Schnittstelle an das https://www.patientendossier.ch/[Elektronische Patientendossier (EPD)] kann die Erwartungen dieses Stakeholders ebenfalls abdecken.
+
+|Anbieter / Product Owner von PhysioConnect
 a|
+__Erforderlich__
+
 * Kurzer Time-to-Market
 * Kostengünstige Entwicklung und Erweiterung
 
-|Entwickler des Integration Layers
+|Entwickler von PhysioConnect
 a|
+__Erforderlich__
+
 * Einfache Erweiterbarkeit bei neuen Features
 * Möglichst hoher Automatisierungsgrad (Entwicklung, Testing, CI/CD)
-* Möglichst effizientes Onboarding neuer Entwickler (aufgrund guter Verständlichkeit und Einfachheit der Architektur und Codebase)
 
-|Technische Integratoren des Integration Layers
+|Technische Integratoren von PhysioConnect (z.B. IT-Abteilung des Kunden)
 a|
-* Minimaler Integrationsaufwand
-* Schnittstellen des Integration Layers, mit welchen kommuniziert werden soll
+__Erforderlich__
+
+* Minimaler Aufwand und Komplexität bezüglich Integration, Betrieb und Wartung
 * Technische Dokumentation als Integrationshilfe
-* Stages / Umgebungen, welche angebunden werden können (z.B. Sandbox, INT, PROD)
+* Unterschiedliche Stages / Umgebungen, welche angebunden werden können (z.B. Sandbox, INT, PROD)
+
+__Optional__
+
+* Datenschnittstellen von PhysioConnect (bezüglich der externen Bereitstellung von Gesundheits- / Therapiedaten)
+* Programmierschnittstelle für den Datenimport aus dem verwendeten Dokumentationssystem
 |===
 
 ==== Stakeholder Powergrid
@@ -206,7 +236,7 @@ image::01_03_stakeholder-powergrid.drawio.svg[Static,width=100%]
 
 Basierend auf dem Verhältnis zwischen Einfluss (Power) und Interessensgrad (Level of Interest) des Stakeholder Powergrids werden die Bedürfnisse der nachfolgenden Stakeholder prioritär berücksichtigt:
 
-* Anbieter des Integration Layers / Product Owner
+* Anbieter / Product Owner von PhysioConnect
 * Kunde
 * Physiotherapeut
 * Patient
@@ -217,6 +247,6 @@ __Zufriedenstellen__
 
 __Informiert halten__
 
-* Entwickler des Integration Layers
+* Entwickler von PhysioConnect
 * Vorgesetzter des Physiotherapeuten
-* Technische Integratoren des Integration Layers
+* Technische Integratoren von PhysioConnect
