@@ -26,6 +26,7 @@ These include
 ** ein Feedback / Bewertung zu einer abgeschlossenen Therapie-Session, Übung oder zu der Bewertung / Feedback eines Patienten abgeben
 
 * Patienten können
+** einer verordneten Therapie beitreten
 ** Therapie-Sessions inkl. verordneter Übungen durchführen
 ** ein Feedback / Bewertung zu einer Therapie-Session und / oder Übung abgeben
 ** eigene Therapie-Sessions inkl. eigener Übungen verwalten und durchführen
