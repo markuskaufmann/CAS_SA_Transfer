@@ -7,46 +7,242 @@ Die primären Qualitätsziele von PhysioConnect sind im Kapitel link:01_introduc
 
 === Qualitätsszenarien
 
-Gemäss den primären link:01_introduction_and_goals.adoc#section-quality-goals[Qualitätszielen] werden die aus Sicht der Stakeholder erwarteten Qualitätsattribute der Systemarchitektur in Form von messbaren Szenarien nachfolgend erläutert.
+Gemäss den primären link:01_introduction_and_goals.adoc#section-quality-goals[Qualitätszielen] werden die aus Sicht der Stakeholder erwarteten Qualitätsattribute der Systemarchitektur in Form von messbaren Szenarien nachfolgend erläutert. +
+Die mit __(Erweiterung)__ gekennzeichneten Szenarien sind ein potentieller Bestandteil zukünftiger Versionen / Iterationen der Systemarchitektur.
 
-==== Interoperability
+==== Interoperability (Compatibility)
 Szenarien, welche sich auf Qualitätsziel QG-1 (Interoperability) beziehen.
 
 [cols="2,6"]
 |===
 |**ID**|SZ-IOP-1
-|**Quelle des Stimulus**|-
-|**Stimulus**|-
-|**Umgebung**|-
-|**Artefakt / System**|-
+|**Quelle des Stimulus**|Patient via Fitnesstracker-App
+|**Stimulus**|Eingehender Request mit aufgezeichneten Messdaten (Puls, Blutdruck)
+|**Umgebung**|Laufzeit
+|**System / Artefakte**|PhysioConnect / API Request Handler für App
 |**Antwort / Verhalten**|-
 |**Metrik für Erfüllungsgrad**|-
 |===
 
-==== Confidentiality
+[cols="2,6"]
+|===
+|**ID**|SZ-IOP-2
+|**Quelle des Stimulus**|Patient via Smartphone-App
+|**Stimulus**|Eingehender Request mit Operation (z.B. Start einer Therapie-Session)
+|**Umgebung**|Laufzeit
+|**System / Artefakte**|PhysioConnect / API Request Handler für App
+|**Antwort / Verhalten**|-
+|**Metrik für Erfüllungsgrad**|-
+|===
+
+[cols="2,6"]
+|===
+|**ID**|SZ-IOP-3
+|**Quelle des Stimulus**|Übungskatalog
+|**Stimulus**|Response auf initialen Request: Upload von Detailinformationen (Bilder, Video, Audio) zu einer bestehenden Übung
+|**Umgebung**|Laufzeit
+|**System / Artefakte**|PhysioConnect / API Response Handler für Übungskatalog
+|**Antwort / Verhalten**|-
+|**Metrik für Erfüllungsgrad**|-
+|===
+
+[cols="2,6"]
+|===
+|**ID**|SZ-IOP-4
+|**Quelle des Stimulus**|Übungskatalog
+|**Stimulus**|Response auf initialen Request: Upload von Detailinformationen (Text) zu einer bestehenden Übung
+|**Umgebung**|Laufzeit
+|**System / Artefakte**|PhysioConnect / API Response Handler für Übungskatalog
+|**Antwort / Verhalten**|-
+|**Metrik für Erfüllungsgrad**|-
+|===
+
+[cols="2,6"]
+|===
+|**ID**|SZ-IOP-5
+|**Quelle des Stimulus**|Benutzerverwaltung
+|**Stimulus**|Response auf initialen Request: Laden der Benutzerdaten (via Benutzer-ID)
+|**Umgebung**|Laufzeit
+|**System / Artefakte**|PhysioConnect / API Response Handler für Benutzerverwaltung
+|**Antwort / Verhalten**|-
+|**Metrik für Erfüllungsgrad**|-
+|===
+
+[cols="2,6"]
+|===
+|**ID**|SZ-IOP-6 (Erweiterung)
+|**Quelle des Stimulus**|Dokumentationssystem
+|**Stimulus**|Eingehender API Request: Datenimport aus Dokumentationssystem (File Upload)
+|**Umgebung**|Laufzeit
+|**System / Artefakte**|PhysioConnect / API Request Handler für Dokumentationssystem
+|**Antwort / Verhalten**|-
+|**Metrik für Erfüllungsgrad**|-
+|===
+
+==== Confidentiality (Security)
 Szenarien, welche sich auf Qualitätsziel QG-2 (Confidentiality) beziehen.
 
 [cols="2,6"]
 |===
 |**ID**|SZ-CNF-1
-|**Quelle des Stimulus**|-
-|**Stimulus**|-
-|**Umgebung**|-
-|**Artefakt / System**|-
+|**Quelle des Stimulus**|Patient via App auf Fitnesstracker
+|**Stimulus**|Eingehender Request mit aufgezeichneten Messdaten (Puls, Blutdruck)
+|**Umgebung**|Laufzeit
+|**System / Artefakte**|PhysioConnect / API Request Handler für App
 |**Antwort / Verhalten**|-
 |**Metrik für Erfüllungsgrad**|-
 |===
 
-==== Modifiability
+[cols="2,6"]
+|===
+|**ID**|SZ-CNF-2 (Erweiterung)
+|**Quelle des Stimulus**|Physiotherapeut via PhysioConnect
+|**Stimulus**|Physiotherapeut markiert Therapie als abgeschlossen, alle patientenbezogenen Therapiedaten werden in aggregierter Form an das https://www.patientendossier.ch/[Elektronische Patientendossier (EPD)] weitergeleitet
+|**Umgebung**|Laufzeit
+|**System / Artefakte**|PhysioConnect / API Response Handler für EPD
+|**Antwort / Verhalten**|-
+|**Metrik für Erfüllungsgrad**|-
+|===
+
+==== Modifiability (Maintainability)
 Szenarien, welche sich auf Qualitätsziel QG-3 (Modifiability) beziehen.
 
 [cols="2,6"]
 |===
 |**ID**|SZ-MOD-1
-|**Quelle des Stimulus**|-
-|**Stimulus**|-
-|**Umgebung**|-
-|**Artefakt / System**|-
+|**Quelle des Stimulus**|Fitnesstracker-App
+|**Stimulus**|Unterstützung eines neuen Messdaten-Typs (z.B. Sauerstoffgehalt im Blut)
+|**Umgebung**|Entwicklungszeit
+|**System / Artefakte**|PhysioConnect / API für App, interne Layer (bis hin zu Persistenzschicht)
+|**Antwort / Verhalten**|-
+|**Metrik für Erfüllungsgrad**|-
+|===
+
+[cols="2,6"]
+|===
+|**ID**|SZ-MOD-2
+|**Quelle des Stimulus**|Fitnesstracker-App
+|**Stimulus**|Unterstützung eines alternativen Datenformats für ressourcenoptimierte Übermittlung der Messdaten (z.B. JSON anstelle von XML)
+|**Umgebung**|Entwicklungszeit
+|**System / Artefakte**|PhysioConnect / API für App
+|**Antwort / Verhalten**|-
+|**Metrik für Erfüllungsgrad**|-
+|===
+
+[cols="2,6"]
+|===
+|**ID**|SZ-MOD-3
+|**Quelle des Stimulus**|Übungskatalog
+|**Stimulus**|Eine Änderung an der Schnittstelle erfordert eine Erweiterung und / oder Modifikation der betroffenen Komponenten in PhysioConnect
+|**Umgebung**|Entwicklungszeit
+|**System / Artefakte**|PhysioConnect / API Connector für Übungskatalog
+|**Antwort / Verhalten**|-
+|**Metrik für Erfüllungsgrad**|-
+|===
+
+[cols="2,6"]
+|===
+|**ID**|SZ-MOD-4
+|**Quelle des Stimulus**|Benutzerverwaltung
+|**Stimulus**|Eine Änderung an der Schnittstelle erfordert eine Erweiterung und / oder Modifikation der betroffenen Komponenten in PhysioConnect
+|**Umgebung**|Entwicklungszeit
+|**System / Artefakte**|PhysioConnect / API Connector für Benutzerverwaltung
+|**Antwort / Verhalten**|-
+|**Metrik für Erfüllungsgrad**|-
+|===
+
+[cols="2,6"]
+|===
+|**ID**|SZ-MOD-5 (Erweiterung)
+|**Quelle des Stimulus**|Kunde / Physiotherapeut
+|**Stimulus**|Bereitstellung einer API für den Datenimport (z.B. File Upload) aus einem verwendeten Dokumentationssystem
+|**Umgebung**|Entwicklungszeit
+|**System / Artefakte**|PhysioConnect / API für Dokumentationssystem, interne Layer
+|**Antwort / Verhalten**|-
+|**Metrik für Erfüllungsgrad**|-
+|===
+
+[cols="2,6"]
+|===
+|**ID**|SZ-MOD-6 (Erweiterung)
+|**Quelle des Stimulus**|Medizinische Forschung
+|**Stimulus**|Interessensbekundung für die Bereitstellung anonymisierter Gesundheitsdaten
+|**Umgebung**|Entwicklungszeit
+|**System / Artefakte**|PhysioConnect / API für Lesezugriff auf Daten, interne Layer (bis hin zu Persistenzschicht)
+|**Antwort / Verhalten**|-
+|**Metrik für Erfüllungsgrad**|-
+|===
+
+[cols="2,6"]
+|===
+|**ID**|SZ-MOD-7 (Erweiterung)
+|**Quelle des Stimulus**|Medizinische Forschung
+|**Stimulus**|Interessensbekundung für das Labeling der bereitgestellten Gesundheitsdaten zum Training von https://www.ibm.com/cloud/learn/supervised-learning[Supervised / Semi-Supervised Learning] AI-Modellen
+|**Umgebung**|Entwicklungszeit
+|**System / Artefakte**|PhysioConnect / API für Eingabe von Labeling-Vorschlägen, interne Layer (bis hin zu Persistenzschicht)
+|**Antwort / Verhalten**|-
+|**Metrik für Erfüllungsgrad**|-
+|===
+
+==== Time behaviour (Performance Efficiency)
+
+[cols="2,6"]
+|===
+|**ID**|SZ-TIB-1
+|**Quelle des Stimulus**|Patient via Fitnesstracker-App
+|**Stimulus**|Verarbeitung parallel eingehender Messdaten 
+|**Umgebung**|Laufzeit
+|**System / Artefakte**|PhysioConnect / API Request Handler für App, interne Layer
+|**Antwort / Verhalten**|-
+|**Metrik für Erfüllungsgrad**|-
+|===
+
+==== Capacity (Performance Efficiency)
+
+[cols="2,6"]
+|===
+|**ID**|SZ-CAP-1
+|**Quelle des Stimulus**|Benutzer von PhysioConnect
+|**Stimulus**|Parallele Verwendung von PhysioConnect durch mehrere Benutzer (z.B. Physiotherapeuten + Vorgesetzte + Patienten)
+|**Umgebung**|Laufzeit
+|**System / Artefakte**|PhysioConnect / Gesamtsystem
+|**Antwort / Verhalten**|-
+|**Metrik für Erfüllungsgrad**|-
+|===
+
+==== Fault tolerance (Reliability)
+
+[cols="2,6"]
+|===
+|**ID**|SZ-FLT-1
+|**Quelle des Stimulus**|Übungskatalog
+|**Stimulus**|Übungskatalog ist nicht / eingeschränkt erreichbar und / oder gibt Request-unabhängige Fehlermeldungen zurück
+|**Umgebung**|Laufzeit
+|**System / Artefakte**|PhysioConnect / Gesamtsystem
+|**Antwort / Verhalten**|-
+|**Metrik für Erfüllungsgrad**|-
+|===
+
+[cols="2,6"]
+|===
+|**ID**|SZ-FLT-2
+|**Quelle des Stimulus**|Benutzerverwaltung
+|**Stimulus**|Benutzerverwaltung ist nicht / eingeschränkt erreichbar und / oder gibt Request-unabhängige Fehlermeldungen zurück
+|**Umgebung**|Laufzeit
+|**System / Artefakte**|PhysioConnect / Gesamtsystem
+|**Antwort / Verhalten**|-
+|**Metrik für Erfüllungsgrad**|-
+|===
+
+==== Installability (Portability)
+
+[cols="2,6"]
+|===
+|**ID**|SZ-INT-1 (Erweiterung)
+|**Quelle des Stimulus**|Kunde, Technische Integratoren von PhysioConnect (z.B. IT-Abteilung des Kunden)
+|**Stimulus**|Interessensbekundung für On Premise-Betrieb von PhysioConnect
+|**Umgebung**|Installationszeit, Konfigurationszeit
+|**System / Artefakte**|PhysioConnect / Gesamtsystem
 |**Antwort / Verhalten**|-
 |**Metrik für Erfüllungsgrad**|-
 |===
