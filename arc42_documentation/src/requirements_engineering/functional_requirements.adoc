@@ -51,8 +51,8 @@ Patienten(-gruppen) können einer Therapie zugeordnet und entsprechend eingelade
 [options="header",cols="2,4,6"]
 |===
 |ID|Name|Beschreibung
-|FR-STA-1|Übermittlung der Gesundheitsdaten an das elektronische Patientendossier (EPD)|Die während einer Therapie-Session aufgezeichneten Messdaten eines Patienten (z.B. Puls, Blutdruck) sollen in einer kompatiblen Form mitsamt einer Therapie- und Übungsbeschreibung an das https://www.patientendossier.ch/[Elektronische Patientendossier (EPD)] weitergeleitet werden, um sie weiteren Gesundheitsfachpersonen und medizinischen Einrichtungen (z.B. Spital, Hausarzt) zur Verfügung zu stellen. Letztere können die bereitgestellten Gesundheitsdaten als potentielles Hilfsmittel für ambulante / stationäre Untersuchungen und Eingriffe, Konsultationen, Diagnosen und / oder Verschreibungen von Medikamenten / weiteren Therapien nutzen.
-Somit könnte FR-MED-1 ebenfalls durch dieses Requirement abgedeckt werden.
+|FR-STA-1|Übermittlung der Gesundheitsdaten an das elektronische Patientendossier (EPD)|Die während einer Therapie-Session aufgezeichneten Messdaten eines Patienten (z.B. Puls, Blutdruck) sollen in einer kompatiblen Form mitsamt einer Therapie- und Übungsbeschreibung an das https://www.patientendossier.ch/[Elektronische Patientendossier (EPD)] weitergeleitet werden, um sie weiteren Gesundheitsfachpersonen und medizinischen Einrichtungen (z.B. Spital, Hausarzt) zur Verfügung zu stellen. Letztere können die bereitgestellten Gesundheitsdaten als potentielles Hilfsmittel für ambulante / stationäre Untersuchungen und Eingriffe, Konsultationen, Diagnosen und / oder Verschreibungen von Medikamenten / weiteren Therapien nutzen. Die Datenübermittlung soll jedoch nur für diejenigen Patienten erfolgen, welche der Weitergabe ihrer Gesundsheitsdaten zu Beginn einer Therapie zugestimmt haben. +
+Dieses Requirement deckt den Umfang von FR-MED-1 ab.
 |===
 
 ==== Krankenversicherung
@@ -61,6 +61,7 @@ Somit könnte FR-MED-1 ebenfalls durch dieses Requirement abgedeckt werden.
 |ID|Name|Beschreibung
 |FR-KRA-1|Übermittlung einer Therapiebeschreibung zu Marketingzwecken|Wenn ein Patient eine neue Therapie beginnt, sich inmitten dieser befindet oder sie erfolgreich abgeschlossen hat, soll dies den Krankenversicherungen über eine definierte Schnittstelle mitgeteilt werden. Diese Informationen können wiederum zu Marketingzwecken weiterverwendet werden. Beispielsweise kann eine Versicherung definieren, ob gewisse Aktivitäten zu möglichen Vergünstigungen oder Prämienreduktionen gemäss https://www.fedlex.admin.ch/eli/cc/24/719_735_717/de[Versicherungsvertragsgesetzes (VVG)] führen, oder die Versicherung kann dem Patienten (Fitness-)Challenges vorschlagen, welche zu der aktuellen oder abgeschlossenen Physiotherapie passen.
 Hierbei ist anzumerken, dass die übermittelten Informationen keine aufgezeichneten Gesundheitsdaten beinhalten.
+Des Weiteren soll die Datenübermittlung nur für diejenigen Patienten erfolgen, welche zu Beginn einer Therapie ihr diesbezügliches Einverständnis gegeben haben.
 |===
 
 ==== Medizinische Forschung
@@ -76,5 +77,6 @@ Hierbei ist anzumerken, dass die übermittelten Informationen keine aufgezeichne
 |===
 |ID|Name|Beschreibung
 |FR-MED-1|Übermittlung der Gesundheitsdaten als Hilfsmittel für weitere Behandlungen|Die während einer Therapie-Session aufgezeichneten Messdaten eines Patienten (z.B. Puls, Blutdruck) sollen in einer kompatiblen Form mitsamt einer Therapie- und Übungsbeschreibung an weitere Gesundheitsfachpersonen und medizinische Einrichtungen (z.B. Spital, Hausarzt) weitergeleitet werden. Letztere können die bereitgestellten Gesundheitsdaten als potentielles Hilfsmittel für ambulante / stationäre Untersuchungen und Eingriffe, Konsultationen, Diagnosen und / oder Verschreibungen von Medikamenten / weiteren Therapien nutzen.
-Dieses Requirement könnte durch FR-STA-1 abgedeckt werden.
+Die Datenübermittlung soll jedoch nur für diejenigen Patienten erfolgen, welche der Weitergabe ihrer Gesundsheitsdaten zu Beginn einer Therapie zugestimmt haben. +
+Der Umfang dieses Requirements wird von FR-STA-1 ebenfalls abgedeckt.
 |===

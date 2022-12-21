@@ -17,66 +17,87 @@ Szenarien, welche sich auf Qualitätsziel QG-1 (Interoperability) beziehen.
 |===
 |**ID**|SZ-IOP-1
 |**Quelle des Stimulus**|Patient via Fitnesstracker-App
-|**Stimulus**|Eingehender Request mit aufgezeichneten Messdaten (Puls, Blutdruck)
+|**Stimulus**|Speichern der übungsrelevanten Messdaten (z.B. Puls, Blutdruck)
 |**Umgebung**|Laufzeit
 |**System / Artefakte**|PhysioConnect / API Request Handler für App
-|**Antwort / Verhalten**|-
-|**Metrik für Erfüllungsgrad**|-
+|**Antwort / Verhalten**|Sind die enthaltenen Messdaten des eingehenden Requests formal korrekt, werden diese abgespeichert und mit dem Patienten sowie der aktuellen Therapie-Session und Übung verknüpft. +
+Sind die Messdaten formal inkorrekt oder ein Fehler tritt bei der Persistierung auf, wird der Request geloggt und ein entsprechender Fehlercode wird als Response zurückgegeben.
+|**Metrik für Erfüllungsgrad**|99.99% aller eingehenden Requests mit formal korrekten Messdaten werden erwartungsgemäss abgespeichert. +
+0% der Requests mit formal inkorrekten Messdaten werden abgespeichert. +
+99.99% der Requests mit formal inkorrekten Messdaten oder auftretenden Fehlern werden geloggt und führen zu einer Response mit Fehlercode.
 |===
 
 [cols="2,6"]
 |===
 |**ID**|SZ-IOP-2
 |**Quelle des Stimulus**|Patient via Smartphone-App
-|**Stimulus**|Eingehender Request mit Operation (z.B. Start einer Therapie-Session)
+|**Stimulus**|Ausführung einer Operation bezüglich einer Therapie-Session
 |**Umgebung**|Laufzeit
 |**System / Artefakte**|PhysioConnect / API Request Handler für App
-|**Antwort / Verhalten**|-
-|**Metrik für Erfüllungsgrad**|-
+|**Antwort / Verhalten**|Ist der eingehende Request formal korrekt, wird die entsprechende Operation intern verarbeitet und allfällige Zustandsänderungen persistiert (z.B. Start der Therapie-Session ändert deren Status). +
+Ist der eingehende Request formal inkorrekt oder ein Fehler tritt während der internen Verarbeitung auf, wird der Request geloggt und ein entsprechender Fehlercode wird als Response zurückgegeben.
+|**Metrik für Erfüllungsgrad**|99.99% aller eingehenden, formal korrekten Requests werden intern verarbeitet und etwaige Zustandsänderungen abgespeichert. +
+0% der formal inkorrekten Requests verlassen den Request Handler zur internen Verarbeitung. +
+99.99% der formal inkorrekten Requests oder auftretenden Fehler werden geloggt und führen zu einer Response mit Fehlercode.
 |===
 
 [cols="2,6"]
 |===
 |**ID**|SZ-IOP-3
-|**Quelle des Stimulus**|Übungskatalog
-|**Stimulus**|Response auf initialen Request: Upload von Detailinformationen (Bilder, Video, Audio) zu einer bestehenden Übung
+|**Quelle des Stimulus**|Physiotherapeut via PhysioConnect, Patient via PhysioConnect oder Smartphone-App
+|**Stimulus**|Verwaltung von Übungen - Create, Read, Update, Archive
 |**Umgebung**|Laufzeit
-|**System / Artefakte**|PhysioConnect / API Response Handler für Übungskatalog
-|**Antwort / Verhalten**|-
-|**Metrik für Erfüllungsgrad**|-
+|**System / Artefakte**|PhysioConnect / API Response Handler für Übungskatalog, interne Layer
+|**Antwort / Verhalten**|Die Operation für das Lesen, Erstellen, Aktualisieren oder Archivieren einer Übung wird inkl. Payload an den Übungskatalog weitergeleitet. +
+Eine erfolgreiche Response des Übungskatalogs wird in eine entsprechende Antwort gemäss PhysioConnect-API Contract transformiert und zurückgegeben. +
+Eine fehlerhafte Response des Übungskatalogs wird geloggt und führt zu einer Antwort der PhysioConnect-API mit entsprechendem Fehlercode.
+|**Metrik für Erfüllungsgrad**|100% aller betroffenen Requests werden an den Übungskatalog weitergeleitet. +
+99.99% der erfolgreichen Responses vom Übungskatalog führen wiederum zu einer Response mit erfolgreichem Status. +
+99.99% der fehlerhaften Responses vom Übungskatalog werden geloggt und führen wiederum zu einer Response mit Fehlercode.
 |===
 
 [cols="2,6"]
 |===
 |**ID**|SZ-IOP-4
-|**Quelle des Stimulus**|Übungskatalog
-|**Stimulus**|Response auf initialen Request: Upload von Detailinformationen (Text) zu einer bestehenden Übung
+|**Quelle des Stimulus**|Physiotherapeut via PhysioConnect, Patient via PhysioConnect oder Smartphone-App
+|**Stimulus**|Upload von Detailinformationen (Text, Bilder, Video, Audio) zu einer bestehenden Übung
 |**Umgebung**|Laufzeit
-|**System / Artefakte**|PhysioConnect / API Response Handler für Übungskatalog
-|**Antwort / Verhalten**|-
-|**Metrik für Erfüllungsgrad**|-
+|**System / Artefakte**|PhysioConnect / API Response Handler für Übungskatalog, interne Layer
+|**Antwort / Verhalten**|Die Operation für den Upload von Detailinformation zu einer Übung wird inkl. Payload an den Übungskatalog weitergeleitet. +
+Eine erfolgreiche Response des Übungskatalogs wird in eine entsprechende Antwort gemäss PhysioConnect-API Contract transformiert und zurückgegeben. +
+Eine fehlerhafte Response des Übungskatalogs wird geloggt und führt zu einer Antwort der PhysioConnect-API mit entsprechendem Fehlercode.
+|**Metrik für Erfüllungsgrad**|100% aller betroffenen Requests werden an den Übungskatalog weitergeleitet. +
+99.99% der erfolgreichen Responses vom Übungskatalog führen wiederum zu einer Response mit erfolgreichem Status. +
+99.99% der fehlerhaften Responses vom Übungskatalog werden geloggt und führen wiederum zu einer Response mit Fehlercode.
 |===
 
 [cols="2,6"]
 |===
 |**ID**|SZ-IOP-5
-|**Quelle des Stimulus**|Benutzerverwaltung
-|**Stimulus**|Response auf initialen Request: Laden der Benutzerdaten (via Benutzer-ID)
+|**Quelle des Stimulus**|Physiotherapeut / Vorgesetzter via PhysioConnect, Patient via PhysioConnect oder Smartphone-App
+|**Stimulus**|Laden von Benutzerinformationen
 |**Umgebung**|Laufzeit
-|**System / Artefakte**|PhysioConnect / API Response Handler für Benutzerverwaltung
-|**Antwort / Verhalten**|-
-|**Metrik für Erfüllungsgrad**|-
+|**System / Artefakte**|PhysioConnect / API Response Handler für Benutzerverwaltung, interne Layer
+|**Antwort / Verhalten**|Requests bzw. interne Funktionen, welche Benutzerinformationen benötigen, setzen einen entsprechenden Request an die Benutzerverwaltung ab. +
+Eine erfolgreiche Response der Benutzerverwaltung wird zur weiteren Verarbeitung verwendet und - falls definiert - als Teil der entsprechenden Response der PhysioConnect-API zurückgegeben. +
+Eine fehlerhafte Response der Benutzerverwaltung wird geloggt und führt zu einer Antwort der PhysioConnect-API mit entsprechendem Fehlercode.
+|**Metrik für Erfüllungsgrad**|100% aller betroffenen Requests werden an die Benutzerverwaltung weitergeleitet. +
+99.99% der erfolgreichen Responses von der Benutzerverwaltung können intern weiterverwendet werden (= ohne auftretende Fehler). +
+99.99% der fehlerhaften Responses von der Benutzerverwaltung werden geloggt und führen wiederum zu einer Response mit Fehlercode.
 |===
 
 [cols="2,6"]
 |===
 |**ID**|SZ-IOP-6 (Erweiterung)
-|**Quelle des Stimulus**|Dokumentationssystem
-|**Stimulus**|Eingehender API Request: Datenimport aus Dokumentationssystem (File Upload)
+|**Quelle des Stimulus**|Physiotherapeut via Dokumentationssystem oder PhysioConnect
+|**Stimulus**|Datenimport aus Dokumentationssystem (API oder File Upload)
 |**Umgebung**|Laufzeit
-|**System / Artefakte**|PhysioConnect / API Request Handler für Dokumentationssystem
-|**Antwort / Verhalten**|-
-|**Metrik für Erfüllungsgrad**|-
+|**System / Artefakte**|PhysioConnect / API Request Handler für Dokumentationssystem, interne Layer
+|**Antwort / Verhalten**|Die zu importierenden Daten werden gemäss der vorgegebenen API / Upload File-Struktur eingelesen und formal geprüft. Sind die Daten formal korrekt, werden sie intern verarbeitet und persistiert. Die PhysioConnect-API gibt einen erfolgreichen Response-Status zurück. +
+Sind die Daten formal inkorrekt oder ein Fehler tritt während der internen Verarbeitung oder Persistierung auf, wird der fehlgeschlagene Import-Versuch geloggt und eine entsprechende Antwort der PhysioConnect-API mit Fehlercode zurückgegeben.
+|**Metrik für Erfüllungsgrad**|99.99% aller eingehenden, formal korrekten Requests werden intern verarbeitet und schlussendlich abgespeichert. +
+0% der formal inkorrekten Requests verlassen den Request Handler zur internen Verarbeitung. +
+99.99% der formal inkorrekten Requests oder auftretenden Fehler werden geloggt und führen zu einer Response mit Fehlercode.
 |===
 
 ==== Confidentiality (Security)
@@ -86,22 +107,27 @@ Szenarien, welche sich auf Qualitätsziel QG-2 (Confidentiality) beziehen.
 |===
 |**ID**|SZ-CNF-1
 |**Quelle des Stimulus**|Patient via App auf Fitnesstracker
-|**Stimulus**|Eingehender Request mit aufgezeichneten Messdaten (Puls, Blutdruck)
+|**Stimulus**|Speichern der übungsrelevanten Messdaten (z.B. Puls, Blutdruck)
 |**Umgebung**|Laufzeit
 |**System / Artefakte**|PhysioConnect / API Request Handler für App
-|**Antwort / Verhalten**|-
-|**Metrik für Erfüllungsgrad**|-
+|**Antwort / Verhalten**|Die Messdaten werden verschlüsselt entgegengenommen (API ist nur via TLS / SSL verwendbar) und formal geprüft. Formal korrekte Messdaten werden direkt in einem verschlüsselten Datenspeicher abgelegt, wo sie nur innerhalb des internen Systemnetzwerks zugreif- / auslesbar sind. In betroffenem Datenspeicher sind die Messdaten nicht anonymisiert abgelegt, da sie zu Auswertungs- und Analysezwecken dem Patienten und der jeweiligen Übung / Therapie-Session zugeordnet werden müssen. +
+Sind die Messdaten formal inkorrekt oder ein Fehler tritt während der internen Verarbeitung oder Persistierung auf, wird der Request geloggt (ohne die konkreten Messdaten) und eine entsprechende Response mit Fehlercode zurückgegeben.
+|**Metrik für Erfüllungsgrad**|100% der verarbeiteten Requests zur Speicherung der Messdaten verlaufen über einen verschlüsselten Kommunikationskanal. +
+Der Datenspeicher mit den Messdaten ist ausserhalb des Systemnetzwerks nicht erreichbar. +
+100% der formal inkorrekten Requests oder auftretenden Fehler werden geloggt und führen zu einer Response mit Fehlercode. Die Logs enthalten keine expliziten Messdaten oder Patienteninformationen.
 |===
 
 [cols="2,6"]
 |===
 |**ID**|SZ-CNF-2 (Erweiterung)
 |**Quelle des Stimulus**|Physiotherapeut via PhysioConnect
-|**Stimulus**|Physiotherapeut markiert Therapie als abgeschlossen, alle patientenbezogenen Therapiedaten werden in aggregierter Form an das https://www.patientendossier.ch/[Elektronische Patientendossier (EPD)] weitergeleitet
+|**Stimulus**|Physiotherapeut markiert Therapie als abgeschlossen
 |**Umgebung**|Laufzeit
 |**System / Artefakte**|PhysioConnect / API Response Handler für EPD
-|**Antwort / Verhalten**|-
-|**Metrik für Erfüllungsgrad**|-
+|**Antwort / Verhalten**|Alle patientenbezogenen Therapiedaten werden in aggregierter Form an das https://www.patientendossier.ch/[Elektronische Patientendossier (EPD)] weitergeleitet. Die Kommunikation verläuft dabei über vordefinierte Schnittstellen / Protokolle sowie über eine verschlüsselte Verbindung. Die Daten sind nicht anonymisiert, da sie Teil der persönlichen Dokumente eines Patienten darstellen. +
+Die Datenübermittlung erfolgt nur für diejenigen Patienten, welche der Weitergabe ihrer Gesundsheitsdaten zu Beginn der Therapie zugestimmt haben. 
+|**Metrik für Erfüllungsgrad**|0% der Daten können während der Übermittlung aus dem Kommunikationskanal / -protokoll extrahiert oder entschlüsselt werden. +
+Das Initiieren und potentielle Fehlschlagen der Datenübermittlung wird geloggt, jedoch keine patientenbezogenen (Mess-)Daten.
 |===
 
 ==== Modifiability (Maintainability)
@@ -111,77 +137,97 @@ Szenarien, welche sich auf Qualitätsziel QG-3 (Modifiability) beziehen.
 |===
 |**ID**|SZ-MOD-1
 |**Quelle des Stimulus**|Fitnesstracker-App
-|**Stimulus**|Unterstützung eines neuen Messdaten-Typs (z.B. Sauerstoffgehalt im Blut)
+|**Stimulus**|Unterstützung eines neuen Messdaten-Typs (z.B. Körpertemperatur)
 |**Umgebung**|Entwicklungszeit
 |**System / Artefakte**|PhysioConnect / API für App, interne Layer (bis hin zu Persistenzschicht)
-|**Antwort / Verhalten**|-
-|**Metrik für Erfüllungsgrad**|-
+|**Antwort / Verhalten**|Das Entwicklungsteam enwirft, implementiert, testet und deployed eine Erweiterung der technisch unterstützten Messdatentypen. Der Umfang der Änderung spannt sich von der App-API bis hin zur Persistenzschicht.
+|**Metrik für Erfüllungsgrad**|Die Erweiterung ist innerhalb von 3 Personentagen realisierbar (Design, Implement, Test, Deploy). +
+100% der bisherigen Tests (Unit, Integration, E2E) können fehlerfrei ausgeführt werden. +
+Im Rahmen von Smoke Tests auf einer deployten Umgebung kommen keine Bugs zum Vorschein, welche mit den gemachten Änderungen korrelieren. +
+Die Erweiterung ist rückwärtskompatibel - Übungen, welche den neuen Messdatentyp nicht benötigen, müssen diesen für eine einwandfreie Funktionalität auch nicht aufzeichnen.
 |===
 
 [cols="2,6"]
 |===
 |**ID**|SZ-MOD-2
 |**Quelle des Stimulus**|Fitnesstracker-App
-|**Stimulus**|Unterstützung eines alternativen Datenformats für ressourcenoptimierte Übermittlung der Messdaten (z.B. JSON anstelle von XML)
+|**Stimulus**|Unterstützung eines alternativen Datenformats / -protokolls für ressourcenoptimierte Übermittlung der Messdaten (z.B. JSON anstelle von XML)
 |**Umgebung**|Entwicklungszeit
 |**System / Artefakte**|PhysioConnect / API für App
-|**Antwort / Verhalten**|-
-|**Metrik für Erfüllungsgrad**|-
+|**Antwort / Verhalten**|Das Entwicklungsteam enwirft, implementiert, testet und deployed eine parallel verwendbare Version der App-API, welche das gewünschte Datenformat / -protokoll unterstützt. Für die internen Layer sollten keine nennenswerten Änderungen resultieren.
+|**Metrik für Erfüllungsgrad**|Die Erweiterung ist innerhalb von 1 Personenwoche realisierbar (Design, Implement, Test, Deploy). +
+100% der bisherigen Tests (Unit, Integration, E2E) können fehlerfrei ausgeführt werden. +
+Im Rahmen von Smoke Tests auf einer deployten Umgebung kommen keine Bugs zum Vorschein, welche mit den gemachten Änderungen korrelieren. +
+Konsumenten der ursprünglichen Version der App-API müssen keinerlei Anpassungen vornehmen, da die neue API-Version parallel und unabhängig dazu betrieben wird.
 |===
 
 [cols="2,6"]
 |===
 |**ID**|SZ-MOD-3
 |**Quelle des Stimulus**|Übungskatalog
-|**Stimulus**|Eine Änderung an der Schnittstelle erfordert eine Erweiterung und / oder Modifikation der betroffenen Komponenten in PhysioConnect
+|**Stimulus**|Änderung an der API des Übungskatalogs
 |**Umgebung**|Entwicklungszeit
 |**System / Artefakte**|PhysioConnect / API Connector für Übungskatalog
-|**Antwort / Verhalten**|-
-|**Metrik für Erfüllungsgrad**|-
+|**Antwort / Verhalten**|Das Entwicklungsteam implementiert, testet und deployed eine neue Version von PhysioConnect, welche die Änderungen an der Übungskatalog-API unterstützt. Je nach Änderung können seitens PhysioConnect nebst dem API Connector auch die internen Layer (bis hin zur Persistenzschicht) von Anpassungen betroffen sein.
+|**Metrik für Erfüllungsgrad**|Die Anpassung an die Änderungen der Übungskatalog-API ist innerhalb von 3 Personentagen realisierbar (Implement, Test, Deploy) sofern lediglich der API Connector davon betroffen ist, ansonsten innerhalb von 1-2 Personenwochen. +
+100% der bisherigen Tests (Unit, Integration, E2E) können fehlerfrei ausgeführt werden. +
+Im Rahmen von Smoke Tests auf einer deployten Umgebung kommen keine Bugs zum Vorschein, welche mit den gemachten Änderungen korrelieren.
 |===
 
 [cols="2,6"]
 |===
 |**ID**|SZ-MOD-4
 |**Quelle des Stimulus**|Benutzerverwaltung
-|**Stimulus**|Eine Änderung an der Schnittstelle erfordert eine Erweiterung und / oder Modifikation der betroffenen Komponenten in PhysioConnect
+|**Stimulus**|Änderung an der API der Benutzerverwaltung
 |**Umgebung**|Entwicklungszeit
 |**System / Artefakte**|PhysioConnect / API Connector für Benutzerverwaltung
-|**Antwort / Verhalten**|-
-|**Metrik für Erfüllungsgrad**|-
+|**Antwort / Verhalten**|Das Entwicklungsteam implementiert, testet und deployed eine neue Version von PhysioConnect, welche die Änderungen an der Benutzerverwaltung-API unterstützt. Je nach Änderung können seitens PhysioConnect nebst dem API Connector auch die internen Layer (bis hin zur Persistenzschicht) von Anpassungen betroffen sein.
+|**Metrik für Erfüllungsgrad**|Die Anpassung an die Änderungen der Benutzerverwaltung-API ist innerhalb von 3 Personentagen realisierbar (Implement, Test, Deploy) sofern lediglich der API Connector davon betroffen ist, ansonsten innerhalb von 1-2 Personenwochen. +
+100% der bisherigen Tests (Unit, Integration, E2E) können fehlerfrei ausgeführt werden. +
+Im Rahmen von Smoke Tests auf einer deployten Umgebung kommen keine Bugs zum Vorschein, welche mit den gemachten Änderungen korrelieren.
 |===
 
 [cols="2,6"]
 |===
 |**ID**|SZ-MOD-5 (Erweiterung)
 |**Quelle des Stimulus**|Kunde / Physiotherapeut
-|**Stimulus**|Bereitstellung einer API für den Datenimport (z.B. File Upload) aus einem verwendeten Dokumentationssystem
+|**Stimulus**|Bereitstellung einer API für den Datenimport (z.B. File Upload) aus einem bestehenden Dokumentationssystem
 |**Umgebung**|Entwicklungszeit
 |**System / Artefakte**|PhysioConnect / API für Dokumentationssystem, interne Layer
-|**Antwort / Verhalten**|-
-|**Metrik für Erfüllungsgrad**|-
+|**Antwort / Verhalten**|Das Entwicklungsteam enwirft, implementiert, testet und deployed die initiale Version einer API, welche den Datenimport aus einem vordefinierten Dokumentationssystem ermöglichen soll. Der Umfang der Erweiterung spannt sich vom API Layer bis hin zur Persistenzschicht.
+|**Metrik für Erfüllungsgrad**|Die Bereitstellung einer initialen API ist innerhalb von 1-2 Personenwochen realisierbar (Design, Implement, Test, Deploy). +
+100% der bisherigen Tests (Unit, Integration, E2E) können fehlerfrei ausgeführt werden. +
+Im Rahmen von Smoke Tests auf einer deployten Umgebung kommen keine Bugs zum Vorschein, welche mit der bereitgestellten API korrelieren.
 |===
 
 [cols="2,6"]
 |===
 |**ID**|SZ-MOD-6 (Erweiterung)
 |**Quelle des Stimulus**|Medizinische Forschung
-|**Stimulus**|Interessensbekundung für die Bereitstellung anonymisierter Gesundheitsdaten
+|**Stimulus**|Bereitstellung anonymisierter Gesundheitsdaten
 |**Umgebung**|Entwicklungszeit
 |**System / Artefakte**|PhysioConnect / API für Lesezugriff auf Daten, interne Layer (bis hin zu Persistenzschicht)
-|**Antwort / Verhalten**|-
-|**Metrik für Erfüllungsgrad**|-
+|**Antwort / Verhalten**|Das Entwicklungsteam enwirft, implementiert, testet und deployed die initiale Version einer API, welche den Lesezugriff auf anonymisierte Gesundheits- / Messdaten ermöglichen soll. Der Umfang der Erweiterung spannt sich vom API Layer bis hin zur Persistenzschicht.
+|**Metrik für Erfüllungsgrad**|Die Bereitstellung einer initialen API ist innerhalb von 1-2 Personenwochen realisierbar (Design, Implement, Test, Deploy). +
+100% der bisherigen Tests (Unit, Integration, E2E) können fehlerfrei ausgeführt werden. +
+Im Rahmen von Smoke Tests auf einer deployten Umgebung kommen keine Bugs zum Vorschein, welche mit der bereitgestellten API korrelieren. +
+Es kann sichergestellt werden, dass 100% der bereitgestellten Gesundheitsdaten anonymisiert sind.
 |===
 
 [cols="2,6"]
 |===
 |**ID**|SZ-MOD-7 (Erweiterung)
 |**Quelle des Stimulus**|Medizinische Forschung
-|**Stimulus**|Interessensbekundung für das Labeling der bereitgestellten Gesundheitsdaten zum Training von https://www.ibm.com/cloud/learn/supervised-learning[Supervised / Semi-Supervised Learning] AI-Modellen
+|**Stimulus**|Labeling der bereitgestellten Gesundheitsdaten zum Training von https://www.ibm.com/cloud/learn/supervised-learning[Supervised / Semi-Supervised Learning] AI-Modellen
 |**Umgebung**|Entwicklungszeit
 |**System / Artefakte**|PhysioConnect / API für Eingabe von Labeling-Vorschlägen, interne Layer (bis hin zu Persistenzschicht)
-|**Antwort / Verhalten**|-
-|**Metrik für Erfüllungsgrad**|-
+|**Antwort / Verhalten**|Das Entwicklungsteam enwirft, implementiert, testet und deployed die initiale Version einer API, welche die Eingabe von Labeling-Vorschlägen ermöglichen soll. Die Labels sollen zusammen mit den bereits bestehenden, anonymisierten Gesundheitsdaten abgelegt werden. +
+Der Umfang der Erweiterung spannt sich vom API Layer bis hin zur Persistenzschicht.
+|**Metrik für Erfüllungsgrad**|Die Bereitstellung einer initialen API ist innerhalb von 1-2 Personenwochen realisierbar (Design, Implement, Test, Deploy). +
+100% der bisherigen Tests (Unit, Integration, E2E) können fehlerfrei ausgeführt werden. +
+Im Rahmen von Smoke Tests auf einer deployten Umgebung kommen keine Bugs zum Vorschein, welche mit der bereitgestellten API korrelieren. +
+Es kann sichergestellt werden, dass 100% der bereitgestellten Gesundheitsdaten anonymisiert sind. +
+Es kann sichergestellt werden, dass 100% der bereitgestellten Gesundheitsdaten mit den vorgeschlagenen Labels versehen sind. 
 |===
 
 ==== Time behaviour (Performance Efficiency)
@@ -190,11 +236,11 @@ Szenarien, welche sich auf Qualitätsziel QG-3 (Modifiability) beziehen.
 |===
 |**ID**|SZ-TIB-1
 |**Quelle des Stimulus**|Patient via Fitnesstracker-App
-|**Stimulus**|Verarbeitung parallel eingehender Messdaten 
+|**Stimulus**|Verarbeitung parallel eingehender Messdaten-Requests
 |**Umgebung**|Laufzeit
 |**System / Artefakte**|PhysioConnect / API Request Handler für App, interne Layer
-|**Antwort / Verhalten**|-
-|**Metrik für Erfüllungsgrad**|-
+|**Antwort / Verhalten**|Gleichzeitig eingehende Messdaten (ausgehend von verschiedenen Patienten) werden in unabhängigen Threads verarbeitet und zuverlässig persistiert. Gemeinsam genutzte Ressourcen (z.B. Datenspeicher) sind mit entsprechenden Synchronisationsmechanismen (z.B. Semaphoren) abgesichert, um Concurrency Exceptions und inkonsistenten Datenständen vorzubeugen.
+|**Metrik für Erfüllungsgrad**|99% der API-Requests zum Ablegen eingehender Messdaten werden intern (sprich abzüglich der Netzwerk-Latenzzeit) innerhalb von 100 Millisekunden verarbeitet (Eingang des Requests, formale Prüfung, Persistierung, Response).
 |===
 
 ==== Capacity (Performance Efficiency)
@@ -206,8 +252,9 @@ Szenarien, welche sich auf Qualitätsziel QG-3 (Modifiability) beziehen.
 |**Stimulus**|Parallele Verwendung von PhysioConnect durch mehrere Benutzer (z.B. Physiotherapeuten + Vorgesetzte + Patienten)
 |**Umgebung**|Laufzeit
 |**System / Artefakte**|PhysioConnect / Gesamtsystem
-|**Antwort / Verhalten**|-
-|**Metrik für Erfüllungsgrad**|-
+|**Antwort / Verhalten**|PhysioConnect verarbeitet verschiedenste Request-Typen (z.B. Verarbeitung eingehender Messdaten, Monitoring, Reporting, Erstellung einer neuen Therapie) in unabhängigen Threads und ermöglicht somit mehreren Parteien, das System gleichzeitig zu verwenden.
+|**Metrik für Erfüllungsgrad**|Das System ermöglicht den einwandfreien Betrieb mit 100 gleichzeitigen Benutzern. Einwandfrei bedeutet in dem Fall: +
+95% aller Requests, deren Response zu einem sichtbaren Ergebnis auf Benutzerseite führen, dauern weniger als 1 Sekunde.
 |===
 
 ==== Fault tolerance (Reliability)
@@ -219,8 +266,10 @@ Szenarien, welche sich auf Qualitätsziel QG-3 (Modifiability) beziehen.
 |**Stimulus**|Übungskatalog ist nicht / eingeschränkt erreichbar und / oder gibt Request-unabhängige Fehlermeldungen zurück
 |**Umgebung**|Laufzeit
 |**System / Artefakte**|PhysioConnect / Gesamtsystem
-|**Antwort / Verhalten**|-
-|**Metrik für Erfüllungsgrad**|-
+|**Antwort / Verhalten**|Requests zum Übungskatalog werden nach Ablauf eines vordefinierten Timeouts (z.B. 5 Sekunden) auf Basis einer Retry-Policy mehrmals wiederholt (z.B. 2 Wiederholungen). Nach erfolglosem Ablauf aller Wiederholungen wird das Nichterreichen des Übungskatalogs geloggt und die interne Funktionslogik wird - sofern sinnvoll - ohne Fehler fortgesetzt. Alternativ wird eine entsprechende Response mit Fehlercode zurückgegeben. +
+Request-unabhängige Fehlermeldungen des Übungskatalogs werden geloggt und führen zu der Rückgabe einer entsprechenden Response mit Fehlercode.
+|**Metrik für Erfüllungsgrad**|Das Nichterreichen des Übungskatalogs oder Request-unabhängige Fehlermeldungen führen zu keiner Exception seitens PhysioConnect, sondern a) zu einer normalen Weiterführung der internen Funktionslogik (falls sinnvoll) oder b) zu einer Response mit Fehlercode und benutzerfreundlichen Fehlermeldung. +
+100% der auftretenden Verbindungsprobleme zum Übungskatalog werden geloggt.
 |===
 
 [cols="2,6"]
@@ -230,8 +279,10 @@ Szenarien, welche sich auf Qualitätsziel QG-3 (Modifiability) beziehen.
 |**Stimulus**|Benutzerverwaltung ist nicht / eingeschränkt erreichbar und / oder gibt Request-unabhängige Fehlermeldungen zurück
 |**Umgebung**|Laufzeit
 |**System / Artefakte**|PhysioConnect / Gesamtsystem
-|**Antwort / Verhalten**|-
-|**Metrik für Erfüllungsgrad**|-
+|**Antwort / Verhalten**|Requests zur Benutzerverwaltung werden nach Ablauf eines vordefinierten Timeouts (z.B. 5 Sekunden) auf Basis einer Retry-Policy mehrmals wiederholt (z.B. 2 Wiederholungen). Nach erfolglosem Ablauf aller Wiederholungen wird das Nichterreichen der Benutzerverwaltung geloggt und die interne Funktionslogik wird - sofern sinnvoll - ohne Fehler fortgesetzt. Alternativ wird eine entsprechende Response mit Fehlercode zurückgegeben. +
+Request-unabhängige Fehlermeldungen der Benutzerverwaltung werden geloggt und führen zu der Rückgabe einer entsprechenden Response mit Fehlercode.
+|**Metrik für Erfüllungsgrad**|Das Nichterreichen der Benutzerverwaltung oder Request-unabhängige Fehlermeldungen führen zu keiner Exception seitens PhysioConnect, sondern a) zu einer normalen Weiterführung der internen Funktionslogik (falls sinnvoll) oder b) zu einer Response mit Fehlercode und benutzerfreundlichen Fehlermeldung. +
+100% der auftretenden Verbindungsprobleme zu der Benutzerverwaltung werden geloggt.
 |===
 
 ==== Installability (Portability)
@@ -240,11 +291,12 @@ Szenarien, welche sich auf Qualitätsziel QG-3 (Modifiability) beziehen.
 |===
 |**ID**|SZ-INT-1 (Erweiterung)
 |**Quelle des Stimulus**|Kunde, Technische Integratoren von PhysioConnect (z.B. IT-Abteilung des Kunden)
-|**Stimulus**|Interessensbekundung für On Premise-Betrieb von PhysioConnect
+|**Stimulus**|On Premise-Betrieb von PhysioConnect
 |**Umgebung**|Installationszeit, Konfigurationszeit
 |**System / Artefakte**|PhysioConnect / Gesamtsystem
-|**Antwort / Verhalten**|-
-|**Metrik für Erfüllungsgrad**|-
+|**Antwort / Verhalten**|PhysioConnect ist in einer kundenspezifischen System- und Applikationslandschaft, welche on premise läuft, mit vertretbarem Aufwand und Komplexität integrierbar (beinhaltet Installation und Konfiguration).
+|**Metrik für Erfüllungsgrad**|PhysioConnect soll unter Einbezug und Verfügbarkeit aller relevanten Parteien (Entwickler / Architekt seitens PhysioConnect, Entwickler / Integratoren seitens IT-Abteilung des Kunden) innerhalb von 1 Personenwoche auf einer beliebigen on premise-Umgebung, welche die System- und Ressourcenanforderungen erfüllt, installiert und initial konfiguriert sein. +
+Der Aufwand und die Komplexität bezüglich der einwandfreien Kommunikation mit bestehenden Umsystemen ist dabei nicht Teil dieses Szenarios und muss individuell evaluiert und szenariotechnisch quantifiziert werden.
 |===
 
 === Quality Tree
