@@ -70,7 +70,7 @@ BoundedContext TherapieContext {
 			}
 		}
 		
-		Aggregate TherapieSession {
+		Aggregate GesamtTherapie {
 			Entity GesamtTherapie {
 				aggregateRoot
 				
@@ -86,24 +86,42 @@ BoundedContext TherapieContext {
 				}
 			}
 
-            Entity TherapieSession {
+			enum TherapieStatus {
+	            ENTWURF, WARTEN_AUF_PATIENT, BEREIT, GESTARTET, UNTERBROCHEN, ABGESCHLOSSEN, ABGEBROCHEN, ARCHIVIERT
+			}
+
+			enum TherapieTyp {
+				HOSPITALISIERT, REHABILITATION, AMBULANT, EIGENSTAENDIG
+			}
+		}
+
+		Aggregate TherapieSession {
+			Entity TherapieSession {
+				aggregateRoot
                 SessionId sessionId
 				- TherapieSessionsStatus status
                 - List<TherapieUebung> uebung
 				- List<PatientenRueckmeldung> rueckmeldung
             }
 
-            Entity TherapieUebung {
+			enum TherapieSessionsStatus {
+	            ERSTELLT, NACHTRAEGLICH_ERFASST, UEBERSPRUNGEN, STARTBEREIT, GESTARTET, UNTERBROCHEN, ABGEBROCHEN, ABGESCHLOSSEN
+			}
+		}
+
+		Aggregate TherapieUebung {
+			Entity TherapieUebung {
+				aggregateRoot
                 UebungId uebungId
 				- UebungsStatus status
                 - UebungsBeschreibung beschreibung
-				- Durchfuehrung durchfuehrung
+				- TherapieUebungsDurchfuehrung durchfuehrung
 				- List<PatientenRueckmeldung> rueckmeldung
-            }
-
-			ValueObject UebungMessdaten {
-				- List<TherapieUebung> uebungen
 				- List<Messdaten> messdaten
+            }
+			
+			enum UebungsStatus {
+				ERSTELLT, NACHTRAEGLICH_ERFASST, UEBERSPRUNGEN, GESTARTET, PAUSIERT, UNTERBROCHEN, ABGEBROCHEN, ABGESCHLOSSEN
 			}
 
 			ValueObject Messdaten {
@@ -113,13 +131,16 @@ BoundedContext TherapieContext {
 				Daten daten
 			}
 
-			ValueObject Durchfuehrung {
+			ValueObject TherapieUebungsDurchfuehrung {
 				Zeit zeit
 				Wiederholungen wiederholungen
 				Boolean eigenangabeMoeglich
 			}
+		}
 
+		Aggregate PatientenRueckmeldung {
 			ValueObject PatientenRueckmeldung {
+				aggregateRoot
 				RueckmeldungsWert effektiveRueckmeldung
 				- TherapeutenKommentar antwortVomTherapeuten
 				- PatientenRueckmeldungsTyp rueckmeldungsTyp				
@@ -140,22 +161,7 @@ BoundedContext TherapieContext {
 				Url resource
 				- Benutzer therapeut
 			}
-			
-			enum TherapieStatus {
-	            ENTWURF, WARTEN_AUF_PATIENT, BEREIT, GESTARTET, UNTERBROCHEN, ABGESCHLOSSEN, ABGEBROCHEN, ARCHIVIERT
-			}
 
-			enum TherapieTyp {
-				HOSPITALISIERT, REHABILITATION, AMBULANT, EIGENSTAENDIG
-			}
-
-			enum TherapieSessionsStatus {
-	            ERSTELLT, NACHERSTELLT, UEBERSPRUNGEN, STARTBEREIT, GESTARTET, UNTERBROCHEN, ABGEBROCHEN, ABGESCHLOSSEN
-			}
-
-			enum UebungsStatus {
-				ERSTELLT, NACHERSTELLT, UEBERSPRUNGEN, GESTARTET, PAUSIERT, UNTERBROCHEN, ABGEBROCHEN, ABGESCHLOSSEN
-			}
 		}
 	}
 }
