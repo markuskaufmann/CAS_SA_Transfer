@@ -6,3 +6,4 @@ physio_connect_c4/generated/
 *.bkp
 .DS_Store
 src-gen/
+.vscode/
