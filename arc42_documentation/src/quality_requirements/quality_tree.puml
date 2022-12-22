@@ -1,0 +1,104 @@
+@startuml Quality Tree
+title Quality Tree
+
+left to right direction
+skinparam linetype line
+skinparam nodesep 50
+skinparam ranksep 80
+
+rectangle Utility #LightBlue
+
+rectangle Compatibility
+rectangle Interoperability
+rectangle "SZ-IOP-1"
+rectangle "0.09" as IOP_1_RESULT #Orange
+rectangle "SZ-IOP-2"
+rectangle "0.09" as IOP_2_RESULT #Orange
+rectangle "SZ-IOP-3"
+rectangle "0.06" as IOP_3_RESULT #FFFFFF
+rectangle "SZ-IOP-4"
+rectangle "0.06" as IOP_4_RESULT #FFFFFF
+rectangle "SZ-IOP-5"
+rectangle "0.06" as IOP_5_RESULT #FFFFFF
+
+rectangle Security
+rectangle Confidentiality
+rectangle "SZ-CNF-1"
+rectangle "0.2" as CNF_1_RESULT #OrangeRed
+rectangle "SZ-CNF-2"
+rectangle "0.05" as CNF_2_RESULT #FFFFFF
+
+rectangle Maintainability
+rectangle Modifiability
+rectangle "SZ-MOD-1"
+rectangle "0.08" as MOD_1_RESULT #Yellow
+rectangle "SZ-MOD-2"
+rectangle "0.02" as MOD_2_RESULT #FFFFFF
+rectangle "SZ-MOD-3"
+rectangle "0.05" as MOD_3_RESULT #FFFFFF
+rectangle "SZ-MOD-4"
+rectangle "0.05" as MOD_4_RESULT #FFFFFF
+
+rectangle "Performance Efficiency"
+rectangle "Time behaviour"
+rectangle "SZ-TIB-1"
+rectangle "0.05" as TIB_1_RESULT #FFFFFF
+rectangle Capacity
+rectangle "SZ-CAP-1"
+rectangle "0.05" as CAP_1_RESULT #FFFFFF
+
+rectangle Reliability
+rectangle "Fault tolerance"
+rectangle "SZ-FLT-1"
+rectangle "0.05" as FLT_1_RESULT #FFFFFF
+rectangle "SZ-FLT-2"
+rectangle "0.05" as FLT_2_RESULT #FFFFFF
+
+Utility --> Compatibility : 0.35
+Utility --> Security : 0.25
+Utility --> Maintainability : 0.2
+Utility --> "Performance Efficiency" : 0.1
+Utility --> Reliability : 0.1
+
+Compatibility --> Interoperability : 1.0
+Interoperability --> "SZ-IOP-1" : 0.25
+"SZ-IOP-1" --[dotted] IOP_1_RESULT
+Interoperability --> "SZ-IOP-2" : 0.25
+"SZ-IOP-2" --[dotted] IOP_2_RESULT
+Interoperability --> "SZ-IOP-3" : 0.16
+"SZ-IOP-3" --[dotted] IOP_3_RESULT
+Interoperability --> "SZ-IOP-4" : 0.16
+"SZ-IOP-4" --[dotted] IOP_4_RESULT
+Interoperability --> "SZ-IOP-5" : 0.16
+"SZ-IOP-5" --[dotted] IOP_5_RESULT
+
+Security --> Confidentiality : 1.0
+Confidentiality --> "SZ-CNF-1" : 0.8
+"SZ-CNF-1" --[dotted] CNF_1_RESULT
+Confidentiality --> "SZ-CNF-2" : 0.2
+"SZ-CNF-2" --[dotted] CNF_2_RESULT
+
+Maintainability --> Modifiability : 1.0
+Modifiability --> "SZ-MOD-1" : 0.4
+"SZ-MOD-1" --[dotted] MOD_1_RESULT
+Modifiability --> "SZ-MOD-2" : 0.1
+"SZ-MOD-2" --[dotted] MOD_2_RESULT
+Modifiability --> "SZ-MOD-3" : 0.25
+"SZ-MOD-3" --[dotted] MOD_3_RESULT
+Modifiability --> "SZ-MOD-4" : 0.25
+"SZ-MOD-4" --[dotted] MOD_4_RESULT
+
+"Performance Efficiency" --> "Time behaviour" : 0.5
+"Time behaviour" --> "SZ-TIB-1" : 1.0
+"SZ-TIB-1" --[dotted] TIB_1_RESULT
+"Performance Efficiency" --> Capacity : 0.5
+Capacity --> "SZ-CAP-1" : 1.0
+"SZ-CAP-1" --[dotted] CAP_1_RESULT
+
+Reliability --> "Fault tolerance" : 1.0
+"Fault tolerance" --> "SZ-FLT-1" : 0.5
+"SZ-FLT-1" --[dotted] FLT_1_RESULT
+"Fault tolerance" --> "SZ-FLT-2" : 0.5
+"SZ-FLT-2" --[dotted] FLT_2_RESULT
+
+@enduml
