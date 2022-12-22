@@ -1,0 +1,716 @@
+{
+  "id" : 1,
+  "name" : "Physio integration layer project",
+  "description" : "Description",
+  "revision" : 0,
+  "lastModifiedDate" : "2022-12-22T10:49:37Z",
+  "lastModifiedAgent" : "structurizr-web/2881/diagram",
+  "properties" : {
+    "structurizr.dsl" : "d29ya3NwYWNlICJQaHlzaW8gaW50ZWdyYXRpb24gbGF5ZXIgcHJvamVjdCIgewoKICAgIG1vZGVsIHsKICAgICAgICBncm91cCAiUGh5c2lvdW50ZXJuZWhtdW5nIiB7CiAgICAgICAgICAgIHRoZXJhcGV1dCA9IHBlcnNvbiAiVGhlcmFwZXV0OiBpbiIgIlBlcnNvbiwgd2VsY2hlIFBoeXNpb3RoZXJhcGllbiBsZWl0ZXQiICJ0aGVyYXBldXQiCiAgICAgICAgICAgIGFkbWluID0gcGVyc29uICJBZG1pbmlzdHJhdG9yOiBpbiIgCiAgICAgICAgICAgIGRva3VtZW50YXRpb25zU29mdHdhcmUgPSBzb2Z0d2FyZVN5c3RlbSAiRG9rdW1lbnRhdGlvbnNzb2Z0d2FyZSIKICAgICAgICAgICAgdGhlcmFwaWVGaWxlID0gZWxlbWVudCAiVGhlcmFwaWUgRmlsZSIgewogICAgICAgICAgICAgICAgdGFncyAiZmlsZSIKICAgICAgICAgICAgfQogICAgICAgIH0KCiAgICAgICAgZ3JvdXAgIlBhdGllbnQiIHsKICAgICAgICAgICAgcGF0aWVudCA9IHBlcnNvbiAiUGF0aWVudDogaW4iICJQYXRpZW50IGRlciBqZXdlaWxpZ2VuIFBoeXNpbyBPcmdhbmlzYXRpb24iICJQYXRpZW50IgogICAgICAgICAgICBmaXRuZXNzVHJhY2tlciA9IHNvZnR3YXJlU3lzdGVtICJGaXRuZXNzIFRyYWNrZXIiCiAgICAgICAgfQoKICAgICAgICBncm91cCAiTW9lZ2xpY2hlIHp1a8O8bmZ0aWdlIEFiaMOkbmdpZ2tlaXRlbiIgewogICAgICAgICAgICBwYXRpZW50ZW5Eb3NzaWVyID0gc29mdHdhcmVTeXN0ZW0gIlBhdGllbnRlbiBEb3NzaWVyIgogICAgICAgICAgICB2ZXJzaWNoZXJ1bmdzU2Nobml0dHN0ZWxsZW4gPSBzb2Z0d2FyZVN5c3RlbSAiVmVyc2ljaGVydW5nc3NjaG5pdHRzdGVsbGVuIgogICAgICAgICAgICBkYXRhU2NpZW50aXN0ID0gcGVyc29uICJEYXRhIFNjaWVudGlzdCIKICAgICAgICB9CgogICAgICAgIAogICAgICAgIGVudGVycHJpc2UgIlBoeXNpbyBDb25uZWN0IiB7CiAgICAgICAgICAgIHBoeXNpb0Nvbm5lY3QgPSBzb2Z0d2FyZVN5c3RlbSAiUGh5c2lvIENvbm5lY3QiICJXZWJhcHAiICJtYWluU3lzdGVtIgoKICAgICAgICAgICAgYXBwID0gc29mdHdhcmVTeXN0ZW0gIk1vYmlsZSBBcHAiCiAgICAgICAgICAgIHVlYnVuZ3NLYXRhbG9nID0gc29mdHdhcmVTeXN0ZW0gIlVlYnVuZ3MgS2F0YWxvZyIKICAgICAgICAgICAgYmVudXR6ZXJWZXJ3YWx0dW5nID0gc29mdHdhcmVTeXN0ZW0gIkJlbnV0emVyIFZlcndhbHR1bmciICJhdXRvcmlzaWVydW5nIHVuZCBhdXRoZW50aWZpemllcnVuZyIKICAgICAgICB9CgoKICAgICAgICAjIHJlbGF0aW9uc2hpcHMgYmV0d2VlbiBwZW9wbGUgYW5kIHNvZnR3YXJlIHN5c3RlbXMKICAgICAgICBwaHlzaW9Db25uZWN0IC0+IHBhdGllbnQgIlNlbmRldCBFaW5sYWR1bmcgZsO8ciBUaGVyYXBpZSIKCiAgICAgICAgYWRtaW4gLT4gcGh5c2lvQ29ubmVjdCAiQWRtaW5pc3RyaWVydCBQZXJzb25hbCB1bmQgVWVidW5nZW4iCiAgICAgICAgdGhlcmFwZXV0IC0+IGRva3VtZW50YXRpb25zU29mdHdhcmUgIlBsYW50IC8gRG9rdW1lbnRpZXJ0IFRoZXJhcGllbiIgCgogICAgICAgIHRoZXJhcGV1dCAtPiB0aGVyYXBpZUZpbGUgIkVkaXRpZXJ0IiAKICAgICAgICB0aGVyYXBldXQgLT4gcGh5c2lvQ29ubmVjdCAiUGxhbnQgVGhlcmFwaWVuIGRpcmVrdFxuc2VuZGV0IFRoZXJhcGllZWlubGFkdW5nZW5cbmVyc3RlbGx0IGVpZ2VuZSBVZWJ1bmdlbiIgCiAgICAgICAgZGF0YVNjaWVudGlzdCAtPiBwaHlzaW9Db25uZWN0ICJCZW51dHp0IERhdGVuIgogICAgICAgIHBhdGllbnQgLT4gYXBwICJSZWdpc3RyaWVydCBzaWNoXG5OaW1tdCBUaGVyYXBpZWVpbmxhZHVuZ2VuIGFuXG5CZW51dHp0IEFwcCBmw7xyIHNlbGJzdHN0w6RuZGlnZSBhdXNmw7xocnVuZyB2b24gVGhlcmFwaWVuIgogICAgICAgIHBhdGllbnQgLT4gZml0bmVzc1RyYWNrZXIgImJlc2l0enQiCiAgICAgICAgYXBwIC0+IGZpdG5lc3NUcmFja2VyICJGb3JkZXJ0IE1lc3NkYXRlbiBhbiIKCiAgICAgICAgIyByZWxhdGlvbnNoaXBzIHRvL2Zyb20gc29mdHdhcmUgc3lzdGVtcwogICAgICAgIGRva3VtZW50YXRpb25zU29mdHdhcmUgLT4gdGhlcmFwaWVGaWxlICJFeHBvcnRpZXJ0IgogICAgICAgIGFwcCAtPiBwaHlzaW9Db25uZWN0ICJTZW5kZXQgU2Vzc2lvbiBVcGRhdGVzIG1pdCBNZXNzZGF0ZW4iCiAgICAgICAgcGh5c2lvQ29ubmVjdCAtPiBhcHAgIlNlbmRldCBUaGVyYXBpZW4sIFNlc3Npb25zIHVuZCBVZWJ1bmdlbiIKICAgICAgICBwaHlzaW9Db25uZWN0IC0+IHVlYnVuZ3NLYXRhbG9nICJJbXBvcnRpZXJ0IFVlYnVuZ2VuIgogICAgICAgIHBoeXNpb0Nvbm5lY3QgLT4gdGhlcmFwaWVGaWxlICJpbXBvcnRpZXJ0IFVlYnVuZ2VuIgogICAgICAgIHBoeXNpb0Nvbm5lY3QgLT4gZG9rdW1lbnRhdGlvbnNzb2Z0d2FyZSAiaW1wb3J0aWVydCBVZWJ1bmdlbiIKICAgICAgICBwaHlzaW9Db25uZWN0IC0+IGJlbnV0emVyVmVyd2FsdHVuZyAiQXV0b3Jpc2llcnQgdW5kIEF1dGhlbnRpZml6aWVydCBCZW51dHplclxuID9FcnN0ZWxsdCBuZXVlIEJlbnV0emVyPyIKICAgICAgICBhcHAgLT4gYmVudXR6ZXJWZXJ3YWx0dW5nICJSZWdpc3RyaWVydW5nIG5ldWVyIEJlbnV0emVyXG4gQXV0aGVudGlmaXppZXJ0IEJlbnV0emVyIgogICAgICAgIHBoeXNpb0Nvbm5lY3QgLT4gcGF0aWVudGVuRG9zc2llciAiQXV0b21hdGlzY2hlciBEYXRlbmF1c3RhdXNjaCIKICAgICAgICBwaHlzaW9Db25uZWN0IC0+IHZlcnNpY2hlcnVuZ3NTY2huaXR0c3RlbGxlbiAidGVpbHQgVHJhaW5pbmdzZGF0ZW4iCiAgICAgICAgIyByZWxhdGlvbnNoaXBzIHRvL2Zyb20gY29tcG9uZW50cwogICAgfQoKICAgIHZpZXdzIHsKICAgICAgICBzeXN0ZW1sYW5kc2NhcGUgIkdlc2FtdHVlYmVyc2ljaHQiIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9MYXlvdXQKICAgICAgICB9CgogICAgICAgIHN5c3RlbWxhbmRzY2FwZSAiS29udGV4dGRpYWdyYW0iIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGV4Y2x1ZGUgZGF0YVNjaWVudGlzdCB2ZXJzaWNoZXJ1bmdzU2Nobml0dHN0ZWxsZW4gcGF0aWVudGVuRG9zc2llcgogICAgICAgICAgICBleGNsdWRlIGRva3VtZW50YXRpb25zU29mdHdhcmUgdGhlcmFwaWVGaWxlCiAgICAgICAgICAgIGF1dG9MYXlvdXQKICAgICAgICB9CgogICAgICAgIHN5c3RlbWNvbnRleHQgcGh5c2lvQ29ubmVjdCAiSW50ZWdyYXRpb25zU2NoaWNodCIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYW5pbWF0aW9uIHsKICAgICAgICAgICAgICAgIHBoeXNpb0Nvbm5lY3QKICAgICAgICAgICAgICAgIHBhdGllbnQKICAgICAgICAgICAgfQogICAgICAgICAgICBhdXRvTGF5b3V0CiAgICAgICAgfQoKICAgICAgICBjb250YWluZXIgcGh5c2lvQ29ubmVjdCAiQ29udGFpbmVycyIgewogICAgICAgIH0KCiAgICAgICAgc3R5bGVzIHsKICAgICAgICAgICAgZWxlbWVudCAiUGVyc29uIiB7CiAgICAgICAgICAgICAgICBjb2xvciAjRkZGRkZGCiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICM0NDQ0NDQKICAgICAgICAgICAgICAgIGZvbnRTaXplIDIyCiAgICAgICAgICAgICAgICBzaGFwZSBQZXJzb24KICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJmaWxlIiB7CiAgICAgICAgICAgICAgICBjb2xvciAjRkZGRkZGCiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICMxMTY4YmQKICAgICAgICAgICAgICAgIHNoYXBlIEZvbGRlcgogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIkdyb3VwOlBoeXNpb3VudGVybmVobXVuZyIgewogICAgICAgICAgICAgICAgY29sb3IgI0I2ODYyRQogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIkdyb3VwOlBhdGllbnQiIHsKICAgICAgICAgICAgICAgIGNvbG9yICM1ODlGRDgKICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJHcm91cDpNb2VnbGljaGUgenVrw7xuZnRpZ2UgQWJow6RuZ2lna2VpdGVuIiB7CiAgICAgICAgICAgICAgICBjb2xvciAjMzgwOTRFCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZWxlbWVudCAiQ3VzdG9tZXIiIHsKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzA4NDI3YgogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIlNvZnR3YXJlIFN5c3RlbSIgewogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjMTE2OGJkCiAgICAgICAgICAgICAgICBjb2xvciAjZmZmZmZmCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZWxlbWVudCAibWFpblN5c3RlbSIgewogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjMDAwMDAwCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZWxlbWVudCAiRXhpc3RpbmcgU3lzdGVtIiB7CiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICM5OTk5OTkKICAgICAgICAgICAgICAgIGNvbG9yICNmZmZmZmYKICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJDb250YWluZXIiIHsKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzQzOGRkNQogICAgICAgICAgICAgICAgY29sb3IgI2ZmZmZmZgogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIldlYiBCcm93c2VyIiB7CiAgICAgICAgICAgICAgICBzaGFwZSBXZWJCcm93c2VyCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZWxlbWVudCAiTW9iaWxlIEFwcCIgewogICAgICAgICAgICAgICAgc2hhcGUgTW9iaWxlRGV2aWNlTGFuZHNjYXBlCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZWxlbWVudCAiRGF0YWJhc2UiIHsKICAgICAgICAgICAgICAgIHNoYXBlIEN5bGluZGVyCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZWxlbWVudCAiQ29tcG9uZW50IiB7CiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICM4NWJiZjAKICAgICAgICAgICAgICAgIGNvbG9yICMwMDAwMDAKICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJGYWlsb3ZlciIgewogICAgICAgICAgICAgICAgb3BhY2l0eSAyNQogICAgICAgICAgICB9CiAgICAgICAgfQogICAgfQp9Cg=="
+  },
+  "configuration" : { },
+  "model" : {
+    "enterprise" : {
+      "name" : "Physio Connect"
+    },
+    "people" : [ {
+      "id" : "5",
+      "tags" : "Element,Person,Patient",
+      "name" : "Patient: in",
+      "description" : "Patient der jeweiligen Physio Organisation",
+      "relationships" : [ {
+        "id" : "20",
+        "tags" : "Relationship",
+        "sourceId" : "5",
+        "destinationId" : "11",
+        "description" : "Registriert sich\nNimmt Therapieeinladungen an\nBenutzt App für selbstständige ausführung von Therapien"
+      }, {
+        "id" : "21",
+        "tags" : "Relationship",
+        "sourceId" : "5",
+        "destinationId" : "6",
+        "description" : "besitzt"
+      } ],
+      "group" : "Patient",
+      "location" : "External"
+    }, {
+      "id" : "2",
+      "tags" : "Element,Person",
+      "name" : "Administrator: in",
+      "relationships" : [ {
+        "id" : "15",
+        "tags" : "Relationship",
+        "sourceId" : "2",
+        "destinationId" : "10",
+        "description" : "Administriert Personal und Uebungen"
+      } ],
+      "group" : "Physiounternehmung",
+      "location" : "External"
+    }, {
+      "id" : "9",
+      "tags" : "Element,Person",
+      "name" : "Data Scientist",
+      "relationships" : [ {
+        "id" : "19",
+        "tags" : "Relationship",
+        "sourceId" : "9",
+        "destinationId" : "10",
+        "description" : "Benutzt Daten"
+      } ],
+      "group" : "Moegliche zukünftige Abhängigkeiten",
+      "location" : "External"
+    }, {
+      "id" : "1",
+      "tags" : "Element,Person,therapeut",
+      "name" : "Therapeut: in",
+      "description" : "Person, welche Physiotherapien leitet",
+      "relationships" : [ {
+        "id" : "17",
+        "tags" : "Relationship",
+        "sourceId" : "1",
+        "destinationId" : "4",
+        "description" : "Editiert"
+      }, {
+        "id" : "18",
+        "tags" : "Relationship",
+        "sourceId" : "1",
+        "destinationId" : "10",
+        "description" : "Plant Therapien direkt\nsendet Therapieeinladungen\nerstellt eigene Uebungen"
+      }, {
+        "id" : "16",
+        "tags" : "Relationship",
+        "sourceId" : "1",
+        "destinationId" : "3",
+        "description" : "Plant / Dokumentiert Therapien"
+      } ],
+      "group" : "Physiounternehmung",
+      "location" : "External"
+    } ],
+    "softwareSystems" : [ {
+      "id" : "13",
+      "tags" : "Element,Software System",
+      "name" : "Benutzer Verwaltung",
+      "description" : "autorisierung und authentifizierung",
+      "location" : "Internal",
+      "documentation" : { }
+    }, {
+      "id" : "11",
+      "tags" : "Element,Software System",
+      "name" : "Mobile App",
+      "relationships" : [ {
+        "id" : "30",
+        "tags" : "Relationship",
+        "sourceId" : "11",
+        "destinationId" : "13",
+        "description" : "Registrierung neuer Benutzer\n Authentifiziert Benutzer"
+      }, {
+        "id" : "24",
+        "tags" : "Relationship",
+        "sourceId" : "11",
+        "destinationId" : "10",
+        "description" : "Sendet Session Updates mit Messdaten"
+      }, {
+        "id" : "22",
+        "tags" : "Relationship",
+        "sourceId" : "11",
+        "destinationId" : "6",
+        "description" : "Fordert Messdaten an"
+      } ],
+      "location" : "Internal",
+      "documentation" : { }
+    }, {
+      "id" : "12",
+      "tags" : "Element,Software System",
+      "name" : "Uebungs Katalog",
+      "location" : "Internal",
+      "documentation" : { }
+    }, {
+      "id" : "10",
+      "tags" : "Element,Software System,mainSystem",
+      "name" : "Physio Connect",
+      "description" : "Webapp",
+      "relationships" : [ {
+        "id" : "29",
+        "tags" : "Relationship",
+        "sourceId" : "10",
+        "destinationId" : "13",
+        "description" : "Autorisiert und Authentifiziert Benutzer\n ?Erstellt neue Benutzer?"
+      }, {
+        "id" : "27",
+        "tags" : "Relationship",
+        "sourceId" : "10",
+        "destinationId" : "4",
+        "description" : "importiert Uebungen"
+      }, {
+        "id" : "14",
+        "tags" : "Relationship",
+        "sourceId" : "10",
+        "destinationId" : "5",
+        "description" : "Sendet Einladung für Therapie"
+      }, {
+        "id" : "25",
+        "tags" : "Relationship",
+        "sourceId" : "10",
+        "destinationId" : "11",
+        "description" : "Sendet Therapien, Sessions und Uebungen"
+      }, {
+        "id" : "31",
+        "tags" : "Relationship",
+        "sourceId" : "10",
+        "destinationId" : "7",
+        "description" : "Automatischer Datenaustausch"
+      }, {
+        "id" : "32",
+        "tags" : "Relationship",
+        "sourceId" : "10",
+        "destinationId" : "8",
+        "description" : "teilt Trainingsdaten"
+      }, {
+        "id" : "26",
+        "tags" : "Relationship",
+        "sourceId" : "10",
+        "destinationId" : "12",
+        "description" : "Importiert Uebungen"
+      }, {
+        "id" : "28",
+        "tags" : "Relationship",
+        "sourceId" : "10",
+        "destinationId" : "3",
+        "description" : "importiert Uebungen"
+      } ],
+      "location" : "Internal",
+      "documentation" : { }
+    }, {
+      "id" : "8",
+      "tags" : "Element,Software System",
+      "name" : "Versicherungsschnittstellen",
+      "group" : "Moegliche zukünftige Abhängigkeiten",
+      "location" : "External",
+      "documentation" : { }
+    }, {
+      "id" : "6",
+      "tags" : "Element,Software System",
+      "name" : "Fitness Tracker",
+      "group" : "Patient",
+      "location" : "External",
+      "documentation" : { }
+    }, {
+      "id" : "7",
+      "tags" : "Element,Software System",
+      "name" : "Patienten Dossier",
+      "group" : "Moegliche zukünftige Abhängigkeiten",
+      "location" : "External",
+      "documentation" : { }
+    }, {
+      "id" : "3",
+      "tags" : "Element,Software System",
+      "name" : "Dokumentationssoftware",
+      "relationships" : [ {
+        "id" : "23",
+        "tags" : "Relationship",
+        "sourceId" : "3",
+        "destinationId" : "4",
+        "description" : "Exportiert"
+      } ],
+      "group" : "Physiounternehmung",
+      "location" : "External",
+      "documentation" : { }
+    } ],
+    "customElements" : [ {
+      "id" : "4",
+      "tags" : "Element,file",
+      "name" : "Therapie File",
+      "group" : "Physiounternehmung"
+    } ]
+  },
+  "documentation" : { },
+  "views" : {
+    "systemLandscapeViews" : [ {
+      "key" : "Gesamtuebersicht",
+      "order" : 1,
+      "paperSize" : "A2_Landscape",
+      "dimensions" : {
+        "width" : 5400,
+        "height" : 2358
+      },
+      "automaticLayout" : {
+        "implementation" : "Graphviz",
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "nodeSeparation" : 300,
+        "edgeSeparation" : 0,
+        "vertices" : false
+      },
+      "enterpriseBoundaryVisible" : true,
+      "relationships" : [ {
+        "id" : "32",
+        "vertices" : [ {
+          "x" : 2466,
+          "y" : 1433
+        }, {
+          "x" : 1629,
+          "y" : 1525
+        } ]
+      }, {
+        "id" : "21"
+      }, {
+        "id" : "31",
+        "vertices" : [ {
+          "x" : 2350,
+          "y" : 1525
+        } ]
+      }, {
+        "id" : "20",
+        "vertices" : [ {
+          "x" : 2329,
+          "y" : 529
+        } ]
+      }, {
+        "id" : "30",
+        "vertices" : [ {
+          "x" : 3187,
+          "y" : 1029
+        } ]
+      }, {
+        "id" : "29"
+      }, {
+        "id" : "18",
+        "vertices" : [ {
+          "x" : 4520,
+          "y" : 729
+        } ]
+      }, {
+        "id" : "28",
+        "vertices" : [ {
+          "x" : 3306,
+          "y" : 1179
+        }, {
+          "x" : 3801,
+          "y" : 1179
+        } ]
+      }, {
+        "id" : "17",
+        "vertices" : [ {
+          "x" : 4670,
+          "y" : 1433
+        } ]
+      }, {
+        "id" : "16"
+      }, {
+        "id" : "27",
+        "vertices" : [ {
+          "x" : 3908,
+          "y" : 1525
+        } ]
+      }, {
+        "id" : "26"
+      }, {
+        "id" : "15",
+        "vertices" : [ {
+          "x" : 3908,
+          "y" : 729
+        } ]
+      }, {
+        "id" : "25"
+      }, {
+        "id" : "14"
+      }, {
+        "id" : "24"
+      }, {
+        "id" : "23"
+      }, {
+        "id" : "22"
+      }, {
+        "id" : "19",
+        "vertices" : [ {
+          "x" : 879,
+          "y" : 1525
+        }, {
+          "x" : 2466,
+          "y" : 1433
+        } ]
+      } ],
+      "elements" : [ {
+        "id" : "11",
+        "x" : 2587,
+        "y" : 379
+      }, {
+        "id" : "12",
+        "x" : 2529,
+        "y" : 1679
+      }, {
+        "id" : "13",
+        "x" : 3279,
+        "y" : 1679
+      }, {
+        "id" : "1",
+        "x" : 4670,
+        "y" : 329
+      }, {
+        "id" : "2",
+        "x" : 3970,
+        "y" : 329
+      }, {
+        "id" : "3",
+        "x" : 4070,
+        "y" : 1029
+      }, {
+        "id" : "4",
+        "x" : 4070,
+        "y" : 1679
+      }, {
+        "id" : "5",
+        "x" : 1887,
+        "y" : 329
+      }, {
+        "id" : "6",
+        "x" : 1837,
+        "y" : 1029
+      }, {
+        "id" : "7",
+        "x" : 1779,
+        "y" : 1679
+      }, {
+        "id" : "8",
+        "x" : 1029,
+        "y" : 1679
+      }, {
+        "id" : "9",
+        "x" : 329,
+        "y" : 1629
+      }, {
+        "id" : "10",
+        "x" : 2587,
+        "y" : 1029
+      } ]
+    }, {
+      "key" : "Kontextdiagram",
+      "order" : 2,
+      "paperSize" : "A3_Landscape",
+      "dimensions" : {
+        "width" : 3891,
+        "height" : 2258
+      },
+      "automaticLayout" : {
+        "implementation" : "Graphviz",
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "nodeSeparation" : 300,
+        "edgeSeparation" : 0,
+        "vertices" : false
+      },
+      "enterpriseBoundaryVisible" : true,
+      "relationships" : [ {
+        "id" : "29"
+      }, {
+        "id" : "18",
+        "vertices" : [ {
+          "x" : 1491,
+          "y" : 786
+        } ]
+      }, {
+        "id" : "26"
+      }, {
+        "id" : "15",
+        "vertices" : [ {
+          "x" : 879,
+          "y" : 786
+        } ]
+      }, {
+        "id" : "25",
+        "vertices" : [ {
+          "x" : 2478,
+          "y" : 896
+        } ]
+      }, {
+        "id" : "14",
+        "vertices" : [ {
+          "x" : 3050,
+          "y" : 786
+        } ]
+      }, {
+        "id" : "24",
+        "vertices" : [ {
+          "x" : 2237,
+          "y" : 717
+        } ]
+      }, {
+        "id" : "22",
+        "vertices" : [ {
+          "x" : 2933,
+          "y" : 786
+        } ]
+      }, {
+        "id" : "21"
+      }, {
+        "id" : "20",
+        "vertices" : [ {
+          "x" : 3083,
+          "y" : 482
+        } ]
+      }, {
+        "id" : "30"
+      } ],
+      "elements" : [ {
+        "id" : "11",
+        "x" : 2375,
+        "y" : 332
+      }, {
+        "id" : "12",
+        "x" : 1670,
+        "y" : 1582
+      }, {
+        "id" : "1",
+        "x" : 1029,
+        "y" : 282
+      }, {
+        "id" : "13",
+        "x" : 2420,
+        "y" : 1582
+      }, {
+        "id" : "2",
+        "x" : 329,
+        "y" : 282
+      }, {
+        "id" : "5",
+        "x" : 3125,
+        "y" : 282
+      }, {
+        "id" : "6",
+        "x" : 3112,
+        "y" : 982
+      }, {
+        "id" : "10",
+        "x" : 1891,
+        "y" : 982
+      } ]
+    } ],
+    "systemContextViews" : [ {
+      "softwareSystemId" : "10",
+      "key" : "IntegrationsSchicht",
+      "order" : 3,
+      "paperSize" : "A2_Landscape",
+      "dimensions" : {
+        "width" : 6100,
+        "height" : 2358
+      },
+      "automaticLayout" : {
+        "implementation" : "Graphviz",
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "nodeSeparation" : 300,
+        "edgeSeparation" : 0,
+        "vertices" : false
+      },
+      "animations" : [ {
+        "order" : 1,
+        "elements" : [ "10" ]
+      }, {
+        "order" : 2,
+        "elements" : [ "5" ],
+        "relationships" : [ "14" ]
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "relationships" : [ {
+        "id" : "32",
+        "vertices" : [ {
+          "x" : 3829,
+          "y" : 1525
+        } ]
+      }, {
+        "id" : "20"
+      }, {
+        "id" : "31",
+        "vertices" : [ {
+          "x" : 2408,
+          "y" : 1525
+        } ]
+      }, {
+        "id" : "30"
+      }, {
+        "id" : "18",
+        "vertices" : [ {
+          "x" : 5220,
+          "y" : 729
+        } ]
+      }, {
+        "id" : "29"
+      }, {
+        "id" : "17",
+        "vertices" : [ {
+          "x" : 5370,
+          "y" : 1329
+        } ]
+      }, {
+        "id" : "28",
+        "vertices" : [ {
+          "x" : 3001,
+          "y" : 1179
+        }, {
+          "x" : 3998,
+          "y" : 1179
+        } ]
+      }, {
+        "id" : "27",
+        "vertices" : [ {
+          "x" : 4608,
+          "y" : 1525
+        } ]
+      }, {
+        "id" : "16"
+      }, {
+        "id" : "15"
+      }, {
+        "id" : "26"
+      }, {
+        "id" : "14",
+        "vertices" : [ {
+          "x" : 850,
+          "y" : 1525
+        } ]
+      }, {
+        "id" : "25",
+        "vertices" : [ {
+          "x" : 1946,
+          "y" : 779
+        } ]
+      }, {
+        "id" : "24",
+        "vertices" : [ {
+          "x" : 1686,
+          "y" : 928
+        } ]
+      }, {
+        "id" : "23"
+      }, {
+        "id" : "19",
+        "vertices" : [ {
+          "x" : 3129,
+          "y" : 1525
+        } ]
+      } ],
+      "elements" : [ {
+        "id" : "11",
+        "x" : 1404,
+        "y" : 379
+      }, {
+        "id" : "12",
+        "x" : 1779,
+        "y" : 1679
+      }, {
+        "id" : "13",
+        "x" : 1029,
+        "y" : 1679
+      }, {
+        "id" : "1",
+        "x" : 5370,
+        "y" : 329
+      }, {
+        "id" : "2",
+        "x" : 4670,
+        "y" : 329
+      }, {
+        "id" : "3",
+        "x" : 4770,
+        "y" : 1029
+      }, {
+        "id" : "4",
+        "x" : 4770,
+        "y" : 1679
+      }, {
+        "id" : "5",
+        "x" : 329,
+        "y" : 1629
+      }, {
+        "id" : "7",
+        "x" : 2529,
+        "y" : 1679
+      }, {
+        "id" : "8",
+        "x" : 3979,
+        "y" : 1679
+      }, {
+        "id" : "9",
+        "x" : 3279,
+        "y" : 1629
+      }, {
+        "id" : "10",
+        "x" : 1779,
+        "y" : 1029
+      } ]
+    } ],
+    "containerViews" : [ {
+      "softwareSystemId" : "10",
+      "key" : "Containers",
+      "order" : 4,
+      "paperSize" : "A5_Landscape",
+      "dimensions" : {
+        "width" : 2480,
+        "height" : 1748
+      },
+      "externalSoftwareSystemBoundariesVisible" : true
+    } ],
+    "configuration" : {
+      "branding" : { },
+      "styles" : {
+        "elements" : [ {
+          "tag" : "Person",
+          "background" : "#444444",
+          "color" : "#ffffff",
+          "fontSize" : 22,
+          "shape" : "Person"
+        }, {
+          "tag" : "file",
+          "background" : "#1168bd",
+          "color" : "#ffffff",
+          "shape" : "Folder"
+        }, {
+          "tag" : "Group:Physiounternehmung",
+          "color" : "#b6862e"
+        }, {
+          "tag" : "Group:Patient",
+          "color" : "#589fd8"
+        }, {
+          "tag" : "Group:Moegliche zukünftige Abhängigkeiten",
+          "color" : "#38094e"
+        }, {
+          "tag" : "Customer",
+          "background" : "#08427b"
+        }, {
+          "tag" : "Software System",
+          "background" : "#1168bd",
+          "color" : "#ffffff"
+        }, {
+          "tag" : "mainSystem",
+          "background" : "#000000"
+        }, {
+          "tag" : "Existing System",
+          "background" : "#999999",
+          "color" : "#ffffff"
+        }, {
+          "tag" : "Container",
+          "background" : "#438dd5",
+          "color" : "#ffffff"
+        }, {
+          "tag" : "Web Browser",
+          "shape" : "WebBrowser"
+        }, {
+          "tag" : "Mobile App",
+          "shape" : "MobileDeviceLandscape"
+        }, {
+          "tag" : "Database",
+          "shape" : "Cylinder"
+        }, {
+          "tag" : "Component",
+          "background" : "#85bbf0",
+          "color" : "#000000"
+        }, {
+          "tag" : "Failover",
+          "opacity" : 25
+        } ]
+      },
+      "terminology" : { },
+      "lastSavedView" : "IntegrationsSchicht"
+    }
+  }
+}
