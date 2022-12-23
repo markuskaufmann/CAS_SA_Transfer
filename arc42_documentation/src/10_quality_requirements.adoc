@@ -305,3 +305,17 @@ Die nachfolgend ersichtliche Darstellung repräsentiert eine Priorisierung / Gew
 Die mit __(Erweiterung)__ gekennzeichneten Szenarien werden in der Initialversion des Quality Trees ausgelassen, da sie ein potentieller Bestandteil zukünftiger Versionen / Iterationen der Systemarchitektur sind.
 
 plantuml::quality_requirements/quality_tree.puml[format=svg]
+
+Aus dem obigen Quality Tree lassen sich die folgenden Erkenntnisse extrahieren:
+
+1. Die folgenden Szenarien sind von besonderer Relevanz
+** SZ-CNF-1 +
+Einhaltung der geltenden Datenschutzverordnungen und Sicherheitsstandards in Bezug auf die Ablage persönlicher Gesundheitsdaten.
+** SZ-IOP-1 +
+Zuverlässige Interoperabilität zwischen Patienten-App (Smartphone / Fitnesstracker) und PhysioConnect bezüglich der Übermittlung von aufgezeichneten Gesundheitsdaten (z.B. Puls, Blutdruck).
+** SZ-IOP-2 +
+Zuverlässige Interoperabilität zwischen Patienten-App (Smartphone / Fitnesstracker) und PhysioConnect bezüglich der Ausführung verschiedener Operationen (z.B. Start einer Therapie-Session).
+** SZ-MOD-1 +
+Einfache und effiziente Erweiterung von PhysioConnect bezüglich der Unterstützung neuer Messdatentypen (z.B. Körpertemperatur) pro Übung.
+
+2. Die restlichen Szenarien (und damit verbundenen Quality Attributes) befinden sich mehrheitlich auf derselben Relevanzstufe, wodurch sie bei Architekturentscheidungen zu gleichen Teilen berücksichtigt werden müssen.

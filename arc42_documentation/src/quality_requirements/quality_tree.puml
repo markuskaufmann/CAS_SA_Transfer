@@ -24,9 +24,7 @@ rectangle "0.06" as IOP_5_RESULT #FFFFFF
 rectangle Security
 rectangle Confidentiality
 rectangle "SZ-CNF-1"
-rectangle "0.2" as CNF_1_RESULT #OrangeRed
-rectangle "SZ-CNF-2"
-rectangle "0.05" as CNF_2_RESULT #FFFFFF
+rectangle "0.25" as CNF_1_RESULT #OrangeRed
 
 rectangle Maintainability
 rectangle Modifiability
@@ -73,10 +71,8 @@ Interoperability --> "SZ-IOP-5" : 0.16
 "SZ-IOP-5" --[dotted] IOP_5_RESULT
 
 Security --> Confidentiality : 1.0
-Confidentiality --> "SZ-CNF-1" : 0.8
+Confidentiality --> "SZ-CNF-1" : 1.0
 "SZ-CNF-1" --[dotted] CNF_1_RESULT
-Confidentiality --> "SZ-CNF-2" : 0.2
-"SZ-CNF-2" --[dotted] CNF_2_RESULT
 
 Maintainability --> Modifiability : 1.0
 Modifiability --> "SZ-MOD-1" : 0.4
