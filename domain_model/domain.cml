@@ -32,21 +32,7 @@ BoundedContext TherapieContext {
 		}
 	}
 
-	Module PhysioConnectV2 {
-		basePackage = ch.hslu.physio
-
-		Aggregate UebungsKollektion {
-			Entity UebungsKollektion {
-				aggregateRoot
-				- List<BeispielSession> beispielTherapieSessionen
-				- List<UebungsBeschreibung> uebungsListe
-			}
-
-			ValueObject BeispielSession {
-				- List<UebungsBeschreibung> uebungsBeschreibungen
-			}
-		}
-
+	Module UebungsKatalog {
 		Aggregate UebungsKatalog {
 			Entity UebungsBeschreibung {
 				aggregateRoot
@@ -69,7 +55,25 @@ BoundedContext TherapieContext {
 				TEXT_BLOCK, VIDEO, BILD, AUDIO
 			}
 		}
-		
+	}
+
+	Module UebungsKollektion {
+		Aggregate UebungsKollektion {
+			Entity UebungsKollektion {
+				aggregateRoot
+				- List<BeispielSession> beispielTherapieSessionen
+				- List<UebungsBeschreibung> uebungsListe
+			}
+
+			ValueObject BeispielSession {
+				- List<UebungsBeschreibung> uebungsBeschreibungen
+			}
+		}
+	}
+
+	Module PhysioConnectV2 {
+		basePackage = ch.hslu.physio
+
 		Aggregate GesamtTherapie {
 			Entity GesamtTherapie {
 				aggregateRoot

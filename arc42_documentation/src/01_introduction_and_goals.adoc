@@ -22,14 +22,17 @@ These include
 ** Therapien erstellen und Patienten dazu einladen
 ** generische und patientenspezische Übungen verwalten
 ** Therapien und Übungen in der Form von Therapie-Sessions kombinieren, welche von den Patienten durchgeführt werden
+** Übungen patienten- und therapiespezifisch modifizieren
 ** den Therapiefortschritt von Patienten überwachen (Monitoring) und auswerten (Reporting)
 ** ein Feedback / Bewertung zu einer abgeschlossenen Therapie-Session, Übung oder zu der Bewertung / Feedback eines Patienten abgeben
+** Übungskollektionen erstellen und den Patienten senden, damit diese nach abgeschlossener Therapie selbstständing Übungen ausführen können
 
 * Patienten können
 ** einer verordneten Therapie beitreten
 ** Therapie-Sessions inkl. verordneter Übungen durchführen
 ** ein Feedback / Bewertung zu einer Therapie-Session und / oder Übung abgeben
 ** eigene Therapie-Sessions inkl. eigener Übungen verwalten und durchführen
+** eigene Therapie-Daten einsehen und weiterleiten
 
 * Vorgesetzte von Physiotherapeuten können
 ** den Fortschritt ihrer unterstellten Physiotherapeuten überwachen (Monitoring) und auswerten (Reporting)
@@ -51,7 +54,7 @@ In der nachfolgenden Tabelle sind die primären Qualitätsziele absteigend nach 
 |===
 |ID|Qualitätsattribut|Name|Ziel / Motivation
 |QG-1|Interoperability|Kompatibilität mit App, Übungskatalog und Dokumentationssystem|Die bereits bestehende Patienten-App sowie der Übungskatalog stehen in direkter Verbindung zu PhysioConnect. Die daher bereits vordefinierten Kommunikationsschnittstellen und -protokolle müssen stets eingehalten und - aus Sicht von PhysioConnect - kompatibel gehalten werden, sodass Informationen zwischen den Systemen ausgetauscht und zielführend verarbeitet werden können. Des Weiteren soll - gemäss der Anforderungen seitens Kunde und Physiotherapeut - die Möglichkeit offengehalten werden, Schnittstellen für den Datenimport aus einem bestehenden Dokumentationssystem bereitzustellen, welche mit möglichst geringem Integrationsaufwand benutzt werden können.
-|QG-2|Confidentiality|Einhaltung bestehender Datenschutzverordnungen und -gesetze|Aus staatlicher sowie Patientensicht ist die Einhaltung existierender Datenschutzverordnungen und -gesetze von hoher Relevanz. Dies betrifft die Aufzeichnung, Ablage und (wenn möglich anonymisierte) Weitergabe der persönlichen Gesundheitsdaten, welche während der Durchführung der einzelnen Übungen (als Teil der Therapie-Sessions) stetig gemessen werden.
+|QG-2|Confidentiality|Einhaltung bestehender Datenschutzverordnungen und -gesetze|Aus staatlicher sowie Patientensicht ist die Einhaltung existierender Datenschutzverordnungen und -gesetze von hoher Relevanz. Dies betrifft die Aufzeichnung, Ablage und Weitergabe der persönlichen Gesundheitsdaten, welche während der Durchführung der einzelnen Übungen (als Teil der Therapie-Sessions) gemessen werden. Diese Punkte betreffen sowohl anonymisierte als auch personalisierte Daten.
 |QG-3|Modifiability|Flexible Erweiterbarkeit für neu zu unterstützende / bereitzustellende Schnittstellen|Aus Sicht des Kunden und Physiotherapeuten soll die Möglichkeit offengehalten werden, Schnittstellen für den Datenimport aus einem bestehenden Dokumentationssystem bereitzustellen. Des Weiteren soll mit möglichst geringem Implementationsaufwand auf etwaige Änderungen der Schnittstellen seitens App oder Übungskatalog reagiert werden können. Ebenfalls soll PhysioConnect einfach mit neuen Schnittstellen (z.B. für die Bereitstellung anonymisierter Gesundheitsdaten an die medizinische Forschung) erweitert werden können.
 |===
 
