@@ -33,6 +33,7 @@ rectangle "0.08" as MOD_1_RESULT #Yellow
 rectangle "SZ-MOD-2"
 rectangle "0.02" as MOD_2_RESULT #FFFFFF
 rectangle "SZ-MOD-3"
+rectangle "SZ-MOD-3"
 rectangle "0.05" as MOD_3_RESULT #FFFFFF
 rectangle "SZ-MOD-4"
 rectangle "0.05" as MOD_4_RESULT #FFFFFF
