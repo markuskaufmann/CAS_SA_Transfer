@@ -3,11 +3,13 @@ version: '3.8'
 services:
   structurizr:
     image: structurizr/cli:latest
+    pull_policy: always
     command: export -w workspace.dsl -format plantuml/structurizr -output generated
     volumes:
       - ./physio_connect_c4:/usr/local/structurizr/
   asciidoctor:
     image: asciidoctor/docker-asciidoctor:latest
+    pull_policy: always
     depends_on:
       structurizr:
         condition: service_completed_successfully
