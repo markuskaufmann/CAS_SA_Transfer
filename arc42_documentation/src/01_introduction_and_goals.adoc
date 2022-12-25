@@ -211,7 +211,9 @@ image::01_03_stakeholder-powergrid.drawio.svg[Static,width=100%]
 
 ==== Priorisierung der Stakeholder
 
-Basierend auf dem Verhältnis zwischen Einfluss (Power) und Interessensgrad (Level of Interest) des Stakeholder Powergrids werden die Bedürfnisse der nachfolgenden Stakeholder prioritär berücksichtigt:
+Basierend auf dem Verhältnis zwischen Einfluss (Power) und Interessensgrad (Level of Interest) des Stakeholder Powergrids werden die Bedürfnisse der Stakeholder folgendermassen berücksichtigt.
+
+__Wichtigste Akteure__
 
 * Anbieter / Product Owner von PhysioConnect
 * Kunde
