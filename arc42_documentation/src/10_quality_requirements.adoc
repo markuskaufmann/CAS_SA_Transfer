@@ -42,7 +42,7 @@ Effektive Szenarien, welche sich auf Qualitätsziel QG-1 (Interoperability) bezi
 |===
 |**ID**|SZ-IOP-1
 |**Quelle des Stimulus**|Smartphone-App sendet API request
-|**Stimulus**|Speichern der übungsrelevanten Messdaten (z.B. Puls, Blutdruck)
+|**Stimulus**|Request zum Speichern der übungsrelevanten Messdaten (z.B. Puls, Blutdruck) gesendet
 |**Umgebung**|Laufzeit
 |**System / Artefakte**|PhysioConnect / API Request Handler für App
 |**Antwort / Verhalten**|Sind die enthaltenen Messdaten des eingehenden Requests formal korrekt, werden diese abgespeichert und mit dem Patienten sowie der aktuellen Therapie-Session und Übung verknüpft. +
@@ -56,7 +56,7 @@ Sind die Messdaten formal inkorrekt oder ein Fehler tritt bei der Persistierung 
 |===
 |**ID**|SZ-IOP-2
 |**Quelle des Stimulus**|Smartphone-App sendet API request
-|**Stimulus**|Ausführung einer Operation bezüglich einer Therapie-Session
+|**Stimulus**|Request zum Ausführung einer Operation bezüglich einer Therapie-Session gesendet
 |**Umgebung**|Laufzeit
 |**System / Artefakte**|PhysioConnect / API Request Handler für App
 |**Antwort / Verhalten**|Ist der eingehende Request formal korrekt, wird die entsprechende Operation intern verarbeitet und allfällige Zustandsänderungen persistiert (z.B. Start der Therapie-Session ändert deren Status). +
@@ -70,7 +70,7 @@ Ist der eingehende Request formal inkorrekt oder ein Fehler tritt während der i
 |===
 |**ID**|SZ-IOP-3
 |**Quelle des Stimulus**|Smartphone-App oder PhysioConnect sendet API request
-|**Stimulus**|Verwaltung von Übungen - Create, Read, Update, Archive
+|**Stimulus**|Request zum Verwalten von Übungen - Create, Read, Update, Archive gesendet
 |**Umgebung**|Laufzeit
 |**System / Artefakte**|PhysioConnect / API Response Handler für Übungskatalog, interne Layer
 |**Antwort / Verhalten**|Die Operation für das Lesen, Erstellen, Aktualisieren oder Archivieren einer Übung wird inkl. Payload an den Übungskatalog weitergeleitet. +
@@ -85,7 +85,7 @@ Eine fehlerhafte Response des Übungskatalogs wird geloggt und führt zu einer A
 |===
 |**ID**|SZ-IOP-4
 |**Quelle des Stimulus**|Smartphone-App oder PhysioConnect sendet API request
-|**Stimulus**|Upload von Detailinformationen (Text, Bilder, Video, Audio) zu einer bestehenden Übung
+|**Stimulus**|Request zum Upload von Detailinformationen (Text, Bilder, Video, Audio) zu einer bestehenden Übung gesendet
 |**Umgebung**|Laufzeit
 |**System / Artefakte**|PhysioConnect / API Response Handler für Übungskatalog, interne Layer
 |**Antwort / Verhalten**|Die Operation für den Upload von Detailinformation zu einer Übung wird inkl. Payload an den Übungskatalog weitergeleitet. +
@@ -100,7 +100,7 @@ Eine fehlerhafte Response des Übungskatalogs wird geloggt und führt zu einer A
 |===
 |**ID**|SZ-IOP-5
 |**Quelle des Stimulus**|Smartphone-App oder PhysioConnect sendet API request
-|**Stimulus**|Laden von Benutzerinformationen
+|**Stimulus**|Request zum Laden von Benutzerinformationen gesendet
 |**Umgebung**|Laufzeit
 |**System / Artefakte**|PhysioConnect / API Response Handler für Benutzerverwaltung, interne Layer
 |**Antwort / Verhalten**|Requests bzw. interne Funktionen, welche Benutzerinformationen benötigen, setzen einen entsprechenden Request an die Benutzerverwaltung ab. +
@@ -115,7 +115,7 @@ Eine fehlerhafte Response der Benutzerverwaltung wird geloggt und führt zu eine
 |===
 |**ID**|SZ-IOP-6 (Erweiterung)
 |**Quelle des Stimulus**|Dokumentationssysteme oder PhysioConnect sendet API request
-|**Stimulus**|Datenimport aus Dokumentationssystem (API oder File Upload)
+|**Stimulus**|Request für Datenimport aus dem Dokumentationssystem (API oder File Upload) gesendet
 |**Umgebung**|Laufzeit
 |**System / Artefakte**|PhysioConnect / API Request Handler für Dokumentationssystem, interne Layer
 |**Antwort / Verhalten**|Die zu importierenden Daten werden gemäss der vorgegebenen API / Upload File-Struktur eingelesen und formal geprüft. Sind die Daten formal korrekt, werden sie intern verarbeitet und persistiert. Die PhysioConnect-API gibt einen erfolgreichen Response-Status zurück. +
