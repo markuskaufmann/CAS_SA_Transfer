@@ -178,23 +178,48 @@ Szenarien, welche sich auf Qualitätsziel QG-2 (Confidentiality) beziehen.
 [cols="2,6"]
 |===
 |**ID**|SZ-CNF-1
-|**Quelle des Stimulus**|Patient via App auf Fitnesstracker
+|**Quelle des Stimulus**|Identifizierter Patient via Smartphone-App
 |**Stimulus**|Speichern der übungsrelevanten Messdaten (z.B. Puls, Blutdruck)
-|**Umgebung**|Laufzeit
+|**Umgebung**|Voll einsatzfähiges online System, Request von ausserhalb des PhysioConnect Netzwerkes
 |**System / Artefakte**|PhysioConnect / API Request Handler für App
 |**Antwort / Verhalten**|Die Messdaten werden verschlüsselt entgegengenommen (API ist nur via TLS / SSL verwendbar) und formal geprüft. Formal korrekte Messdaten werden direkt in einem verschlüsselten Datenspeicher abgelegt, wo sie nur innerhalb des internen Systemnetzwerks zugreif- / auslesbar sind. In betroffenem Datenspeicher sind die Messdaten nicht anonymisiert abgelegt, da sie zu Auswertungs- und Analysezwecken dem Patienten und der jeweiligen Übung / Therapie-Session zugeordnet werden müssen. +
 Sind die Messdaten formal inkorrekt oder ein Fehler tritt während der internen Verarbeitung oder Persistierung auf, wird der Request geloggt (ohne die konkreten Messdaten) und eine entsprechende Response mit Fehlercode zurückgegeben.
 |**Metrik für Erfüllungsgrad**|100% der verarbeiteten Requests zur Speicherung der Messdaten verlaufen über einen verschlüsselten Kommunikationskanal. +
-Der Datenspeicher mit den Messdaten ist ausserhalb des Systemnetzwerks nicht erreichbar. +
+Der Datenspeicher mit den Messdaten ist ausserhalb des Systemnetzwerks nicht direkt erreichbar. +
 100% der formal inkorrekten Requests oder auftretenden Fehler werden geloggt und führen zu einer Response mit Fehlercode. Die Logs enthalten keine expliziten Messdaten oder Patienteninformationen.
 |===
 
 [cols="2,6"]
 |===
-|**ID**|SZ-CNF-2 (Erweiterung)
-|**Quelle des Stimulus**|Physiotherapeut via PhysioConnect
+|**ID**|SZ-CNF-2
+|**Quelle des Stimulus**|Identifizierter Patient via Smartphone-App
+|**Stimulus**|Abrufen der Messdaten eines anderen Patienten
+|**Umgebung**|Voll einsatzfähiges online System, Request von ausserhalb des PhysioConnect Netzwerkes
+|**System / Artefakte**|PhysioConnect / API Request Handler für App
+|**Antwort / Verhalten**|Die Anfrage wird entgegengenommen und das darin enthaltene Access Token überprüft. Der Patient wird korrekt authentifiziert und es wird überprüft, ob der Patient Zugriff auf die angeforderten Daten besitzt. Da die Daten einem Anderen Patienten zugewiesen sind, wird eine 403 Response zurückgesendet und der Vorfall wird als potentieller angriffsversuch geloggt.
+|**Metrik für Erfüllungsgrad**|Bei 100% der Requests werden keine Messdaten zurückgeliefert. Bei 99.9% der Requests wird eine Response mit Fehlercode 403 geliefert.
+99.9% der Requests werded korrekt geloggt und als potentielle Angriffe markiert und auf den verwendetetn Benutzeraccount verwiesen, sodass bei wiederholten Angriffen Massnahmen ergriffen werden können.
+|===
+
+[cols="2,6"]
+|===
+|**ID**|SZ-CNF-3
+|**Quelle des Stimulus**|Unidentifizierte Person via Smartphone-App
+|**Stimulus**|Abrufen der Messdaten mit einem ungültigen Access Token
+
+|**Umgebung**|Voll einsatzfähiges online System, Request von ausserhalb des PhysioConnect Netzwerkes
+|**System / Artefakte**|PhysioConnect / API Request Handler für App
+|**Antwort / Verhalten**|Die Anfrage wird entgegengenommen und das darin enthaltene Access Token überprüft. Der Benutzername und die ID des Patienten sind dabei korrekt gesetzt. Das Token wird an die Security Komponente weitergeleited und validiert. Da das Token ungültig ist, beantwortet Physio Connect den Request mit einem Fehlercode von 403 Unauthorized.
+|**Metrik für Erfüllungsgrad**|Bei 100% der Requests werden keine Messdaten zurückgeliefert. Bei 99.9% der Requests wird eine Response mit Fehlercode 403 geliefert.
+99.9% der Requests werded korrekt geloggt und als potentielle Angriffe markiert, sodass bei wiederholten Angriffen Massnahmen ergriffen werden können.
+|===
+
+[cols="2,6"]
+|===
+|**ID**|SZ-CNF-4 (Erweiterung)
+|**Quelle des Stimulus**|Identifizierter Physiotherapeut via PhysioConnect
 |**Stimulus**|Physiotherapeut markiert Therapie als abgeschlossen
-|**Umgebung**|Laufzeit
+|**Umgebung**|Voll einsatzfähiges online System, Request von innerhalb des PhysioConnect Netzwerkes
 |**System / Artefakte**|PhysioConnect / API Response Handler für EPD
 |**Antwort / Verhalten**|Alle patientenbezogenen Therapiedaten werden in aggregierter Form an das https://www.patientendossier.ch/[Elektronische Patientendossier (EPD)] weitergeleitet. Die Kommunikation verläuft dabei über vordefinierte Schnittstellen / Protokolle sowie über eine verschlüsselte Verbindung. Die Daten sind nicht anonymisiert, da sie Teil der persönlichen Dokumente eines Patienten darstellen. +
 Die Datenübermittlung erfolgt nur für diejenigen Patienten, welche der Weitergabe ihrer Gesundsheitsdaten zu Beginn der Therapie zugestimmt haben. 
