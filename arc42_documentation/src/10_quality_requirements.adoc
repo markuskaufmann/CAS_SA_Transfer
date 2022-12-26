@@ -357,7 +357,7 @@ Es kann sichergestellt werden, dass 100% der bereitgestellten Gesundheitsdaten m
 |**ID**|SZ-TIB-1
 |**Quelle des Stimulus**|Patient via Fitnesstracker-App
 |**Stimulus**|Verarbeitung parallel eingehender Messdaten-Requests
-|**Umgebung**|Laufzeit
+|**Umgebung**|Normalbetrieb
 |**System / Artefakte**|PhysioConnect / API Request Handler für App, interne Layer
 |**Antwort / Verhalten**|Gleichzeitig eingehende Messdaten (ausgehend von verschiedenen Patienten) werden in unabhängigen Threads verarbeitet und zuverlässig persistiert. Gemeinsam genutzte Ressourcen (z.B. Datenspeicher) sind mit entsprechenden Synchronisationsmechanismen (z.B. Semaphoren) abgesichert, um Concurrency Exceptions und inkonsistenten Datenständen vorzubeugen.
 |**Metrik für Erfüllungsgrad**|99% der API-Requests zum Ablegen eingehender Messdaten werden intern (sprich abzüglich der Netzwerk-Latenzzeit) innerhalb von 100 Millisekunden verarbeitet (Eingang des Requests, formale Prüfung, Persistierung, Response).
@@ -370,7 +370,7 @@ Es kann sichergestellt werden, dass 100% der bereitgestellten Gesundheitsdaten m
 |**ID**|SZ-CAP-1
 |**Quelle des Stimulus**|Benutzer von PhysioConnect
 |**Stimulus**|Parallele Verwendung von PhysioConnect durch mehrere Benutzer (z.B. Physiotherapeuten + Vorgesetzte + Patienten)
-|**Umgebung**|Laufzeit
+|**Umgebung**|Spitzenbelastung
 |**System / Artefakte**|PhysioConnect / Gesamtsystem
 |**Antwort / Verhalten**|PhysioConnect verarbeitet verschiedenste Request-Typen (z.B. Verarbeitung eingehender Messdaten, Monitoring, Reporting, Erstellung einer neuen Therapie) in unabhängigen Threads und ermöglicht somit mehreren Parteien, das System gleichzeitig zu verwenden.
 |**Metrik für Erfüllungsgrad**|Das System ermöglicht den einwandfreien Betrieb mit 100 gleichzeitigen Benutzern. Einwandfrei bedeutet in dem Fall: +
@@ -384,7 +384,7 @@ Es kann sichergestellt werden, dass 100% der bereitgestellten Gesundheitsdaten m
 |**ID**|SZ-FLT-1
 |**Quelle des Stimulus**|Übungskatalog
 |**Stimulus**|Übungskatalog ist nicht / eingeschränkt erreichbar und / oder gibt Request-unabhängige Fehlermeldungen zurück
-|**Umgebung**|Laufzeit
+|**Umgebung**|Gestörter Betrieb
 |**System / Artefakte**|PhysioConnect / Gesamtsystem
 |**Antwort / Verhalten**|Requests zum Übungskatalog werden nach Ablauf eines vordefinierten Timeouts (z.B. 5 Sekunden) auf Basis einer Retry-Policy mehrmals wiederholt (z.B. 2 Wiederholungen). Nach erfolglosem Ablauf aller Wiederholungen wird das Nichterreichen des Übungskatalogs geloggt und die interne Funktionslogik wird - sofern sinnvoll - ohne Fehler fortgesetzt. Alternativ wird eine entsprechende Response mit Fehlercode zurückgegeben. +
 Request-unabhängige Fehlermeldungen des Übungskatalogs werden geloggt und führen zu der Rückgabe einer entsprechenden Response mit Fehlercode.
@@ -397,7 +397,7 @@ Request-unabhängige Fehlermeldungen des Übungskatalogs werden geloggt und füh
 |**ID**|SZ-FLT-2
 |**Quelle des Stimulus**|Benutzerverwaltung
 |**Stimulus**|Benutzerverwaltung ist nicht / eingeschränkt erreichbar und / oder gibt Request-unabhängige Fehlermeldungen zurück
-|**Umgebung**|Laufzeit
+|**Umgebung**|Gestörter Betrieb
 |**System / Artefakte**|PhysioConnect / Gesamtsystem
 |**Antwort / Verhalten**|Requests zur Benutzerverwaltung werden nach Ablauf eines vordefinierten Timeouts (z.B. 5 Sekunden) auf Basis einer Retry-Policy mehrmals wiederholt (z.B. 2 Wiederholungen). Nach erfolglosem Ablauf aller Wiederholungen wird das Nichterreichen der Benutzerverwaltung geloggt und die interne Funktionslogik wird - sofern sinnvoll - ohne Fehler fortgesetzt. Alternativ wird eine entsprechende Response mit Fehlercode zurückgegeben. +
 Request-unabhängige Fehlermeldungen der Benutzerverwaltung werden geloggt und führen zu der Rückgabe einer entsprechenden Response mit Fehlercode.
@@ -411,7 +411,7 @@ Request-unabhängige Fehlermeldungen der Benutzerverwaltung werden geloggt und f
 |===
 |**ID**|SZ-INT-1 (Erweiterung)
 |**Quelle des Stimulus**|Kunde, Technische Integratoren von PhysioConnect (z.B. IT-Abteilung des Kunden)
-|**Stimulus**|On Premise-Betrieb von PhysioConnect
+|**Stimulus**|Einrichtung von Premise-Betrieb von PhysioConnect
 |**Umgebung**|Installationszeit, Konfigurationszeit
 |**System / Artefakte**|PhysioConnect / Gesamtsystem
 |**Antwort / Verhalten**|PhysioConnect ist in einer kundenspezifischen System- und Applikationslandschaft, welche on premise läuft, mit vertretbarem Aufwand und Komplexität integrierbar (beinhaltet Installation und Konfiguration).
