@@ -41,7 +41,7 @@ Effektive Szenarien, welche sich auf Qualitätsziel QG-1 (Interoperability) bezi
 [cols="2,6"]
 |===
 |**ID**|SZ-IOP-1
-|**Quelle des Stimulus**|Patient via Fitnesstracker-App
+|**Quelle des Stimulus**|Smartphone-App sendet API request
 |**Stimulus**|Speichern der übungsrelevanten Messdaten (z.B. Puls, Blutdruck)
 |**Umgebung**|Laufzeit
 |**System / Artefakte**|PhysioConnect / API Request Handler für App
@@ -55,7 +55,7 @@ Sind die Messdaten formal inkorrekt oder ein Fehler tritt bei der Persistierung 
 [cols="2,6"]
 |===
 |**ID**|SZ-IOP-2
-|**Quelle des Stimulus**|Patient via Smartphone-App
+|**Quelle des Stimulus**|Smartphone-App sendet API request
 |**Stimulus**|Ausführung einer Operation bezüglich einer Therapie-Session
 |**Umgebung**|Laufzeit
 |**System / Artefakte**|PhysioConnect / API Request Handler für App
@@ -69,7 +69,7 @@ Ist der eingehende Request formal inkorrekt oder ein Fehler tritt während der i
 [cols="2,6"]
 |===
 |**ID**|SZ-IOP-3
-|**Quelle des Stimulus**|Physiotherapeut via PhysioConnect, Patient via PhysioConnect oder Smartphone-App
+|**Quelle des Stimulus**|Smartphone-App oder PhysioConnect sendet API request
 |**Stimulus**|Verwaltung von Übungen - Create, Read, Update, Archive
 |**Umgebung**|Laufzeit
 |**System / Artefakte**|PhysioConnect / API Response Handler für Übungskatalog, interne Layer
@@ -84,7 +84,7 @@ Eine fehlerhafte Response des Übungskatalogs wird geloggt und führt zu einer A
 [cols="2,6"]
 |===
 |**ID**|SZ-IOP-4
-|**Quelle des Stimulus**|Physiotherapeut via PhysioConnect, Patient via PhysioConnect oder Smartphone-App
+|**Quelle des Stimulus**|Smartphone-App oder PhysioConnect sendet API request
 |**Stimulus**|Upload von Detailinformationen (Text, Bilder, Video, Audio) zu einer bestehenden Übung
 |**Umgebung**|Laufzeit
 |**System / Artefakte**|PhysioConnect / API Response Handler für Übungskatalog, interne Layer
@@ -99,7 +99,7 @@ Eine fehlerhafte Response des Übungskatalogs wird geloggt und führt zu einer A
 [cols="2,6"]
 |===
 |**ID**|SZ-IOP-5
-|**Quelle des Stimulus**|Physiotherapeut / Vorgesetzter via PhysioConnect, Patient via PhysioConnect oder Smartphone-App
+|**Quelle des Stimulus**|Smartphone-App oder PhysioConnect sendet API request
 |**Stimulus**|Laden von Benutzerinformationen
 |**Umgebung**|Laufzeit
 |**System / Artefakte**|PhysioConnect / API Response Handler für Benutzerverwaltung, interne Layer
@@ -114,7 +114,7 @@ Eine fehlerhafte Response der Benutzerverwaltung wird geloggt und führt zu eine
 [cols="2,6"]
 |===
 |**ID**|SZ-IOP-6 (Erweiterung)
-|**Quelle des Stimulus**|Physiotherapeut via Dokumentationssystem oder PhysioConnect
+|**Quelle des Stimulus**|Dokumentationssysteme oder PhysioConnect sendet API request
 |**Stimulus**|Datenimport aus Dokumentationssystem (API oder File Upload)
 |**Umgebung**|Laufzeit
 |**System / Artefakte**|PhysioConnect / API Request Handler für Dokumentationssystem, interne Layer
