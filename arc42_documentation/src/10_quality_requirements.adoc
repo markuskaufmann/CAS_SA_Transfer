@@ -11,7 +11,32 @@ Gemäss den primären link:01_introduction_and_goals.adoc#section-quality-goals[
 Die mit __(Erweiterung)__ gekennzeichneten Szenarien sind ein potentieller Bestandteil zukünftiger Versionen / Iterationen der Systemarchitektur.
 
 ==== Interoperability (Compatibility)
-Szenarien, welche sich auf Qualitätsziel QG-1 (Interoperability) beziehen.
+Die interoperability Szenarien basieren auf der folgenden Definition:
+
+[cols="2,6"]
+|===
+|**ID**|SZ-IOP-X
+|**Quelle des Stimulus**|A system initiates a request to interoperate with another system
+|**Stimulus**|A request to exchange information among system(s)
+|**Umgebung**|System(s) wishing to interoperate are discovered at runtime or known prior to runtime 
+|**System / Artefakte**|The systems that Wish to interoperate 
+|**Antwort / Verhalten**|One or more Of the following: 
+
+- The request is (appropriately) rejected and appropriate entities (people or 
+systems) are notified 
+
+- The request is (appropriately) accepted and information is exchanged 
+successfully 
+
+- The request is logged by one or more Of the involved systems 
+|**Metrik für Erfüllungsgrad**|One or more of the following: 
+
+- Percentage of information exchanges correctly processed
+
+- percentage of information exchanges correctly rejected 
+|===
+
+Effektive Szenarien, welche sich auf Qualitätsziel QG-1 (Interoperability) beziehen.
 
 [cols="2,6"]
 |===
@@ -101,6 +126,53 @@ Sind die Daten formal inkorrekt oder ein Fehler tritt während der internen Vera
 |===
 
 ==== Confidentiality (Security)
+
+Die confidentiality Szenarien basieren auf der folgenden Security Szenario Template:
+
+[cols="2,6"]
+|===
+|**ID**|SZ-CNF-X
+|**Quelle des Stimulus**|Human or another system which may have been previously identified (either correctly or incorrectly) or may be currently unknown. A human attacker may be from outside the organization or from inside the organization
+|**Stimulus**|Unauthorized attempt is made to display data, change or delete data, access system services, change the system's behavior, or reduce availability 
+|**Umgebung**|The system is either online or offline; either connected to or disconnected 
+from a network; either behind a firewall or open to a network; fully
+operational, partially operational, or not operational
+|**System / Artefakte**|System services, data within the system, a component or resources of the 
+system, data produced or consumed by the system 
+|**Antwort / Verhalten**|Transactions are carried out in a fashion such that 
+
+- Data or services are protected from unauthorized access. 
+
+- Data or services are not being manipulated Without authorization. 
+
+- Parties to a transaction are identified with assurance. 
+
+- The parties to the transaction cannot repudiate their involvements. 
+
+- The data, resources, and system services will be available for legitimate use. 
+
+The system tracks activities within it by 
+
+- Recording access or modification 
+
+- Recording attempts to access data, resources, or services 
+
+- Notifying appropriate entities attack is occurring 
+
+|**Metrik für Erfüllungsgrad**|One or more of the following: 
+
+- How much of a system is compromised when a particular component or data value is compromised 
+
+- How much time passed before an attack was detected 
+
+- How many attacks were resisted 
+
+- How long does it take to recover from a successful attack 
+
+- How much data is vulnerable to a particular attack 
+
+|===
+
 Szenarien, welche sich auf Qualitätsziel QG-2 (Confidentiality) beziehen.
 
 [cols="2,6"]
@@ -131,6 +203,29 @@ Das Initiieren und potentielle Fehlschlagen der Datenübermittlung wird geloggt,
 |===
 
 ==== Modifiability (Maintainability)
+Die modifiability Szenarien basieren auf dem folgenden Modifiability Szenario Template:
+
+[cols="2,6"]
+|===
+|**ID**|SZ-MOD-X
+|**Quelle des Stimulus**|End user, developer, system administrator
+|**Stimulus**|A directive to add/delete/modify functionality, or change a quality attribute, capacity, or technology 
+|**Umgebung**|Runtime, compile time, build time, initiation time, design time
+|**System / Artefakte**|Code, data, interfaces, components, resources, configurations, ...
+|**Antwort / Verhalten**|One or more Of the following: 
+
+- Make modification, Test modification, Deploy modification 
+|**Metrik für Erfüllungsgrad**|Cost in terms of the following: 
+
+- Number. size. complexity Of affected artifacts 
+
+- Effort, Calendar time, Money (direct outlay or opportunity cost) 
+
+- Extent to which this modification affects other functions or quality attributes 
+
+- New defects introduced 
+|===
+
 Szenarien, welche sich auf Qualitätsziel QG-3 (Modifiability) beziehen.
 
 [cols="2,6"]
