@@ -256,11 +256,11 @@ Szenarien, welche sich auf Qualitätsziel QG-3 (Modifiability) beziehen.
 [cols="2,6"]
 |===
 |**ID**|SZ-MOD-1
-|**Quelle des Stimulus**|Fitnesstracker-App
-|**Stimulus**|Unterstützung eines neuen Messdaten-Typs (z.B. Körpertemperatur)
+|**Quelle des Stimulus**|Physiotherapeut
+|**Stimulus**|Will Unterstützung für einen neuen Messdatentyp zur besseren Auswertung von Therapien (z.B. Körpertemperatur)
 |**Umgebung**|Entwicklungszeit
 |**System / Artefakte**|PhysioConnect / API für App, interne Layer (bis hin zu Persistenzschicht)
-|**Antwort / Verhalten**|Das Entwicklungsteam enwirft, implementiert, testet und deployed eine Erweiterung der technisch unterstützten Messdatentypen. Der Umfang der Änderung spannt sich von der App-API bis hin zur Persistenzschicht.
+|**Antwort / Verhalten**|Das Entwicklungsteam entwirft, implementiert, testet und deployed eine Erweiterung der technisch unterstützten Messdatentypen. Der Umfang der Änderung spannt sich von der App-API bis hin zur Persistenzschicht.
 |**Metrik für Erfüllungsgrad**|Die Erweiterung ist innerhalb von 3 Personentagen realisierbar (Design, Implement, Test, Deploy). +
 100% der bisherigen Tests (Unit, Integration, E2E) können fehlerfrei ausgeführt werden. +
 Im Rahmen von Smoke Tests auf einer deployten Umgebung kommen keine Bugs zum Vorschein, welche mit den gemachten Änderungen korrelieren. +
@@ -270,8 +270,8 @@ Die Erweiterung ist rückwärtskompatibel - Übungen, welche den neuen Messdaten
 [cols="2,6"]
 |===
 |**ID**|SZ-MOD-2
-|**Quelle des Stimulus**|Fitnesstracker-App
-|**Stimulus**|Unterstützung eines alternativen Datenformats / -protokolls für ressourcenoptimierte Übermittlung der Messdaten (z.B. JSON anstelle von XML)
+|**Quelle des Stimulus**|Entwickler
+|**Stimulus**|Will ein alternativen Datenformat / -protokoll für ressourcenoptimierte Übermittlung der Messdaten unterstützen (z.B. JSON anstelle von XML)
 |**Umgebung**|Entwicklungszeit
 |**System / Artefakte**|PhysioConnect / API für App
 |**Antwort / Verhalten**|Das Entwicklungsteam enwirft, implementiert, testet und deployed eine parallel verwendbare Version der App-API, welche das gewünschte Datenformat / -protokoll unterstützt. Für die internen Layer sollten keine nennenswerten Änderungen resultieren.
@@ -284,8 +284,8 @@ Konsumenten der ursprünglichen Version der App-API müssen keinerlei Anpassunge
 [cols="2,6"]
 |===
 |**ID**|SZ-MOD-3
-|**Quelle des Stimulus**|Übungskatalog
-|**Stimulus**|Änderung an der API des Übungskatalogs
+|**Quelle des Stimulus**|Entwickler
+|**Stimulus**|Ändert/Erweitert die API des Übungskatalogs
 |**Umgebung**|Entwicklungszeit
 |**System / Artefakte**|PhysioConnect / API Connector für Übungskatalog
 |**Antwort / Verhalten**|Das Entwicklungsteam implementiert, testet und deployed eine neue Version von PhysioConnect, welche die Änderungen an der Übungskatalog-API unterstützt. Je nach Änderung können seitens PhysioConnect nebst dem API Connector auch die internen Layer (bis hin zur Persistenzschicht) von Anpassungen betroffen sein.
@@ -297,8 +297,8 @@ Im Rahmen von Smoke Tests auf einer deployten Umgebung kommen keine Bugs zum Vor
 [cols="2,6"]
 |===
 |**ID**|SZ-MOD-4
-|**Quelle des Stimulus**|Benutzerverwaltung
-|**Stimulus**|Änderung an der API der Benutzerverwaltung
+|**Quelle des Stimulus**|Entwickler
+|**Stimulus**|Ändert/Erweitert die API der Benutzerverwaltung
 |**Umgebung**|Entwicklungszeit
 |**System / Artefakte**|PhysioConnect / API Connector für Benutzerverwaltung
 |**Antwort / Verhalten**|Das Entwicklungsteam implementiert, testet und deployed eine neue Version von PhysioConnect, welche die Änderungen an der Benutzerverwaltung-API unterstützt. Je nach Änderung können seitens PhysioConnect nebst dem API Connector auch die internen Layer (bis hin zur Persistenzschicht) von Anpassungen betroffen sein.
@@ -311,7 +311,7 @@ Im Rahmen von Smoke Tests auf einer deployten Umgebung kommen keine Bugs zum Vor
 |===
 |**ID**|SZ-MOD-5 (Erweiterung)
 |**Quelle des Stimulus**|Kunde / Physiotherapeut
-|**Stimulus**|Bereitstellung einer API für den Datenimport (z.B. File Upload) aus einem bestehenden Dokumentationssystem
+|**Stimulus**|Will Daten von einem bestehenden Dokumentationssystem via API importieren
 |**Umgebung**|Entwicklungszeit
 |**System / Artefakte**|PhysioConnect / API für Dokumentationssystem, interne Layer
 |**Antwort / Verhalten**|Das Entwicklungsteam enwirft, implementiert, testet und deployed die initiale Version einer API, welche den Datenimport aus einem vordefinierten Dokumentationssystem ermöglichen soll. Der Umfang der Erweiterung spannt sich vom API Layer bis hin zur Persistenzschicht.
@@ -323,8 +323,8 @@ Im Rahmen von Smoke Tests auf einer deployten Umgebung kommen keine Bugs zum Vor
 [cols="2,6"]
 |===
 |**ID**|SZ-MOD-6 (Erweiterung)
-|**Quelle des Stimulus**|Medizinische Forschung
-|**Stimulus**|Bereitstellung anonymisierter Gesundheitsdaten
+|**Quelle des Stimulus**|Medizinisches Forschungsteam
+|**Stimulus**|Will anonymisierte Gesundheitsdaten von unserem System beziehen
 |**Umgebung**|Entwicklungszeit
 |**System / Artefakte**|PhysioConnect / API für Lesezugriff auf Daten, interne Layer (bis hin zu Persistenzschicht)
 |**Antwort / Verhalten**|Das Entwicklungsteam enwirft, implementiert, testet und deployed die initiale Version einer API, welche den Lesezugriff auf anonymisierte Gesundheits- / Messdaten ermöglichen soll. Der Umfang der Erweiterung spannt sich vom API Layer bis hin zur Persistenzschicht.
@@ -337,8 +337,8 @@ Es kann sichergestellt werden, dass 100% der bereitgestellten Gesundheitsdaten a
 [cols="2,6"]
 |===
 |**ID**|SZ-MOD-7 (Erweiterung)
-|**Quelle des Stimulus**|Medizinische Forschung
-|**Stimulus**|Labeling der bereitgestellten Gesundheitsdaten zum Training von https://www.ibm.com/cloud/learn/supervised-learning[Supervised / Semi-Supervised Learning] AI-Modellen
+|**Quelle des Stimulus**|Medizinisches Forschungsteam
+|**Stimulus**|Will bereitgestellte Gesundheitsdaten Labeln, damit diese zum Training von https://www.ibm.com/cloud/learn/supervised-learning[Supervised / Semi-Supervised Learning] AI-Modellen verwendet werden können
 |**Umgebung**|Entwicklungszeit
 |**System / Artefakte**|PhysioConnect / API für Eingabe von Labeling-Vorschlägen, interne Layer (bis hin zu Persistenzschicht)
 |**Antwort / Verhalten**|Das Entwicklungsteam enwirft, implementiert, testet und deployed die initiale Version einer API, welche die Eingabe von Labeling-Vorschlägen ermöglichen soll. Die Labels sollen zusammen mit den bereits bestehenden, anonymisierten Gesundheitsdaten abgelegt werden. +
