@@ -424,7 +424,7 @@ Der Aufwand und die Komplexität bezüglich der einwandfreien Kommunikation mit 
 Die nachfolgend ersichtliche Darstellung repräsentiert eine Priorisierung / Gewichtung der oberhalb definierten Szenarien in Form eines Quality Trees, um eine zukünftige Evaluation der Systemarchitektur gemäss ATAM (Architecture Tradeoff Analysis Method) zu ermöglichen. +
 Die mit __(Erweiterung)__ gekennzeichneten Szenarien werden in der Initialversion des Quality Trees ausgelassen, da sie ein potentieller Bestandteil zukünftiger Versionen / Iterationen der Systemarchitektur sind.
 
-plantuml::quality_requirements/quality_tree.puml[format=svg]
+plantuml::quality_requirements/quality_tree.puml[target=generated_quality_tree, format=svg]
 
 Aus dem obigen Quality Tree lassen sich die folgenden Erkenntnisse extrahieren:
 
