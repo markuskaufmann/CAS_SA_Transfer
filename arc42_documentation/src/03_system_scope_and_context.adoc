@@ -47,12 +47,53 @@ The title of the table is the name of your system, the three columns contain the
 
 ****
 
-
-plantuml::structurizr_diagrams/generated/structurizr-Kontextdiagram.puml[format=svg]
-
 ==== Legende
 
 plantuml::structurizr_diagrams/generated/structurizr-Gesamtuebersicht-key.puml[format=svg]
+
+[options="header"]
+|===
+|Element Typ|Beschreibung
+|Main System|Hauptsystem, welches im Rahmen dieses Dokuments analysiert wird.
+|Software System|Software Systeme, welche eine direkte oder inderekte Beziehung zum Hauptsystem besitzen. Können sich sowohl innerhalb als auch ausserhalb der Unternehmensgrenze befinden.
+|Person|Akteure, welche direkt oder indirekt mit dem Hauptsystem interagieren. Können sich sowohl innerhalb als auch ausserhalb der Unternehmensgrenze befinden.
+|File|Eine Datei, welche eine Systemrelevante Rolle einnimt und somit im Kontext abgebildet werden muss.
+|Relationship|Simple gerichtete Beziehung. Jede Beziehung muss mit einem Beschreibungstext genauer beschrieben werden. 
+|===
+
+==== Kontext
+
+plantuml::structurizr_diagrams/generated/structurizr-Kontextdiagram.puml[format=svg]
+
+[options="header"]
+|===
+|Element|Beschreibung
+|Unternehmung:Physio Connect|Die Unternehmung "Physio Connect" ist der Besitzer des zu untersuchenden Systems. Alle Software Elemente innerhalb dieser Grenzen können direkt beinflusst werden. 
+|Gruppe:Patient|Alle Elemente, welche in der Gruppe Patient befinden, stehen in direkter Verbindung zum Akteur "Patient" und werden von diesem Verwendet. Physio Connect hat keinen Einfluss auf die Art von Geräten, welche von Patienten eingesetzt werden.
+|Gruppe:Physiounternehmung|Eine Unternehmung, welche Physiotherapien durchführt. In den meisten Fällen handelt es sich um eine Physio Praxis, es kann sich jedoch auch um eine Spitalabteilung, eine Rehabilitations Klinik oder andere Anbieter handeln. Physio Connect hat nur einen beschränkten Einfluss auf die in Physiounternehmungen eingesetzten Software Systeme. In den meisten Fällen ist es möglich, Informationen zu bestehenden Schnittstellen zu erhalten. 
+|Physio Connect|Hauptsystem, welches im Rahmen dieses Dokuments analysiert wird. Bietet die im Kapitel 1 Beschriebenen Funktionalitäten an.
+|Mobile App|App, welche von Patienten verwendet wird. Wird zum Ausführen von Therapiesession verwendet. Erhält Daten zu Therapien von Physio Connect. Sendet falls möglich Messdaten an Physio Connect.
+|Übungs Katalog|Beinhaltet vordefinierte Übungsdefinitionen und bietet die Möglichkeit, Übungen via einer API zu verwalten.
+|Benutzer Verwaltung|Beinhaltet alle Benutzerspezifischen Informationen. Handhabt die Authentifizierung und Autorisierung. Bietet eine API zur Verwaltung von Benutzern an.
+|Patient|Akteur, welcher die Mobile App verwendet, um Therapiesessions auszuführen. Im Normalfall hat dieser eine Verordnung von einem Hausarzt oder einer anderen Gesundheitsstelle zur Teilnahme an einer gewissen Anzahl Physiotherapien. Ebenfalls ist es möglich, dass sich dieser im Spital oder einer Rehabilitations Klinik befindet.
+|Fitness Tracker|Gerät, welches Daten wie Herzschlag, Schritte und Blutdruck misst. Im Normalfall ist dies ein Fitnessband oder eine Sportuhr. Es kann sich jedoch auch um andere Geräte handeln, solange diese eine Schnittstelle zu den Messdaten bereitstellen.
+|Therapeut: in|Therapeuten sind für die Durchführung von Physiotherapien mit Patienten zuständig. Physiotherapeuten planen, dokumentieren und werten Therapien Patientenspezifisch aus. Therapeuten haben die Berechtigung, direkt mit dem Physio Connect System zu Interagieren und somit Therapien und Übungen zu verwalten.
+|Administrator: in|Administratoren sind Personen in Physiounternehmungen, welche die höchstmögliche Authorisierungen im Umgang mit dem Physio Connect System besitzen. Es ist möglich, dass Personen in einer Physio Unternehmung gleichzeitig die Rolle eines Therapeuten und Administrators einnehmen.
+|===
+
+*FIXME*: Die folgende Tabelle finde ich im momentanen Stand eher verwirrend, sollte auf der Definition oben basieren "Alternatively (or additionally) you can use a table. The title of the table is the name of your system, the three columns contain the name of the communication partner, the inputs, and the outputs."
+Kommunikation aus Sicht von Physio Connect
+|===
+|Kommunikationspartner|Input|Output
+|Mobile App|Informationen zu Therapien, Therapiesessions und Therapieübungen|Fortschritt von laufenden Sessions. Endresultat von Abgeschlossenen Sessions
+|Übungs Katalog|Create/Update/Delete Requests für Übungen|Liste der vorhandenen Übungen
+|Benutzer Verwaltung|Requests zur Validierung von Access Tokens.* Möglicherweise Requests zur Erstellung / Anpassung von Benutzern*|JWT Token mit Authorisierungsinformationen
+|Therapeut: in||Plant Therapien, Sendet Therapieeinladungen, erstellt Übungen
+|Administrator: in||Administriert Personal und Übungen. *Evt. macht eine direkte Verbindung zur Benutzerverwaltung mehr Sinn zum Administrieren der Benutzer.*
+|Patient: in|Erhält Therapieeinladungen|Kein direkter Output, nur indirekt Über die Mobile App
+|===
+
+
 
 [.landscape]
 <<<
@@ -67,6 +108,22 @@ plantuml::structurizr_diagrams/generated/structurizr-Gesamtuebersicht.puml[forma
 
 [.portrait]
 <<<
+[options="header"]
+|===
+|Element|Beschreibung
+|Gruppe: Zukünftige Abhängigkeiten|Mögliche Abhängigkeiten, welche in der ersten Implementationszyklus keinen Einfluss auf unser System haben. Die enthaltenen Elemente müssen bei Entscheidungen jedoch berücksichtigt werden, sodass zukünftige Umsetzungen möglichst reibungslos verlaufen.
+|Dokumentationssoftware|Physiotherapeuten dokumentieren mit Dokumentasionssoftwaren die ausgeführten Therapiesessions und planen auszuführende Therapiesessions. Es gibt drei Varianten von Dokumentationssystemen, welche heutzutage im Einsatz sind:
+
+* Vollintegriert in einer Software Gesamtlösung: wird meist von Spitälern eingesetzt
+
+* Einzelne Software, teilweise mit Integrationsschnittstellen: Wird oft von Praxen verwendet
+
+* Keine digitale Lösung, alles auf Papier: Weiterhin sehr in kleineren Praxen verbreitet
+|Therapie File|Therapiefiles beinhalten alle für Therapien relevante Daten. Diese Files können entweder direkt von Therapeuten erstellt oder von Dokumentationssystemen exporteirt werden. Physio Connect kann diese Files importieren und die definierten Therapien im System anlegen / anpassen.
+|Patienten Dossier|Schnittstelle für die Übermittlung der Gesundheitsdaten an das https://www.patientendossier.ch/[Elektronische Patientendossier (EPD)]
+|Versicherungsschnittstellen|Verschiedene Versicherungen bieten Schnittstellen an, um sportliche Leistungen von Kunden zu entlöhnen. Möglicherweise können ausgeführte Therapien der Patienten an diese Schnittstellen gesendet werden.
+|Data Scientist|Data Scientists oder Forschende, welche an den gesammelten Gesunheitsdaten interessiert sind. Es soll die möglichkeit offen gehalten werden, anonymisierte Gesunheitsdaten für Studien anzubieten.
+|===
 **<Diagram or Table>**
 
 **<optionally: Explanation of external domain interfaces>**
