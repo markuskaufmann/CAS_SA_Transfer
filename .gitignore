@@ -7,3 +7,4 @@ physio_connect_c4/generated/
 .DS_Store
 src-gen/
 .vscode/
+arc42_documentation/images/generated_*
