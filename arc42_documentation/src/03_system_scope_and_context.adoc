@@ -27,7 +27,6 @@ See https://docs.arc42.org/section-3/[Context and Scope] in the arc42 documentat
 
 ****
 
-plantuml::structurizr_diagrams/generated/structurizr-Kontextdiagram.puml[format=svg]
 
 === Business Context
 
@@ -48,6 +47,26 @@ The title of the table is the name of your system, the three columns contain the
 
 ****
 
+
+plantuml::structurizr_diagrams/generated/structurizr-Kontextdiagram.puml[format=svg]
+
+==== Legende
+
+plantuml::structurizr_diagrams/generated/structurizr-Gesamtuebersicht-key.puml[format=svg]
+
+[.landscape]
+<<<
+
+==== Erweiterter Kontext
+
+Die Zukunft
+
+
+plantuml::structurizr_diagrams/generated/structurizr-Gesamtuebersicht.puml[format=svg]
+
+
+[.portrait]
+<<<
 **<Diagram or Table>**
 
 **<optionally: Explanation of external domain interfaces>**
