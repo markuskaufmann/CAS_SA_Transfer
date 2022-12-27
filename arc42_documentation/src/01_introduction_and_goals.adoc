@@ -64,8 +64,8 @@ __Erforderlich__
 
 * Intuitive Benutzeroberfläche
 * Therapieverwaltung
+* Therapie-Session-Verwaltung
 * Übungsverwaltung
-* Patientenverwaltung
 * Monitoring
 * Reporting
 
@@ -78,16 +78,15 @@ a|
 __Erforderlich__
 
 * Zweckmässige und zeitlich eingeschränkte Aufzeichnung der persönlichen Gesundheitsdaten
-* Sichere und rechtlich anerkannte Ablage der persönlichen Gesundheitsdaten
+* Sichere und rechtlich anerkannte Übermittlung und Ablage der persönlichen Gesundheitsdaten
 * Explizite Einwilligung zur Datenweitergabe an Drittpersonen (z.B. medizinische Forschung)
-* Verwaltung persönlicher Therapiesessions und Übungskollektionen
+* Verwaltung persönlicher Therapie-Sessions und Übungskollektionen
 
 |Vorgesetzter des Physiotherapeuten
 (z.B. Abteilungsleiter innerhalb eines Spitals)
 a|
 __Erforderlich__
 
-* Therapeutenverwaltung
 * Monitoring
 * Reporting
 
@@ -107,7 +106,7 @@ __Optional__
 a|
 __Erforderlich__
 
-* Einhaltung existierender Datenschutzverordnungen und -gesetze. Betrifft die Aufzeichnung, Ablage und Weitergabe der persönlichen Gesundheitsdaten
+* Einhaltung existierender Datenschutzverordnungen und -gesetze. Betrifft die Aufzeichnung, Übermittlung, Ablage und Weitergabe der persönlichen Gesundheitsdaten
 
 __Optional__
 
