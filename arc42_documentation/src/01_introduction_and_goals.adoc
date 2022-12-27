@@ -206,4 +206,8 @@ Unter dem Begriff __Cloud Native__ versteht man ein System, welches bereits in d
 Die Systemarchitektur von Physio Connect soll ebenfalls dem __Cloud Native__-Paradigma folgen, damit auf zukünftige Anwendungs- und Integrationsszenarien dynamischer und effizienter reagiert werden kann.
 
 * **Mehrheitliche Verwendung des Smartphones** +
-Das Smartphone ist zu einem digitalen Alltagsgegenstand mutiert, welches meist häufiger als ein traditioneller Desktop-PC oder Laptop verwendet wird. Diesbezüglich muss bei der Architektur einer aktuellen Webapplikation speziell darauf geachtet werden, welche Priorität den Aspekten __Responsiveness__ (Design und Verhalten der Applikation auf unterschiedlichen Geräten / Umgebungen) und __Progressive Web App__ (Erweiterung der Funktionalitäten gemäss Laufzeitumgebung, z.B. Push Notifications) zugeordnet werden soll.
+Das Smartphone ist zu einem digitalen Alltagsgegenstand mutiert, welches meist häufiger als ein traditioneller Desktop-PC oder Laptop verwendet wird. Diesbezüglich muss bei der Architektur einer aktuellen Webapplikation speziell darauf geachtet werden, welche Priorität den folgenden Aspekten zugeordnet werden soll:
+** __Responsive Web App__ +
+Design und Verhalten der Applikation auf unterschiedlichen Geräten / Umgebungen
+** __Progressive Web App__ +
+Unterstützung eines erweiterten "nativen" Funktionsumfangs auf spezifischen Geräten / Umgebungen (z.B. Push Notifications, Camera Access)
