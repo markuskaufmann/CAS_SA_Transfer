@@ -10,7 +10,8 @@ Nachfolgend werden die aktuell geltenden Randbedingungen genauer erläutert.
 |===
 |Bedingung|Beschreibung
 |Datenschutzverordnungen im Umgang mit Messdaten|Die Aufzeichnung, Ablage und etwaige Weitergabe von gesundheitsbezogenen Messdaten unterliegt strengen Datenschutzverordnungen, welche die explizite Zustimmung der Patienten erfordern. Der Patient muss zu jeder Zeit darüber informiert sein, welche Daten im Rahmen einer therapierelevanten Übung aufgezeichnet, abgelegt und vom Physiotherapeuten eingesehen und analysiert werden können. +
-Des Weiteren muss eine anonymisierte Weitergabe der Daten an Drittparteien (z.B. an die medizinische Forschung) ebenfalls durch den Patienten genehmigt werden.
+Des Weiteren muss eine anonymisierte Weitergabe der Daten an Drittparteien (z.B. an die medizinische Forschung) ebenfalls durch den Patienten genehmigt werden. +
+Hierzu gehören ebenfalls Themenbereiche wie __Privacy by Design__ und __Privacy by Default__.
 |===
 
 === Technische Randbedingungen
@@ -18,7 +19,7 @@ Des Weiteren muss eine anonymisierte Weitergabe der Daten an Drittparteien (z.B.
 [options="header",cols="2,4"]
 |===
 |Bedingung|Beschreibung
-|Einhaltung von aktuell geltenden Security-Standards|Aufgrund der Verarbeitung persönlicher Gesundheitsdaten muss zwingend sichergestellt sein, dass Physio Connect alle technisch geltenden Sicherheitsstandards erfüllt, welche für den einwandfreien Umgang mit persönlichen Gesundheitsdaten relevant sind. Zu den erwähnten Sicherheitsstandards gehören ebenfalls Themenbereiche wie __Privacy by Design__ und __Privacy by Default__.
+|Einhaltung von aktuell geltenden Security-Standards|Aufgrund der Übermittlung, Verarbeitung und Ablage persönlicher Gesundheitsdaten muss zwingend sichergestellt sein, dass alle technischen Komponenten die aktuellsten Sicherheitsstandards erfüllen, welche für den einwandfreien Umgang mit persönlichen Gesundheitsdaten relevant sind. Dies betrifft insbesondere den Schutz vor unbefugtem System- und Datenzugriff und die Anwendung von aktuellen Verschlüsselungsverfahren.
 |Verwendung von etablierten Protokoll- und Technologiestandards|Grundsätzlich sind etablierte Technologiestandards gegenüber proprietären Lösungen zu bevorzugen. Beispielsweise wird eine öffentliche API gemäss https://roy.gbiv.com/pubs/dissertation/rest_arch_style.htm[REST] entworfen und verwendet standardisierte Übertragungs- und Datenprotokolle (HTTPS, JSON / XML).
 |Versionsverwaltung|Sämtliche Bestandteile des Quellcodes werden unter der Verwendung von Git als Versionskontrollsystem (VCS) verwaltet.
 |Infrastructure as Code (IaC)|Sämtliche Bestandteile der notwendigen Systeminfrastruktur werden als Bestandteil des Quellcodes realisiert.
