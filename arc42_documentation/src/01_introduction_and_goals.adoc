@@ -11,25 +11,25 @@ Anders als bestehende Physio-Gesamtlösungen und Dokumentationssysteme zielt Phy
 
 * Physiotherapeuten können
 ** Therapien erstellen und Patienten dazu einladen
-** generische und patientenspezische Übungen verwalten
+** generische und patientenspezifische Übungen verwalten
 ** Therapien und Übungen in der Form von Therapie-Sessions kombinieren, welche von den Patienten durchgeführt werden
 ** Übungen patienten- und therapiespezifisch modifizieren
 ** den Therapiefortschritt von Patienten überwachen (Monitoring) und auswerten (Reporting)
-** ein Feedback / Bewertung zu einer abgeschlossenen Therapie-Session, Übung oder zu der Bewertung / Feedback eines Patienten abgeben
-** Übungskollektionen erstellen und den Patienten senden, damit diese nach abgeschlossener Therapie selbstständing Übungen ausführen können
+** eine Rückmeldung (Kommentar / Bewertung) zu einer abgeschlossenen Therapie-Session, Übung oder zu der Rückmeldung eines Patienten abgeben
+** Übungskollektionen erstellen und den betroffenen Patienten senden, damit diese nach abgeschlossener Therapie selbstständing Übungen ausführen können
 
 * Patienten können
 ** einer verordneten Therapie beitreten
-** Therapie-Sessions inkl. verordneter Übungen durchführen
-** ein Feedback / Bewertung zu einer Therapie-Session und / oder Übung abgeben
+** Therapie-Sessions inkl. der verordneten Übungen durchführen
+** eine Rückmeldung (Kommentar / Bewertung) zu einer Therapie-Session oder Übung abgeben
 ** eigene Therapie-Sessions inkl. eigener Übungen verwalten und durchführen
-** eigene Therapie-Daten einsehen und weiterleiten
+** eigene Therapiedaten einsehen und weiterleiten
 
 * Vorgesetzte von Physiotherapeuten können
 ** den Fortschritt ihrer unterstellten Physiotherapeuten überwachen (Monitoring) und auswerten (Reporting)
 ** den Therapiefortschritt von Patienten kontrollieren
 
-Eine genaue Auflistung der konkreten funktionalen Anforderungen ist im entsprechenden link:requirements_engineering/functional_requirements.adoc#section-functional-requirements[Anforderungsdokument] ersichtlich.
+Eine genaue Auflistung der konkreten funktionalen Anforderungen ist im entsprechenden link:../requirements_engineering/functional_requirements.adoc#section-functional-requirements[Anforderungsdokument] ersichtlich.
 
 [[section-quality-goals]]
 === Qualitätsziele
@@ -198,7 +198,7 @@ __Informiert halten__
 
 === Zusätzliche Architekturtreiber (Forces)
 
-Nebst den Architekturtreibern, welche aus den bestehenden link:requirements_engineering/functional_requirements.adoc#section-functional-requirements[Requirements] und link:02_architecture_constraints.adoc#section-architecture-constraints[Constraints] hervorgehen, sind die nachfolgenden Faktoren für den Entwurf der Systemarchitektur ebenfalls zu berückzsichtigen:
+Nebst den Architekturtreibern, welche aus den bestehenden link:../requirements_engineering/functional_requirements.adoc#section-functional-requirements[Requirements] und link:02_architecture_constraints.adoc#section-architecture-constraints[Constraints] hervorgehen, sind die nachfolgenden Faktoren für den Entwurf der Systemarchitektur ebenfalls zu berückzsichtigen:
 
 * **Cloud Native** +
 Die Verwendung aktueller Cloud-Technologien von Microsoft, Amazon oder Google (oder wahlweise alternativer Hyperscaler) ist heutzutage ein zentraler Diskussionspunkt beim Entwurf und der Entwicklung von Softwaresystemen. Informationen und Funktionalitäten müssen von überall stets zugreifbar sein und die Anzahl der verwendeten Ressourcen kann je nach Auslastung dynamisch skaliert werden, um eine konstante Performance und - darausfolgend - eine optimale User Experience zu erzielen. +
