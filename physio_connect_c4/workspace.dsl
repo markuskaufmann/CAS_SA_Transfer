@@ -75,7 +75,8 @@ workspace "Physio integration layer project" {
         dataScientist -> physioConnect "Benutzt Daten"
         patient -> patientenApp "Registriert sich\nNimmt Therapieeinladungen an\nBenutzt App für selbstständige ausführung von Therapien"
         patient -> fitnessTracker "besitzt"
-        patientenApp -> fitnessTracker "Fordert Messdaten an"
+        patientenApp -> fitnessTracker "Verbindet sich mit"
+        fitnessTracker ->  patientenApp "Sendet Messdaten"
 
         # relationships to/from software systems
         dokumentationsSoftware -> therapieFile "Exportiert"
