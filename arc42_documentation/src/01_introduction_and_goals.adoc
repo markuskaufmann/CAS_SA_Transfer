@@ -1,33 +1,11 @@
 [[section-introduction-and-goals]]
 == Einführung und Ziele
-****
-For [customer] 
 
-Who [needs... or has opportunity] 
+=== Systemvision
 
-The [product] 
-
-Is [category] 
-
-That [major capability, benefit, ]
-
-Unlike [alternative, current system, current practice] 
-
-Our Product [differentiation, advantages, ...]
-****
-Für Physiothereupen und Patienten,
-
-welche Selbsttherapien intuitiver und effektiver gestalten möchten.
-
-Das Physio Connect System
-
-ist eine Unterstützungs und Integrationssoftware
-
-die es ermöglicht, mit minimalem Aufwand patientenspezifische Therapien zu planen, den Patienten zur Ausführung bereitszustellen und schlussendlich anhand der gesammelten Messdaten und Patientenrückmeldungen auszuwerten.
-
-Anders als Physio Gesamtlösungen und Dokumentationssysteme
-
-Zielt unser Produkt nicht darauf, bereits eingesetzte Systeme und Prozesse abzulösen, sondern nimmt eine komplementäre Rolle ein. Somit ist der Initialaufwand sehr gering und die für Therapeuten essentielle Flexibilität für die Therapieplanung wird erhöht und nicht eingeschränkt
+Das Physio Connect-System ist eine Unterstützungs- und Integrationssoftware für Physiotherapeuten und Patienten, welche Selbsttherapien intuitiver und effektiver gestalten möchten. +
+Physio Connect ermöglicht es, mit minimalem Aufwand patientenspezifische Therapien zu planen, den Patienten zur Ausführung bereitzustellen und schlussendlich anhand der gesammelten Messdaten und Patientenrückmeldungen auszuwerten. +
+Anders als bestehende Physio-Gesamtlösungen und Dokumentationssysteme zielt Physio Connect nicht darauf ab, bereits eingesetzte Systeme und Prozesse abzulösen, sondern nimmt eine komplementäre Rolle ein. Somit ist der initiale Einarbeitungsaufwand sehr gering und die für Physiotherapeuten essentielle Flexibilität hinsichtlich der Therapieplanung wird erhöht und nicht eingeschränkt.
 
 [role="arc42help"]
 ****
