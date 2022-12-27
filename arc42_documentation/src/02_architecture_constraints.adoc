@@ -1,25 +1,45 @@
 [[section-architecture-constraints]]
-== Architecture Constraints
+== Randbedingungen
 
+Die Systemarchitektur von Physio Connect unterliegt bestimmten Randbedingungen, welche im Rahmen jedes Architekturentscheids explizit berücksichtigt werden müssen. +
+Nachfolgend werden die aktuell geltenden Randbedingungen genauer erläutert. 
 
-[role="arc42help"]
-****
-.Contents
-Any requirement that constraints software architects in their freedom of design and implementation decisions or decision about the development process. These constraints sometimes go beyond individual systems and are valid for whole organizations and companies.
+=== Rechtliche Randbedingungen
 
-.Motivation
-Architects should know exactly where they are free in their design decisions and where they must adhere to constraints.
-Constraints must always be dealt with; they may be negotiable, though.
+[options="header",cols="2,4"]
+|===
+|Bedingung|Beschreibung
+|Datenschutzverordnungen im Umgang mit Messdaten|Die Aufzeichnung, Ablage und etwaige Weitergabe von gesundheitsbezogenen Messdaten unterliegt strengen Datenschutzverordnungen, welche die explizite Zustimmung der Patienten erfordern. Der Patient muss zu jeder Zeit darüber informiert sein, welche Daten im Rahmen einer therapierelevanten Übung aufgezeichnet, abgelegt und vom Physiotherapeuten eingesehen und analysiert werden können. +
+Des Weiteren muss eine anonymisierte Weitergabe der Daten an Drittparteien (z.B. an die medizinische Forschung) ebenfalls durch den Patienten genehmigt werden.
+|===
 
-.Form
-Simple tables of constraints with explanations.
-If needed you can subdivide them into
-technical constraints, organizational and political constraints and
-conventions (e.g. programming or versioning guidelines, documentation or naming conventions)
+=== Technische Randbedingungen
 
+[options="header",cols="2,4"]
+|===
+|Bedingung|Beschreibung
+|Einhaltung von aktuell geltenden Security-Standards|Aufgrund der Verarbeitung persönlicher Gesundheitsdaten muss zwingend sichergestellt sein, dass Physio Connect alle technisch geltenden Sicherheitsstandards erfüllt, welche für den einwandfreien Umgang mit persönlichen Gesundheitsdaten relevant sind. Zu den erwähnten Sicherheitsstandards gehören ebenfalls Themenbereiche wie __Privacy by Design__ und __Privacy by Default__.
+|Verwendung von etablierten Protokoll- und Technologiestandards|Grundsätzlich sind etablierte Technologiestandards gegenüber proprietären Lösungen zu bevorzugen. Beispielsweise wird eine öffentliche API gemäss https://roy.gbiv.com/pubs/dissertation/rest_arch_style.htm[REST] entworfen und verwendet standardisierte Übertragungs- und Datenprotokolle (HTTPS, JSON / XML).
+|Versionsverwaltung|Sämtliche Bestandteile des Quellcodes werden unter der Verwendung von Git als Versionskontrollsystem (VCS) verwaltet.
+|Infrastructure as Code (IaC)|Sämtliche Bestandteile der notwendigen Systeminfrastruktur werden als Bestandteil des Quellcodes realisiert.
+|===
 
-.Further Information
+=== Organisatorische Randbedingungen
 
-See https://docs.arc42.org/section-2/[Architecture Constraints] in the arc42 documentation.
+[options="header",cols="2,4"]
+|===
+|Bedingung|Beschreibung
+|Zeitplan|Für die Sicherstellung einer möglichst kurzen Time-to-Market soll ein initiales __Minimum Viable Product (MVP)__ innerhalb von 4 Monaten realisierbar sein.
+|Vorgehensmodell|Entwickelt wird iterativ-inkrementell nach Scrum.
+|Architekturdokumentation|Für die Architekturdokumentation kommt arc42 und C4 zum Einsatz. Als Versionsverwaltung wird Git verwendet.
+|===
 
-****
+=== Konventionen
+
+|===
+|Bedingung|Beschreibung
+|Architekturdokumentation|Die Terminologie und Gliederung der Architekturdokumentation entspricht dem deutschen arc42-Template in der Version 8 (Release: Februar 2022).
+|Sprache (Deutsch, Englisch)|Die Architekturdokumentation ist in deutscher Sprache verfasst, um sie allen betroffenen Zielgruppen und Stakeholdern leichter zugänglich und verständlich zu machen. Sämtlicher Quellcode ist jedoch in englischer Sprache zu verfassen, um dessen Kompatibilität mit internationalen Entwicklern (deren Muttersprache nicht Deutsch ist) zu gewährleisten. +
+Damit eine __ubiquitous language__ über die Sprachgrenzen hinaus eingehalten werden kann, muss ein entsprechendes Glossar aktiv gepflegt werden.
+|Coding Guidelines|Zu den grundlegend einzuhaltenden Coding Guidelines gehören diejenigen Richtlinien, welche im literarischen Werk https://github.com/martinmurciego/good-books/blob/master/Clean%20Code_%20A%20Handbook%20of%20Agile%20Software%20Craftsmanship%20-%20Robert%20C.%20Martin.pdf[Clean Code (Robert C. Martin)] verfasst wurden.
+|===

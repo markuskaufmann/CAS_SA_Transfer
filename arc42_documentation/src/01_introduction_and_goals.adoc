@@ -51,7 +51,7 @@ In der nachfolgenden Tabelle sind die primären Qualitätsziele absteigend nach 
 
 Die Qualitätsszenarien im Kapitel link:10_quality_requirements.adoc#section-quality-requirements[Qualitätsanforderungen] konkretisieren die oben genannten Qualitätsziele und dienen aufgrund von definierten Metriken auch dazu, ihren Erfüllungsgrad zu bewerten.
 
-=== Stakeholders
+=== Stakeholder
 
 Die nachfolgende Tabelle repräsentiert eine Zusammenfassung der bestehenden Stakeholder sowie der jeweiligen Systemaspekte und -komponenten, welche von ihnen im Kontext von PhysioConnect als relevant erachtet werden.
 
@@ -145,7 +145,7 @@ Die von staatlicher Seite gewünschte Schnittstelle an das https://www.patienten
 a|
 __Erforderlich__
 
-* Kurzer Time-to-Market
+* Kurze Time-to-Market
 * Kostengünstige Entwicklung und Erweiterung
 
 |Entwickler von PhysioConnect
