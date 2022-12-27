@@ -8,40 +8,42 @@ Die primären Qualitätsziele von PhysioConnect sind im Kapitel link:01_introduc
 === Qualitätsszenarien
 
 Gemäss den primären link:01_introduction_and_goals.adoc#section-quality-goals[Qualitätszielen] werden die aus Sicht der Stakeholder erwarteten Qualitätsattribute der Systemarchitektur in Form von messbaren Szenarien nachfolgend erläutert. +
-Die mit __(Erweiterung)__ gekennzeichneten Szenarien sind ein potentieller Bestandteil zukünftiger Versionen / Iterationen der Systemarchitektur.
+Die mit __(Erweiterung)__ gekennzeichneten Szenarien sind ein potenzieller Bestandteil zukünftiger Versionen / Iterationen der Systemarchitektur.
 
 ==== Interoperability (Compatibility)
-Die interoperability Szenarien basieren auf der folgenden Definition:
+
+Die Interoperability-Szenarien basieren jeweils auf der folgenden Definition:
 
 [cols="2,6"]
 |===
 |**ID**|SZ-IOP-X
-|**Quelle des Stimulus**|A system initiates a request to interoperate with another system
-|**Stimulus**|A request to exchange information among system(s)
-|**Umgebung**|System(s) wishing to interoperate are discovered at runtime or known prior to runtime 
-|**System / Artefakte**|The systems that Wish to interoperate 
-|**Antwort / Verhalten**|One or more Of the following: 
+|**Quelle des Stimulus**|Ein System setzt einen Request für die Interaktion mit einem anderen System ab
+|**Stimulus**|Ein Request zum Austausch von Informationen zwischen den Systemen
+|**Umgebung**|Systeme, die miteinander interagieren wollen, werden zur Laufzeit entdeckt oder sind bereits vorher bekannt
+|**System / Artefakte**|Die Systeme, die interagieren wollen / Komponenten, welche von der Interaktion betroffen sind
+|**Antwort / Verhalten**
+a|
+Einer oder mehrere der folgenden Punkte:
 
-- The request is (appropriately) rejected and appropriate entities (people or 
-systems) are notified 
+* Der Request wird (ordnungsgemäss) abgelehnt und die zuständigen Entitäten (Personen oder Systeme) werden benachrichtigt
+* Der Request wird (ordnungsgemäss) verarbeitet und die Informationen werden erfolgreich ausgetauscht
+* Der Request wird von einem oder mehreren der beteiligten Systeme geloggt
 
-- The request is (appropriately) accepted and information is exchanged 
-successfully 
+|**Metrik für Erfüllungsgrad**
+a|
+Einer oder mehrere der folgenden Punkte:
 
-- The request is logged by one or more Of the involved systems 
-|**Metrik für Erfüllungsgrad**|One or more of the following: 
+* Prozentualer Anteil der korrekt verarbeiteten Requests
+* Prozentualer Anteil der korrekt abgelehnten Requests
 
-- Percentage of information exchanges correctly processed
-
-- percentage of information exchanges correctly rejected 
 |===
 
-Effektive Szenarien, welche sich auf Qualitätsziel QG-1 (Interoperability) beziehen.
+Nachfolgend werden die effektiven Szenarien erläutert, welche sich auf das Qualitätsziel QG-1 (Interoperability) beziehen.
 
 [cols="2,6"]
 |===
 |**ID**|SZ-IOP-1
-|**Quelle des Stimulus**|Smartphone-App sendet API request
+|**Quelle des Stimulus**|Smartphone-App sendet API Request
 |**Stimulus**|Request zum Speichern der übungsrelevanten Messdaten (z.B. Puls, Blutdruck) gesendet
 |**Umgebung**|Systeme, welche bereits vor der Laufzeit bekannt waren
 |**System / Artefakte**|PhysioConnect / API Request Handler für App
@@ -55,8 +57,8 @@ Sind die Messdaten formal inkorrekt oder ein Fehler tritt bei der Persistierung 
 [cols="2,6"]
 |===
 |**ID**|SZ-IOP-2
-|**Quelle des Stimulus**|Smartphone-App sendet API request
-|**Stimulus**|Request zum Ausführung einer Operation bezüglich einer Therapie-Session gesendet
+|**Quelle des Stimulus**|Smartphone-App sendet API Request
+|**Stimulus**|Request zur Ausführung einer Operation bezüglich einer Therapie-Session gesendet
 |**Umgebung**|Systeme, welche bereits vor der Laufzeit bekannt waren
 |**System / Artefakte**|PhysioConnect / API Request Handler für App
 |**Antwort / Verhalten**|Ist der eingehende Request formal korrekt, wird die entsprechende Operation intern verarbeitet und allfällige Zustandsänderungen persistiert (z.B. Start der Therapie-Session ändert deren Status). +
@@ -69,8 +71,8 @@ Ist der eingehende Request formal inkorrekt oder ein Fehler tritt während der i
 [cols="2,6"]
 |===
 |**ID**|SZ-IOP-3
-|**Quelle des Stimulus**|Smartphone-App oder PhysioConnect sendet API request
-|**Stimulus**|Request zum Verwalten von Übungen - Create, Read, Update, Archive gesendet
+|**Quelle des Stimulus**|Smartphone-App oder PhysioConnect sendet API Request
+|**Stimulus**|Request zum Verwalten von Übungen (Create, Read, Update, Archive) gesendet
 |**Umgebung**|Systeme, welche bereits vor der Laufzeit bekannt waren
 |**System / Artefakte**|PhysioConnect / API Response Handler für Übungskatalog, interne Layer
 |**Antwort / Verhalten**|Die Operation für das Lesen, Erstellen, Aktualisieren oder Archivieren einer Übung wird inkl. Payload an den Übungskatalog weitergeleitet. +
@@ -84,7 +86,7 @@ Eine fehlerhafte Response des Übungskatalogs wird geloggt und führt zu einer A
 [cols="2,6"]
 |===
 |**ID**|SZ-IOP-4
-|**Quelle des Stimulus**|Smartphone-App oder PhysioConnect sendet API request
+|**Quelle des Stimulus**|Smartphone-App oder PhysioConnect sendet API Request
 |**Stimulus**|Request zum Upload von Detailinformationen (Text, Bilder, Video, Audio) zu einer bestehenden Übung gesendet
 |**Umgebung**|Systeme, welche bereits vor der Laufzeit bekannt waren
 |**System / Artefakte**|PhysioConnect / API Response Handler für Übungskatalog, interne Layer
@@ -99,7 +101,7 @@ Eine fehlerhafte Response des Übungskatalogs wird geloggt und führt zu einer A
 [cols="2,6"]
 |===
 |**ID**|SZ-IOP-5
-|**Quelle des Stimulus**|Smartphone-App oder PhysioConnect sendet API request
+|**Quelle des Stimulus**|Smartphone-App oder PhysioConnect sendet API Request
 |**Stimulus**|Request zum Laden von Benutzerinformationen gesendet
 |**Umgebung**|Systeme, welche bereits vor der Laufzeit bekannt waren
 |**System / Artefakte**|PhysioConnect / API Response Handler für Benutzerverwaltung, interne Layer
@@ -114,7 +116,7 @@ Eine fehlerhafte Response der Benutzerverwaltung wird geloggt und führt zu eine
 [cols="2,6"]
 |===
 |**ID**|SZ-IOP-6 (Erweiterung)
-|**Quelle des Stimulus**|Dokumentationssysteme oder PhysioConnect sendet API request
+|**Quelle des Stimulus**|Dokumentationssystem oder PhysioConnect sendet API Request
 |**Stimulus**|Request für Datenimport aus dem Dokumentationssystem (API oder File Upload) gesendet
 |**Umgebung**|Systeme, welche bereits vor der Laufzeit bekannt waren
 |**System / Artefakte**|PhysioConnect / API Request Handler für Dokumentationssystem, interne Layer
@@ -127,60 +129,51 @@ Sind die Daten formal inkorrekt oder ein Fehler tritt während der internen Vera
 
 ==== Confidentiality (Security)
 
-Die confidentiality Szenarien basieren auf der folgenden Security Szenario Template:
+Die Confidentiality-Szenarien basieren jeweils auf der folgenden Definition:
 
 [cols="2,6"]
 |===
 |**ID**|SZ-CNF-X
-|**Quelle des Stimulus**|Human or another system which may have been previously identified (either correctly or incorrectly) or may be currently unknown. A human attacker may be from outside the organization or from inside the organization
-|**Stimulus**|Unauthorized attempt is made to display data, change or delete data, access system services, change the system's behavior, or reduce availability 
-|**Umgebung**|The system is either online or offline; either connected to or disconnected 
-from a network; either behind a firewall or open to a network; fully
-operational, partially operational, or not operational
-|**System / Artefakte**|System services, data within the system, a component or resources of the 
-system, data produced or consumed by the system 
-|**Antwort / Verhalten**|Transactions are carried out in a fashion such that 
+|**Quelle des Stimulus**|Eine Person oder ein anderes System, das zuvor identifiziert wurde (entweder korrekt oder inkorrekt) oder derzeit unbekannt ist. Der Ursprung eines menschlichen Angreifers kann von inner- oder ausserhalb der Organisation sein.
+|**Stimulus**|Unbefugter Zugriff mit dem Versuch, Daten anzuzeigen, zu ändern oder zu löschen, auf Systemdienste zuzugreifen, das Systemverhalten zu ändern oder die Verfügbarkeit des Systems zu beeinträchtigen
+|**Umgebung**|Das System ist entweder online oder offline; entweder mit einem Netzwerk verbunden oder davon getrennt; entweder hinter einer Firewall oder für ein Netzwerk zugänglich; vollständig, teilweise oder nicht betriebsbereit.
+|**System / Artefakte**|Systemdienste, Daten innerhalb des Systems, eine Komponente oder Ressourcen des Systems, vom System produzierte oder konsumierte Daten
+|**Antwort / Verhalten**
+a|
+Die Transaktionen werden so durchgeführt, dass
 
-- Data or services are protected from unauthorized access. 
+* Daten oder Dienste vor unberechtigtem Zugriff geschützt sind.
+* Daten oder Dienste nicht ohne Autorisierung manipuliert werden.
+* die an der Transaktion beteiligten Parteien mit Sicherheit identifiziert werden.
+* die an der Transaktion beteiligten Parteien ihre Beteiligung nicht abstreiten können.
+* die Daten, Ressourcen und Systemdienste für die ordnungsgemässe Nutzung verfügbar sind.
 
-- Data or services are not being manipulated Without authorization. 
+Das System überwacht Aktivitäten innerhalb des Systems durch
 
-- Parties to a transaction are identified with assurance. 
+* die Aufzeichnung von Zugriffen oder Änderungen 
+* die Aufzeichnung der Zugriffsversuche auf Daten, Ressourcen oder Dienste
+* die Benachrichtigung der zuständigen Entitäten (Personen oder Systeme) im Falle eines Angriffs
 
-- The parties to the transaction cannot repudiate their involvements. 
+|**Metrik für Erfüllungsgrad**
+a|
+Einer oder mehrere der folgenden Punkte:
 
-- The data, resources, and system services will be available for legitimate use. 
-
-The system tracks activities within it by 
-
-- Recording access or modification 
-
-- Recording attempts to access data, resources, or services 
-
-- Notifying appropriate entities attack is occurring 
-
-|**Metrik für Erfüllungsgrad**|One or more of the following: 
-
-- How much of a system is compromised when a particular component or data value is compromised 
-
-- How much time passed before an attack was detected 
-
-- How many attacks were resisted 
-
-- How long does it take to recover from a successful attack 
-
-- How much data is vulnerable to a particular attack 
+* Welcher Anteil des Systems gefährdet ist, wenn eine bestimmte Komponente oder ein bestimmter Datenwert kompromittiert ist 
+* Wie viel Zeit verging, bevor ein Angriff entdeckt wurde
+* Wie viele Angriffe wurden abgewehrt
+* Wie lange dauert es, sich von einem erfolgreichen Angriff zu erholen
+* Welcher Anteil des Datenbestandes ist durch einen bestimmten Angriff verwundbar
 
 |===
 
-Szenarien, welche sich auf Qualitätsziel QG-2 (Confidentiality) beziehen.
+Nachfolgend werden die effektiven Szenarien erläutert, welche sich auf das Qualitätsziel QG-2 (Confidentiality) beziehen.
 
 [cols="2,6"]
 |===
 |**ID**|SZ-CNF-1
 |**Quelle des Stimulus**|Identifizierter Patient via Smartphone-App
 |**Stimulus**|Speichern der übungsrelevanten Messdaten (z.B. Puls, Blutdruck)
-|**Umgebung**|Voll einsatzfähiges online System, Request von ausserhalb des PhysioConnect Netzwerkes
+|**Umgebung**|Voll einsatzfähiges System (online), Request von ausserhalb des PhysioConnect-Netzwerks
 |**System / Artefakte**|PhysioConnect / API Request Handler für App
 |**Antwort / Verhalten**|Die Messdaten werden verschlüsselt entgegengenommen (API ist nur via TLS / SSL verwendbar) und formal geprüft. Formal korrekte Messdaten werden direkt in einem verschlüsselten Datenspeicher abgelegt, wo sie nur innerhalb des internen Systemnetzwerks zugreif- / auslesbar sind. In betroffenem Datenspeicher sind die Messdaten nicht anonymisiert abgelegt, da sie zu Auswertungs- und Analysezwecken dem Patienten und der jeweiligen Übung / Therapie-Session zugeordnet werden müssen. +
 Sind die Messdaten formal inkorrekt oder ein Fehler tritt während der internen Verarbeitung oder Persistierung auf, wird der Request geloggt (ohne die konkreten Messdaten) und eine entsprechende Response mit Fehlercode zurückgegeben.
@@ -194,11 +187,12 @@ Der Datenspeicher mit den Messdaten ist ausserhalb des Systemnetzwerks nicht dir
 |**ID**|SZ-CNF-2
 |**Quelle des Stimulus**|Identifizierter Patient via Smartphone-App
 |**Stimulus**|Abrufen der Messdaten eines anderen Patienten
-|**Umgebung**|Voll einsatzfähiges online System, Request von ausserhalb des PhysioConnect Netzwerkes
+|**Umgebung**|Voll einsatzfähiges System (online), Request von ausserhalb des PhysioConnect-Netzwerks
 |**System / Artefakte**|PhysioConnect / API Request Handler für App
-|**Antwort / Verhalten**|Die Anfrage wird entgegengenommen und das darin enthaltene Access Token überprüft. Der Patient wird korrekt authentifiziert und es wird überprüft, ob der Patient Zugriff auf die angeforderten Daten besitzt. Da die Daten einem Anderen Patienten zugewiesen sind, wird eine 403 Response zurückgesendet und der Vorfall wird als potentieller angriffsversuch geloggt.
-|**Metrik für Erfüllungsgrad**|Bei 100% der Requests werden keine Messdaten zurückgeliefert. Bei 99.9% der Requests wird eine Response mit Fehlercode 403 geliefert.
-99.9% der Requests werded korrekt geloggt und als potentielle Angriffe markiert und auf den verwendetetn Benutzeraccount verwiesen, sodass bei wiederholten Angriffen Massnahmen ergriffen werden können.
+|**Antwort / Verhalten**|Die Anfrage wird entgegengenommen und das darin enthaltene Access Token überprüft. Der Patient wird korrekt authentifiziert und es wird überprüft, ob der Patient Zugriff auf die angeforderten Daten besitzt. Da die Daten einem anderen Patienten zugewiesen sind, wird eine 403 Response (Forbidden) zurückgesendet und der Vorfall wird als potenzieller Angriffsversuch geloggt.
+|**Metrik für Erfüllungsgrad**|Bei 100% der Requests werden keine Messdaten zurückgeliefert. +
+Bei 99.9% der Requests wird eine Response mit Fehlercode 403 (Forbidden) geliefert. +
+99.9% der Requests werden korrekt geloggt, als potenzielle Angriffe markiert und mit dem verwendeten Benutzeraccount verlinkt, sodass bei wiederholten Angriffsversuchen entsprechende Massnahmen ergriffen werden können.
 |===
 
 [cols="2,6"]
@@ -206,12 +200,12 @@ Der Datenspeicher mit den Messdaten ist ausserhalb des Systemnetzwerks nicht dir
 |**ID**|SZ-CNF-3
 |**Quelle des Stimulus**|Unidentifizierte Person via Smartphone-App
 |**Stimulus**|Abrufen der Messdaten mit einem ungültigen Access Token
-
-|**Umgebung**|Voll einsatzfähiges online System, Request von ausserhalb des PhysioConnect Netzwerkes
+|**Umgebung**|Voll einsatzfähiges System (online), Request von ausserhalb des PhysioConnect-Netzwerks
 |**System / Artefakte**|PhysioConnect / API Request Handler für App
-|**Antwort / Verhalten**|Die Anfrage wird entgegengenommen und das darin enthaltene Access Token überprüft. Der Benutzername und die ID des Patienten sind dabei korrekt gesetzt. Das Token wird an die Security Komponente weitergeleited und validiert. Da das Token ungültig ist, beantwortet Physio Connect den Request mit einem Fehlercode von 403 Unauthorized.
-|**Metrik für Erfüllungsgrad**|Bei 100% der Requests werden keine Messdaten zurückgeliefert. Bei 99.9% der Requests wird eine Response mit Fehlercode 403 geliefert.
-99.9% der Requests werded korrekt geloggt und als potentielle Angriffe markiert, sodass bei wiederholten Angriffen Massnahmen ergriffen werden können.
+|**Antwort / Verhalten**|Die Anfrage wird entgegengenommen und das darin enthaltene Access Token überprüft. Der Benutzername und die ID des Patienten sind dabei korrekt gesetzt. Das Token wird an die Security-Komponente weitergeleitet und validiert. Da das Token ungültig ist (z.B. abgelaufen), beantwortet Physio Connect den Request mit dem Fehlercode 401 (Unauthorized).
+|**Metrik für Erfüllungsgrad**|Bei 100% der Requests werden keine Messdaten zurückgeliefert. +
+Bei 99.9% der Requests wird eine Response mit Fehlercode 401 (Unauthorized) geliefert. +
+99.9% der Requests werded korrekt geloggt und als potenzielle Angriffe markiert, sodass bei wiederholten Angriffen entsprechende Massnahmen ergriffen werden können.
 |===
 
 [cols="2,6"]
@@ -219,7 +213,7 @@ Der Datenspeicher mit den Messdaten ist ausserhalb des Systemnetzwerks nicht dir
 |**ID**|SZ-CNF-4 (Erweiterung)
 |**Quelle des Stimulus**|Identifizierter Physiotherapeut via PhysioConnect
 |**Stimulus**|Physiotherapeut markiert Therapie als abgeschlossen
-|**Umgebung**|Voll einsatzfähiges online System, Request von innerhalb des PhysioConnect Netzwerkes
+|**Umgebung**|Voll einsatzfähiges System (online), Request von innerhalb des PhysioConnect-Netzwerks
 |**System / Artefakte**|PhysioConnect / API Response Handler für EPD
 |**Antwort / Verhalten**|Alle patientenbezogenen Therapiedaten werden in aggregierter Form an das https://www.patientendossier.ch/[Elektronische Patientendossier (EPD)] weitergeleitet. Die Kommunikation verläuft dabei über vordefinierte Schnittstellen / Protokolle sowie über eine verschlüsselte Verbindung. Die Daten sind nicht anonymisiert, da sie Teil der persönlichen Dokumente eines Patienten darstellen. +
 Die Datenübermittlung erfolgt nur für diejenigen Patienten, welche der Weitergabe ihrer Gesundsheitsdaten zu Beginn der Therapie zugestimmt haben. 
@@ -228,30 +222,36 @@ Das Initiieren und potentielle Fehlschlagen der Datenübermittlung wird geloggt,
 |===
 
 ==== Modifiability (Maintainability)
-Die modifiability Szenarien basieren auf dem folgenden Modifiability Szenario Template:
+
+Die Modifiability-Szenarien basieren jeweils auf der folgenden Definition:
 
 [cols="2,6"]
 |===
 |**ID**|SZ-MOD-X
-|**Quelle des Stimulus**|End user, developer, system administrator
-|**Stimulus**|A directive to add/delete/modify functionality, or change a quality attribute, capacity, or technology 
-|**Umgebung**|Runtime, compile time, build time, initiation time, design time
-|**System / Artefakte**|Code, data, interfaces, components, resources, configurations, ...
-|**Antwort / Verhalten**|One or more Of the following: 
+|**Quelle des Stimulus**|Endbenutzer, Entwickler, Systemadministrator
+|**Stimulus**|Eine Richtlinie zum Hinzufügen / Ändern / Löschen einer Funktionalität oder zum Ändern eines Qualitätsattributs, einer Kapazität oder einer Technologie
+|**Umgebung**|Laufzeit, Zeitpunkt des Kompiliervorgangs, Entwicklungszeit, Initiierungszeit, Entwurfszeit
+|**System / Artefakte**|Code, Daten, Schnittstellen, Komponenten, Ressourcen, Konfigurationen, ...
+|**Antwort / Verhalten**
+a|
+Einer oder mehrere der folgenden Punkte: 
 
-- Make modification, Test modification, Deploy modification 
-|**Metrik für Erfüllungsgrad**|Cost in terms of the following: 
+* Durchführung der Änderung
+* Test der Änderung
+* Deployment der Änderung
 
-- Number. size. complexity Of affected artifacts 
+|**Metrik für Erfüllungsgrad**
+a|
+Kosten in Bezug auf die folgenden Punkte:
 
-- Effort, Calendar time, Money (direct outlay or opportunity cost) 
+* Anzahl, Grösse, Komplexität der betroffenen Artefakte
+* Aufwand, Zeitrahmen gemäss Kalender, Geld (direkte Ausgaben oder Opportunitätskosten)
+* Ausmass, in welchem die Änderung andere Funktionen oder Qualitätsattribute beeinträchtigt
+* neu eingeführte Fehler / Bugs
 
-- Extent to which this modification affects other functions or quality attributes 
-
-- New defects introduced 
 |===
 
-Szenarien, welche sich auf Qualitätsziel QG-3 (Modifiability) beziehen.
+Nachfolgend werden die effektiven Szenarien erläutert, welche sich auf das Qualitätsziel QG-3 (Modifiability) beziehen.
 
 [cols="2,6"]
 |===
@@ -259,7 +259,7 @@ Szenarien, welche sich auf Qualitätsziel QG-3 (Modifiability) beziehen.
 |**Quelle des Stimulus**|Physiotherapeut
 |**Stimulus**|Will Unterstützung für einen neuen Messdatentyp zur besseren Auswertung von Therapien (z.B. Körpertemperatur)
 |**Umgebung**|Entwicklungszeit
-|**System / Artefakte**|PhysioConnect / API für App, interne Layer (bis hin zu Persistenzschicht)
+|**System / Artefakte**|PhysioConnect / API für App, interne Layer (bis hin zur Persistenzschicht)
 |**Antwort / Verhalten**|Das Entwicklungsteam entwirft, implementiert, testet und deployed eine Erweiterung der technisch unterstützten Messdatentypen. Der Umfang der Änderung spannt sich von der App-API bis hin zur Persistenzschicht.
 |**Metrik für Erfüllungsgrad**|Die Erweiterung ist innerhalb von 3 Personentagen realisierbar (Design, Implement, Test, Deploy). +
 100% der bisherigen Tests (Unit, Integration, E2E) können fehlerfrei ausgeführt werden. +
@@ -271,7 +271,7 @@ Die Erweiterung ist rückwärtskompatibel - Übungen, welche den neuen Messdaten
 |===
 |**ID**|SZ-MOD-2
 |**Quelle des Stimulus**|Entwickler
-|**Stimulus**|Will ein alternativen Datenformat / -protokoll für ressourcenoptimierte Übermittlung der Messdaten unterstützen (z.B. JSON anstelle von XML)
+|**Stimulus**|Will ein alternatives Datenformat / -protokoll für eine ressourcenoptimierte Übermittlung der Messdaten unterstützen (z.B. JSON anstelle von XML)
 |**Umgebung**|Entwicklungszeit
 |**System / Artefakte**|PhysioConnect / API für App
 |**Antwort / Verhalten**|Das Entwicklungsteam enwirft, implementiert, testet und deployed eine parallel verwendbare Version der App-API, welche das gewünschte Datenformat / -protokoll unterstützt. Für die internen Layer sollten keine nennenswerten Änderungen resultieren.
@@ -285,7 +285,7 @@ Konsumenten der ursprünglichen Version der App-API müssen keinerlei Anpassunge
 |===
 |**ID**|SZ-MOD-3
 |**Quelle des Stimulus**|Entwickler
-|**Stimulus**|Ändert/Erweitert die API des Übungskatalogs
+|**Stimulus**|Ändert / Erweitert die API des Übungskatalogs
 |**Umgebung**|Entwicklungszeit
 |**System / Artefakte**|PhysioConnect / API Connector für Übungskatalog
 |**Antwort / Verhalten**|Das Entwicklungsteam implementiert, testet und deployed eine neue Version von PhysioConnect, welche die Änderungen an der Übungskatalog-API unterstützt. Je nach Änderung können seitens PhysioConnect nebst dem API Connector auch die internen Layer (bis hin zur Persistenzschicht) von Anpassungen betroffen sein.
@@ -298,7 +298,7 @@ Im Rahmen von Smoke Tests auf einer deployten Umgebung kommen keine Bugs zum Vor
 |===
 |**ID**|SZ-MOD-4
 |**Quelle des Stimulus**|Entwickler
-|**Stimulus**|Ändert/Erweitert die API der Benutzerverwaltung
+|**Stimulus**|Ändert / Erweitert die API der Benutzerverwaltung
 |**Umgebung**|Entwicklungszeit
 |**System / Artefakte**|PhysioConnect / API Connector für Benutzerverwaltung
 |**Antwort / Verhalten**|Das Entwicklungsteam implementiert, testet und deployed eine neue Version von PhysioConnect, welche die Änderungen an der Benutzerverwaltung-API unterstützt. Je nach Änderung können seitens PhysioConnect nebst dem API Connector auch die internen Layer (bis hin zur Persistenzschicht) von Anpassungen betroffen sein.
@@ -311,7 +311,7 @@ Im Rahmen von Smoke Tests auf einer deployten Umgebung kommen keine Bugs zum Vor
 |===
 |**ID**|SZ-MOD-5 (Erweiterung)
 |**Quelle des Stimulus**|Kunde / Physiotherapeut
-|**Stimulus**|Will Daten von einem bestehenden Dokumentationssystem via API importieren
+|**Stimulus**|Will Daten aus einem bestehenden Dokumentationssystem via API importieren
 |**Umgebung**|Entwicklungszeit
 |**System / Artefakte**|PhysioConnect / API für Dokumentationssystem, interne Layer
 |**Antwort / Verhalten**|Das Entwicklungsteam enwirft, implementiert, testet und deployed die initiale Version einer API, welche den Datenimport aus einem vordefinierten Dokumentationssystem ermöglichen soll. Der Umfang der Erweiterung spannt sich vom API Layer bis hin zur Persistenzschicht.
@@ -324,7 +324,7 @@ Im Rahmen von Smoke Tests auf einer deployten Umgebung kommen keine Bugs zum Vor
 |===
 |**ID**|SZ-MOD-6 (Erweiterung)
 |**Quelle des Stimulus**|Medizinisches Forschungsteam
-|**Stimulus**|Will anonymisierte Gesundheitsdaten von unserem System beziehen
+|**Stimulus**|Will anonymisierte Gesundheitsdaten von PhysioConnect beziehen
 |**Umgebung**|Entwicklungszeit
 |**System / Artefakte**|PhysioConnect / API für Lesezugriff auf Daten, interne Layer (bis hin zu Persistenzschicht)
 |**Antwort / Verhalten**|Das Entwicklungsteam enwirft, implementiert, testet und deployed die initiale Version einer API, welche den Lesezugriff auf anonymisierte Gesundheits- / Messdaten ermöglichen soll. Der Umfang der Erweiterung spannt sich vom API Layer bis hin zur Persistenzschicht.
@@ -338,9 +338,9 @@ Es kann sichergestellt werden, dass 100% der bereitgestellten Gesundheitsdaten a
 |===
 |**ID**|SZ-MOD-7 (Erweiterung)
 |**Quelle des Stimulus**|Medizinisches Forschungsteam
-|**Stimulus**|Will bereitgestellte Gesundheitsdaten Labeln, damit diese zum Training von https://www.ibm.com/cloud/learn/supervised-learning[Supervised / Semi-Supervised Learning] AI-Modellen verwendet werden können
+|**Stimulus**|Will bereitgestellte Gesundheitsdaten mit Labels versehen, damit diese zum Training von https://www.ibm.com/cloud/learn/supervised-learning[Supervised / Semi-Supervised Learning] AI-Modellen verwendet werden können
 |**Umgebung**|Entwicklungszeit
-|**System / Artefakte**|PhysioConnect / API für Eingabe von Labeling-Vorschlägen, interne Layer (bis hin zu Persistenzschicht)
+|**System / Artefakte**|PhysioConnect / API für Eingabe von Labeling-Vorschlägen, interne Layer (bis hin zur Persistenzschicht)
 |**Antwort / Verhalten**|Das Entwicklungsteam enwirft, implementiert, testet und deployed die initiale Version einer API, welche die Eingabe von Labeling-Vorschlägen ermöglichen soll. Die Labels sollen zusammen mit den bereits bestehenden, anonymisierten Gesundheitsdaten abgelegt werden. +
 Der Umfang der Erweiterung spannt sich vom API Layer bis hin zur Persistenzschicht.
 |**Metrik für Erfüllungsgrad**|Die Bereitstellung einer initialen API ist innerhalb von 1-2 Personenwochen realisierbar (Design, Implement, Test, Deploy). +
