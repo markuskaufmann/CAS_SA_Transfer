@@ -195,3 +195,15 @@ __Informiert halten__
 * Entwickler von PhysioConnect
 * Vorgesetzter des Physiotherapeuten
 * Technische Integratoren von PhysioConnect
+
+=== Zusätzliche Architekturtreiber (Forces)
+
+Nebst den Architekturtreibern, welche aus den bestehenden link:requirements_engineering/functional_requirements.adoc#section-functional-requirements[Requirements] und link:02_architecture_constraints.adoc#section-architecture-constraints[Constraints] hervorgehen, sind die nachfolgenden Faktoren für den Entwurf der Systemarchitektur ebenfalls zu berückzsichtigen:
+
+* **Cloud Native** +
+Die Verwendung aktueller Cloud-Technologien von Microsoft, Amazon oder Google (oder wahlweise alternativer Hyperscaler) ist heutzutage ein zentraler Diskussionspunkt beim Entwurf und der Entwicklung von Softwaresystemen. Informationen und Funktionalitäten müssen von überall stets zugreifbar sein und die Anzahl der verwendeten Ressourcen kann je nach Auslastung dynamisch skaliert werden, um eine konstante Performance und - darausfolgend - eine optimale User Experience zu erzielen. +
+Unter dem Begriff __Cloud Native__ versteht man ein System, welches bereits in dessen Entwurfsphase auf den Betrieb in der Cloud ausgerichtet wird. Im Gegensatz dazu stehen Systeme, welche initial on-premise betrieben und erst später in die Cloud migriert werden.
+Die Systemarchitektur von Physio Connect soll ebenfalls dem __Cloud Native__-Paradigma folgen, damit auf zukünftige Anwendungs- und Integrationsszenarien dynamischer und effizienter reagiert werden kann.
+
+* **Mehrheitliche Verwendung des Smartphones** +
+Das Smartphone ist zu einem digitalen Alltagsgegenstand mutiert, welches meist häufiger als ein traditioneller Desktop-PC oder Laptop verwendet wird. Diesbezüglich muss bei der Architektur einer aktuellen Webapplikation speziell darauf geachtet werden, welche Priorität den Aspekten __Responsiveness__ (Design und Verhalten der Applikation auf unterschiedlichen Geräten / Umgebungen) und __Progressive Web App__ (Erweiterung der Funktionalitäten gemäss Laufzeitumgebung, z.B. Push Notifications) zugeordnet werden soll.
