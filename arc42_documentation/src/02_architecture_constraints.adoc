@@ -6,41 +6,44 @@ Nachfolgend werden die aktuell geltenden Randbedingungen genauer erläutert.
 
 === Rechtliche Randbedingungen
 
-[options="header",cols="2,4"]
+[options="header",cols="1,2,4"]
 |===
-|Bedingung|Beschreibung
-|Datenschutzverordnungen im Umgang mit Messdaten|Die Aufzeichnung, Ablage und etwaige Weitergabe von gesundheitsbezogenen Messdaten unterliegt strengen Datenschutzverordnungen, welche die explizite Zustimmung der Patienten erfordern. Der Patient muss zu jeder Zeit darüber informiert sein, welche Daten im Rahmen einer therapierelevanten Übung aufgezeichnet, abgelegt und vom Physiotherapeuten eingesehen und analysiert werden können. +
-Des Weiteren muss eine anonymisierte Weitergabe der Daten an Drittparteien (z.B. an die medizinische Forschung) ebenfalls durch den Patienten genehmigt werden. +
-Hierzu gehören ebenfalls Themenbereiche wie __Privacy by Design__ und __Privacy by Default__.
+|ID|Bedingung|Beschreibung
+|CS-REC-10|Datenschutzverordnungen im Umgang mit Messdaten|Die Aufzeichnung, Ablage und etwaige Weitergabe von gesundheitsbezogenen Messdaten unterliegt strengen Datenschutzverordnungen, welche die explizite Zustimmung der Patienten erfordern. Der Patient muss zu jeder Zeit darüber informiert sein, welche Daten im Rahmen einer therapierelevanten Übung aufgezeichnet, abgelegt und vom Physiotherapeuten eingesehen und analysiert werden können. +
+Des Weiteren muss eine Weitergabe der anonymisierten Messdaten an Drittparteien (z.B. an die medizinische Forschung) ebenfalls durch den Patienten genehmigt werden. +
+Bezüglich dieser Thematik sind Konzepte wie https://www2.deloitte.com/ch/en/pages/risk/articles/gdpr-privacy-by-design-and-by-default.html["Privacy by Design" und "Privacy by Default"] zu berücksichtigen.
 |===
 
 === Technische Randbedingungen
 
-[options="header",cols="2,4"]
+[options="header",cols="1,2,4"]
 |===
-|Bedingung|Beschreibung
-|Einhaltung von aktuell geltenden Security-Standards|Aufgrund der Übermittlung, Verarbeitung und Ablage persönlicher Gesundheitsdaten muss zwingend sichergestellt sein, dass alle technischen Komponenten die aktuellsten Sicherheitsstandards erfüllen, welche für den einwandfreien Umgang mit persönlichen Gesundheitsdaten relevant sind. Dies betrifft insbesondere den Schutz vor unbefugtem System- und Datenzugriff und die Anwendung von aktuellen Verschlüsselungsverfahren.
-|Verwendung von etablierten Protokoll- und Technologiestandards|Grundsätzlich sind etablierte Technologiestandards gegenüber proprietären Lösungen zu bevorzugen. Beispielsweise wird eine öffentliche API gemäss https://roy.gbiv.com/pubs/dissertation/rest_arch_style.htm[REST] entworfen und verwendet standardisierte Übertragungs- und Datenprotokolle (HTTPS, JSON / XML).
-|Versionsverwaltung|Sämtliche Bestandteile des Quellcodes werden unter der Verwendung von Git als Versionskontrollsystem (VCS) verwaltet.
-|Infrastructure as Code (IaC)|Sämtliche Bestandteile der notwendigen Systeminfrastruktur werden als Bestandteil des Quellcodes realisiert.
+|ID|Bedingung|Beschreibung
+|CS-TEC-10|Einhaltung von aktuell geltenden Security-Standards|Aufgrund der Übermittlung, Verarbeitung und Ablage persönlicher Gesundheitsdaten muss zwingend sichergestellt sein, dass alle beteiligten Systeme und Komponenten die aktuellsten Sicherheitsstandards erfüllen, welche für den einwandfreien Umgang mit persönlichen Gesundheitsdaten relevant sind. Dies betrifft insbesondere den Schutz vor unbefugtem System- und Datenzugriff und die Anwendung von aktuell empfohlenen Verschlüsselungsverfahren.
+|CS-TEC-20|Plattformunabhängigkeit|PhysioConnect wird auf Basis eines Technologiestacks entwickelt, welcher das Deployment und den Betrieb auf Windows, Linux, und macOS gewährleistet. +
+Beispiele: Java, .NET Core
+|CS-TEC-30|Lokale Entwicklungsumgebung|PhysioConnect kann auf dem lokalen Rechner ohne Abhängigkeiten zu deployten Systemen (z.B. auf der DEV Stage) betrieben werden. +
+Abhängigkeiten zu Umsystemen können konfiguriert werden, sodass PhysioConnect wahlweise mit einem Mock oder mit einer lokal gestarteten Instanz des jeweiligen Umsystems kommunizieren kann. 
+|CS-TEC-40|Versionsverwaltung|Sämtliche Bestandteile des Quellcodes werden unter der Verwendung von https://git-scm.com/[Git] als Versionskontrollsystem (VCS) verwaltet.
+|CS-TEC-50|Everything as Code (EaC)|Nebst dem Quellcode werden alle relevanten Artefakte von PhysioConnect (Konfigurationen, Dokumentation) ebenfalls über das Versionskontrollsystem verwaltet und daher gleich wie der Quellcode behandelt.
+|CS-TEC-51|Architekturdokumentation|Für die Architekturdokumentation kommt https://arc42.org/[arc42] und https://c4model.com/[C4] zum Einsatz. Die Terminologie und Gliederung der Dokumentation entspricht dem deutschen arc42-Template in der Version 8 (Release: Februar 2022).
 |===
 
 === Organisatorische Randbedingungen
 
-[options="header",cols="2,4"]
+[options="header",cols="1,2,4"]
 |===
-|Bedingung|Beschreibung
-|Zeitplan|Für die Sicherstellung einer möglichst kurzen Time-to-Market soll ein initiales __Minimum Viable Product (MVP)__ innerhalb von 4 Monaten realisierbar sein.
-|Vorgehensmodell|Entwickelt wird iterativ-inkrementell nach Scrum.
-|Architekturdokumentation|Für die Architekturdokumentation kommt arc42 und C4 zum Einsatz. Als Versionsverwaltung wird Git verwendet.
+|ID|Bedingung|Beschreibung
+|CS-ORG-10|Zeitplan|Für die Sicherstellung einer möglichst kurzen Time-to-Market soll ein initiales __Minimum Viable Product (MVP)__ innerhalb von 4-6 Monaten realisierbar sein.
+|CS-ORG-20|Vorgehensmodell|Entwickelt wird iterativ-inkrementell nach https://www.scrum.org/resources/what-is-scrum[Scrum].
 |===
 
 === Konventionen
 
+[options="header",cols="1,2,4"]
 |===
-|Bedingung|Beschreibung
-|Architekturdokumentation|Die Terminologie und Gliederung der Architekturdokumentation entspricht dem deutschen arc42-Template in der Version 8 (Release: Februar 2022).
-|Sprache (Deutsch, Englisch)|Die Architekturdokumentation ist in deutscher Sprache verfasst, um sie allen betroffenen Zielgruppen und Stakeholdern leichter zugänglich und verständlich zu machen. Sämtlicher Quellcode ist jedoch in englischer Sprache zu verfassen, um dessen Kompatibilität mit internationalen Entwicklern (deren Muttersprache nicht Deutsch ist) zu gewährleisten. +
+|ID|Bedingung|Beschreibung
+|CS-KON-10|Sprache (Deutsch, Englisch)|Die Architekturdokumentation ist in deutscher Sprache verfasst, um sie allen betroffenen Zielgruppen und Stakeholdern leichter zugänglich und verständlich zu machen. Sämtlicher Quellcode ist jedoch in englischer Sprache zu verfassen, um dessen Kompatibilität mit internationalen Entwicklern (deren Muttersprache nicht Deutsch ist) zu gewährleisten. +
 Damit eine __ubiquitous language__ über die Sprachgrenzen hinaus eingehalten werden kann, muss ein entsprechendes Glossar aktiv gepflegt werden.
-|Coding Guidelines|Zu den grundlegend einzuhaltenden Coding Guidelines gehören diejenigen Richtlinien, welche im literarischen Werk https://github.com/martinmurciego/good-books/blob/master/Clean%20Code_%20A%20Handbook%20of%20Agile%20Software%20Craftsmanship%20-%20Robert%20C.%20Martin.pdf[Clean Code (Robert C. Martin)] verfasst wurden.
+|CS-KON-20|Clean Code|Zu den grundlegend einzuhaltenden Coding guidelines gehören diejenigen Richtlinien, welche im literarischen Werk https://gist.github.com/wojteklu/73c6914cc446146b8b533c0988cf8d29[Clean Code (Robert C. Martin)] verfasst wurden.
 |===
