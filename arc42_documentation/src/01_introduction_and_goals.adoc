@@ -210,3 +210,7 @@ Das Smartphone ist zu einem digitalen Alltagsgegenstand mutiert, welches meist h
 Design und Verhalten der Applikation auf unterschiedlichen Geräten / Umgebungen
 ** __Progressive Web App__ +
 Unterstützung eines erweiterten "nativen" Funktionsumfangs auf spezifischen Geräten / Umgebungen (z.B. Push Notifications, Camera Access)
+
+* **Fitness Trend** +
+Immer mehr Personen treiben Sport und Fitnesscenter sind beliebter denn je. Um die eigene Leistung zu überwachen verwenden viele einen Fitnesstracker wie zum Beispiel Sportwatches und Fitnessbänder. Dies führt dazu, dass Fitnesstracker von verschiedenen Marken mit unterschiedlichen Messdaten, Genaugkeiten und Features produziert werden.
+Die Systemarchitektur von Physio Connect muss beachten, dass die Messdaten eine unterschiedliche Genauigkeit besitzen und mit verschiedenen Frequenzen gemessen werden. Zusätzlich soll es möglich sein, schnell auf zusätzliche Funktionalitäten von neuen Devices zu reagieren.
