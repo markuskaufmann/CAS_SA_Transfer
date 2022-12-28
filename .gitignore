@@ -8,3 +8,4 @@ physio_connect_c4/generated/
 src-gen/
 .vscode/
 arc42_documentation/images/generated_*
+arc42_documentation/structurizr_diagrams/generated/*
