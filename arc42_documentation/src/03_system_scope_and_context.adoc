@@ -72,7 +72,7 @@ plantuml::structurizr_diagrams/generated/structurizr-Kontextdiagram.puml[format=
 |Gruppe:Patient|Alle Elemente, welche in der Gruppe Patient befinden, stehen in direkter Verbindung zum Akteur "Patient" und werden von diesem Verwendet. Physio Connect hat keinen Einfluss auf die Art von Geräten, welche von Patienten eingesetzt werden.
 |Gruppe:Physiounternehmung|Eine Unternehmung, welche Physiotherapien durchführt. In den meisten Fällen handelt es sich um eine Physio Praxis, es kann sich jedoch auch um eine Spitalabteilung, eine Rehabilitations Klinik oder andere Anbieter handeln. Physio Connect hat nur einen beschränkten Einfluss auf die in Physiounternehmungen eingesetzten Software Systeme. In den meisten Fällen ist es möglich, Informationen zu bestehenden Schnittstellen zu erhalten. 
 |Physio Connect|Hauptsystem, welches im Rahmen dieses Dokuments analysiert wird. Bietet die im Kapitel 1 Beschriebenen Funktionalitäten an.
-|Mobile App|App, welche von Patienten verwendet wird. Wird zum Ausführen von Therapiesession verwendet. Erhält Daten zu Therapien von Physio Connect. Sendet falls möglich Messdaten an Physio Connect.
+|Mobile Patientenapp|App, welche von Patienten verwendet wird. Wird zum Ausführen von Therapiesession verwendet. Erhält Daten zu Therapien von Physio Connect. Sendet falls möglich Messdaten an Physio Connect.
 |Übungs Katalog|Beinhaltet vordefinierte Übungsdefinitionen und bietet die Möglichkeit, Übungen via einer API zu verwalten.
 |Benutzer Verwaltung|Beinhaltet alle Benutzerspezifischen Informationen. Handhabt die Authentifizierung und Autorisierung. Bietet eine API zur Verwaltung von Benutzern an.
 |Patient|Akteur, welcher die Mobile App verwendet, um Therapiesessions auszuführen. Im Normalfall hat dieser eine Verordnung von einem Hausarzt oder einer anderen Gesundheitsstelle zur Teilnahme an einer gewissen Anzahl Physiotherapien. Ebenfalls ist es möglich, dass sich dieser im Spital oder einer Rehabilitations Klinik befindet.
@@ -90,7 +90,7 @@ Kommunikation aus Sicht von Physio Connect
 |Benutzer Verwaltung|Requests zur Validierung von Access Tokens.* Möglicherweise Requests zur Erstellung / Anpassung von Benutzern*|JWT Token mit Authorisierungsinformationen
 |Therapeut: in||Plant Therapien, Sendet Therapieeinladungen, erstellt Übungen
 |Administrator: in||Administriert Personal und Übungen. *Evt. macht eine direkte Verbindung zur Benutzerverwaltung mehr Sinn zum Administrieren der Benutzer.*
-|Patient: in|Erhält Therapieeinladungen|Kein direkter Output, nur indirekt Über die Mobile App
+|Patient: in|Erhält Therapieeinladungen|Verwaltet selbst erstellte Therapien
 |===
 
 

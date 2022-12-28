@@ -27,18 +27,14 @@ workspace "Physio integration layer project" {
                 description "Webapp"
                 tags "mainSystem"
                 group "Frontend" {
-                    therapeutenWebApp = container "WebApp" {
-                        description "delivers browser App, maybe mobile App."
+                    therapienWebApp = container "WebApp" {
+                        description "delivers frontend Application"
                         technology "TBD, maybe angular or react"
                     }
-                    therapeutenBrowserApplication = container "browser App" {
+                    therapienSinglePageApplication = container "Single Page Application" {
                         tags "Web Browser"
-                        description "App that is rendered by a browser"
-                        technology "TBD, maybe Single Page Application"
-                    }
-                    therapeutenMobileApplication = container "MobileApp" {
-                        tags "Mobile App"
-                        technology "TBD, maybe Progressive Web App"
+                        description "Now "
+                        technology "TBD, ändert sich evt von SPI zu einem anderen Ansatz"
                     }
                 }
 
@@ -58,8 +54,8 @@ workspace "Physio integration layer project" {
                 }
             }  
 
-            patientenApp = softwareSystem "Mobile App"
-            uebungsKatalog = softwareSystem "Uebungs Katalog"
+            patientenApp = softwareSystem "Mobile Patientenapp"
+            uebungsKatalog = softwareSystem "Übungs Katalog"
             benutzerVerwaltung = softwareSystem "Benutzer Verwaltung" "autorisierung und authentifizierung"
         }
 
@@ -71,31 +67,28 @@ workspace "Physio integration layer project" {
         therapeut -> dokumentationsSoftware "Plant / Dokumentiert Therapien" 
 
         therapeut -> therapieFile "Editiert" 
-        therapeut -> physioConnect "Plant Therapien direkt\nsendet Therapieeinladungen\nerstellt eigene Uebungen" 
+        therapeut -> therapienSinglePageApplication "Plant Therapien direkt\nsendet Therapieeinladungen\nerstellt eigene Uebungen" 
         dataScientist -> physioConnect "Benutzt Daten"
         patient -> patientenApp "Registriert sich\nNimmt Therapieeinladungen an\nBenutzt App für selbstständige ausführung von Therapien"
         patient -> fitnessTracker "besitzt"
+        patient -> therapienSinglePageApplication "Verwaltet selbsterstellte Therapien"
         patientenApp -> fitnessTracker "Verbindet sich mit"
         fitnessTracker ->  patientenApp "Sendet Messdaten"
 
         # relationships to/from software systems
         dokumentationsSoftware -> therapieFile "Exportiert"
-        patientenApp -> physioConnect "Sendet Session Updates mit Messdaten"
+        patientenApp -> physioConnect "Sendet Session Updates mit Messdaten, Registrierung neuer Benutzer\n Authentifiziert Benutzer"
         physioConnect -> patientenApp "Sendet Therapien, Sessions und Uebungen"
         physioConnect -> uebungsKatalog "Importiert Uebungen"
         physioConnect -> therapieFile "importiert Uebungen"
         physioConnect -> dokumentationssoftware "importiert Uebungen"
-        physioConnect -> benutzerVerwaltung "Autorisiert und Authentifiziert Benutzer\n ?Erstellt neue Benutzer?"
-        patientenApp -> benutzerVerwaltung "Registrierung neuer Benutzer\n Authentifiziert Benutzer"
+        physioConnect -> benutzerVerwaltung "Autorisiert und Authentifiziert Benutzer\n Erstellt neue Benutzer"
         physioConnect -> patientenDossier "Automatischer Datenaustausch"
         physioConnect -> versicherungsSchnittstellen "teilt Trainingsdaten"
         
         # relationships to/from containers
-        therapeutenMobileApplication -> therapeutenWebApp "Maybe get page, depends on technology decision"
-        therapeutenBrowserApplication -> therapeutenWebApp "Maybe get page, depends on technology decision"
-
-        therapeutenMobileApplication -> applicationLogic "Probably API calls"
-        therapeutenBrowserApplication -> applicationLogic "Probably API calls"
+        therapienSinglePageApplication -> therapienWebApp "Maybe get page, depends on technology decision"
+        therapienSinglePageApplication -> applicationLogic "Probably API calls"
 
         applicationLogic -> benutzerVerwaltung "Probably API calls"
         applicationLogic -> physioDb "TBD, z.B. JDBC / ODBC"
