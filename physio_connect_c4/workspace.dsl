@@ -22,7 +22,7 @@ workspace "Physio integration layer project" {
         }
 
         
-        enterprise "Physio Connect" {
+        enterprise "Unternehmungsgrenze" {
             physioConnect = softwareSystem "Physio Connect" {
                 description "Webapp"
                 tags "mainSystem"

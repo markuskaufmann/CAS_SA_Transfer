@@ -68,7 +68,7 @@ plantuml::structurizr_diagrams/generated/structurizr-Kontextdiagram.puml[format=
 [options="header"]
 |===
 |Element|Beschreibung
-|Unternehmung:Physio Connect|Die Unternehmung "Physio Connect" ist der Besitzer des zu untersuchenden Systems. Alle Software Elemente innerhalb dieser Grenzen können direkt beinflusst werden. 
+|Unternehmungsgrenze|Alle Software Elemente innerhalb dieser Grenzen werden von uns gewartet und können direkt beinflusst werden. Auf Elemente ausserhalb dieser Grenzen besitzen wir nur beschränkten bis garkeinen Einfluss. 
 |Gruppe:Patient|Alle Elemente, welche in der Gruppe Patient befinden, stehen in direkter Verbindung zum Akteur "Patient" und werden von diesem Verwendet. Physio Connect hat keinen Einfluss auf die Art von Geräten, welche von Patienten eingesetzt werden.
 |Gruppe:Physiounternehmung|Eine Unternehmung, welche Physiotherapien durchführt. In den meisten Fällen handelt es sich um eine Physio Praxis, es kann sich jedoch auch um eine Spitalabteilung, eine Rehabilitations Klinik oder andere Anbieter handeln. Physio Connect hat nur einen beschränkten Einfluss auf die in Physiounternehmungen eingesetzten Software Systeme. In den meisten Fällen ist es möglich, Informationen zu bestehenden Schnittstellen zu erhalten. 
 |Physio Connect|Hauptsystem, welches im Rahmen dieses Dokuments analysiert wird. Bietet die im Kapitel 1 Beschriebenen Funktionalitäten an.
