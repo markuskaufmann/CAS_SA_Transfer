@@ -36,4 +36,205 @@ a|
 
 === Security
 
-TBD
+[cols="2,6"]
+|===
+|**ID**|ADR-SEC-10
+|**Anliegen (Concern)**|Wie wird ein Systemkonsument sicher authentifiziert?
+|**Kontext**|Sowohl die bereitgestellte API als auch die Webapplikation (SPA, PWA) von PhysioConnect darf lediglich von Konsumenten (Benutzer oder Systeme) verwendet werden, welche in der Benutzerverwaltung als gültige Benutzer registriert sind. Bei jedem Kommunikationsvorgang muss daher sichergestellt werden, dass die Identität der konsumierenden Partei erfolgreich verifiziert werden konnte.
+|**Alternativen**
+a|
+**Voraussetzungen**
+
+__Allgemein__
+
+Das System "Benutzerverwaltung" gibt bereits die folgenden Rahmenbedingungen vor:
+
+* Als Identity Provider wird https://www.keycloak.org/[Keycloak] verwendet
+* Keycloak unterstützt Multi-factor authentication
+1. Passwort des Benutzers
+2. One-time password via https://googleauthenticator.net/[Google Authenticator] oder https://freeotp.github.io/[FreeOTP]
+
+Nachfolgend werden die kompatiblen Alternativen gelistet.
+
+**A1) HTTP basic authentication** +
+Authentifizierung mittels vordefiniertem Username und Passwort. Die Credentials werden mit Base64 transformiert und mit jedem Request als Teil des HTTP Headers mitgegeben. +
+
+__Vorteile:__
+
+* Einfache Implementation +
+(Encoding von Username & Passwort mit Base64)
+* Einfache Übertragung via HTTP Header
+* Keine komplexen Handshake- / Callback-Login-Mechanismen notwendig
+
+__Nachteile:__
+
+* Sollte nicht ohne HTTPS / SSL / TLS verwendet werden
+* Anfällig für Hijacking- und Man-in-the-middle-Attacken wenn unverschlüsselte Verbindung
+* Grössere Angriffsfläche, da Username / Passwort mit jedem Request quasi als Klartext (Base64) mitgesendet werden
+* Passwort wird eventuell im Browsercache abgelegt, was CSRF-Attacken begünstigt
+* Im Falle eines erfolgreichen Angriffs sind die Benutzer-Credentials (Username & Passwort) in den Händen des Angreifers, was (je nach internen Rollen und Berechtigungen des betroffenen Benutzers) zu einer immensen Verletzlichkeit des Gesamtsystems führen kann
+
+**A2) API Key** +
+Authentifizierung mittels generiertem API Key. Letzterer wird mit jedem Request als Teil des HTTP Headers mitgegeben. +
+
+__Vorteile:__
+
+* Einfache Implementation
+* Einfache Übertragung via HTTP Header
+* Keine komplexen Handshake- / Callback-Login-Mechanismen notwendig
+* Bequemer, da API Keys invalidieren und neu generieren kann, ohne das Passwort eines Benutzeraccounts zu ändern
+* Im Falle einer Kompromittierung ist die Angriffsfläche auf die API beschränkt, nicht auf den gesamten Benutzeraccount
+* Es können unterschiedliche Keys pro Benutzeraccount, Umgebung und Access Scope generiert werden (z.B. DEV / PROD Key mit Read / Write Access)
+
+__Nachteile:__
+
+* Sollte nicht ohne HTTPS / SSL / TLS verwendet werden
+* Anfällig für Hijacking- und Man-in-the-middle-Attacken wenn unverschlüsselte Verbindung
+* Grössere Angriffsfläche, da der API Key mit jedem Request als Klartext mitgesendet wird
+* Im Falle eines erfolgreichen Angriffs ist die gesamte API kompromittiert
+
+**A3) OAuth 2.0 mit OpenID Connect und Bearer Token (JWT)** +
+Authentifizierung via https://oauth.net/2/[OAuth 2.0]-Flow mit https://openid.net/connect/[OpenID Connect]. OAuth 2.0 ist ein etabliertes Autorisierungsframework und bietet eine Spezifikation für die Implementation von Autorisierungsprotokollen und -flows. OpenID Connect basiert auf dem OAuth 2.0-Framework und ist ein Standard, welcher speziell auf die Benutzerauthentifikation ausgerichtet ist.
+
+__Vorteile:__
+
+* Etabliertes Framework - es gibt zahlreiche Online-Dokumentationen und Guides
+* State-of-the-art bezüglich der Absicherung von APIs
+* Ausgestellte Bearer Tokens (JWT) können seitens API einfach auf ihre Integrität und Gültigkeit validiert werden
+* Tokens können auf feingranulare API Scopes ausgestellt werden, was die Angriffsfläche theoretisch reduziert
+* Möglichkeit, zusätzliche Refresh Tokens zu verwenden, welche bei Ablauf eines Access Tokens automatisch einen neuen anfordern
+* Unterstützt Single Sign-On (SSO)
+* Ausgestellte Bearer Tokens (JWT) können Browser-seitig in einem Cookie abgelegt werden (bzw. Standardverhalten für manche Identity Provider), damit sie nicht alternativ im Local oder Session Storage gespeichert werden müssen
+* Unterstützung verschiedener Client-Typen (z.B. Device, SPA / Public client)
+
+__Nachteile:__
+
+* Ist nicht immer ganz einfach zu implementieren
+* Kann bei falscher Implementation und / oder Konfiguration zu https://www.rfc-editor.org/rfc/rfc6819#section-4[Sicherheitslücken] führen
+
+**A4) SAML** +
+Authentifizierung via https://auth0.com/blog/how-saml-authentication-works/[SAML]. Security Assertion Markup Language (SAML) ist - nebst OpenID Connect - ein weiterer Standard, welcher auf die Benutzerauthentifikation ausgerichtet ist.
+
+__Vorteile:__
+
+* Etablierter Standard
+* Unterstützt Single Sign-On (SSO)
+
+__Nachteile:__
+
+* Alter Standard: Die neuste Version des Standards besteht bereits seit 2005
+** nicht einfach, aktuelle Web- (SPA) und Mobileapplikationen mit SAML abzusichern
+** OpenID Connect wurde unter anderem dafür entworfen, SAML abzulösen
+* Verwendet XML anstelle von JSON Web Tokens (JWT) als Übertragungsformat
+** erhöhter Ressourcenbedarf (Netzwerk & Memory) im Vergleich zu JWT
+** bei der Implementation muss auf die bestehenden https://cheatsheetseries.owasp.org/cheatsheets/XML_Security_Cheat_Sheet.html[XML-Angriffsvektoren] Acht gegeben werden
+* API Scopes werden nicht out-of-the-box unterstützt
+
+|**Entscheidung**
+a|
+* A3) OAuth 2.0 mit OpenID Connect und Bearer Token (JWT)
+* Multi-factor authentication (MFA)
+
+|**Begründung**|Die Authentifizierung mit OAuth 2.0 und OpenID Connect ist eine etablierte und (zurzeit) sichere Methode zur Verifikation der Identität eines Systemkonsumenten. In der direkten Gegenüberstellung mit den restlichen Alternativen ist OAuth & OpenID Connect spezifisch darauf ausgelegt, den Authentifizierungsworkflow zwischen Frontend (SPA, PWA) und Backend (API) so sicher wie möglich zu gestalten. +
+Vorsicht ist jedoch bei der Implementation und Konfiguration geboten - wie bereits als Nachteil dieser Variante erfasst, kann eine falsche Implementation und / oder Konfiguration zu Sicherheitslücken führen. Dies kann jedoch theoretisch bei jeder Alternative der Fall sein. +
+OAuth 2.0 & OpenID Connect wird zudem von allen gängigen (Social) Identity Providern einwandfrei unterstützt.
+
+Des Weiteren ist der supplementäre Einsatz von Multi-factor authentication (MFA) ein relevanter Bestandteil aktueller Authentifizierungsmechanismen und wird daher als notwendig angesehen. Hierbei wird auf die unterstützten MFA-Faktoren von Keycloak sowie den angebotenen Social Identity Providern (ADR-SEC-11) zurückgegriffen.
+|**Follow-up Entscheidungen**
+a|
+* **ADR-SEC-11** +
+Mit welchen Social Identity Providern kann sich ein Systembenutzer authentifizieren?
+
+|===
+
+[cols="2,6"]
+|===
+|**ID**|ADR-SEC-11
+|**Anliegen (Concern)**|Mit welchen Social Identity Providern kann sich ein Systembenutzer authentifizieren?
+|**Kontext**
+a|Social Identity Providers wie Google, Microsoft oder Apple ermöglichen die Authentifizierung eines Benutzers über bereits existierende (Social Media) Accounts. Auf diese Weise werden Benutzerinformationen und Credentials (Username & Passwort) lediglich an einem zentralen Ort (nämlich beim betroffenen Social Identity Provider) verwaltet und nicht bei PhysioConnect redundant gehalten. +
+Zudem ist der Login-Prozess über Social Identity Providers meist intuitiver, da die Benutzer meist denselben Account mit verschiedenen Services verknüpfen (z.B. Google-Account) und sich daher überall mit denselben Credentials und über dieselbe Login-Maske und Multi-factor authentication (MFA) authentifizieren können.
+|**Alternativen**
+a|
+**Voraussetzungen**
+
+__Allgemein__
+
+Das System "Benutzerverwaltung" gibt bereits die folgenden Rahmenbedingungen vor:
+
+* Als Identity Provider wird https://www.keycloak.org/[Keycloak] verwendet
+* Keycloak unterstützt __identity provider federation__, sprich die Delegation der Authentifizierung zu verknüpften, externen (Social) Identity Providern. Voraussetzung für die Anbindung ist die Kompatibilität zu OAuth 2.0 & OpenID Connect.
+
+__ADR-SEC-10__
+
+* OAuth 2.0 & OpenID Connect wird unterstützt
+* Multi-factor authentication (MFA) wird unterstützt
+
+Nachfolgend werden die kompatiblen Alternativen gelistet.
+
+**A1) Kein Social Identity Provider** +
+PhysioConnect bietet keine Authentifizierung via Social Identity Provider an.
+
+__Vorteile:__
+
+* Kein Zusatzaufwand seitens PhysioConnect-Identity Provider (ADR-SEC-11) für die Einbindung externer Identity Providers
+* Vollständige Kontrolle über alle Benutzeraccounts, da alle Informationen innerhalb des Systemkontexts abgelegt sind
+* Keine zusätzlichen Datenschutz- / Privacy Concerns, da die Benutzerdaten nicht ausserhalb des Systemkontexts verwendet werden können
+* Bei der Verwendung von Social Identity Providers wird das potenzielle Schadensausmass im Falle eines Account-Hijackings vergrössert. Beispielsweise kann sich ein Angreifer bei der Übernahme eines Google Accounts auf allen Webseiten anmelden, welche sich mittels Verwendung des Google Accounts authentifizieren 
+
+__Nachteile:__
+
+* Redundante Datenhaltung, da ein Grossteil der Benutzer bereits einen Account bei einem (oder mehreren) Social Identity Providers besitzt
+* Eigene Login-Maske und Multi-factor authentication (MFA)-Prozess für alle Benutzer
+* Benutzer müssen sich mit dedizierten Credentials (Username & Passwort) anmelden
+
+**A2) Google** +
+Authentifizierung über Google.
+
+__Vorteile:__
+
+* Einbezug von Benutzern, welche sich ausschliesslich im Google-Ökosystem befinden oder mehrheitlich Google-Produkte und -Services verwenden. +
+Beispielsweise ist hierbei der Grossteil aller Android User inkludiert.
+
+__Nachteile:__ +
+-
+
+**A3) Microsoft** +
+Authentifizierung über Microsoft.
+
+__Vorteile:__
+
+* Einbezug von Benutzern, welche sich ausschliesslich im Microsoft-Ökosystem befinden oder mehrheitlich Microsoft-Produkte und -Services verwenden. +
+Beispielsweise ist hierbei der Grossteil aller Windows User inkludiert.
+
+__Nachteile:__ +
+-
+
+**A4) Apple** +
+Authentifizierung über Apple.
+
+__Vorteile:__
+
+* Einbezug von Benutzern, welche sich ausschliesslich im Apple-Ökosystem befinden oder mehrheitlich Apple-Produkte und -Services verwenden. +
+Beispielsweise ist hierbei der Grossteil aller iOS & macOS User inkludiert.
+
+__Nachteile:__ +
+-
+
+|**Entscheidung**
+a|
+Verwendung von
+
+* A1) Google
+* A2) Microsoft
+* A3) Apple
+
+Die Möglichkeit der Authentifizierung über die obigen Social Identity Provider soll in erster Linie den Patienten (= externen Benutzeraccounts) zur Verfügung stehen. Die Benutzeraccounts von Physiotherapeuten, Vorgesetzten und weiteren kundenseitig internen Benutzern werden im Rahmen des Systems "Benutzerverwaltung" mit der bestehenden Identity & Access Management-Lösung des Kunden (z.B. Active Directory) synchronisiert. +
+Eine Ausnahme bilden Kunden, welche ihre internen Benutzer bereits via Microsoft Accounts (z.B. via Office 365) authentifizieren.
+|**Begründung**|Die Verwendung von Social Identity Providers bietet eine hohe Flexibilität bei relativ geringem Integrationsaufwand. Mit der Kombination aus Google, Microsoft und Apple sollte das Angebot an Social Identity Providern eine klare Mehrheit der zukünftigen Benutzer abdecken. +
+Zudem kann auf diese Weise eine redundante Datenhaltung von Benutzeraccounts verhindert werden, da ein Grossteil der zukünftigen Benutzer bereits einen Account bei einem (oder mehreren) Social Identity Providers besitzt.
+
+**Hinweis:** +
+Diese Entscheidung führt zu entsprechenden Änderungen in PhysioConnect (Webapplikation, API) sowie dem System "Benutzerverwaltung" (Konfiguration der Social Identity Providers in Keycloak).
+|**Follow-up Entscheidungen**|-
+|===
