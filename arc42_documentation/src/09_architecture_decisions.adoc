@@ -462,3 +462,81 @@ Mit Server Side Rendering wäre es sehr Aufwendig, die Gewünschten Usability um
 |**Follow-up Entscheidungen**|
 ADR-FRO-12
 |===
+
+==== Frontend Technologie
+
+[cols="2,6"]
+|===
+|**ID**|ADR-FRO-12
+|**Anliegen (Concern)**|Mit welcher Technologie soll die Single Page Application Umgesetzt werden?
+
+|**Kontext**
+|Physiotherapeuten und Patienten verwenden dieses Frontend hauptsächlich für die Planung und Auswertung von Therapien. Mobile Browser müssen unterstützt werden. Es wurde bestimmt, dass eine SPA verwendet wird.
+
+|**Alternativen**
+a|
+
+*Flutter*
+
+__Vorteile:__
+
+* Cross Plattform Applikation von einer Codebase
+
+__Nachteile:__
+
+* Kaum Know-How zu Dart Programming Language vorhanden
+* Support für Web Applikationen schlechter verglichen mit den anderen Alternativen
+
+*React*
+
+__Vorteile:__
+
+* Viel Know-How in der Community vorhanden
+* Kompatibel mit vielen Libraries
+* Sehr hohe Zufriedenheit in der State of JS Umfrage https://2021.stateofjs.com/en-US/libraries/front-end-frameworks/
+
+__Nachteile:__
+
+* Relativ komplex zum erlernen
+
+*Angular*
+
+__Vorteile:__
+
+* Viel Know-How in der Community vorhanden
+* Hohe Unterstützung für Typescript
+
+__Nachteile:__
+
+* Komplex zum erlernen
+* Tiefe Zufriedenheit in State of JS https://2021.stateofjs.com/en-US/libraries/front-end-frameworks/
+
+*Vue*
+
+__Vorteile:__
+
+* Einfacher zu erlernen als die Alternativen
+* Relativ hohe Zufriedenheit in der State of JS Umfrage https://2021.stateofjs.com/en-US/libraries/front-end-frameworks/
+
+__Nachteile:__
+
+* Relativ kleine Community
+* Verglichen wenig angebotene Features
+
+|**Entscheidung**|React
+|**Begründung**
+a|
+Der Hauptvorteil von Flutter, nämlich die Unterstützung von Geräten ausserhalb von Desktops und Apps, hat bei uns keine Priorität.
+
+Für Angular gab es in den letzten Jahren viele schlechte Rückmeldungen.
+
+VueJS und React sind beide für unser Projekt geeignet, React scheint jedoch eine aktivere Community zu besitzen und hat einen höhere Anzahl an direkt unterstützten Features, was den Implementationsaufwand senken sollte. Aus diesem Grund haben wir uns für React entschieden.
+
+|**Follow-up Entscheidungen**|
+ADR-FRO-13: 
+Da das Framework nun bekannt ist kann entschieden werden, ob eine App unterstützt werden soll oder nicht.
+
+ADR-FRO-14: 
+Sollen Micro Frontends verwendet werden, um die SPA umzusetzen?
+
+|===
