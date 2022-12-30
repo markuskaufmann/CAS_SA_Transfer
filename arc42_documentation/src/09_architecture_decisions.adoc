@@ -238,3 +238,74 @@ Zudem kann auf diese Weise eine redundante Datenhaltung von Benutzeraccounts ver
 Diese Entscheidung führt zu entsprechenden Änderungen in PhysioConnect (Webapplikation, API) sowie dem System "Benutzerverwaltung" (Konfiguration der Social Identity Providers in Keycloak).
 |**Follow-up Entscheidungen**|-
 |===
+
+=== Messaging
+
+[cols="2,6"]
+|===
+|**ID**|ADR-MES-10
+|**Anliegen (Concern)**|Wie wird das Messaging innerhalb von Physio Connect umgesetzt?
+
+|**Kontext**
+|Sowohl Requests von Physiotherapeuten als auch Patienten werden vom PhysioConnect System gehandhabt. Zu Peak Zeiten kann es sich dabei um eine hohe Last an Daten handeln. Da gemäss *link zu ADR Backend* PhysioConnect aus mehreren Containern bestehen wird, soll überprüft werden, ob eine Messaging Komponente eingesetzt werden soll und falls ja, welche.
+
+|**Alternativen**
+a|
+
+
+__Vorteile:__
+
+**HTTP/HTTPS**
+
+__Vorteile:__
+
+* Einfache Implementierung
+* Know-How weit verbreitet
+* Von vielen verschiedenen Libraries unterstützt
+
+__Nachteile:__
+
+* Weniger effizient als einige Alternativen
+
+
+**Message Queues** (RabbitMQ, Kafka)
+
+__Vorteile:__
+
+* Kann je nach Implementierungsart Requests effizient abarbeiten (Trade Off mit Traceablility)
+* Gruppierung von Gruppen nach Themen
+* Skalierbare Messaging Komponente
+* Sender muss nicht darauf Warten, bis die Message verarbeitet wurde
+* Bei Ausfall der Datenbank könnten die Daten kurzfristig in der Queue als Messages persistiert sein bis die Datenbank wieder erreichbar ist.
+
+__Nachteile:__
+
+* Benötigt Messaging Container
+* Erhöht Komplexität der Lösung
+
+**gRPC**
+
+__Vorteile:__
+
+* Sehr Performant
+* Ermöglicht bi-direktionale Kommunikation
+
+__Nachteile:__
+
+* Mehraufwand für die Implementation
+* Weniger breite Unterstützung als andere Ansätze
+* Weniger Know-How vorhanden
+
+|**Entscheidung**|HTTP / HTTPS
+|**Begründung**
+a|
+
+* Implementation mit HTTPS hat die geringste Komplexität 
+* Time to Market ist in einem ersten Schritt wichtiger als die Performanz
+* Für eine geringe Anzahl Benutzer wird es einfach sein, eine gute Performanz mittels Skalierung zu erreichen
+* Es ist einfacher, Bottlenecks zu erkennen und zu optimieren, wenn das System bereits produktiv im Einsatz ist
+
+Es soll jedoch bei Design und Implementation darauf geachtet werden, dass in Zukunft die gezielte Verwendung von gRPC oder einer Messaging Queue möglich gehalten werden muss.
+
+|**Follow-up Entscheidungen**|-
+|===
