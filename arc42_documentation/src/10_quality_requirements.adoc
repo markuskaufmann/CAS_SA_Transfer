@@ -439,3 +439,201 @@ Zuverlässige Interoperabilität zwischen Patienten-App (Smartphone / Fitnesstra
 Einfache und effiziente Erweiterung von PhysioConnect bezüglich der Unterstützung neuer Messdatentypen (z.B. Körpertemperatur) pro Übung.
 
 2. Die restlichen Szenarien (und damit verbundenen Quality Attributes) befinden sich mehrheitlich auf derselben Relevanzstufe, wodurch sie bei Architekturentscheidungen zu gleichen Teilen berücksichtigt werden müssen.
+
+
+=== Architektur Taktiken
+
+Mit den folgenden Taktiken soll die Einhaltung der Qualitätszenarien ermöglicht werden. Die Gewichtung der Szenarien wurde bei der Auswahl der Taktiken beachtet.
+
+[cols="1,3"]
+|===
+|*ID*
+|TA-IOP-1
+
+|*Qualitätsattribut*
+|Interoperability
+
+|*Referenz Szenario*
+|SZ-IOP-1, SZ-IOP-2
+
+|*Stimulus*
+|Request zum Speichern der übungsrelevanten Messdaten (z.B. Puls,Blutdruck) gesendet
+
+Request zur Ausführung einer Operation bezüglich einer TherapieSession gesendet
+
+
+|*Taktik*
+|Alle Schnittstellen prüfen, ob eingehende Daten den definierten Datentypen entsprechen. Dabei
+
+* müssen alle erforderlichen Felder mit dem korrekten Datentyp im Request vorhanden sein
+
+* können fakultative Felder mit dem korrekten Datentyp im Request vorhanden sein
+
+* dürfen keine Felder, weder erforderlich noch fakultativ, mit einem falschen Datentyp vorhanden sein
+
+Falls eine dieser Überprüfungen Fehlschlägt, muss der Request geloggt werden und mit "400 bad request" beantwortet werden.
+
+Requests dürfen nicht benötigte Daten mitliefern. Diese werden von den Request handlern jedoch rausgefiltert und ignoriert.
+
+|===
+
+[cols="1,3"]
+|===
+|*ID*
+|TA-IOP-2
+
+|*Qualitätsattribut*
+|Interoperability
+
+
+|*Referenz Szenario*
+|SZ-IOP-3, SZ-IOP-4, SZ-IOP-5
+
+|*Stimulus*
+|Request wird erhalten, für welchen die Kommunikation zwischen mehreren Systemen benötigt wird
+
+|*Taktik*
+|Wenn von einem Container von Physio Connect aus mit einem anderen internen Container oder einem externen System kommuniziert wird, sollen folgendermassen vorgegangen werden:
+
+Erfolgreiche Requests mit dem entsprechenden Code zurücksenden.
+
+Timeout Zeit für Requests tief halten, sodass immer innerhalb von 5 Sekunden auf den initialen Request geantwortet werden kann.
+
+Im Falle eines Timeouts ein Retry Mechanismus verwendet mit mindestens drei Versuchen.
+
+Im Falle eines Fehlers, bei welchem definiert ist, dass ein Retry Sinnvoll ist, ebenfalls ein Retry Mechanismus verwenden.
+
+Im Falle eines Fehlers, bei welchem Retries keinen Sinn machen, den Fehler entsprechend dem initialen Request weiterleiten.
+
+Falls möglich Fallback Systeme und mehrere Instanzen eines Containertyps zur Verfügung stellen, um Single Points of Failures zu vermeiden.
+|===
+
+[cols="1,3"]
+|===
+|*ID*
+|TA-CNF-1
+
+|*Qualitätsattribut*
+|Confidentiality
+
+
+|*Referenz Szenario*
+|SZ-CNF-1
+
+
+|*Stimulus*
+|Verschlüsselter request wird entgegengenommen
+
+|*Taktik*
+|Alle APIs in der Produktion sind nur via TLS / SSL
+
+Kommunikation zwischen Containern ist in der Produktion immer verschlüsselt.
+
+Kommunikation mit externen Systemen ist in der Produktion immer verschlüsselt.
+|===
+
+
+[cols="1,3"]
+|===
+|*ID*
+|TA-CNF-2
+
+|*Qualitätsattribut*
+|Confidentiality
+
+
+|*Referenz Szenario*
+|SZ-CNF-2, SZ-CNF-3
+
+
+|*Stimulus*
+|Request zum Auslesen von Messdaten wird erhalten
+
+|*Taktik*
+|Für jeden Request werden die folgenden Überprüfungen vorgenommen
+
+Token wird mittels eines IDPs validiert.
+
+Es wird überprüft, ob der Benutzer die benötigten Sicherheitsrollen zugewiesen hat, um die entsprechenden Requests auszuführen. (z.B. Physiotherapeuten und Patientenrollen)
+
+Es wird überprüft, ob der Benutzer die korrekte Identität hat, um entsprechende Requests auszuführen. (z.B. eigene Messdaten abrufen)
+|===
+
+[cols="1,3"]
+|===
+|*ID*
+|TA-CNF-3
+
+|*Qualitätsattribut*
+|Confidentiality
+
+
+|*Referenz Szenario*
+|SZ-CNF-2, SZ-CNF-3
+
+
+|*Stimulus*
+|Neuer API Endpoint implementiert werden
+
+|*Taktik*
+|Beim Implementieren von neuen API Requests muss das folgende beachtet werden
+
+Ohne Begründung und Absprache ist kein Request ohne Authentifizierung erreichbar
+
+Ohne Begründung und Absprache ist kein Request ohne Autorisierung durch mindestens eine Rolle erreichbar
+
+Der Zugang zu allen Endpoints wird standardmässig verweigert und nur via Zugehörigkeit zu Rollen erlaubt. (Deny all)
+
+Endpoints dürfen nicht für Benutzer offen sein, welche diesen Zugriff nicht benötigen. Falls zum Beispiel nur ein Teil der Physiotherapeuten einen Request verwendet, soll eine spezifische Rolle für dies Untergruppe erstellt werden.
+
+|===
+
+[cols="1,3"]
+|===
+|*ID*
+|TA-MOD-1
+
+|*Qualitätsattribut*
+|Modifiability
+
+|*Referenz Szenario*
+|SZ-MOD-1, SZ-MOD-2
+
+|*Stimulus*
+|Wunsch von Stakeholdern für neue Funktionalitäten
+
+|*Taktik*
+|Bei der Implementation von Features soll jeweils das folgende überprüft werden
+
+Werde Domänenspezifische Anpassungen benötigt werden, muss das Domänenmodell angepasst / erweitert werden. Die darin enthaltene Logik soll der Realität entsprechen und somit auf zukünftige Änderungen reagieren können und möglichst unabhängig von Frameworks sein. Falls möglich werden die Änderungen mit einem Domänenexperten besprochen.
+
+Bei allen Änderungen muss abgeschätzt werden, wie wahrscheinlich Änderungen in der Zukunft sind. Grundsätzlich soll nur in extremen Fällen hohe Abstraktionen eingesetzt werden, um Over Engineering zu vermeiden.
+
+Bei der Umsetzung aller Funktionalitäten muss die Kohäsion und Korrelation beachtet werden. Refactorings, zum Beispiel zum Aufsplitten von Modulen, Neuverteilung von Verantwortungen oder sogar Auslagerung in einen neuen Microservices, sind Teil aller Stories.
+|===
+
+
+[cols="1,3"]
+|===
+|*ID*
+|TA-MOD-2
+
+|*Qualitätsattribut*
+|Modifiability
+
+|*Referenz Szenario*
+|SZ-MOD-3, SZ-MOD-4
+
+|*Stimulus*
+|Änderung externer Systeme
+
+|*Taktik*
+|Um auf Änderungen mit externen Systemen schnell reagieren zu können, müssen die folgenden Punkte eingehalten werden.
+
+* Kommunikation mit externen Services geschieht über Wrapper
+
+* Wrapper können eigene Container sein aber auch Module oder Libraries
+
+* Funktionalität zum Umgang mit Externen Systemen muss sich in den Wrappern befinden, nicht in den Komponenten, welche die Wrapper verwenden.
+
+|===

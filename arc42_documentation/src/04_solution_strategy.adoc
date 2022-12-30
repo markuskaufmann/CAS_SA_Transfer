@@ -66,6 +66,9 @@ ATDD, ist ein software approach und eher kein Prinzip
 
 APIs Restful scheint für mich eher eine design entscheidung zu sein als ein Prinzip
 
+
+Qualitätsattribut Szenarios und Taktiken zur Einhaltung dieser Prinzipien werden im Kapitel 10 *link here* definiert. 
+
 [role="arc42help"]
 ****
 .Contents
