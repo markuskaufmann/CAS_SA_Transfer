@@ -397,3 +397,68 @@ Es wurden bereits Funktionalitäten gewünscht wie Fotografieren und Videoaufnah
 |**Follow-up Entscheidungen**|
 ADR-FRO-11
 |===
+
+==== Frontend Architekturstil
+
+[cols="2,6"]
+|===
+|**ID**|ADR-FRO-11
+|**Anliegen (Concern)**|Welcher Architekturstiel soll für das PhysioConnect Frontend verwendet werden?
+
+|**Kontext**
+|Physiotherapeuten und Patienten verwenden dieses Frontend hauptsächlich für die Planung und Auswertung von Therapien. Mobile Browser müssen unterstützt werden.
+
+|**Alternativen**
+a|
+
+**Single Page Application**
+
+__Vorteile:__
+
+* Hohe Responsiveness, da alles zum Start geladen wird
+* Server muss nicht bei jedem Klick des Users requests entgegennehmen
+* Rechenleistung der Clients kann verwendet werden
+
+__Nachteile:__
+
+* Häufige Reloads können zu einer hohen Datenlast führen
+* Schlechte Suchmaschinenoptimierung
+* Ausführung von Funktionalitäten direkt im Browser des Clients kann zu Sicherheitslücken führen
+
+**Server Side Rendering**
+
+__Vorteile:__
+
+* Suchmaschinenoptimierung möglich
+* Sichere Ausführung von Funktionen auf dem Server
+
+__Nachteile:__
+
+* Relativ tiefe Responsiveness
+* Alle rechenleistungen müssen von uns zur Verfügung gestellt werden
+
+**Static Side Generation**
+
+__Vorteile:__
+
+* Sehr schnell
+
+__Nachteile:__
+
+* Inhalt wird vorgeneriert und kann dementsprechend nicht  zu Echtzeit angepasst werden
+
+|**Entscheidung**
+|Single Page Application
+
+|**Begründung**
+a|
+Wir haben uns für SPAs entschieden, da mit einer SPA sowohl unsere funktionalen Anforderungen als auch die Qualitätsattribute umgesetzt werden können. Die für SPAs typische Nachteile wie schlechte Suchmaschinenoptimierung sind für uns nur begrenzt relevant.
+
+Mit Static Side Generation können nicht alle benötigten Funktionalitäten für Physio Connect umgesetzt werden.
+
+Mit Server Side Rendering wäre es sehr Aufwendig, die Gewünschten Usability umzusetzen.
+
+
+|**Follow-up Entscheidungen**|
+ADR-FRO-12
+|===
