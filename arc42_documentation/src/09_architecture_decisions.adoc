@@ -252,9 +252,6 @@ Diese Entscheidung führt zu entsprechenden Änderungen in PhysioConnect (Webapp
 |**Alternativen**
 a|
 
-
-__Vorteile:__
-
 **HTTP/HTTPS**
 
 __Vorteile:__
@@ -308,4 +305,95 @@ a|
 Es soll jedoch bei Design und Implementation darauf geachtet werden, dass in Zukunft die gezielte Verwendung von gRPC oder einer Messaging Queue möglich gehalten werden muss.
 
 |**Follow-up Entscheidungen**|-
+|===
+
+=== Frontend Architektur
+
+==== Plattformen
+
+[cols="2,6"]
+|===
+|**ID**|ADR-FRO-10
+|**Anliegen (Concern)**|Welche Plattformen sollen unterstützt werden?
+
+|**Kontext**
+|Physiotherapeuten und Patienten verwenden dieses Frontend hauptsächlich für die Planung und Auswertung von Therapien.
+
+|**Alternativen**
+a|
+
+**Browser (exklusive Mobile-Browser)**
+
+__Vorteile:__
+
+* Applikation kann von einer sehr hohen Anzahl Geräten verwendet werden
+* Eine Implementation deckt die Anwendung für verschiedene Betriebssysteme ab
+
+__Nachteile:__
+
+* Erhöhter Implementationsaufwand und Testaufwand durch Unterstützung verschiedener Browser
+
+**Mobile-Browser**
+
+__Vorteile:__
+
+* Es wird keine Workstation benötigt, um die Applikation zu verwenden
+* Relativ Zusatzaufwand falls Browser Applikation bereits entwickelt wird (gleiche Codebase)
+
+__Nachteile:__
+
+* Alle UI Elemente müssen so Umgesetzt werden, dass sie auf einem kleinen Screen funktionieren
+* Erhöhter Testaufwand
+* Mehr und schwerer zu Reproduzierende Fehler durch zusätzliche / veraltete Betriebssysteme und mobilen Browser
+
+**Android App**
+
+__Vorteile (im Vergleich zu nur Mobile Browser):__
+
+* Erhöhte Benutzerfreundlichkeit für Android Anwender durch
+** App auf dem Homescreen
+** Bessere Unterstützung von gerätespezifischen Funktionalitäten wie Kamera
+
+__Nachteile:__
+
+* Es muss eine Implementationsart verwendet werden, mit welcher eine App aus der gleichen Codebase wie die Web Applikation generiert werden kann.
+
+**iOS App**
+
+__Vorteile:__
+
+* Erhöhte Benutzerfreundlichkeit für iOS Anwender durch
+** App auf dem Homescreen
+** Bessere Unterstützung von gerätespezifischen Funktionalitäten wie Kamera
+
+__Nachteile:__
+
+* Es muss eine Implementationsart verwendet werden, mit welcher eine App aus der gleichen Codebase wie die Web Applikation generiert werden kann.
+
+**Desktop Applikation**
+
+__Vorteile:__
+
+* Bessere Performance als Web Applications
+* Bietet Offline Funktionalitäten an
+
+__Nachteile:__
+
+* Systemabhängig
+
+|**Entscheidung**
+|Muss: Browser & Mobile Browser. 
+
+Kann: Android App & iOS App
+
+|**Begründung**
+a|
+Da wir keinen Einfluss auf das System unserer Kunden haben schliesst dies eine Desktop Applikation aus. Web Applikationen genügen ausserdem für die für unser System benötigte Performance.
+
+Da Physiotherapeuten oft nicht im Büro sind und trotzdem Zugriff auf die Therapiedaten haben müssen, müssen mobile Browser unterstützt werden.
+
+Es wurden bereits Funktionalitäten gewünscht wie Fotografieren und Videoaufnahmen für Übungsbeschreibungen. Dies hätte eine höhere Usability in Apps als im Browser. Da der Implementationsaufwand minimal gehalten werden sollte und nur eine Codebase verwendet werden muss, wird dieser Entscheid bei der Analyse der zu verwendenden Technologien getroffen.
+
+|**Follow-up Entscheidungen**|
+ADR-FRO-11
 |===
