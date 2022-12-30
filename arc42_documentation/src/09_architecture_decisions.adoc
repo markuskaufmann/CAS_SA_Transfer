@@ -616,3 +616,42 @@ a|Es wurde PWA gewählt, da dies einen relativ geringen Umsetzungsaufwand benöt
 
 |**Follow-up Entscheidungen**|
 |===
+
+==== Micro Frontends
+
+[cols="2,6"]
+|===
+|**ID**|ADR-FRO-14
+|**Anliegen (Concern)**|Sollen Micro Frontends eingesetzt werden?
+
+|**Kontext**
+|Es wurde entschieden, das Frontend mit SPA umzusetzen. Nun soll entschieden werden, ob für die Umsetzung zusätzlich Micro Frontends verwendet werden sollen.
+
+|**Alternativen**
+a|
+
+**Micro Frontends**
+
+__Vorteile:__
+
+* Frontends können einzeln deployed werden
+* Frontends können separat entwickelt werden
+* Zur Umsetzung der Frontends können verschiedene Sprachen verwendet werden
+* Frontends sind einzeln skalierbar
+
+__Nachteile:__
+
+* Erhöhte Komplexität für die Umsetzung
+* Frontends müssen miteinander Kompatibel gehalten werden
+
+**Keine Micro Frontends**
+Umkehrung von der Alternative "Micro Frontends"
+
+|**Entscheidung**|Keine Micro Frontends
+|**Begründung**
+a|
+
+Die Vorteile von Micro Frontends können in Physio Connect kaum verwendet werden. Um die Komplexität gering zu halten wurde gegen Micro Frontends entschieden.
+
+|**Follow-up Entscheidungen**|
+|===
