@@ -1,6 +1,70 @@
 [[section-solution-strategy]]
 == Solution Strategy
 
+=== Architektur Prinzipien
+
+Die folgenden Prinzipien müssen bestmöglich während dem Design und der Umsetzung von Physio Connect eingehalten werden.
+
+[cols="e,e,4e" options="header"]
+|===
+|ID|Name|Beschreibung
+
+|
+|Open Source bevorzugen und unterstützen
+|Falls möglich sollen Open Source Lösungen für Libraries, Komponente, Systeme und Tools verwendet werden. Falls eine Open Source Lösung eine gewünschte Funktionalität nicht unterstützt, soll in Betracht gezogen werden, diese Funktionalität direkt im Open Source Projekt zu implementieren.
+
+|
+|Erst kaufen, dann machen
+|Falls keine Open Source Lösung existiert, sollten Lösungen zuerst gekauft werden bevor wir diese selbst herstellen. Dies dient dazu, um eine kurze Markteinführungszeit zu erreichen.
+
+|
+|Skalierbarkeit
+|Alle Container, deren Ressourcenverbrauch stark mit der Anzahl aktiver Benutzer korreliert, müssen horizontal skalierbar und stateless sein. Container, deren Ressourcenverbrauch *nicht* oder nur minimal mit der Anzahl aktiver Benutzer korreliert müssen nicht optimal skalierbar aufgebaut werden.
+
+|
+|Protokolle 
+|Wenn immer möglich sollen standardisierte, etablierte und sichere Protokolle verwenden werden. Sicherheit ist höher zu gewichten als Overhead und Geschwindigkeit.
+
+|
+|Programmiersprachen
+|Verwendete Programmiersprachen müssen plattformunabhängig und etabliert sein und sollten wenn möglich typisiert sein. Zusätzlich sollen bereits im Projekt verwendete Sprachen präferiert werden, um den Stack klein zu halten.
+
+|
+|Cloud native
+|Alle umzusetzenden Komponenten sollen Cloud Native sein und in einem lokalen Kubernetes Cluster ausführbar sein. Clusterweite standards für Logging, Überwachtbarkeit und Sicherheit müssen eingehalten werden.
+
+|
+|Everything as Code, Versionierung 
+|Alle Artefakte, welche intern oder extern ausgeliefert werden, müssen als Code existieren und unter Git versioniert sein. Dazu zählen Sourcecode, Softwarearchitekturedokumente, Analysen, Entscheidungen, Geschäftsprozesse, Endbenutzer Dokumentationen, Protokolle von Meetings usw. Ausgeschlossen sind Wegwerfzeichnungen, Diskussionen, aufgezeichnete Meetings usw.
+
+|
+|Singuläre Codebasis
+|Es soll nur eine einzelne Codebasis existieren. Falls Apps für verschiedene Devices benötigt werden, muss dies mit einer Codebasis gelöst werden.
+
+|
+|Datenformat
+|Es sollen etablierte Standarddatenformate bevor Formaten von Drittanbietern bevor selbsterstellten Formaten verwendet werden. 
+
+|
+|Security
+|Grundsätzlich soll bei Sicherheitskonzepten alles Verboten werden und nur Benutzer mit expliziter Erlaubnis sollen Aktionen ausführen dürfen. Dies gilt sowohl für Netzwerkkomponente wie Firewalls als auch Code Level Autorisierungen für API Requests.
+
+|
+|Continuous Delivery
+|Alle Systeme müssen so umgesetzt werden, dass sie automatisiert ausgerollt werden können. Dies beinhaltet die Verifizierung via Testausführung.
+
+|===
+
+*FIXME: delete after review*
+Nicht aufgeführt aber in den Notizen:
+
+Slim MVP
+
+ATDD, ist ein software approach und eher kein Prinzip
+
+0 Bugs is a tactic
+
+APIs Restful scheint für mich eher eine design entscheidung zu sein als ein Prinzip
 
 [role="arc42help"]
 ****
