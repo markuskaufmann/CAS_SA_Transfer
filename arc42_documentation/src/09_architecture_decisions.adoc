@@ -540,3 +540,79 @@ ADR-FRO-14:
 Sollen Micro Frontends verwendet werden, um die SPA umzusetzen?
 
 |===
+
+==== Mobile Unterstützung
+
+[cols="2,6"]
+|===
+|**ID**|ADR-FRO-13
+|**Anliegen (Concern)**|Soll eine iOS und Android App aus der React App generiert werden? Falls ja, mit welcher Technologie?
+
+|**Kontext**
+|Es wurde entschieden, dass bei geringem Umsetzungsaufwand eine App für iOS und Android gemacht werden sollte. Zusätzlich wurde bestimmt, dass React zum Umsetzen der Web Applikation verwendet wird und dass nur eine Codebase existieren darf.
+
+|**Alternativen**
+a|
+
+*Keine App*
+
+__Vorteile:__
+
+* Kein Entwicklungsaufwand
+
+__Nachteile:__
+
+* Keine App auf dem Homescreen
+* Gerätespezifische Funktionen werden schlechter unterstützt
+* Seite normalerweise nicht im Fullscreen
+
+*Progressive Web App (PWA)*
+
+__Vorteile:__
+
+* Apps müssen nicht über einen Store veröffentlicht werden
+* Apps besitzen immer die gleiche Version wie der Server. Falls mehrere Systeme im Einsatz sind (self Hosted vom Kunden), passt das App automatisch mit der Kundenversion überein
+
+* Relativ geringer Umsetzungsaufwand
+* Bietet eingeschränkte Offline Funktionalitäten an
+* Da es sich weiterhin um ein Browserapp handelt und nicht auf die native Funktionalitäten zugreift muss nicht mit einer vielzahl von Devices getestet werden
+
+__Nachteile:__
+
+* Features nicht so ausgereift wie bei Native Apps
+* iOS Safari bietet weniger Funktionalitäten an als Android
+
+*React Native*
+
+__Vorteile:__
+
+* Bietet Offline Funktionalitäten an
+* Verwendet Device native Funktionalitäten
+* Relativ geringer Supportaufwand da Reactspezifische Lösung
+
+__Nachteile:__
+
+* Unterstützung von Native Funktionalitäten führt zu erhöhtem Testaufwand
+* Es muss bestimmt werden, welche OS unterstützt werden. Diese sollten auch aktiv getestet werden.
+
+*Cordova*
+
+__Vorteile:__
+
+* Bietet Offline Funktionalitäten an
+* Verwendet Device native Funktionalitäten
+
+
+__Nachteile:__
+
+* Relativ hoher Supportaufwand da Cordova nicht nur für React entwickelt wird
+* Unterstützung von Native Funktionalitäten führt zu erhöhtem Testaufwand
+* Es muss bestimmt werden, welche OS unterstützt werden. Diese sollten auch aktiv getestet werden.
+
+
+|**Entscheidung**|PWA
+|**Begründung**
+a|Es wurde PWA gewählt, da dies einen relativ geringen Umsetzungsaufwand benötigt und gleichzeitig alle Usabilty Requirements erfüllt. Der Vorteil von Native apps kann mit dem Physio Connect Vorteil kaum ausgenutzt werden, da hauptsächlich die Kamera verwendet wird und ansonsten nur Begrenzt Offline Content benötigt wird. Der Usability Vorteil, eine PWA umzusetzen, übertrifft den geringeren Implementationsaufwand für die Alternative "keine App".
+
+|**Follow-up Entscheidungen**|
+|===
