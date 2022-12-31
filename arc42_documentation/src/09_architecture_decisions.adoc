@@ -760,7 +760,85 @@ Die grundsätzliche Implementierung einer Lambda-Architektur kann relativ schnel
 Die Implementierung einer Lambda-Architektur auf Basis von Open Source-Technologien gefolgt von einem Cloud-Deployment kann zu komplexen Fehlersituationen führen, weshalb meist auf angebotene Services der jeweiligen Hyperscaler (Microsoft, Amazon, Google) zurückgegriffen wird. Dabei erhöht man jedoch das Risiko eines Vendor Lock-ins bzw. die Abhängigkeit zum verwendeten Hyperscaler / Vendor.
 
 |**Entscheidung**|A2) Microservices
-|**Begründung**|Der Hauptgrund für diese Entscheidung ist eine erhöhte Priorität betreffend den Punkten Wiederverwendbarkeit, Modifizierbarkeit / Erweiterbarkeit und Skalierbarkeit, welche mittels dem Einsatz von Microservices optimal abgedeckt werden kann. +
+|**Begründung**|Der Einsatz von Microservices deckt die erhöhte Priorität betreffend den Punkten Wiederverwendbarkeit, Modifizierbarkeit / Erweiterbarkeit und Skalierbarkeit optimal ab. +
 Funktionalitäten können optimal auf einzelne Services aufgeteilt und Letztere mit möglichst loser Kopplung entwickelt, betrieben und gewartet werden. Des Weiteren können einzelne Services je nach anfallender Last dynamisch / automatisiert skaliert werden.
+|**Follow-up Entscheidungen**|-
+|===
+
+[cols="2,6"]
+|===
+|**ID**|ADR-BAC-20
+|**Anliegen (Concern)**|Welcher Architekturstil soll grundlegend innerhalb einer deploybaren Einheit eingesetzt werden?
+|**Kontext**
+a|Diese Entscheidung befasst sich damit, welcher Architekturstil grundlegend für die interne Struktur (Mikroarchitektur) der einzelnen Backend-Komponenten eingesetzt werden soll. +
+Hierbei handelt es sich jedoch nur um den grundlegend zu verwendenden Stil - es ist durchaus legitim und plausibel, dass es aus Sicht einer oder mehrerer Komponenten sinnvoller ist, eine andere interne Struktur zu wählen. Der Einsatz eines komponentenspezifischen Stils sollte jedoch in einem dedizierten ADR konkret begründet werden.
+|**Alternativen**
+a|
+**A1) Layered architecture**
+
+__Vorteile:__
+
+* Separation of Concerns: +
+Durch die einzelnen Layers wird eine klare Separation of Concerns geschaffen, was die Verständlichkeit des Codes erhöht
+* Wiederverwendbarkeit: +
+Da jede Schicht unabhängig entwickelt und getestet werden kann, wird die Wiederverwendbarkeit indirekt erhöht
+* Innerhalb eines Layers ist es relativ einfach, bestehende Funktionen zu ändern oder neue hinzuzufügen, ohne den Rest der Anwendung zu beeinträchtigen
+* Testing: +
+Die einzelnen Layer können isoliert sehr gut getestet werden
+
+__Nachteile:__
+
+* Modifizierbarkeit / Erweiterbarkeit: +
+Starre Abhängigkeiten zwischen den einzelnen Layer können zu einer Gesamtstruktur führen, die unflexibel und nur schwer zu modifizieren / erweitern ist
+* Hohe Kopplung durch https://devopedia.org/leaky-abstractions[leaky abstraction]: +
+Wenn ein Layer seine Implementationsdetails nicht vollständig abstrahiert und abhängige Layer nicht korrekt ohne Kenntnis dieser Details kommunizieren können, wird von einer __leaky abstraction__ gesprochen. Dieser Effekt verletzt die Seperation of Concerns und erhöht somit die Kopplung zwischen den betroffenen Layers.
+
+**A2) Hexagonal architecture (Ports & Adapters)**
+
+__Vorteile:__
+
+* Separation of Concerns: +
+Durch die gezielte Trennung der Businesslogik und des "Ports & Adapter-Hexagons" wird eine klare Separation of Concerns geschaffen, was die Verständlichkeit des Codes erhöht
+* Testbarkeit: +
+Durch die einfache Abstraktion der externen Abhängigkeiten kann die interne Businesslogik einfacher und gezielter getestet werden
+* Flexibilität: +
+Die Möglichkeit, zwischen verschiedenen Technologien / Adaptern zu wechseln, macht diesen Stil zu einer flexiblen "Plugin-Architektur". Solange derselbe Port für unterschiedliche Adapter verwendet werden kann, können die konkreten Implementierungen ausgetauscht werden, ohne dabei Änderungen in der Businesslogik vorzunehmen.
+* Modifizierbarkeit / Erweiterbarkeit: +
+Aufgrund der abstrakten Ports kann die Businesslogik ohne Auswirkungen auf die externen Abhängigkeiten geändert werden. Änderungen innerhalb einer externen Abhängigkeit können lediglich mit der entsprechenden Änderung des jeweiligen Adapters nachgeführt werden, ohne die Businesslogik zu beeinflussen. +
+Die Erweiterbarkeit ist ebenfalls gegeben, da neue Funktionen durch die Modifizierung der Businesslogik oder durch das Hinzufügen eines neuen Adapters hinzugefügt werden können.
+
+__Nachteile:__
+
+* Komplexität: +
+Aufgrund der Trennung von Businesslogik und externen Abhängigkeiten und der diesbezüglich eingesetzten Indirektionen / Abstraktionen (z.B. durch den Einsatz von Interfaces) kann dieser Stil schwierig zu verstehen und daher komplexer und aufwändiger zu implementieren sein - vor allem für Entwickler, welche noch wenig / keine Erfahrung mit dem Stil besitzen
+
+**A3) Clean / Onion architecture**
+
+__Vorteile:__
+
+* Kombination mit Hexagonal Architecture (Ports & Adapters) +
+Die Schichten der Clean / Onion Architecture sorgen für eine konkrete Organisation der Businesslogik, dem Inneren des "Ports & Adapter-Hexagons"
+* Verwendung von Domain-driven design (DDD) +
+Clean / Onion Architecture baut auf einem gegebenen Domänenmodell auf und unterstützt daher die Verwendung von DDD inkl. dessen Layers (Domain, Application, Infrastructure, UI)
+* Separation of Concerns: +
+Durch die gezielte Trennung der Businesslogik in einzelne Layer wird eine klare Separation of Concerns geschaffen, was die Verständlichkeit des Codes erhöht
+* Testbarkeit: +
+Durch die einfache Abstraktion der Abhängigkeiten kann die interne Businesslogik eines Layers isoliert und daher einfacher / gezielter getestet werden
+* Flexibilität: +
+Aus Sicht eines inneren Layers (z.B. Domain) können die äusseren Layer (z.B. Application) problemlos ausgetauscht werden, ohne zu Änderungen im betroffenen Layer zu führen
+* Modifizierbarkeit / Erweiterbarkeit: +
+Durch die lose und gerichtete Kopplung (äussere Schichten "zeigen" nach innen, nie umgekehrt) lassen sich äussere Layer einfach und ohne grossen Mehraufwand modifizieren. Änderungen am Domain Layer (der "Kern" des Domänenmodells) hingegen dürfen zu abhängigen Anpassungen in den äusseren Layern führen, da sie alle (direkt oder indirekt) von der Domäne abhängig sind. +
+Die Erweiterbarkeit ist ebenfalls gegeben, da neue Funktionen durch die Modifizierung der Businesslogik eines Layers hinzugefügt werden können.
+
+__Nachteile:__
+
+* Komplexität: +
+Aufgrund der zahlreichen Layers und diesbezüglich eingesetzten Indirektionen / Abstraktionen (z.B. durch den Einsatz von Interfaces) kann dieser Stil schwierig zu verstehen und daher komplexer und aufwändiger zu implementieren sein - vor allem für Entwickler, welche noch wenig / keine Erfahrung mit dem Stil besitzen
+* Umfangreiche Codebase / Boilerplate-Code: +
+Die Verwendung von Layer-Abstraktionen und vordefinierten Mappings zwischen den Layern kann zu Boilerplate-Code und - darausfolgend - einer umfangreicheren Codebase führen
+
+|**Entscheidung**|A2) Hexagonal architecture (Ports & Adapters)
+|**Begründung**|Die Verwendung einer hexagonalen Mikroarchitektur (Ports & Adapters) deckt die erhöhte Priorität betreffend Modifizierbarkeit / Erweiterbarkeit optimal ab. +
+Die Businesslogik wird mit definierten Abstraktionen (Ports) sauber von allen externen Abhängigkeiten (Adapters) separiert, was zu einer losen Kopplung führt. Für die innere Struktur der Businesslogik setzen wir nicht explizit auf Clean / Onion Architecture, da dieser Ansatz für unser Domänenmodell schlichtweg zu komplex wäre und daher over-engineered wäre.
 |**Follow-up Entscheidungen**|-
 |===
