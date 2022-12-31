@@ -896,57 +896,171 @@ Welche Datenbankmodelle werden für PhysioConnect eingesetzt?
 a|PhysioConnect persistiert unterschiedlichste Daten zur Laufzeit. Beispielsweise werden einerseits stetig aufgezeichnete Messdaten des Patienten abgelegt, andererseits aber auch allgemeine Therapiedaten. Im Rahmen dieser Entscheidung soll analysiert werden, welche Datenbankmodelle für die unterschiedlichen Datenarten und Anwendungsfälle von PhysioConnect passend sein könnten.
 |**Alternativen**
 a|
-**A1) Relational
+**A1) Relationale Datenbank**
+
+__Verwendungszwecke:__
+
+* Verwaltung von strukturierten Daten, welche einem vordefinierten, statischen Schema folgen
+* Eignet sich für Anwendungen, welche ein hohes Mass an Datenintegrität erfordern, wie beispielsweise Finanz- oder Gesundheitssysteme 
+* Durchführung komplexer Datenabfragen
+* Definition von Datenbeschränkungen, um die Genauigkeit und Konsistenz der Daten zu gewährleisten
 
 __Vorteile:__
 
-* f
+* Strukturierte Daten: +
+Relationale Datenbanken sind darauf ausgelegt, strukturierte Daten zu speichern, was die Suche und den Abruf bestimmter Daten mit SQL-Abfragen erleichtert.
+* Datenintegrität: +
+Relationale Datenbanken erzwingen Datenintegritätsbeschränkungen, was bedeutet, dass die Daten konsistent und genau gespeichert werden.
+* Skalierbarkeit: +
+Relationale Datenbanken sind in der Lage, grosse Datenmengen zu verarbeiten, und können bei wachsendem Umfang der Datenbank einfach skaliert werden.
+* Sicherheit: +
+Relationale Datenbanken bieten Sicherheitsfunktionen wie Benutzerauthentifizierung, Datenverschlüsselung und Zugriffskontrolle.
 
 __Nachteile:__
 
-* f
+* Komplexität: +
+Relationale Datenbanken können aufwändig in der Einrichtung und Wartung sein, insbesondere bei grossen und komplexen Systemen.
+* Performance: +
+Relationale Datenbanken können bei der Verarbeitung grosser Datenmengen oder einer hohen Anzahl gleichzeitiger Benutzer Performanceprobleme aufweisen.
+* Flexibilität: +
+Relationale Datenbanken sind nicht so flexibel wie einige NoSQL-Datenbanken, was die Speicherung komplexer oder unstrukturierter Daten erschweren kann.
+* Kosten: +
+Relationale Datenbanken können im Vergleich zu einigen NoSQL-Datenbanken teurer in der Einrichtung und Wartung sein.
 
-**A2) Objektorientiert
+**A2) Objektorientierte Datenbank**
+
+__Verwendungszwecke:__
+
+* Verwaltung von komplexen Datenstrukturen, welche nicht in ein herkömmliches relationales Schema passen
+* Integration in Anwendungen, welche objektorientierte Programmiersprachen wie Java und C++ verwenden
+* Verwaltung grosser Datenmengen
+* Eignet sich für Anwendungen, welche ein hohes Mass an Flexibilität und Anpassungsfähigkeit erfordern, wie beispielsweise Datenanalyse- oder maschinelle Lernsysteme
 
 __Vorteile:__
 
-* f
+* Datenmodellierung: +
+Objektorientierte Datenbanken ermöglichen eine natürlichere und intuitivere Datenmodellierung mittels Verwendung von Objekten und Klassen.
+* Datenintegrität: +
+Objektorientierte Datenbanken erzwingen Datenintegritätsbeschränkungen und stellen so sicher, dass die Daten konsistent und korrekt gespeichert werden.
+* Skalierbarkeit: +
+Objektorientierte Datenbanken sind in der Lage, grosse Datenmengen zu verarbeiten und lassen sich leicht skalieren, wenn der Umfang der Datenbank wächst.
+* Integration: +
+Objektorientierte Datenbanken lassen sich leicht in objektorientierte Programmiersprachen wie Java oder C++ integrieren.
 
 __Nachteile:__
 
-* f
+* Komplexität: +
+Objektorientierte Datenbanken können sehr komplex in der Einrichtung und Wartung sein, insbesondere bei grossen und komplexen Systemen.
+* Performance: +
+Bei objektorientierten Datenbanken kann es zu Performanceproblemen kommen, wenn grosse Datenmengen oder eine hohe Anzahl gleichzeitiger Benutzer verarbeitet werden.
+* Kompatibilität: +
+Objektorientierte Datenbanken sind möglicherweise nicht mit allen Anwendungen und Programmiersprachen kompatibel.
+* Kosten: +
+Die Einrichtung und Wartung objektorientierter Datenbanken kann im Vergleich zu einigen anderen Datenbankarten teurer sein.
 
-**A3) Dokumenten-basiert
+**A3) Dokumentdatenbank**
+
+__Verwendungszwecke:__
+
+* Verwaltung unstrukturierter oder halbstrukturierter Daten, welche nicht gut in ein traditionelles relationales Schema passen
+* Verwaltung grosser Datenmengen
+* Eignet sich für Anwendungen, welche ein hohes Mass an Flexibilität und die Fähigkeit erfordern, Daten schnell und effizient zu speichern und abzurufen
+* Eignet sich für Anwendungen, welche ein hohes Mass an Skalierbarkeit und die Fähigkeit erfordern, eine grosse Anzahl gleichzeitiger Benutzer zu verarbeiten
 
 __Vorteile:__
 
-* f
+* Flexibilität: +
+Dokumentdatenbanken sind für die Speicherung unstrukturierter Daten konzipiert, was sie flexibler macht als relationale Datenbanken.
+* Skalierbarkeit: +
+Dokumentdatenbanken sind in der Lage, grosse Datenmengen zu verarbeiten und lassen sich leicht skalieren, wenn der Umfang der Datenbank wächst.
+* Performance: +
+Dokumentdatenbanken sind im Allgemeinen performanter und effizienter als relationale Datenbanken, wenn es um das Lesen und Schreiben von Daten geht.
+* Benutzerfreundlichkeit: +
+Dokumentdatenbanken sind im Vergleich zu relationalen Datenbanken oft einfacher einzurichten und zu pflegen - insbesondere für Entwickler, die mit dem JSON-Datenformat vertraut sind.
 
 __Nachteile:__
 
-* f
+* Datenmodellierung: +
+Es kann schwieriger sein, Daten in einer Dokumentdatenbank zu modellieren als in einer relationalen Datenbank, insbesondere bei komplexen Datenstrukturen.
+* Datenintegrität: +
+In Dokumentdatenbanken werden Einschränkungen der Datenintegrität möglicherweise nicht so streng durchgesetzt wie in relationalen Datenbanken, was zu Dateninkonsistenzen führen kann.
+* Kompatibilität: +
+Dokumentdatenbanken sind möglicherweise nicht mit allen Anwendungen und Programmiersprachen kompatibel.
+* Kosten: +
+Die Einrichtung und Wartung von Dokumentdatenbanken kann im Vergleich zu anderen Datenbankmodellen teurer sein.
 
-**A4) Graph-basiert
+**A4) Graphdatenbank**
+
+__Verwendungszwecke:__
+
+* Verwaltung komplexer, miteinander verknüpfter Daten und deren Beziehungen untereinander
+* Verwaltung grosser Mengen von Echtzeitdaten
+* Eignet sich für Anwendungen, welche ein hohes Mass an Flexibilität und die Fähigkeit erfordern, Datenbeziehungen schnell und effizient abzufragen und zu analysieren
+* Eignet sich für Anwendungen, welche ein hohes Mass an Skalierbarkeit und die Fähigkeit erfordern, eine grosse Anzahl gleichzeitiger Benutzer zu verarbeiten
 
 __Vorteile:__
 
-* f
+* Datenmodellierung: +
+Graphdatenbanken eignen sich gut für die Speicherung komplexer, miteinander verbundener Daten und können Beziehungen zwischen Daten auf eine natürlichere und intuitivere Weise modellieren.
+* Performance: +
+Graphdatenbanken sind im Allgemeinen performanter als relationale Datenbanken, wenn es darum geht, Daten abzufragen und Muster in grossen, komplexen Datensätzen zu finden.
+* Skalierbarkeit: +
+Graphdatenbanken können grosse Datenmengen verarbeiten und lassen sich bei wachsendem Umfang der Datenbank einfach skalieren.
+* Verarbeitung von Echtzeitdaten: +
+Graphdatenbanken eignen sich gut für die Verarbeitung von Echtzeitdaten und können Daten schnell aktualisieren und abfragen, wenn sie sich ändern.
 
 __Nachteile:__
 
-* f
+* Komplexität: +
+Die Einrichtung und Pflege von Graphdatenbanken kann komplex sein, insbesondere bei grossen und komplexen Systemen.
+* Datenintegrität: +
+Graphdatenbanken setzen Datenintegritätsbeschränkungen möglicherweise nicht so streng durch wie relationale Datenbanken, was zu Dateninkonsistenzen führen kann.
+* Kompatibilität: +
+Graphdatenbanken sind möglicherweise nicht mit allen Anwendungen und Programmiersprachen kompatibel.
+* Kosten: +
+Die Einrichtung und Wartung von Graphdatenbanken kann im Vergleich zu anderen Datenbankmodellen teurer sein.
 
-**A5) Zeitreihen-basiert
+**A5) Zeitreihendatenbank**
+
+__Verwendungszwecke:__
+
+* Verwaltung von Daten mit Zeitstempel wie z.B. Sensor-, Finanz- oder Protokolldaten
+* Verwaltung grosser Datenmengen
+* Eignet sich für Anwendungen, welche ein hohes Mass an Performance und die Fähigkeit zur schnellen und effizienten Abfrage und Analyse von zeitbasierten Daten erfordern
+* Eignet sich für Anwendungen, welche ein hohes Mass an Skalierbarkeit und die Fähigkeit erfordern, eine grosse Anzahl gleichzeitiger Benutzer zu verarbeiten
 
 __Vorteile:__
 
-* f
+* Datenmodellierung: +
+Zeitreihendatenbanken sind speziell für die Speicherung und Abfrage von Zeitstempeldaten konzipiert, was die Modellierung und Analyse von zeitbasierten Daten erleichtert.
+* Performance: +
+Zeitreihendatenbanken sind für schnelle Schreibvorgänge und effiziente Abfragen von Zeitstempeldaten optimiert.
+* Skalierbarkeit: +
+Zeitreihendatenbanken können grosse Datenmengen verarbeiten und lassen sich leicht skalieren, wenn die Grösse der Datenbank zunimmt.
+* Datenkompression: +
+Zeitreihendatenbanken können Datenkomprimierungstechniken verwenden, um die Grösse der Datenbank zu verringern und die Performance zu verbessern.
 
 __Nachteile:__
 
-* f
+* Komplexität: +
+Die Einrichtung und Pflege von Zeitreihendatenbanken kann komplex sein, insbesondere bei grossen und komplexen Systemen.
+* Kompatibilität: +
+Zeitreihendatenbanken sind möglicherweise nicht mit allen Anwendungen und Programmiersprachen kompatibel.
+* Kosten: +
+Die Einrichtung und Pflege von Zeitreihendatenbanken kann im Vergleich zu anderen Datenbanktypen teurer sein.
+* Begrenzte Datentypen: +
+Zeitreihendatenbanken sind für die Speicherung und Abfrage von Zeitstempeldaten optimiert und unterstützen andere Datentypen möglicherweise nicht so effizient.
 
-|**Entscheidung**|TBD
-|**Begründung**|TBD
+|**Entscheidung**
+a|
+Kombination aus
+
+* A1) Relationale Datenbank oder A3) Dokumentdatenbank +
+Für alle Daten ausser die Patienten-Messdaten
+* A3) Dokumentdatenbank +
+Für die Patienten-Messdaten
+
+|**Begründung**|Für die Ablage aller Daten, welche nicht zu den Patienten-Messdaten gehören, sollte eine herkömmliche relationale Datenbank allen Anforderungen gerecht werden. Alternativ könnte eine Dokumentdatenbank ebenfalls passend eingesetzt werden. +
+Für die Persistierung der Patienten-Messdaten sollte hingegen primär auf eine Dokumentdatenbank zurückgegriffen werden, da sie auf die Ablage halb- oder unstrukturierter Daten spezialisiert sind und eine hohe Performance bezüglich Schreib- und Lesevorgängen vorweisen können.
 |**Follow-up Entscheidungen**|-
 |===
