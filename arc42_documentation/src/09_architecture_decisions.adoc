@@ -842,3 +842,111 @@ Die Verwendung von Layer-Abstraktionen und vordefinierten Mappings zwischen den 
 Die Businesslogik wird mit definierten Abstraktionen (Ports) sauber von allen externen Abhängigkeiten (Adapters) separiert, was zu einer losen Kopplung führt. Für die innere Struktur der Businesslogik setzen wir nicht explizit auf Clean / Onion Architecture, da dieser Ansatz für unser Domänenmodell schlichtweg zu komplex wäre und daher over-engineered wäre.
 |**Follow-up Entscheidungen**|-
 |===
+
+==== Persistenz
+
+[cols="2,6"]
+|===
+|**ID**|ADR-BAC-30
+|**Anliegen (Concern)**|Werden mehrere (unterschiedliche) Datenbanken für PhysioConnect eingesetzt?
+|**Kontext**
+a|PhysioConnect persistiert unterschiedlichste Daten zur Laufzeit. Beispielsweise werden einerseits stetig aufgezeichnete Messdaten des Patienten abgelegt, andererseits aber auch allgemeine Therapiedaten. Im Rahmen dieser Entscheidung soll analysiert werden, ob die Verwendung mehrerer (unterschiedlicher) Datenbanken für die Persistierung der Daten eingesetzt werden sollen.
+|**Alternativen**
+a|
+**A1) Alle Daten in derselben Datenbank**
+
+__Vorteile:__
+
+* Die Verwaltung der Daten ist einfacher, da alles an einem zentralen Ort abgelegt ist.
+* Die Datenkonsistenz kann einfacher gewährleistet werden.
+** Ein eventuell benötigtes Transaktionsmanagement kann out-of-the-box über mehrere Tabellen verwendet werden.
+* Die Verwendung einer einzelnen Datenbank kann kostengünstiger sein als die Verwendung mehrerer Datenbanken, insbesondere wenn man einen Cloud-basierten Datenbankdienst nutzt, welcher nach Verbrauch abrechnet.
+
+__Nachteile:__
+
+* Vor allem bei unterschiedlichen Speicherintervallen und verschiedenen, grossen Datenmengen kann die Datenbank sehr schnell an Komplexität gewinnen und an Performance verlieren. Beispielsweise könnten die Patienten-Messdaten im Sekundentakt eingehen und abgelegt werden, während die allgemeinen Therapiedaten vielleicht nur monatlich einmal aktualisiert werden.
+
+**A2) Separate Datenbank für die Patienten-Messdaten**
+
+__Vorteile:__
+
+* Besser geeignet wenn Daten mit unterschiedlichen Speicher- und Verarbeitungsanforderungen abgelegt werden sollen. Bei Daten, welche unterschiedliche Speicher- oder Verarbeitungsfunktionen erfordern, kann es sinnvoll sein, diese in getrennten Datenbanken zu speichern. So können beispielsweise strukturierte Daten, auf die häufig zugegriffen wird, in einer relationalen Datenbank und grosse Mengen unstrukturierter Daten in einer NoSQL-Datenbank persistiert werden.
+* Besser geeignet wenn Daten mit unterschiedlichen Sicherheitsanforderungen abgelegt werden sollen. Bei Daten, welche unterschiedliche Sicherheitsstufen erfordern, kann es sinnvoll sein, diese in getrennten Datenbanken zu speichern. So können beispielsweise sensible Patienten-Messdaten in einer separaten, eventuell verschlüsselten Datenbank persistiert werden, während Therapiedaten in einer "normalen" Datenbank abgelegt werden.
+* Besser geeignet wenn man grosse Datenmengen verzeichnet. Eine diesbezügliche Verteilung der Datenmengen auf mehrere Datenbanken kann die Leistung und Skalierbarkeit des Gesamtsystems verbessern.
+* Besser geeignet wenn man mehrere Anwendungen unterstützen soll, welche jeweils auf unterschiedliche Teilmengen von Daten zugreifen müssen.
+
+__Nachteile:__
+
+* Die Verwendung mehrerer Datenbanken (vor allem auch wenn sie nicht demselben Modell entsprechen) kann die Gesamtkomplexität des Systems (Implementation, Betrieb, Wartung) generell stark erhöhen.
+
+|**Entscheidung**|A2) Separate Datenbank für die Patienten-Messdaten
+|**Begründung**|Wir erachten es als sinnvoll, die eingehenden Patienten-Messdaten in einer separaten Datenbank zu persistieren, da sie einerseits andere Sicherheitsanforderungen als die herkömmlichen Therapiedaten erfüllen müssen (Stichwort Datenschutz / Privacy) und andererseits viel frequentierter abgelegt werden, was zu einer beachtlich grösseren Datenmenge führen wird.
+|**Follow-up Entscheidungen**
+a|
+* **ADR-BAC-31** +
+Welche Datenbankmodelle werden für PhysioConnect eingesetzt?
+
+|===
+
+[cols="2,6"]
+|===
+|**ID**|ADR-BAC-31
+|**Anliegen (Concern)**|Welche Datenbankmodelle werden für PhysioConnect eingesetzt?
+|**Kontext**
+a|PhysioConnect persistiert unterschiedlichste Daten zur Laufzeit. Beispielsweise werden einerseits stetig aufgezeichnete Messdaten des Patienten abgelegt, andererseits aber auch allgemeine Therapiedaten. Im Rahmen dieser Entscheidung soll analysiert werden, welche Datenbankmodelle für die unterschiedlichen Datenarten und Anwendungsfälle von PhysioConnect passend sein könnten.
+|**Alternativen**
+a|
+**A1) Relational
+
+__Vorteile:__
+
+* f
+
+__Nachteile:__
+
+* f
+
+**A2) Objektorientiert
+
+__Vorteile:__
+
+* f
+
+__Nachteile:__
+
+* f
+
+**A3) Dokumenten-basiert
+
+__Vorteile:__
+
+* f
+
+__Nachteile:__
+
+* f
+
+**A4) Graph-basiert
+
+__Vorteile:__
+
+* f
+
+__Nachteile:__
+
+* f
+
+**A5) Zeitreihen-basiert
+
+__Vorteile:__
+
+* f
+
+__Nachteile:__
+
+* f
+
+|**Entscheidung**|TBD
+|**Begründung**|TBD
+|**Follow-up Entscheidungen**|-
+|===
