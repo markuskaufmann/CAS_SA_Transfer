@@ -655,3 +655,112 @@ Die Vorteile von Micro Frontends können in Physio Connect kaum verwendet werden
 
 |**Follow-up Entscheidungen**|
 |===
+
+=== Backend Architektur
+
+==== Architekturstil
+
+[cols="2,6"]
+|===
+|**ID**|ADR-BAC-10
+|**Anliegen (Concern)**|Welche Architekturstile sollen aus Sicht einer deploybaren Einheit eingesetzt werden?
+|**Kontext**
+a|
+Das Backend von PhysioConnect besteht grundsätzlich aus den folgenden High Level-Komponenten:
+
+* API Controllers / Request Handlers für die Entgegennahme und formale Kontrolle der eingehenden Requests
+** Kommunikation mit Patienten-App +
+(z.B. Übertragung der Messdaten, Start einer Therapie-Session)
+** Kommunikation mit PhysioConnect-Webapplikation / -Frontend +
+(z.B. Erstellung einer Therapie)
+* Businesslogik für die fachliche Verarbeitung der Requests
+* https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer[Anti-corruption layers] für die Kommunikation mit den Systemen "Übungskatalog" und "Benutzerverwaltung"
+
+Diese Entscheidung befasst sich damit, welche Architekturstile für die obigen Komponenten hinsichtlich deren optimalen Kommunikation, Skalier- und Deploybarkeit eingesetzt werden können.
+|**Alternativen**
+a|
+**A1) Monolith**
+
+__Vorteile:__
+
+* Einfachheit: +
+Ein Monolith besteht aus einer einzigen, in sich geschlossenen Einheit, welche - verglichen mit verteilten Systemen - leicht zu verstehen ist
+* Einfaches Deployment: +
+Da es sich bei einem Monolith um eine einzige Einheit handelt, lässt sie sich einfach und atomar deployen
+
+__Nachteile:__
+
+* Eingeschränkte Skalierbarkeit: +
+Es kann schwierig sein, einen Monolithen horizontal zu skalieren, da die gesamte Anwendung als eine einzige Einheit deployed werden muss
+* Hohe Kopplung: +
+Die internen Komponenten eines Monolithen sind meist eng miteinander gekoppelt, was die Änderung, Erweiterung und / oder Wiederverwendung einzelner Komponenten erschwert
+
+**A2) Microservices**
+
+__Vorteile:__
+
+* Skalierbarkeit: +
+Microservices können unabhängig voneinander skaliert werden, was wiederum die Skalierbarkeit des Gesamtsystems erhöht
+* Wiederverwendbarkeit: +
+Microservices sind kleine, unabhängige Funktionseinheiten und können daher in verschiedenen Kontexten wiederverwendet werden
+* Erweiterbarkeit: +
+Etwaige Modifikationen oder Erweiterungen eines Microservices sind mit geringer Komplexität realisierbar, da sich die darin befindlichen Funktionalitäten nur in dem jeweils betroffenen Microservice befinden und nicht über mehrere Services aufgetrennt sind
+* Einfaches Deployment: +
+Da es sich bei Microservices um unabhängige Einheiten handelt, ist es relativ einfach, neue Versionen einzelner Microservices zu deployen, ohne den Rest des Systems zu beeinträchtigen
+* Lose Kopplung: +
+Das Konzept von Microservices ermöglicht eine lose Kopplung zwischen abhängigen Services. Beispielsweise kann sich ein von Service A benötigter Service B innerhalb eines Clusters von gleichwertigen Service B-Instanzen befinden. Service A benötigt keine direkte Kopplung zu einer Service B-Instanz, sondern sendet seine Requests an eine vordefinierte URL. Der Cluster Controller nimmt den Request entgegen, leitet ihn an eine beliebige Service B-Instanz weiter und Letztere verarbeitet den Request und retourniert eine Response.
+* Testing: +
+Aufgrund der klaren Abgrenzung und losen Kopplung zu anderen Services lassen sich einzelne Microservices einfach testen. Die bestehenden Abhängigkeiten können mittels geringem Aufwand durch entsprechende Mocks ersetzt werden.
+* Parallele Entwicklung: +
+Aufgrund der klaren funktionalen Abgrenzung und Unabhängigkeit eines Microservices ist es möglich, pendente Entwicklungsarbeiten an mehreren Microservices zu parallelisieren (z.B. indem unterschiedliche Entwicklungsteams an unterschiedlichen Services arbeiten)
+
+__Nachteile:__
+
+* Komplexität: +
+Der Aufbau und die Pflege eines Systems, welches aus vielen kleinen, unabhängigen Microservices besteht, kann relativ schnell an Komplexität zunehmen
+* Kommunikation zwischen den Services: +
+Die Kommunikation zwischen einzelnen Microservices ist meist komplexer als die Kommunikation innerhalb eines Monoliths. Zudem haben externe Einflüsse wie beispielsweise die Netzwerkverbindung (Latenzzeit, Bandbreite, Auslastung, Durchsatz) einen Einfluss auf die Qualität der Kommunikaion
+
+**A3) Self-contained systems (SCS)**
+
+__Vorteile:__
+
+* Einfachheit: +
+SCS sind relativ einfach zu verstehen (verglichen mit verteilten Systemen)
+* Erweiterbarkeit: +
+Etwaige Modifikationen oder Erweiterungen innerhalb eines SCS sind mit geringer Komplexität realisierbar, da sich die darin befindlichen Funktionalitäten nur in dem jeweils betroffenen SCS befinden und nicht über mehrere Systeme aufgetrennt sind 
+* Parallele Entwicklung: +
+Aufgrund der klaren funktionalen Abgrenzung und Unabhängigkeit eines SCS ist es möglich, pendente Entwicklungsarbeiten an mehreren SCS zu parallelisieren (z.B. indem unterschiedliche Entwicklungsteams an unterschiedlichen SCS arbeiten)
+
+__Nachteile:__
+
+* Begrenzte Skalierbarkeit: +
+Es kann schwierig sein, ein SCS horizontal zu skalieren, da das System jeweils als atomare Einheit deployed werden muss
+* Begrenzte Wiederverwendbarkeit: +
+SCS sind unabhängige Funktionseinheiten, besitzen jedoch meist einen eigenen Stack aus Frontend, Businesslogik und Persistenz. Daher ist die funktionale Wiederverwendung eines SCS eingeschränkter als bei einzelnen Microservices. Mittels dem Einsatz spezifischer Kommunikationsmechanismen (z.B. API, Event-driven) ist es jedoch möglich, Funktionalitäten eines SCS zur Wiederverwendung bereitzustellen.
+
+**A4) Lambda architecture**
+
+__Vorteile:__
+
+* Skalierbarkeit: +
+Lambda-Funktionen können automatisch skaliert werden, um der aktuellen Nachfrage gerecht zu werden
+* Kosteneffizienz: +
+Bei einer Mehrheit der aktuellen Hyperscaler zahlt man nur für die verbrauchte Rechenzeit, was - vor allem bei fluktuierender Auslastung - kostengünstiger sein kann als der Betrieb eigener Server
+* Echtzeitverarbeitung: +
+Die Echtzeitverarbeitungskomponente (Stream / Speed Layer) der Lambda-Architektur ermöglicht die sofortige Verarbeitung und Analyse der eingehenden Daten
+* Datenverarbeitung: Separation of Concerns: +
+Durch die Aufteilung der Datenverarbeitung in einen Stream und Batch Layer lassen sich die jeweiligen Systemverantwortlichkeiten und Funktionalitäten sauber voneinander separarieren
+
+__Nachteile:__
+
+* Komplexität: +
+Die grundsätzliche Implementierung einer Lambda-Architektur kann relativ schnell komplex werden, da zwei separate Layer / Systeme für die Datenverarbeitung erforderlich sind (Stream & Batch Layer).
+* Infrastruktur- / Vendor-basiert: +
+Die Implementierung einer Lambda-Architektur auf Basis von Open Source-Technologien gefolgt von einem Cloud-Deployment kann zu komplexen Fehlersituationen führen, weshalb meist auf angebotene Services der jeweiligen Hyperscaler (Microsoft, Amazon, Google) zurückgegriffen wird. Dabei erhöht man jedoch das Risiko eines Vendor Lock-ins bzw. die Abhängigkeit zum verwendeten Hyperscaler / Vendor.
+
+|**Entscheidung**|A2) Microservices
+|**Begründung**|Der Hauptgrund für diese Entscheidung ist eine erhöhte Priorität betreffend den Punkten Wiederverwendbarkeit, Modifizierbarkeit / Erweiterbarkeit und Skalierbarkeit, welche mittels dem Einsatz von Microservices optimal abgedeckt werden kann. +
+Funktionalitäten können optimal auf einzelne Services aufgeteilt und Letztere mit möglichst loser Kopplung entwickelt, betrieben und gewartet werden. Des Weiteren können einzelne Services je nach anfallender Last dynamisch / automatisiert skaliert werden.
+|**Follow-up Entscheidungen**|-
+|===
