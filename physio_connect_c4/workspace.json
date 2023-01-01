@@ -240,7 +240,7 @@
     }, {
       "id" : "17",
       "tags" : "Element,Software System",
-      "name" : "Übungs Katalog",
+      "name" : "Übungskatalog",
       "location" : "Internal",
       "documentation" : { }
     }, {
@@ -253,8 +253,8 @@
     }, {
       "id" : "18",
       "tags" : "Element,Software System",
-      "name" : "Benutzer Verwaltung",
-      "description" : "autorisierung und authentifizierung",
+      "name" : "Benutzerverwaltung",
+      "description" : "Authentifizierung und Autorisierung",
       "location" : "Internal",
       "documentation" : { }
     }, {

@@ -55,8 +55,8 @@ workspace "Physio integration layer project" {
             }  
 
             patientenApp = softwareSystem "Mobile Patientenapp"
-            uebungsKatalog = softwareSystem "Übungs Katalog"
-            benutzerVerwaltung = softwareSystem "Benutzer Verwaltung" "autorisierung und authentifizierung"
+            uebungsKatalog = softwareSystem "Übungskatalog"
+            benutzerVerwaltung = softwareSystem "Benutzerverwaltung" "Authentifizierung und Autorisierung"
         }
 
 
