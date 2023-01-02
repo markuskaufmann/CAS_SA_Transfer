@@ -5,7 +5,7 @@
 
 Die folgenden Prinzipien müssen bestmöglich während dem Design und der Umsetzung von Physio Connect eingehalten werden.
 
-[cols="e,e,4e" options="header"]
+[options="header",cols="1,3,6"]
 |===
 |ID|Name|Beschreibung
 
