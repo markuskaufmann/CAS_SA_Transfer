@@ -24,35 +24,59 @@ workspace "Physio integration layer project" {
         
         enterprise "Unternehmungsgrenze" {
             physioConnect = softwareSystem "Physio Connect" {
-                description "Webapp"
+                description "Bietet ein WebApp an zur Verwaltung von Therapie Planugnsdaten und eine Schnittstelle zum Empfangen und Persistieren von Ausführungsdaten."
                 tags "mainSystem"
                 group "Frontend" {
-                    therapienWebApp = container "WebApp" {
-                        description "delivers frontend Application"
-                        technology "TBD, maybe angular or react"
+                    serverSideTherapieManager = container "Server Side Therapie Manager" {
+                        description "Liefert auf Anfrage die Single Page Application aus"
+                        technology "React"
                     }
-                    therapienSinglePageApplication = container "Single Page Application" {
-                        tags "Web Browser"
-                        description "Now "
-                        technology "TBD, ändert sich evt von SPI zu einem anderen Ansatz"
+                    singlePageTherapieManager = container "Therapien Manager SPA" {
+                        description "Single Page Applikation zum Verwalten von Therapiedaten. Kann von mobilen Devices als PWA verwendet werden."
+                        technology "Single Page Application, Progressive Web App"
                     }
                 }
 
-                applicationLogic = container "Application Logic" {
-                    description "Platzhalter für Applikationslogik. Kann weiter aufgeteilt oder mit anderen Containern zusammengeführt werden."
-                    technology TBD
+                requestHandler = container "Request Handler / Load Balancer" {
+                    technology "Ingress"
                 }
 
-                businessLogic = container "Business Logic" {
-                    description "Platzhalter für Businesslogik. Kann weiter aufgeteilt oder mit anderen Containern zusammengeführt werden."
-                    technology TBD
+                group "Planung" {
+                    planungsService = container "Therapie Planungs Service" {
+                        description "Handhabt alle Requests für die Verwaltung von Gesamttherapien. Validiert Requests, beinhaltet Applikations und Domänenlogik für die Planungsdaten"
+                        technology "Spring Boot"
+                    }
+                    planungsDatenbank = container "Therapie Planungs Datenbank" {
+                        tags "Database"
+                        technology "Relationale oder Dokumentendatenbank"
+                        description "Persistiert alle Planungsdaten. Wird evt. mit der Ausführungs Datenbank fusioniert."
+                    }
                 }
 
-                physioDb = container "Physio Datenbank" {
-                    tags "Database"
-                    description "Platzhalter für alle benöitgten Schemas (exklusive Benutzerdatenbank & Übungsdatenbank), wird evt aufgeteilt"
+                group "Ausführung" {
+                    ausfuehrungsService = container "Ausführungs Service" {
+                        description "Handhabt alle Requests, welche von Patienten während der Ausführung der Therapie Sessions abgesetzt werden. Validiert Requests, beinhaltet Applikations und Domänenlogik für die Ausführungsdaten."
+                        technology "Spring Boot"
+                    }
+                    ausfuehrungsDatenbank = container "Ausführungs Datenbank" {
+                        tags "Database"
+                        technology "Dokuementendatenbank"
+                        description "Beinhaltet Daten der ausgeführtne Therapie Sessions, unter anderem Messdaten, Rückmeldungen und effektive Sets und Reps."
+                    }
                 }
-            }  
+
+                group "Wrappers" {
+                    uebungsKatalogWrapper = container "Übungskatalog Wrapper" {
+                        description "Anti-Corrpution Layer für die Kommunikation mit dem Übungskatalog"
+                        technology "Spring boot"
+                    }   
+
+                    benutzerVerwaltungWrapper = container "Benutzerverwaltung Wrapper" {
+                        description "Anti-Corrpution Layer für die Kommunikation mit der Benutzerverwaltung"
+                        technology "Spring boot"
+                    }
+                }
+            }
 
             patientenApp = softwareSystem "Mobile Patientenapp"
             uebungsKatalog = softwareSystem "Übungskatalog"
@@ -67,11 +91,11 @@ workspace "Physio integration layer project" {
         therapeut -> dokumentationsSoftware "Plant / Dokumentiert Therapien" 
 
         therapeut -> therapieFile "Editiert" 
-        therapeut -> therapienSinglePageApplication "Plant Therapien direkt\nsendet Therapieeinladungen\nerstellt eigene Uebungen" 
+        therapeut -> singlePageTherapieManager "Plant Therapien direkt\nsendet Therapieeinladungen\nerstellt eigene Uebungen" 
         dataScientist -> physioConnect "Benutzt Daten"
         patient -> patientenApp "Registriert sich\nNimmt Therapieeinladungen an\nBenutzt App für selbstständige ausführung von Therapien"
         patient -> fitnessTracker "besitzt"
-        patient -> therapienSinglePageApplication "Verwaltet selbsterstellte Therapien"
+        patient -> singlePageTherapieManager "Verwaltet selbsterstellte Therapien"
         patientenApp -> fitnessTracker "Verbindet sich mit"
         fitnessTracker ->  patientenApp "Sendet Messdaten"
 
@@ -87,15 +111,25 @@ workspace "Physio integration layer project" {
         physioConnect -> versicherungsSchnittstellen "teilt Trainingsdaten"
         
         # relationships to/from containers
-        therapienSinglePageApplication -> therapienWebApp "Maybe get page, depends on technology decision"
-        therapienSinglePageApplication -> applicationLogic "Probably API calls"
+        patientenApp -> requestHandler "Sendet Messdaten\nSendet Requests für Informationen zu Therapien und Übungen"
+        singlePageTherapieManager -> requestHandler  "Sendet Requests zum Verwalten der Gesamttherapien, Übungen und Benutzer"
 
-        applicationLogic -> benutzerVerwaltung "Probably API calls"
-        applicationLogic -> physioDb "TBD, z.B. JDBC / ODBC"
-        applicationLogic -> uebungsKatalog "Probably API calls"
-        applicationLogic -> businessLogic "TBD"
+        requestHandler -> planungsService "Leitet Requests weiter für Gesamttherapien"
+        requestHandler -> benutzerVerwaltungWrapper "Leitet Requests weiter für die Benutzerverwaltung"
+        requestHandler -> uebungsKatalogWrapper "Leitet Requests weiter für den Übungskatalog"
+        requestHandler -> ausfuehrungsService "Leitet ausführungsspezifische Requests weiter"
 
-        patientenApp -> applicationLogic "Messdaten senden\nTherapiedaten Anfragen"
+        ausfuehrungsService -> ausfuehrungsDatenbank "Persistiert Messdaten und effektive Ausführungsinformationen"
+
+        planungsService -> benutzerVerwaltungWrapper "Verwendet Benutzerinformationen von"
+        planungsService -> uebungsKatalogWrapper "Verwendet Übungsinformationen von"
+        planungsService -> planungsDatenbank "Persistiert Gesamttherapien, Therapie Sessions, Therapie Übungen und die dazugehörigen Detailinformationen"
+        planungsService -> ausfuehrungsService "Kombiniert Planugnsdaten mit Ausführungsdaten von"
+
+        benutzerVerwaltungWrapper -> benutzerVerwaltung "Verwaltet Benutzerdaten"
+        uebungsKatalogWrapper -> uebungsKatalog "Verwaltet Übungsdefinitionen"
+
+        serverSideTherapieManager -> singlePageTherapieManager "Liefert SPA an den Client aus"
     }
 
     views {
@@ -141,6 +175,15 @@ workspace "Physio integration layer project" {
                 color #B6862E
             }
             element "Group:Frontend" {
+                color #444444
+            }
+            element "Group:Wrappers" {
+                color #444444
+            }
+            element "Group:Ausführung" {
+                color #444444
+            }
+            element "Group:Planung" {
                 color #444444
             }
             element "Group:Patient" {

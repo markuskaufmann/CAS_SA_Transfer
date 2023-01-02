@@ -40,6 +40,9 @@ See https://docs.arc42.org/section-5/[Building Block View] in the arc42 document
 
 === Whitebox Overall System
 
+plantuml::structurizr_diagrams/generated/structurizr-Containers.puml[format=svg]
+
+
 [role="arc42help"]
 ****
 Here you describe the decomposition of the overall system using the following white box template. It contains
