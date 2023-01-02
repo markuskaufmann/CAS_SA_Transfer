@@ -61,8 +61,6 @@ Die folgende Priorität soll bezüglich der Verwendung von Datenformaten eingeha
 
 |===
 
-Szenarien zu den relevanten Qualitätsattributen sowie Taktiken zur Implementation der obigen Prinzipien werden im Kapitel link:10_quality_requirements.adoc#section-quality-requirements[Qualitätsanforderungen] definiert.
-
 [role="arc42help"]
 ****
 .Contents
