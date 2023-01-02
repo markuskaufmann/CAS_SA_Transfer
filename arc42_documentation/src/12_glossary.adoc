@@ -3,7 +3,7 @@
 
 Im Rahmen dieses Kapitels werden die wichtigsten fachlichen und technischen Begriffe definiert, welche von allen Stakeholdern und Systemakteuren verwendet werden sollen, wenn sie über PhysioConnect sprechen. Das Ziel ist hierbei, eine einheitlich verwendete Domänensprache (__ubiquitous language__) aufrecht zu halten.
 
-[cols="e,e,4e" options="header"]
+[options="header",cols="2,2,6"]
 |===
 |Deutsche Bezeichnung|Englische Bezeichnung|Definition
 

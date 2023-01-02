@@ -249,127 +249,136 @@ Diese Entscheidung führt zu entsprechenden Änderungen in PhysioConnect (Webapp
 |**Anliegen (Concern)**|Welche Plattformen sollen unterstützt werden?
 
 |**Kontext**
-|Physiotherapeuten und Patienten verwenden dieses Frontend hauptsächlich für die Planung und Auswertung von Therapien.
+|Physiotherapeuten und Patienten verwenden das PhysioConnect-Frontend hauptsächlich für die Planung und Auswertung von Therapien.
 
 |**Alternativen**
 a|
 
-**Browser (exklusive Mobile-Browser)**
+**A1) Browser (exklusive Mobile-Browser)**
 
 __Vorteile:__
 
-* Applikation kann von einer sehr hohen Anzahl Geräten verwendet werden
+* Applikation kann von einer sehr hohen Anzahl Geräte verwendet werden
 * Eine Implementation deckt die Anwendung für verschiedene Betriebssysteme ab
 
 __Nachteile:__
 
 * Erhöhter Implementationsaufwand und Testaufwand durch Unterstützung verschiedener Browser
 
-**Mobile-Browser**
+**A2) Mobile Browser**
 
 __Vorteile:__
 
 * Es wird keine Workstation benötigt, um die Applikation zu verwenden
-* Relativ Zusatzaufwand falls Browser Applikation bereits entwickelt wird (gleiche Codebase)
+* Relativer Zusatzaufwand falls Browser-Applikation bereits entwickelt wird (gleiche Codebase)
 
 __Nachteile:__
 
-* Alle UI Elemente müssen so Umgesetzt werden, dass sie auf einem kleinen Screen funktionieren
+* Alle UI-Elemente müssen so umgesetzt werden, dass sie auf unterschiedlichen Bildschirmgrössen funktionieren
 * Erhöhter Testaufwand
-* Mehr und schwerer zu Reproduzierende Fehler durch zusätzliche / veraltete Betriebssysteme und mobilen Browser
+* Mehr und schwerer zu reproduzierende Fehler durch zusätzliche / veraltete Betriebssysteme und mobile Browser
 
-**Android App**
+**A3) Android App**
 
-__Vorteile (im Vergleich zu nur Mobile Browser):__
+__Vorteile (im Vergleich zu A2):__
 
-* Erhöhte Benutzerfreundlichkeit für Android Anwender durch
+* Erhöhte Benutzerfreundlichkeit für Android-Anwender durch
 ** App auf dem Homescreen
 ** Bessere Unterstützung von gerätespezifischen Funktionalitäten wie Kamera
 
 __Nachteile:__
 
-* Es muss eine Implementationsart verwendet werden, mit welcher eine App aus der gleichen Codebase wie die Web Applikation generiert werden kann.
+* Es muss eine Implementationsart verwendet werden, mit welcher eine App aus der gleichen Codebase wie die Webapplikation generiert werden kann.
 
-**iOS App**
+**A4) iOS App**
 
-__Vorteile:__
+__Vorteile (im Vergleich zu A2):__
 
-* Erhöhte Benutzerfreundlichkeit für iOS Anwender durch
+* Erhöhte Benutzerfreundlichkeit für iOS-Anwender durch
 ** App auf dem Homescreen
 ** Bessere Unterstützung von gerätespezifischen Funktionalitäten wie Kamera
 
 __Nachteile:__
 
-* Es muss eine Implementationsart verwendet werden, mit welcher eine App aus der gleichen Codebase wie die Web Applikation generiert werden kann.
+* Es muss eine Implementationsart verwendet werden, mit welcher eine App aus der gleichen Codebase wie die Webapplikation generiert werden kann.
 
-**Desktop Applikation**
+**A5) Desktop-Applikation**
 
 __Vorteile:__
 
-* Bessere Performance als Web Applications
-* Bietet Offline Funktionalitäten an
+* Bessere Performance als Webapplikationen
+* Bietet Offline-Funktionalitäten an
 
 __Nachteile:__
 
-* Systemabhängig
+* Betriebssystemabhängig
 
 |**Entscheidung**
-|Muss: Browser & Mobile Browser. 
+a|
+Muss:
 
-Kann: Android App & iOS App
+* A1) Browser
+* A2) Mobile Browser
+
+Kann:
+* A3) Android App
+* A4) iOS App
 
 |**Begründung**
 a|
-Da wir keinen Einfluss auf das System unserer Kunden haben schliesst dies eine Desktop Applikation aus. Web Applikationen genügen ausserdem für die für unser System benötigte Performance.
+Da wir keinen Einfluss auf das System unserer Kunden haben, schliesst dies eine Desktop-Applikation aus. Webapplikationen genügen ausserdem für die für unser System benötigte Performance.
 
-Da Physiotherapeuten oft nicht im Büro sind und trotzdem Zugriff auf die Therapiedaten haben müssen, müssen mobile Browser unterstützt werden.
+Da Physiotherapeuten oft nicht im Büro sind und trotzdem Zugriff auf die Therapiedaten haben müssen, müssen mobile Browser ebenfalls unterstützt werden.
 
-Es wurden bereits Funktionalitäten gewünscht wie Fotografieren und Videoaufnahmen für Übungsbeschreibungen. Dies hätte eine höhere Usability in Apps als im Browser. Da der Implementationsaufwand minimal gehalten werden sollte und nur eine Codebase verwendet werden muss, wird dieser Entscheid bei der Analyse der zu verwendenden Technologien getroffen.
+Es wurden bereits Funktionalitäten gewünscht wie die Aufnahme von Fotos und Videos für Übungsbeschreibungen. Dies hätte eine höhere Usability in Mobile Apps als im Browser. Da der Implementationsaufwand minimal gehalten werden sollte und nur eine Codebase verwendet werden muss, wird dieser Entscheid bei der Analyse der zu verwendenden Technologien getroffen.
 
-|**Follow-up Entscheidungen**|
-ADR-FRO-11
+|**Follow-up Entscheidungen**
+a|
+* **ADR-FRO-11** +
+Welcher Architekturstil soll für das PhysioConnect-Frontend verwendet werden?
+
 |===
 
-==== Frontend Architekturstil
+==== Architekturstil
 
 [cols="2,6"]
 |===
 |**ID**|ADR-FRO-11
-|**Anliegen (Concern)**|Welcher Architekturstiel soll für das PhysioConnect Frontend verwendet werden?
+|**Anliegen (Concern)**|Welcher Architekturstil soll für das PhysioConnect-Frontend verwendet werden?
 
 |**Kontext**
-|Physiotherapeuten und Patienten verwenden dieses Frontend hauptsächlich für die Planung und Auswertung von Therapien. Mobile Browser müssen unterstützt werden.
+|Physiotherapeuten und Patienten verwenden das PhysioConnect-Frontend hauptsächlich für die Planung und Auswertung von Therapien. Mobile Browser müssen unterstützt werden.
 
 |**Alternativen**
 a|
 
-**Single Page Application**
+**A1) Single Page Application (SPA)**
 
 __Vorteile:__
 
 * Hohe Responsiveness, da alles zum Start geladen wird
-* Server muss nicht bei jedem Klick des Users requests entgegennehmen
-* Rechenleistung der Clients kann verwendet werden
+* Server muss nicht bei jedem Klick des Users entsprechende Requests entgegennehmen
+* Rechenleistung der Clients (bzw. Client Browsers) kann verwendet werden
 
 __Nachteile:__
 
 * Häufige Reloads können zu einer hohen Datenlast führen
-* Schlechte Suchmaschinenoptimierung
+* Schlechte Suchmaschinenoptimierung (SEO)
 * Ausführung von Funktionalitäten direkt im Browser des Clients kann zu Sicherheitslücken führen
 
-**Server Side Rendering**
+**A2) Server-side Rendering (SSR)**
 
 __Vorteile:__
 
-* Suchmaschinenoptimierung möglich
+* Suchmaschinenoptimierung (SEO) möglich
 * Sichere Ausführung von Funktionen auf dem Server
 
 __Nachteile:__
 
 * Relativ tiefe Responsiveness
-* Alle rechenleistungen müssen von uns zur Verfügung gestellt werden
+* Alle für eine optimale Rechenleistung erforderlichen Systemressourcen müssen von uns zur Verfügung gestellt werden
 
-**Static Side Generation**
+**A3) Static Side Generation (SSG)**
 
 __Vorteile:__
 
@@ -377,61 +386,63 @@ __Vorteile:__
 
 __Nachteile:__
 
-* Inhalt wird vorgeneriert und kann dementsprechend nicht  zu Echtzeit angepasst werden
+* Inhalt wird vorgeneriert und kann dementsprechend nicht in Echtzeit angepasst werden
 
 |**Entscheidung**
-|Single Page Application
+|A1) Single Page Application (SPA)
 
 |**Begründung**
 a|
-Wir haben uns für SPAs entschieden, da mit einer SPA sowohl unsere funktionalen Anforderungen als auch die Qualitätsattribute umgesetzt werden können. Die für SPAs typische Nachteile wie schlechte Suchmaschinenoptimierung sind für uns nur begrenzt relevant.
+Wir haben uns für eine Single Page Application entschieden, da mit einer SPA sowohl unsere funktionalen Anforderungen als auch die Qualitätsattribute umgesetzt werden können. Die für SPAs typischen Nachteile - wie beispielsweise eine schlechte Suchmaschinenoptimierung - sind für uns nur begrenzt relevant.
 
-Mit Static Side Generation können nicht alle benötigten Funktionalitäten für Physio Connect umgesetzt werden.
+Mit Static Site Generation können nicht alle benötigten Funktionalitäten für Physio Connect umgesetzt werden.
 
-Mit Server Side Rendering wäre es sehr Aufwendig, die Gewünschten Usability umzusetzen.
+Mit Server-side Rendering wäre es sehr aufwändig, die gewünschte Usability umzusetzen.
 
+|**Follow-up Entscheidungen**
+a|
+* **ADR-FRO-12** +
+Mit welcher Technologie soll die Single Page Application umgesetzt werden?
 
-|**Follow-up Entscheidungen**|
-ADR-FRO-12
 |===
 
-==== Frontend Technologie
+==== Frontend-Technologie
 
 [cols="2,6"]
 |===
 |**ID**|ADR-FRO-12
-|**Anliegen (Concern)**|Mit welcher Technologie soll die Single Page Application Umgesetzt werden?
+|**Anliegen (Concern)**|Mit welcher Technologie soll die Single Page Application umgesetzt werden?
 
 |**Kontext**
-|Physiotherapeuten und Patienten verwenden dieses Frontend hauptsächlich für die Planung und Auswertung von Therapien. Mobile Browser müssen unterstützt werden. Es wurde bestimmt, dass eine SPA verwendet wird.
+|Physiotherapeuten und Patienten verwenden das PhysioConnect-Frontend hauptsächlich für die Planung und Auswertung von Therapien. Mobile Browser müssen unterstützt werden. Es wurde entschieden, dass eine Single Page Application (SPA) verwendet werden soll.
 
 |**Alternativen**
 a|
 
-*Flutter*
+**A1) Flutter**
 
 __Vorteile:__
 
-* Cross Plattform Applikation von einer Codebase
+* Cross Plattform-Applikation mittels der Verwendung einer gemeinsamen Codebase
 
 __Nachteile:__
 
 * Kaum Know-How zu Dart Programming Language vorhanden
-* Support für Web Applikationen schlechter verglichen mit den anderen Alternativen
+* Support für Webapplikationen ist schlechter (verglichen mit den anderen Alternativen)
 
-*React*
+**A2) React**
 
 __Vorteile:__
 
 * Viel Know-How in der Community vorhanden
 * Kompatibel mit vielen Libraries
-* Sehr hohe Zufriedenheit in der State of JS Umfrage https://2021.stateofjs.com/en-US/libraries/front-end-frameworks/
+* Sehr hohe Zufriedenheit in der https://2021.stateofjs.com/en-US/libraries/front-end-frameworks/[State of JS-Umfrage (2021)]
 
 __Nachteile:__
 
-* Relativ komplex zum erlernen
+* Relativ steile Lernkurve
 
-*Angular*
+**A3) Angular**
 
 __Vorteile:__
 
@@ -440,36 +451,36 @@ __Vorteile:__
 
 __Nachteile:__
 
-* Komplex zum erlernen
-* Tiefe Zufriedenheit in State of JS https://2021.stateofjs.com/en-US/libraries/front-end-frameworks/
+* Steile Lernkurve
+* Tiefe Zufriedenheit in der https://2021.stateofjs.com/en-US/libraries/front-end-frameworks/[State of JS-Umfrage (2021)]
 
-*Vue*
+**A4) Vue.js**
 
 __Vorteile:__
 
 * Einfacher zu erlernen als die Alternativen
-* Relativ hohe Zufriedenheit in der State of JS Umfrage https://2021.stateofjs.com/en-US/libraries/front-end-frameworks/
+* Relativ hohe Zufriedenheit in der https://2021.stateofjs.com/en-US/libraries/front-end-frameworks/[State of JS-Umfrage (2021)]
 
 __Nachteile:__
 
 * Relativ kleine Community
-* Verglichen wenig angebotene Features
+* Vergleichsweise wenig angebotene Features
 
-|**Entscheidung**|React
+|**Entscheidung**|A2) React
 |**Begründung**
 a|
 Der Hauptvorteil von Flutter, nämlich die Unterstützung von Geräten ausserhalb von Desktops und Apps, hat bei uns keine Priorität.
 
 Für Angular gab es in den letzten Jahren viele schlechte Rückmeldungen.
 
-VueJS und React sind beide für unser Projekt geeignet, React scheint jedoch eine aktivere Community zu besitzen und hat einen höhere Anzahl an direkt unterstützten Features, was den Implementationsaufwand senken sollte. Aus diesem Grund haben wir uns für React entschieden.
+Vue.js und React sind beide für unser Projekt geeignet, React scheint jedoch eine aktivere Community zu besitzen und hat eine höhere Anzahl an direkt unterstützten Features, was den Implementationsaufwand senken sollte. Aus diesem Grund haben wir uns für React entschieden.
 
-|**Follow-up Entscheidungen**|
-ADR-FRO-13: 
-Da das Framework nun bekannt ist kann entschieden werden, ob eine App unterstützt werden soll oder nicht.
-
-ADR-FRO-14: 
-Sollen Micro Frontends verwendet werden, um die SPA umzusetzen?
+|**Follow-up Entscheidungen**
+a|
+* **ADR-FRO-13** +
+Soll eine iOS und Android App aus der React App generiert werden? Falls ja, mit welcher Technologie?
+* **ADR-FRO-14** +
+Sollen Micro Frontends verwendet werden?
 
 |===
 
@@ -481,12 +492,12 @@ Sollen Micro Frontends verwendet werden, um die SPA umzusetzen?
 |**Anliegen (Concern)**|Soll eine iOS und Android App aus der React App generiert werden? Falls ja, mit welcher Technologie?
 
 |**Kontext**
-|Es wurde entschieden, dass bei geringem Umsetzungsaufwand eine App für iOS und Android gemacht werden sollte. Zusätzlich wurde bestimmt, dass React zum Umsetzen der Web Applikation verwendet wird und dass nur eine Codebase existieren darf.
+|Es wurde entschieden, dass bei geringem Umsetzungsaufwand eine App für iOS und Android realisiert werden sollte. Zusätzlich wurde bestimmt, dass React zum Umsetzen der Webapplikation verwendet wird und dass nur eine gemeinsame Codebase existieren darf.
 
 |**Alternativen**
 a|
 
-*Keine App*
+**A1) Keine App**
 
 __Vorteile:__
 
@@ -498,53 +509,50 @@ __Nachteile:__
 * Gerätespezifische Funktionen werden schlechter unterstützt
 * Seite normalerweise nicht im Fullscreen
 
-*Progressive Web App (PWA)*
+**A2) Progressive Web App (PWA)**
 
 __Vorteile:__
 
 * Apps müssen nicht über einen Store veröffentlicht werden
-* Apps besitzen immer die gleiche Version wie der Server. Falls mehrere Systeme im Einsatz sind (self Hosted vom Kunden), passt das App automatisch mit der Kundenversion überein
-
+* Apps besitzen immer die gleiche Version wie der Server. Falls mehrere Systeme im Einsatz sind (self-hosted vom Kunden), passt die App automatisch mit der Kundenversion überein
 * Relativ geringer Umsetzungsaufwand
-* Bietet eingeschränkte Offline Funktionalitäten an
-* Da es sich weiterhin um ein Browserapp handelt und nicht auf die native Funktionalitäten zugreift muss nicht mit einer vielzahl von Devices getestet werden
+* Bietet eingeschränkte Offline-Funktionalitäten an
+* Da es sich weiterhin um ein Browser-App handelt und nicht auf die native Funktionalitäten zugreift, muss nicht mit einer Vielzahl von Devices getestet werden
 
 __Nachteile:__
 
 * Features nicht so ausgereift wie bei Native Apps
 * iOS Safari bietet weniger Funktionalitäten an als Android
 
-*React Native*
+**A3) React Native**
 
 __Vorteile:__
 
-* Bietet Offline Funktionalitäten an
-* Verwendet Device native Funktionalitäten
-* Relativ geringer Supportaufwand da Reactspezifische Lösung
+* Bietet Offline-Funktionalitäten an
+* Verwendet Device-native Funktionalitäten
+* Relativ geringer Supportaufwand, da React-spezifische Lösung
 
 __Nachteile:__
 
-* Unterstützung von Native Funktionalitäten führt zu erhöhtem Testaufwand
-* Es muss bestimmt werden, welche OS unterstützt werden. Diese sollten auch aktiv getestet werden.
+* Unterstützung von nativen Funktionalitäten führt zu erhöhtem Testaufwand
+* Es muss bestimmt werden, welche Betriebssysteme unterstützt werden. Diese sollten auch aktiv getestet werden.
 
-*Cordova*
+**A4) Cordova**
 
 __Vorteile:__
 
-* Bietet Offline Funktionalitäten an
-* Verwendet Device native Funktionalitäten
-
+* Bietet Offline-Funktionalitäten an
+* Verwendet Device-native Funktionalitäten
 
 __Nachteile:__
 
-* Relativ hoher Supportaufwand da Cordova nicht nur für React entwickelt wird
-* Unterstützung von Native Funktionalitäten führt zu erhöhtem Testaufwand
-* Es muss bestimmt werden, welche OS unterstützt werden. Diese sollten auch aktiv getestet werden.
+* Relativ hoher Supportaufwand, da Cordova nicht nur für React entwickelt wird
+* Unterstützung von nativen Funktionalitäten führt zu erhöhtem Testaufwand
+* Es muss bestimmt werden, welche Betriebssysteme unterstützt werden. Diese sollten auch aktiv getestet werden.
 
-
-|**Entscheidung**|PWA
+|**Entscheidung**|A2) Progressive Web App (PWA)
 |**Begründung**
-a|Es wurde PWA gewählt, da dies einen relativ geringen Umsetzungsaufwand benötigt und gleichzeitig alle Usabilty Requirements erfüllt. Der Vorteil von Native apps kann mit dem Physio Connect Vorteil kaum ausgenutzt werden, da hauptsächlich die Kamera verwendet wird und ansonsten nur Begrenzt Offline Content benötigt wird. Der Usability Vorteil, eine PWA umzusetzen, übertrifft den geringeren Implementationsaufwand für die Alternative "keine App".
+a|Der Entscheid fiel auf die Verwendung einer Progressive Web App, da dies einen relativ geringen Umsetzungsaufwand benötigt und gleichzeitig alle Usabilty Requirements erfüllt. Der Vorteil von Native Apps kann mit dem Physio Connect-Vorteil kaum ausgenutzt werden, da hauptsächlich die Kamera verwendet wird und ansonsten nur begrenzt Offline Content benötigt wird. Der Usability-Vorteil, eine PWA umzusetzen, übertrifft den geringeren Implementationsaufwand für die Alternative __A1) Keine App__.
 
 |**Follow-up Entscheidungen**|
 |===
@@ -554,36 +562,36 @@ a|Es wurde PWA gewählt, da dies einen relativ geringen Umsetzungsaufwand benöt
 [cols="2,6"]
 |===
 |**ID**|ADR-FRO-14
-|**Anliegen (Concern)**|Sollen Micro Frontends eingesetzt werden?
+|**Anliegen (Concern)**|Sollen Micro Frontends verwendet werden?
 
 |**Kontext**
-|Es wurde entschieden, das Frontend mit SPA umzusetzen. Nun soll entschieden werden, ob für die Umsetzung zusätzlich Micro Frontends verwendet werden sollen.
+|Es wurde entschieden, das PhysioConnect-Frontend mit einer Single Page Application (SPA) umzusetzen. Nun soll entschieden werden, ob für die Umsetzung zusätzlich Micro Frontends verwendet werden sollen.
 
 |**Alternativen**
 a|
 
-**Micro Frontends**
+**A1) Micro Frontends**
 
 __Vorteile:__
 
 * Frontends können einzeln deployed werden
 * Frontends können separat entwickelt werden
-* Zur Umsetzung der Frontends können verschiedene Sprachen verwendet werden
+* Zur Umsetzung der Frontends können verschiedene Frameworks und Programmiersprachen verwendet werden
 * Frontends sind einzeln skalierbar
 
 __Nachteile:__
 
 * Erhöhte Komplexität für die Umsetzung
-* Frontends müssen miteinander Kompatibel gehalten werden
+* Frontends müssen miteinander kompatibel gehalten werden
 
-**Keine Micro Frontends**
-Umkehrung von der Alternative "Micro Frontends"
+**A2) Keine Micro Frontends**
 
-|**Entscheidung**|Keine Micro Frontends
+Umkehrung der Alternative __A1) Micro Frontends__.
+
+|**Entscheidung**|A2) Keine Micro Frontends
 |**Begründung**
 a|
-
-Die Vorteile von Micro Frontends können in Physio Connect kaum verwendet werden. Um die Komplexität gering zu halten wurde gegen Micro Frontends entschieden.
+Die Vorteile von Micro Frontends können in Physio Connect kaum verwendet werden. Um die Komplexität gering zu halten, fiel der schlussendliche Entscheid gegen die Verwendung von Micro Frontends.
 
 |**Follow-up Entscheidungen**|
 |===
