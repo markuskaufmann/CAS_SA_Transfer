@@ -239,74 +239,6 @@ Diese Entscheidung führt zu entsprechenden Änderungen in PhysioConnect (Webapp
 |**Follow-up Entscheidungen**|-
 |===
 
-=== Messaging
-
-[cols="2,6"]
-|===
-|**ID**|ADR-MES-10
-|**Anliegen (Concern)**|Wie wird das Messaging innerhalb von Physio Connect umgesetzt?
-
-|**Kontext**
-|Sowohl Requests von Physiotherapeuten als auch Patienten werden vom PhysioConnect System gehandhabt. Zu Peak Zeiten kann es sich dabei um eine hohe Last an Daten handeln. Da gemäss *link zu ADR Backend* PhysioConnect aus mehreren Containern bestehen wird, soll überprüft werden, ob eine Messaging Komponente eingesetzt werden soll und falls ja, welche.
-
-|**Alternativen**
-a|
-
-**HTTP/HTTPS**
-
-__Vorteile:__
-
-* Einfache Implementierung
-* Know-How weit verbreitet
-* Von vielen verschiedenen Libraries unterstützt
-
-__Nachteile:__
-
-* Weniger effizient als einige Alternativen
-
-
-**Message Queues** (RabbitMQ, Kafka)
-
-__Vorteile:__
-
-* Kann je nach Implementierungsart Requests effizient abarbeiten (Trade Off mit Traceablility)
-* Gruppierung von Gruppen nach Themen
-* Skalierbare Messaging Komponente
-* Sender muss nicht darauf Warten, bis die Message verarbeitet wurde
-* Bei Ausfall der Datenbank könnten die Daten kurzfristig in der Queue als Messages persistiert sein bis die Datenbank wieder erreichbar ist.
-
-__Nachteile:__
-
-* Benötigt Messaging Container
-* Erhöht Komplexität der Lösung
-
-**gRPC**
-
-__Vorteile:__
-
-* Sehr Performant
-* Ermöglicht bi-direktionale Kommunikation
-
-__Nachteile:__
-
-* Mehraufwand für die Implementation
-* Weniger breite Unterstützung als andere Ansätze
-* Weniger Know-How vorhanden
-
-|**Entscheidung**|HTTP / HTTPS
-|**Begründung**
-a|
-
-* Implementation mit HTTPS hat die geringste Komplexität 
-* Time to Market ist in einem ersten Schritt wichtiger als die Performanz
-* Für eine geringe Anzahl Benutzer wird es einfach sein, eine gute Performanz mittels Skalierung zu erreichen
-* Es ist einfacher, Bottlenecks zu erkennen und zu optimieren, wenn das System bereits produktiv im Einsatz ist
-
-Es soll jedoch bei Design und Implementation darauf geachtet werden, dass in Zukunft die gezielte Verwendung von gRPC oder einer Messaging Queue möglich gehalten werden muss.
-
-|**Follow-up Entscheidungen**|-
-|===
-
 === Frontend Architektur
 
 ==== Plattformen
@@ -1062,5 +994,73 @@ Für die Patienten-Messdaten
 
 |**Begründung**|Für die Ablage aller Daten, welche nicht zu den Patienten-Messdaten gehören, sollte eine herkömmliche relationale Datenbank allen Anforderungen gerecht werden. Alternativ könnte eine Dokumentdatenbank ebenfalls passend eingesetzt werden. +
 Für die Persistierung der Patienten-Messdaten sollte hingegen primär auf eine Dokumentdatenbank zurückgegriffen werden, da sie auf die Ablage halb- oder unstrukturierter Daten spezialisiert sind und eine hohe Performance bezüglich Schreib- und Lesevorgängen vorweisen können.
+|**Follow-up Entscheidungen**|-
+|===
+
+==== Messaging
+
+[cols="2,6"]
+|===
+|**ID**|ADR-MES-10
+|**Anliegen (Concern)**|Wie wird das Backend-Messaging innerhalb von Physio Connect umgesetzt?
+|**Kontext**
+|Sowohl Requests von Physiotherapeuten als auch von Patienten werden vom PhysioConnect-Backend gehandhabt. Zu Peak-Zeiten kann es sich dabei um eine hohe Anzahl von Requests bzw. eine hohe eingehende Datenmenge handeln. Da das PhysioConnect-Backend gemäss Architekturentscheid __ADR-BAC-10__ aus mehreren Microservices bestehen wird, soll überprüft werden, ob eine Messaging-Komponente eingesetzt werden soll und falls ja, welche.
+|**Alternativen**
+a|
+
+**A1) HTTP(S)**
+
+__Vorteile:__
+
+* Einfache Implementierung
+* Know-How weit verbreitet
+* Von vielen verschiedenen Libraries unterstützt
+
+__Nachteile:__
+
+* Weniger effizient als einige Alternativen
+
+**A2) Message Queues**
+
+(RabbitMQ, Kafka)
+
+__Vorteile:__
+
+* Kann je nach Implementierungsart Requests effizient abarbeiten (Trade-off mit Traceablility)
+* Gruppierung zusammenhängender Messages nach Themen (Topics)
+* Skalierbare Messaging-Komponente
+* Sender muss nicht darauf warten, bis die Message verarbeitet wurde
+* Bei Ausfall der Datenbank könnten die Daten kurzfristig in der Queue als Messages persistiert werden, bis die Datenbank wieder erreichbar ist
+
+__Nachteile:__
+
+* Benötigt Messaging Container
+* Erhöht Komplexität der Lösung
+* Know-How kann sehr punktuell sein
+
+**A3) gRPC**
+
+__Vorteile:__
+
+* Sehr performant
+* Ermöglicht bidirektionale Kommunikation
+
+__Nachteile:__
+
+* Mehraufwand für die Implementation
+* Weniger breite Unterstützung als andere Ansätze
+* Weniger Know-How vorhanden
+
+|**Entscheidung**|A1) HTTP(S)
+|**Begründung**
+a|
+
+* Kommunikation mit HTTP(S) hat die geringste Komplexität
+* Time-to-Market ist in einem ersten Schritt wichtiger als die Performance
+* Für eine geringe Anzahl Benutzer wird es einfach sein, eine gute Performance mittels Skalierung zu erreichen
+* Es ist einfacher, Bottlenecks zu erkennen und zu optimieren, wenn das System bereits produktiv im Einsatz ist
+
+Es soll jedoch bei Design und Implementation darauf geachtet werden, dass die Möglichkeit der zukünftig gezielten Verwendung von gRPC oder einer Message Queue erhalten bleibt.
+
 |**Follow-up Entscheidungen**|-
 |===
