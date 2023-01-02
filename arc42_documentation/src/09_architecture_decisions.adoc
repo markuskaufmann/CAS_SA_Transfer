@@ -659,7 +659,7 @@ __Nachteile:__
 * Komplexität: +
 Der Aufbau und die Pflege eines Systems, welches aus vielen kleinen, unabhängigen Microservices besteht, kann relativ schnell an Komplexität zunehmen
 * Kommunikation zwischen den Services: +
-Die Kommunikation zwischen einzelnen Microservices ist meist komplexer als die Kommunikation innerhalb eines Monoliths. Zudem haben externe Einflüsse wie beispielsweise die Netzwerkverbindung (Latenzzeit, Bandbreite, Auslastung, Durchsatz) einen Einfluss auf die Qualität der Kommunikaion
+Die Kommunikation zwischen einzelnen Microservices ist komplexer als die Kommunikation innerhalb eines Monoliths. Zudem haben externe Einflüsse wie beispielsweise die Netzwerkverbindung (Latenzzeit, Bandbreite, Auslastung, Durchsatz) einen Einfluss auf die Qualität und Geschwindigkeit der Kommunikation
 
 **A3) Self-contained systems (SCS)**
 
@@ -779,7 +779,7 @@ Die Verwendung von Layer-Abstraktionen und vordefinierten Mappings zwischen den 
 
 |**Entscheidung**|A2) Hexagonal architecture (Ports & Adapters)
 |**Begründung**|Die Verwendung einer hexagonalen Mikroarchitektur (Ports & Adapters) deckt die erhöhte Priorität betreffend Modifizierbarkeit / Erweiterbarkeit optimal ab. +
-Die Businesslogik wird mit definierten Abstraktionen (Ports) sauber von allen externen Abhängigkeiten (Adapters) separiert, was zu einer losen Kopplung führt. Für die innere Struktur der Businesslogik setzen wir nicht explizit auf Clean / Onion Architecture, da dieser Ansatz für unser Domänenmodell schlichtweg zu komplex wäre und daher over-engineered wäre.
+Die Businesslogik wird mit definierten Abstraktionen (Ports) sauber von allen externen Abhängigkeiten (Adapters) separiert, was zu einer losen Kopplung führt. Für die innere Struktur der Businesslogik setzen wir nicht explizit auf Clean / Onion Architecture, da dieser Ansatz für unser Domänenmodell zu komplex wäre und daher over-engineered wäre.
 |**Follow-up Entscheidungen**|-
 |===
 
