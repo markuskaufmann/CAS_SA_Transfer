@@ -182,6 +182,19 @@ _<white box template>_
 
 === Level 3
 
+plantuml::domain_model/domain_BC_TherapieContext_PhysioConnectV2.puml[format=svg]
+plantuml::domain_model/domain_BC_TherapieContext_UebungsKatalog.puml[format=svg]
+plantuml::domain_model/domain_BC_TherapieContext_UebungsKollektion.puml[format=svg]
+
+[.landscape]
+<<<
+
+plantuml::domain_model/domain_BC_TherapieContext.puml[format=svg]
+
+[.portrait]
+<<<
+
+
 [role="arc42help"]
 ****
 Here you can specify the inner structure of (some) building blocks from level 2 as white boxes.
