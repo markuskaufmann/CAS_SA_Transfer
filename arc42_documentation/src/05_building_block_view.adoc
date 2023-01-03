@@ -159,6 +159,8 @@ Leave out normal, simple, boring or standardized parts of your system
 
 ==== White Box _<building block 1>_
 
+plantuml::structurizr_diagrams/generated/structurizr-PlanungsServiceDetails.puml[format=svg]
+
 [role="arc42help"]
 ****
 ...describes the internal structure of _building block 1_.
@@ -167,6 +169,8 @@ Leave out normal, simple, boring or standardized parts of your system
 _<white box template>_
 
 ==== White Box _<building block 2>_
+
+plantuml::structurizr_diagrams/generated/structurizr-AusfuehrungsServiceDetails.puml[format=svg]
 
 
 _<white box template>_

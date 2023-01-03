@@ -37,7 +37,7 @@ workspace "Physio integration layer project" {
                     }
                 }
 
-                requestHandler = container "Request Handler / Load Balancer" {
+                ingress = container "Ingress" "Reverse Proxy und Load Balancer" {
                     technology "Ingress"
                 }
 
@@ -45,6 +45,11 @@ workspace "Physio integration layer project" {
                     planungsService = container "Therapie Planungs Service" {
                         description "Handhabt alle Requests für die Verwaltung von Gesamttherapien. Validiert Requests, beinhaltet Applikations und Domänenlogik für die Planungsdaten"
                         technology "Spring Boot"
+
+                        therapieApiController = component "Therapie API Controllers" "Verifiziert die eingehenden Requests."
+                        therapieApplikationsLogik = component "Therapie Applikationslogik"
+                        therapiePersistenzAdapter = component "Therapie Persistenz Adapter"
+                        therapieDomaenenLogik = component "Therapie Domänenlogik" "" "POJ"
                     }
                     planungsDatenbank = container "Therapie Planungs Datenbank" {
                         tags "Database"
@@ -57,6 +62,11 @@ workspace "Physio integration layer project" {
                     ausfuehrungsService = container "Ausführungs Service" {
                         description "Handhabt alle Requests, welche von Patienten während der Ausführung der Therapie Sessions abgesetzt werden. Validiert Requests, beinhaltet Applikations und Domänenlogik für die Ausführungsdaten."
                         technology "Spring Boot"
+
+                        ausfuehrungsApiController = component "Ausführungs API Controllers" "Verifiziert die eingehenden Requests."
+                        ausfuehrungsApplikationsLogik = component "Ausführungs Applikationslogik"
+                        ausfuehrungsPersistenzAdapter = component "Ausführungs Persistenz Adapter"
+                        ausfuehrungsDomaenenLogik = component "Ausführungs Domänenlogik" "" "POJ"
                     }
                     ausfuehrungsDatenbank = container "Ausführungs Datenbank" {
                         tags "Database"
@@ -69,7 +79,7 @@ workspace "Physio integration layer project" {
                     uebungsKatalogWrapper = container "Übungskatalog Wrapper" {
                         description "Anti-Corrpution Layer für die Kommunikation mit dem Übungskatalog"
                         technology "Spring boot"
-                    }   
+                    }
 
                     benutzerVerwaltungWrapper = container "Benutzerverwaltung Wrapper" {
                         description "Anti-Corrpution Layer für die Kommunikation mit der Benutzerverwaltung"
@@ -111,13 +121,13 @@ workspace "Physio integration layer project" {
         physioConnect -> versicherungsSchnittstellen "teilt Trainingsdaten"
         
         # relationships to/from containers
-        patientenApp -> requestHandler "Sendet Messdaten\nSendet Requests für Informationen zu Therapien und Übungen"
-        singlePageTherapieManager -> requestHandler  "Sendet Requests zum Verwalten der Gesamttherapien, Übungen und Benutzer"
+        patientenApp -> ingress "Sendet Messdaten\nSendet Requests für Informationen zu Therapien und Übungen"
+        singlePageTherapieManager -> ingress  "Sendet Requests zum Verwalten der Gesamttherapien, Übungen und Benutzer"
 
-        requestHandler -> planungsService "Leitet Requests weiter für Gesamttherapien"
-        requestHandler -> benutzerVerwaltungWrapper "Leitet Requests weiter für die Benutzerverwaltung"
-        requestHandler -> uebungsKatalogWrapper "Leitet Requests weiter für den Übungskatalog"
-        requestHandler -> ausfuehrungsService "Leitet ausführungsspezifische Requests weiter"
+        ingress -> planungsService "Leitet Requests weiter für Gesamttherapien"
+        ingress -> benutzerVerwaltungWrapper "Leitet Requests weiter für die Benutzerverwaltung"
+        ingress -> uebungsKatalogWrapper "Leitet Requests weiter für den Übungskatalog"
+        ingress -> ausfuehrungsService "Leitet ausführungsspezifische Requests weiter"
 
         ausfuehrungsService -> ausfuehrungsDatenbank "Persistiert Messdaten und effektive Ausführungsinformationen"
 
@@ -130,6 +140,26 @@ workspace "Physio integration layer project" {
         uebungsKatalogWrapper -> uebungsKatalog "Verwaltet Übungsdefinitionen"
 
         serverSideTherapieManager -> singlePageTherapieManager "Liefert SPA an den Client aus"
+
+        # relationships to/from components to/from containers
+        therapiePersistenzAdapter -> planungsDatenbank  "Persistiert Daten in"
+        therapieApplikationsLogik -> uebungsKatalogWrapper "Sendet API Requests an"
+        therapieApplikationsLogik -> benutzerVerwaltungWrapper "Sendet API Requests an"
+        therapieApplikationsLogik -> ausfuehrungsService "Sendet API Requests an"
+        ingress -> therapieApiController "Leitet Requests weiter für Gesamttherapien"
+
+        ausfuehrungsPersistenzAdapter -> ausfuehrungsDatenbank "Persistiert Daten in"
+        ingress -> ausfuehrungsApiController "Leitet ausführungsspezifische Requests weiter"
+        planungsService -> ausfuehrungsApiController "Sendet API Requests an"
+
+        # relationships to/from components
+        therapieApiController -> therapieApplikationsLogik "Führt Service Calls mit den verifizierten Daten aus"
+        therapiePersistenzAdapter -> therapieApplikationsLogik "Implementiert Adapter für die Port Interfaces der Applikationslogik"
+        therapieApplikationsLogik -> therapieDomaenenLogik "Implementier Adapter für die Port Interfaces der Domänenlogik"
+
+        ausfuehrungsApiController -> ausfuehrungsApplikationsLogik "Führt Service Calls mit den verifizierten Daten aus"
+        ausfuehrungsPersistenzAdapter -> ausfuehrungsApplikationsLogik "Implementiert Adapter für die Port Interfaces der Applikationslogik"
+        ausfuehrungsApplikationsLogik -> ausfuehrungsDomaenenLogik "Implementier Adapter für die Port Interfaces der Domänenlogik"
     }
 
     views {
@@ -155,6 +185,16 @@ workspace "Physio integration layer project" {
         }
 
         container physioConnect "Containers" {
+            include *
+            autoLayout
+        }
+
+        component planungsService "PlanungsServiceDetails" {
+            include *
+            autoLayout
+        }
+
+        component ausfuehrungsService "AusfuehrungsServiceDetails" {
             include *
             autoLayout
         }
