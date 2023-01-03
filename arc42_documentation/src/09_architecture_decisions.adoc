@@ -1072,3 +1072,71 @@ Es soll jedoch bei Design und Implementation darauf geachtet werden, dass die M�
 
 |**Follow-up Entscheidungen**|-
 |===
+
+=== Hosting
+
+[cols="2,6"]
+|===
+|**ID**|ADR-HST-10
+|**Anliegen (Concern)**|Wie wird Physio Connect gehosted?
+|**Kontext**|Physio Connect ist eine Unterstützungs- und Integrationssoftware und zielt nicht darauf ab, kundenseitig bereits eingesetzte Systeme und Prozesse abzulösen, sondern nimmt eine komplementäre Rolle ein. Deshalb stellt sich die Frage, welches Hosting-Modell den Kunden das ideale Verhältnis zwischen (Integrations- / Betriebs-)Aufwand, Komplexität, Effizienz und Kompatibilität zur Verfügung stellt.
+|**Alternativen**
+a|
+
+**A1) Hosting bei etabliertem Cloud-Provider**
+
+(Microsoft, Amazon, Google, IBM)
+
+__Vorteile:__
+
+* Keine Vorlaufkosten für die Infrastruktur: +
+Der Aufwand und die Komplexität bezüglich Kauf, Einrichtung und Wartung physischer Server fallen weg. Dies kann besonders für kleine bis mittlere Unternehmen (KMU) oder Startups nützlich sein, die möglicherweise nicht über die Ressourcen und / oder das Know-How verfügen, um eine eigene Infrastruktur zu betreiben.
+* "Pay as you go": +
+Bei den aktuellen Cloud-Providern zahlt man nur für die Ressourcen, welche man auch effektiv nutzt. Dies kann kosteneffizienter sein als das Hosting on-premise, insbesondere wenn es zu variablen oder unvorhersehbaren Mustern im Netzwerkverkehr / -auslastung kommen kann.
+* Skalierbarkeit: +
+Bei den aktuellen Cloud-Providern kann die Leistung je nach Bedarf problemlos erhöht oder verringert werden. Bei einem plötzlichen Anstieg des Datenverkehrs können schnell weitere Ressourcen horizontal oder vertikal hinzugefügt werden, um die Last zu bewältigen.
+* Hohe Verfügbarkeit: +
+Cloud-Provider bieten häufig Hochverfügbarkeitsoptionen an, z.B. auch über mehrere Verfügbarkeitszonen oder Regionen, welche sicherstellen, dass die gehostete Anwendung optimal verfügbar ist.
+* Infrastructure as Code: +
+Alle aktuellen Cloud-Provider bieten die Möglichkeit, die benötigten Infrastrukturressourcen automatisiert via Quellcode zu erstellen, modifizieren und - falls nötig - wieder abzubauen. Die automatisierte Verwaltung der Infrastruktur lässt sich zudem nahtlos in eine CI/CD-Pipeline integrieren, was zu einem grundsätzlich agilen Software Development Lifecycle beiträgt. +
+Bei einem on-premise Hosting ist die Möglichkeit von __Infrastructure as Code__ in den meisten Fällen nicht gegeben.
+
+__Nachteile:__
+
+* Potenzielle Sicherheitsbedenken: +
+Auch wenn die aktuellen Cloud-Provider unterschiedliche Massnahmen zur Sicherung der eingesetzten Infrastruktur ergreifen, besteht immer noch das Risiko, dass die übermittelten, verarbeiteten und / oder abgelegten Daten gefährdet sein könnten. Dieses Risiko kann jedoch durch die Anwendung bewährter Sicherheitspraktiken und die Befolgung der Anweisungen des präferierten Cloud-Providers mitigiert werden. +
+Ein ebenfalls zu berücksichtigender Aspekt ist Datenschutz / Privacy - beispielsweise herrschen an gewissen Server-Standorten unterschiedliche Verordnungen / Gesetze diesbezüglich.
+* Begrenzte Kontrolle: +
+Das Hosting der Anwendung bei einem Cloud-Provider bedeutet gleichzeitig auch, dass man von der Infrastruktur und den Serviceangeboten des Providers abhängig ist. Dies kann ein Trade-Off für den Komfort sein, keine eigenen Server(-Farmen) verwalten zu müssen.
+
+**A2) On-premise beim Kunden**
+
+__Vorteile:__
+
+* Vollständige Kontrolle: +
+Bei einem on-premise Hosting besitzt man (bzw. in diesem Fall der Kunde) die vollständige Kontrolle über die Hardware, Software und Infrastruktur. Dies kann von Vorteil sein, wenn spezielle Sicherheits- oder Compliance-Anforderungen vorliegen, welche von einem Cloud-Provider nicht (oder nur eingeschränkt) erfüllt werden können.
+* Vorhersehbare Kosten: +
+Bei einem on-premise Hosting können die Kosten in der Regel genauer und verlässlicher prognostiziert werden, da sie nicht an die Nutzung ("Pay as you go") gebunden sind.
+* (Potenziell) Bessere Performance: +
+In einigen Fällen kann ein on-premise Hosting zu einer besseren Performance führen, da man nicht von einer konstanten Internetverbindung oder der Leistung eines Remote-Servers abhängig ist.
+
+__Nachteile:__
+
+* Höhere Vorabkosten: +
+Ein on-premise Hosting erfordert grössere vorgängige Investitionen in Hardware, Software und Infrastruktur.
+* Wartung und Support: +
+Bei einem on-premise Hosting ist der Kunde selbst für die Wartung und Unterstützung der Infrastruktur verantwortlich. Dies kann ressourcenaufwändig sein und spezielles technisches Know-How erfordern.
+* Eingeschränkte Skalierbarkeit: +
+Es kann komplex und kostenaufwändig sein, eine on-premise gehostete Infrastruktur nach Bedarf horizontal oder vertikal zu skalieren.
+
+|**Entscheidung**|A1) Hosting bei etabliertem Cloud-Provider
+
+Die Möglichkeit, dass - je nach Kunde - die Alternative __A2) On-premise beim Kunden__ zum Einsatz kommen kann, wird nicht ausgeschlossen, sollte jedoch ein Ausnahmefall bleiben.
+|**Begründung**
+a|
+Das definierte link:04_solution_strategy.adoc#section-solution-strategy[Architekturprinzip AP-6] gibt bereits die Richtlinie vor, im Rahmen von Physio Connect grundsätzlich das https://aws.amazon.com/what-is/cloud-native/[Cloud Native-Prinzip] zu befolgen. Auf diese Weise bleibt Physio Connect skalierbar, flexibel, resilient und kann effizient auf neue Kundenbedürfnisse angepasst werden.
+
+Es soll jedoch bei Design und Implementation darauf geachtet werden, dass ein potenzielles on-premise Hosting aus technischer Sicht nicht verbaut wird.
+
+|**Follow-up Entscheidungen**|-
+|===

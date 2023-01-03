@@ -31,7 +31,7 @@ Die folgenden Prinzipien müssen bestmöglich während dem Design und der Umsetz
 
 |AP-6
 |Cloud Native
-|Alle umzusetzenden Komponenten sollen Cloud Native und in einem lokalen Kubernetes-Cluster ausführbar sein. Clusterweite Standards für Logging, Überwachbarkeit (Monitoring) und Sicherheit müssen eingehalten werden.
+|Alle umzusetzenden Komponenten sollen dem https://aws.amazon.com/what-is/cloud-native/[Cloud Native-Prinzip] entsprechen und in einem lokalen Kubernetes-Cluster ausführbar sein. Clusterweite Standards für Logging, Überwachbarkeit (Monitoring) und Sicherheit müssen eingehalten werden.
 
 |AP-7
 |Everything as Code, Versionierung 
