@@ -1147,12 +1147,11 @@ a|
 Hosten wir eine einzige Physio Connect Instanz oder eine pro Kunde? 
 |===
 
-
 [cols="2,6"]
 |===
 |**ID**|ADR-HST-11
-|**Anliegen (Concern)**|Hosten wir eine einzelne Physio Connect Instanz oder eine Instanz pro Kunde? 
-|**Kontext**|Gemäss ADR-HST-10 hosten wir PhysioConnect auf einem etablierten Cloud Anbieter. 
+|**Anliegen (Concern)**|Hosten wir eine einzelne Physio Connect-Instanz oder eine Instanz pro Kunde? 
+|**Kontext**|Gemäss __ADR-HST-10__ hosten wir PhysioConnect bei einem etablierten Cloud-Provider (Microsoft, Amazon, Google, IBM). Zu entscheiden gilt nun noch, ob eine einzelne, globale Instanz oder jeweils eine Instanz pro Kunde deployed und betrieben werden soll.
 |**Alternativen**
 a|
 
@@ -1161,44 +1160,44 @@ a|
 __Vorteile:__
 
 * Einzelne Produktivversion im Einsatz
-* Relative einfache Implementation für CI/CD
-* Erhöhte User Experience durch einzelne URL für das Planungsmanager Interface
-** Falls ein Patient das Physio Connect System zuerst in der Reha verwendet und anschliessend in einer privaten Praxis hätten diese unterschiedliche URLs
+* Relativ einfache Implementation für CI/CD-Pipeline
+* Erhöhte User Experience durch einzelne, globale URL für das Planungsmanager Interface
+** Falls ein Patient das Physio Connect-System zuerst in der Rehabilitationsklinik verwendet und anschliessend in einer privaten Praxis, hätten diese unterschiedliche URLs
 * Skalierbarkeit kann gemäss Gesetz der grossen Zahlen optimiert werden
-* Einfachere Implementation für Fallback System
+* Einfachere Implementation für Fallback-System
 * Einfachere Implementation für Backups
 
 __Nachteile:__
 
 * Falls ein Upgrade eine Datenmigration benötigt, muss dies bei allen Kunden gleichzeitig gemacht werden
-* Falls das System abstürzen sollte ist es für alle Kunden nicht verfügbar
-* Keine direkte Abrechnung für Infrastruktur möglich
+* Falls das System abstürzen sollte, ist es für alle Kunden nicht verfügbar
+* Keine direkte Abrechnung bezüglich der Infrastrukturkosten möglich
 
 **A2) Eine Instanz pro Kunde**
 
 __Vorteile:__
 
 * Einfachere Individualisierbarkeit und Konfigurierbarkeit pro Kunde.
-* Möglichkeit für hosting auf verschiedenen Cloud Anbietern.
-* Infrastrukturkosten pro Kunde können genau Abgerechnet werden.
-* Deploymentprozess wäre besser darauf ausgerichtet, Hosting beim Kunden zusätzlich zu unterstützen.
-* Versionsupgrades können Phasenweise ausgerollt werden.
+* Möglichkeit für das Hosting bei verschiedenen Cloud-Providern.
+* Infrastrukturkosten pro Kunde können genau abgerechnet werden.
+* Deploymentprozess wäre besser darauf ausgerichtet, ein on-premise Hosting beim Kunden zusätzlich zu unterstützen.
+* Versionsupgrades können phasenweise ausgerollt werden.
 
 __Nachteile:__
 
-* System muss für jeden Kunden neu Aufgesetzt werden.
+* System muss für jeden Kunden neu aufgesetzt werden.
 * Pro eingesetzte Version müssen Patches geliefert werden können.
-* Verschiedene Versionen des Physio Connect Systems müssen mit der Benutzerverwaltung und dem Übungskatalogs kompatibel sein.
+* Verschiedene Versionen des Physio Connect-Systems müssen mit der Benutzerverwaltung und dem Übungskatalog kompatibel sein.
 * Automatisierte Tests müssen regelmässig auf allen Versionen ausgeführt werden.
 * Hoher Supportaufwand für die Systeme.
-* Von uns angebotene "Testphasen" müssten einzeln gehostet werden. Übergang von Testphase zum effektiven Einsatz ist mit Aufwand verbunden.
+* Von uns angebotene "Testphasen" müssten einzeln gehostet werden. Der Übergang von der Testphase zum effektiven Einsatz ist mit Aufwand verbunden.
  
-|**Entscheidung**| A1) Einzelne Instanz
+|**Entscheidung**|A1) Einzelne Instanz
 
-Da die Möglichkeit __ADR-HST-10 A2) On-premise beim Kunden__ zum Einsatz kommen kann, wird es trotzdem möglich sein, einzelne Instanz für einen Kunden in der Cloud zu deployen
+Da die Alternative __A2) On-premise beim Kunden__ des Entscheids __ADR-HST-10__ potenziell zum Einsatz kommen kann, wird es trotzdem möglich sein, eine einzelne Instanz für einen Kunden in der Cloud zu deployen.
 |**Begründung**
 a|
-Für den Verkauf unseres Produktes sind tiefe Einführungskosten essentiell. Zusätzlich können wir uns als Startup keinen Support für eine Vielzahl von Versionen leisten. Falls einzelne Instanzen für Kunden gepflegt werden müssen, sollen diese auf der gleichen Version wie unsere "Hauptinstanz" gehalten werden.
+Für den Verkauf von PhysioConnect sind tiefe Einführungskosten essenziell. Zusätzlich können wir uns als Startup keinen Support für eine Vielzahl von Versionen leisten. Falls einzelne Instanzen für Kunden gepflegt werden müssen, sollen diese auf der gleichen Version wie unsere "Hauptinstanz" gehalten werden.
 
 |**Follow-up Entscheidungen**|-
 |===
