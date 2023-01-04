@@ -43,47 +43,50 @@ workspace "Physio integration layer project" {
 
                 group "Planung" {
                     planungsService = container "Therapie Planungs Service" {
-                        description "Handhabt alle Requests für die Verwaltung von Gesamttherapien. Validiert Requests, beinhaltet Applikations und Domänenlogik für die Planungsdaten"
+                        description "Handhabt alle Requests für die Verwaltung von Gesamttherapien. Validiert Requests, beinhaltet Applikations- und Domänenlogik für die Planungsdaten"
                         technology "Spring Boot"
 
-                        therapieApiController = component "Therapie API Controllers" "Verifiziert die eingehenden Requests."
+                        therapieApiController = component "Therapie API Controller" "Verwaltet die bereitgestellten API Endpoints des Services, z.B. Verifiziert die eingehenden Requests."
                         therapieApplikationsLogik = component "Therapie Applikationslogik"
                         therapiePersistenzAdapter = component "Therapie Persistenz Adapter"
-                        therapieDomaenenLogik = component "Therapie Domänenlogik" "" "POJ"
+                        therapieDomaenenLogik = component "Therapie Domänenlogik" "" "POJO"
+                        therapieUebungsKatalogApiAdapter = component "Übungskatalog API Adapter" "Verwaltet den serviceinternen Zugriff auf die API des Übungskatalog Wrappers"
+                        therapieBenutzerVerwaltungApiAdapter = component "Benutzerverwaltung API Adapter" "Verwaltet den serviceinternen Zugriff auf die API des Benutzerverwaltung Wrappers"
+                        therapieAusfuehrungsApiAdapter = component "Ausführungs API Adapter" "Verwaltet den serviceinternen Zugriff auf die API des Ausführungs Service"
                     }
                     planungsDatenbank = container "Therapie Planungs Datenbank" {
                         tags "Database"
-                        technology "Relationale oder Dokumentendatenbank"
+                        technology "Relationale oder Dokumentdatenbank"
                         description "Persistiert alle Planungsdaten. Wird evt. mit der Ausführungs Datenbank fusioniert."
                     }
                 }
 
                 group "Ausführung" {
                     ausfuehrungsService = container "Ausführungs Service" {
-                        description "Handhabt alle Requests, welche von Patienten während der Ausführung der Therapie Sessions abgesetzt werden. Validiert Requests, beinhaltet Applikations und Domänenlogik für die Ausführungsdaten."
+                        description "Handhabt alle Requests, welche von Patienten während der Ausführung der Therapie-Sessions abgesetzt werden. Validiert Requests, beinhaltet Applikations und Domänenlogik für die Ausführungsdaten."
                         technology "Spring Boot"
 
-                        ausfuehrungsApiController = component "Ausführungs API Controllers" "Verifiziert die eingehenden Requests."
+                        ausfuehrungsApiController = component "Ausführungs API Controller" "Verwaltet die bereitgestellten API Endpoints des Services, z.B. Verifiziert die eingehenden Requests."
                         ausfuehrungsApplikationsLogik = component "Ausführungs Applikationslogik"
                         ausfuehrungsPersistenzAdapter = component "Ausführungs Persistenz Adapter"
-                        ausfuehrungsDomaenenLogik = component "Ausführungs Domänenlogik" "" "POJ"
+                        ausfuehrungsDomaenenLogik = component "Ausführungs Domänenlogik" "" "POJO"
                     }
                     ausfuehrungsDatenbank = container "Ausführungs Datenbank" {
                         tags "Database"
-                        technology "Dokuementendatenbank"
-                        description "Beinhaltet Daten der ausgeführtne Therapie Sessions, unter anderem Messdaten, Rückmeldungen und effektive Sets und Reps."
+                        technology "Dokumentdatenbank"
+                        description "Beinhaltet Daten der ausgeführten Therapie-Sessions: Unter anderem Messdaten, Rückmeldungen und effektive Sets und Reps."
                     }
                 }
 
                 group "Wrappers" {
                     uebungsKatalogWrapper = container "Übungskatalog Wrapper" {
-                        description "Anti-Corrpution Layer für die Kommunikation mit dem Übungskatalog"
-                        technology "Spring boot"
+                        description "Anti-Corruption Layer (ACL) für die Kommunikation mit dem Übungskatalog"
+                        technology "Spring Boot"
                     }
 
                     benutzerVerwaltungWrapper = container "Benutzerverwaltung Wrapper" {
-                        description "Anti-Corrpution Layer für die Kommunikation mit der Benutzerverwaltung"
-                        technology "Spring boot"
+                        description "Anti-Corruption Layer (ACL) für die Kommunikation mit der Benutzerverwaltung"
+                        technology "Spring Boot"
                     }
                 }
             }
@@ -133,7 +136,7 @@ workspace "Physio integration layer project" {
 
         planungsService -> benutzerVerwaltungWrapper "Verwendet Benutzerinformationen von"
         planungsService -> uebungsKatalogWrapper "Verwendet Übungsinformationen von"
-        planungsService -> planungsDatenbank "Persistiert Gesamttherapien, Therapie Sessions, Therapie Übungen und die dazugehörigen Detailinformationen"
+        planungsService -> planungsDatenbank "Persistiert Gesamttherapien, Therapie-Sessions, Therapie Übungen und die dazugehörigen Detailinformationen"
         planungsService -> ausfuehrungsService "Kombiniert Planugnsdaten mit Ausführungsdaten von"
 
         benutzerVerwaltungWrapper -> benutzerVerwaltung "Verwaltet Benutzerdaten"
@@ -143,9 +146,9 @@ workspace "Physio integration layer project" {
 
         # relationships to/from components to/from containers
         therapiePersistenzAdapter -> planungsDatenbank  "Persistiert Daten in"
-        therapieApplikationsLogik -> uebungsKatalogWrapper "Sendet API Requests an"
-        therapieApplikationsLogik -> benutzerVerwaltungWrapper "Sendet API Requests an"
-        therapieApplikationsLogik -> ausfuehrungsService "Sendet API Requests an"
+        therapieUebungsKatalogApiAdapter -> uebungsKatalogWrapper "Sendet API Requests an"
+        therapieBenutzerverwaltungApiAdapter -> benutzerVerwaltungWrapper "Sendet API Requests an"
+        therapieAusfuehrungsApiAdapter -> ausfuehrungsService "Sendet API Requests an"
         ingress -> therapieApiController "Leitet Requests weiter für Gesamttherapien"
 
         ausfuehrungsPersistenzAdapter -> ausfuehrungsDatenbank "Persistiert Daten in"
@@ -156,6 +159,9 @@ workspace "Physio integration layer project" {
         therapieApiController -> therapieApplikationsLogik "Führt Service Calls mit den verifizierten Daten aus"
         therapiePersistenzAdapter -> therapieApplikationsLogik "Implementiert Adapter für die Port Interfaces der Applikationslogik"
         therapieApplikationsLogik -> therapieDomaenenLogik "Implementier Adapter für die Port Interfaces der Domänenlogik"
+        therapieUebungsKatalogApiAdapter -> therapieApplikationsLogik "Implementiert Adapter für die Port Interfaces der Applikationslogik"
+        therapieBenutzerverwaltungApiAdapter -> therapieApplikationsLogik "Implementiert Adapter für die Port Interfaces der Applikationslogik"
+        therapieAusfuehrungsApiAdapter -> therapieApplikationsLogik "Implementiert Adapter für die Port Interfaces der Applikationslogik"
 
         ausfuehrungsApiController -> ausfuehrungsApplikationsLogik "Führt Service Calls mit den verifizierten Daten aus"
         ausfuehrungsPersistenzAdapter -> ausfuehrungsApplikationsLogik "Implementiert Adapter für die Port Interfaces der Applikationslogik"
