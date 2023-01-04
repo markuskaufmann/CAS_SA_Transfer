@@ -166,6 +166,58 @@ workspace "Physio integration layer project" {
         ausfuehrungsApiController -> ausfuehrungsApplikationsLogik "Führt Service Calls mit den verifizierten Daten aus"
         ausfuehrungsPersistenzAdapter -> ausfuehrungsApplikationsLogik "Implementiert Adapter für die Port Interfaces der Applikationslogik"
         ausfuehrungsApplikationsLogik -> ausfuehrungsDomaenenLogik "Implementier Adapter für die Port Interfaces der Domänenlogik"
+    
+            
+        deploymentEnvironment "Cloud Deployment singuläre Physio Connect Instanz" {
+            deploymentNode "Physio Infrastruktur" {
+                deploymentNode "Physiotherapeut Desktop / Laptop" {
+                    kundenBrowser = containerInstance singlePageTherapieManager 
+                }
+
+                deploymentNode "Physiotherapeut Mobile Device" {
+                    mobileBrowser = containerInstance singlePageTherapieManager
+                }
+            }
+
+            deploymentNode "Patienten Infrastruktur" {
+                deploymentNode "Fitness Tracker" {
+                    fitnessTrackerInstanz = softwareSystemInstance fitnessTracker
+                }
+
+                deploymentNode "Patient Mobile Device" {
+                    patientenAppInstanz = softwareSystemInstance patientenApp
+                }
+            }
+
+
+            deploymentNode "Cloud Hyperscaler" {
+                deploymentNode "Kubernetes Cluster" {
+                    deploymentNode "namespace: PhysioConnect" {
+                        ingressInstanz = containerInstance ingress
+
+                        ausfuehrungsServiceInstanz = containerInstance ausfuehrungsService
+                        planungsServiceInstanz = containerInstance planungsService
+
+                        uebungsKatalogWrapperInstance = containerInstance uebungsKatalogWrapper
+                        benutzerVerwaltungWrapperInstance = containerInstance benutzerVerwaltungWrapper
+
+                        serverSideTherapieManagerInstance =  containerInstance serverSideTherapieManager 
+                    }
+                    deploymentNode "namespace: Übungskatalog" {
+                        uebungsKatalogInstanz = softwareSystemInstance uebungsKatalog
+                    }
+                    deploymentNode "namespace: Benutzerverwaltung" {
+                        benutzerVerwaltungInstanz = softwareSystemInstance benutzerVerwaltung
+                    }
+                    
+                }
+
+                deploymentNode "Storage Service" {
+                    ausfuehrungsDatenbankInstanz = containerInstance ausfuehrungsDatenbank
+                    planungsDatenbankInstanz = containerInstance planungsDatenbank
+                }
+            }
+        }
     }
 
     views {
@@ -201,6 +253,11 @@ workspace "Physio integration layer project" {
         }
 
         component ausfuehrungsService "AusfuehrungsServiceDetails" {
+            include *
+            autoLayout
+        }
+
+        deployment physioConnect "Cloud Deployment singuläre Physio Connect Instanz" {
             include *
             autoLayout
         }
