@@ -11,19 +11,12 @@ Das Format der Entscheidungen basiert auf dem folgenden Template:
 |**ID**|ADR-[Kategorie]-[Nummer]
 |**Anliegen (Concern)**|Anliegen, welches die Grundlage für die Entscheidung darstellt. Formuliert als Fragestellung.
 |**Kontext**|Beschreibung der Ausgangslage, um die Relevanz des Anliegens hervorzuheben.
-|**Alternativen**
-a|
-Auflistung der möglichen Alternativen, inkl. deren Vor- und Nachteile.
-
-* [Option 1]
-** Beschreibung
-** Vorteile
-** Nachteile
-* [Option 2]
-** ...
-* [Option 3]
-** ...
-
+|**Voraussetzungen** +
+(falls vorhanden)
+|Beschreibung der zu berücksichtigen Voraussetzungen / Rahmenbedingungen.
+|**Alternative A1**|Beschreibung der 1. Alternative inkl. deren Vor- und Nachteile.
+|**Alternative A2**|Beschreibung der 2. Alternative inkl. deren Vor- und Nachteile.
+|**Alternative A[n]**|Beschreibung der n. Alternative inkl. deren Vor- und Nachteile.
 |**Entscheidung**|Resultat der Entscheidungsfindung bzw. welche der Alternativen eingesetzt wird.
 |**Begründung**
 a|
@@ -31,7 +24,9 @@ a|
 * Weshalb wurde Alternative x ausgewählt?
 * Beschreibung der eventuellen Konsequenzen (positiv oder negativ), welche beim Einsatz der Alternative x speziell zu beachten sind
 
-|**Follow-up Entscheidungen**|Auflistung der benötigten Entscheidungen, welche aus dieser Entscheidung resultieren und zusätzlich getroffen werden müssen.
+|**Follow-up Entscheidungen** +
+(falls vorhanden)
+|Auflistung der benötigten Folgeentscheidungen, welche aus dieser Entscheidung resultieren und zusätzlich getroffen werden müssen.
 |===
 
 === Security
@@ -41,22 +36,18 @@ a|
 |**ID**|ADR-SEC-10
 |**Anliegen (Concern)**|Wie wird ein Systemkonsument sicher authentifiziert?
 |**Kontext**|Sowohl die bereitgestellte API als auch die Webapplikation (SPA, PWA) von PhysioConnect darf lediglich von Konsumenten (Benutzer oder Systeme) verwendet werden, welche in der Benutzerverwaltung als gültige Benutzer registriert sind. Bei jedem Kommunikationsvorgang muss daher sichergestellt werden, dass die Identität der konsumierenden Partei erfolgreich verifiziert werden konnte.
-|**Alternativen**
+|**Voraussetzungen**
 a|
-**Voraussetzungen**
-
-__Allgemein__
-
 Das System "Benutzerverwaltung" gibt bereits die folgenden Rahmenbedingungen vor:
 
 * Als Identity Provider wird https://www.keycloak.org/[Keycloak] verwendet
-* Keycloak unterstützt Multi-factor authentication
+* Keycloak unterstützt Multi-factor authentication (MFA)
 1. Passwort des Benutzers
 2. One-time password via https://googleauthenticator.net/[Google Authenticator] oder https://freeotp.github.io/[FreeOTP]
 
-Nachfolgend werden die kompatiblen Alternativen gelistet.
-
-**A1) HTTP basic authentication** +
+|**Alternative A1**
+a|
+**HTTP basic authentication** +
 Authentifizierung mittels vordefiniertem Username und Passwort. Die Credentials werden mit Base64 transformiert und mit jedem Request als Teil des HTTP Headers mitgegeben. +
 
 __Vorteile:__
@@ -74,7 +65,9 @@ __Nachteile:__
 * Passwort wird eventuell im Browsercache abgelegt, was CSRF-Attacken begünstigt
 * Im Falle eines erfolgreichen Angriffs sind die Benutzer-Credentials (Username & Passwort) in den Händen des Angreifers, was (je nach internen Rollen und Berechtigungen des betroffenen Benutzers) zu einer immensen Verletzlichkeit des Gesamtsystems führen kann
 
-**A2) API Key** +
+|**Alternative A2**
+a|
+**API Key** +
 Authentifizierung mittels generiertem API Key. Letzterer wird mit jedem Request als Teil des HTTP Headers mitgegeben. +
 
 __Vorteile:__
@@ -93,7 +86,9 @@ __Nachteile:__
 * Grössere Angriffsfläche, da der API Key mit jedem Request als Klartext mitgesendet wird
 * Im Falle eines erfolgreichen Angriffs ist die gesamte API kompromittiert
 
-**A3) OAuth 2.0 mit OpenID Connect und Bearer Token (JWT)** +
+|**Alternative A3**
+a|
+**OAuth 2.0 mit OpenID Connect und Bearer Token (JWT)** +
 Authentifizierung via https://oauth.net/2/[OAuth 2.0]-Flow mit https://openid.net/connect/[OpenID Connect]. OAuth 2.0 ist ein etabliertes Autorisierungsframework und bietet eine Spezifikation für die Implementation von Autorisierungsprotokollen und -flows. OpenID Connect basiert auf dem OAuth 2.0-Framework und ist ein Standard, welcher speziell auf die Benutzerauthentifikation ausgerichtet ist.
 
 __Vorteile:__
@@ -112,7 +107,9 @@ __Nachteile:__
 * Ist nicht immer ganz einfach zu implementieren
 * Kann bei falscher Implementation und / oder Konfiguration zu https://www.rfc-editor.org/rfc/rfc6819#section-4[Sicherheitslücken] führen
 
-**A4) SAML** +
+|**Alternative A4**
+a|
+**SAML** +
 Authentifizierung via https://auth0.com/blog/how-saml-authentication-works/[SAML]. Security Assertion Markup Language (SAML) ist - nebst OpenID Connect - ein weiterer Standard, welcher auf die Benutzerauthentifikation ausgerichtet ist.
 
 __Vorteile:__
@@ -154,10 +151,8 @@ Mit welchen Social Identity Providern kann sich ein Systembenutzer authentifizie
 |**Kontext**
 a|Social Identity Providers wie Google, Microsoft oder Apple ermöglichen die Authentifizierung eines Benutzers über bereits existierende (Social Media) Accounts. Auf diese Weise werden Benutzerinformationen und Credentials (Username & Passwort) lediglich an einem zentralen Ort (nämlich beim betroffenen Social Identity Provider) verwaltet und nicht bei PhysioConnect redundant gehalten. +
 Zudem ist der Login-Prozess über Social Identity Providers meist intuitiver, da die Benutzer meist denselben Account mit verschiedenen Services verknüpfen (z.B. Google-Account) und sich daher überall mit denselben Credentials und über dieselbe Login-Maske und Multi-factor authentication (MFA) authentifizieren können.
-|**Alternativen**
+|**Voraussetzungen**
 a|
-**Voraussetzungen**
-
 __Allgemein__
 
 Das System "Benutzerverwaltung" gibt bereits die folgenden Rahmenbedingungen vor:
@@ -170,9 +165,9 @@ __ADR-SEC-10__
 * OAuth 2.0 & OpenID Connect wird unterstützt
 * Multi-factor authentication (MFA) wird unterstützt
 
-Nachfolgend werden die kompatiblen Alternativen gelistet.
-
-**A1) Kein Social Identity Provider** +
+|**Alternative A1**
+a|
+**Kein Social Identity Provider** +
 PhysioConnect bietet keine Authentifizierung via Social Identity Provider an.
 
 __Vorteile:__
@@ -188,7 +183,9 @@ __Nachteile:__
 * Eigene Login-Maske und Multi-factor authentication (MFA)-Prozess für alle Benutzer
 * Benutzer müssen sich mit dedizierten Credentials (Username & Passwort) anmelden
 
-**A2) Google** +
+|**Alternative A2**
+a|
+**Google** +
 Authentifizierung über Google.
 
 __Vorteile:__
@@ -199,7 +196,9 @@ Beispielsweise ist hierbei der Grossteil aller Android User inkludiert.
 __Nachteile:__ +
 -
 
-**A3) Microsoft** +
+|**Alternative A3**
+a|
+**Microsoft** +
 Authentifizierung über Microsoft.
 
 __Vorteile:__
@@ -210,7 +209,9 @@ Beispielsweise ist hierbei der Grossteil aller Windows User inkludiert.
 __Nachteile:__ +
 -
 
-**A4) Apple** +
+|**Alternative A4**
+a|
+**Apple** +
 Authentifizierung über Apple.
 
 __Vorteile:__
@@ -236,10 +237,10 @@ Zudem kann auf diese Weise eine redundante Datenhaltung von Benutzeraccounts ver
 
 **Hinweis:** +
 Diese Entscheidung führt zu entsprechenden Änderungen in PhysioConnect (Webapplikation, API) sowie dem System "Benutzerverwaltung" (Konfiguration der Social Identity Providers in Keycloak).
-|**Follow-up Entscheidungen**|-
+
 |===
 
-=== Frontend Architektur
+=== Architektur: Frontend
 
 ==== Plattformen
 
@@ -251,10 +252,9 @@ Diese Entscheidung führt zu entsprechenden Änderungen in PhysioConnect (Webapp
 |**Kontext**
 |Physiotherapeuten und Patienten verwenden das PhysioConnect-Frontend hauptsächlich für die Planung und Auswertung von Therapien.
 
-|**Alternativen**
+|**Alternative A1**
 a|
-
-**A1) Browser (exklusive Mobile-Browser)**
+**Browser (exklusive Mobile-Browser)**
 
 __Vorteile:__
 
@@ -265,7 +265,9 @@ __Nachteile:__
 
 * Erhöhter Implementationsaufwand und Testaufwand durch Unterstützung verschiedener Browser
 
-**A2) Mobile Browser**
+|**Alternative A2**
+a|
+**Mobile Browser**
 
 __Vorteile:__
 
@@ -278,7 +280,9 @@ __Nachteile:__
 * Erhöhter Testaufwand
 * Mehr und schwerer zu reproduzierende Fehler durch zusätzliche / veraltete Betriebssysteme und mobile Browser
 
-**A3) Android App**
+|**Alternative A3**
+a|
+**Android App**
 
 __Vorteile (im Vergleich zu A2):__
 
@@ -290,7 +294,9 @@ __Nachteile:__
 
 * Es muss eine Implementationsart verwendet werden, mit welcher eine App aus der gleichen Codebase wie die Webapplikation generiert werden kann.
 
-**A4) iOS App**
+|**Alternative A4**
+a|
+**iOS App**
 
 __Vorteile (im Vergleich zu A2):__
 
@@ -302,7 +308,9 @@ __Nachteile:__
 
 * Es muss eine Implementationsart verwendet werden, mit welcher eine App aus der gleichen Codebase wie die Webapplikation generiert werden kann.
 
-**A5) Desktop-Applikation**
+|**Alternative A5**
+a|
+**Desktop-Applikation**
 
 __Vorteile:__
 
@@ -321,6 +329,7 @@ Muss:
 * A2) Mobile Browser
 
 Kann:
+
 * A3) Android App
 * A4) iOS App
 
@@ -349,10 +358,9 @@ Welcher Architekturstil soll für das PhysioConnect-Frontend verwendet werden?
 |**Kontext**
 |Physiotherapeuten und Patienten verwenden das PhysioConnect-Frontend hauptsächlich für die Planung und Auswertung von Therapien. Mobile Browser müssen unterstützt werden.
 
-|**Alternativen**
+|**Alternative A1**
 a|
-
-**A1) Single Page Application (SPA)**
+**Single Page Application (SPA)**
 
 __Vorteile:__
 
@@ -366,7 +374,9 @@ __Nachteile:__
 * Schlechte Suchmaschinenoptimierung (SEO)
 * Ausführung von Funktionalitäten direkt im Browser des Clients kann zu Sicherheitslücken führen
 
-**A2) Server-side Rendering (SSR)**
+|**Alternative A2**
+a|
+**Server-side Rendering (SSR)**
 
 __Vorteile:__
 
@@ -378,7 +388,9 @@ __Nachteile:__
 * Relativ tiefe Responsiveness
 * Alle für eine optimale Rechenleistung erforderlichen Systemressourcen müssen von uns zur Verfügung gestellt werden
 
-**A3) Static Side Generation (SSG)**
+|**Alternative A3**
+a|
+**Static Side Generation (SSG)**
 
 __Vorteile:__
 
@@ -416,10 +428,9 @@ Mit welcher Technologie soll die Single Page Application umgesetzt werden?
 |**Kontext**
 |Physiotherapeuten und Patienten verwenden das PhysioConnect-Frontend hauptsächlich für die Planung und Auswertung von Therapien. Mobile Browser müssen unterstützt werden. Es wurde entschieden, dass eine Single Page Application (SPA) verwendet werden soll.
 
-|**Alternativen**
+|**Alternative A1**
 a|
-
-**A1) Flutter**
+**Flutter**
 
 __Vorteile:__
 
@@ -430,7 +441,9 @@ __Nachteile:__
 * Kaum Know-How zu Dart Programming Language vorhanden
 * Support für Webapplikationen ist schlechter (verglichen mit den anderen Alternativen)
 
-**A2) React**
+|**Alternative A2**
+a|
+**React**
 
 __Vorteile:__
 
@@ -442,7 +455,9 @@ __Nachteile:__
 
 * Relativ steile Lernkurve
 
-**A3) Angular**
+|**Alternative A3**
+a|
+**Angular**
 
 __Vorteile:__
 
@@ -454,7 +469,9 @@ __Nachteile:__
 * Steile Lernkurve
 * Tiefe Zufriedenheit in der https://2021.stateofjs.com/en-US/libraries/front-end-frameworks/[State of JS-Umfrage (2021)]
 
-**A4) Vue.js**
+|**Alternative A4**
+a|
+**Vue.js**
 
 __Vorteile:__
 
@@ -494,10 +511,9 @@ Sollen Micro Frontends verwendet werden?
 |**Kontext**
 |Es wurde entschieden, dass bei geringem Umsetzungsaufwand eine App für iOS und Android realisiert werden sollte. Zusätzlich wurde bestimmt, dass React zum Umsetzen der Webapplikation verwendet wird und dass nur eine gemeinsame Codebase existieren darf.
 
-|**Alternativen**
+|**Alternative A1**
 a|
-
-**A1) Keine App**
+**Keine App**
 
 __Vorteile:__
 
@@ -509,7 +525,9 @@ __Nachteile:__
 * Gerätespezifische Funktionen werden schlechter unterstützt
 * Seite normalerweise nicht im Fullscreen
 
-**A2) Progressive Web App (PWA)**
+|**Alternative A2**
+a|
+**Progressive Web App (PWA)**
 
 __Vorteile:__
 
@@ -524,7 +542,9 @@ __Nachteile:__
 * Features nicht so ausgereift wie bei Native Apps
 * iOS Safari bietet weniger Funktionalitäten an als Android
 
-**A3) React Native**
+|**Alternative A3**
+a|
+**React Native**
 
 __Vorteile:__
 
@@ -537,7 +557,9 @@ __Nachteile:__
 * Unterstützung von nativen Funktionalitäten führt zu erhöhtem Testaufwand
 * Es muss bestimmt werden, welche Betriebssysteme unterstützt werden. Diese sollten auch aktiv getestet werden.
 
-**A4) Cordova**
+|**Alternative A4**
+a|
+**Cordova**
 
 __Vorteile:__
 
@@ -554,7 +576,6 @@ __Nachteile:__
 |**Begründung**
 a|Der Entscheid fiel auf die Verwendung einer Progressive Web App, da dies einen relativ geringen Umsetzungsaufwand benötigt und gleichzeitig alle Usabilty Requirements erfüllt. Der Vorteil von Native Apps kann mit dem Physio Connect-Vorteil kaum ausgenutzt werden, da hauptsächlich die Kamera verwendet wird und ansonsten nur begrenzt Offline Content benötigt wird. Der Usability-Vorteil, eine PWA umzusetzen, übertrifft den geringeren Implementationsaufwand für die Alternative __A1) Keine App__.
 
-|**Follow-up Entscheidungen**|
 |===
 
 ==== Micro Frontends
@@ -567,10 +588,9 @@ a|Der Entscheid fiel auf die Verwendung einer Progressive Web App, da dies einen
 |**Kontext**
 |Es wurde entschieden, das PhysioConnect-Frontend mit einer Single Page Application (SPA) umzusetzen. Nun soll entschieden werden, ob für die Umsetzung zusätzlich Micro Frontends verwendet werden sollen.
 
-|**Alternativen**
+|**Alternative A1**
 a|
-
-**A1) Micro Frontends**
+**Micro Frontends**
 
 __Vorteile:__
 
@@ -584,7 +604,9 @@ __Nachteile:__
 * Erhöhte Komplexität für die Umsetzung
 * Frontends müssen miteinander kompatibel gehalten werden
 
-**A2) Keine Micro Frontends**
+|**Alternative A2**
+a|
+**Keine Micro Frontends**
 
 Umkehrung der Alternative __A1) Micro Frontends__.
 
@@ -593,10 +615,9 @@ Umkehrung der Alternative __A1) Micro Frontends__.
 a|
 Die Vorteile von Micro Frontends können in Physio Connect kaum verwendet werden. Um die Komplexität gering zu halten, fiel der schlussendliche Entscheid gegen die Verwendung von Micro Frontends.
 
-|**Follow-up Entscheidungen**|
 |===
 
-=== Backend Architektur
+=== Architektur: Backend
 
 ==== Architekturstil
 
@@ -617,9 +638,9 @@ Das Backend von PhysioConnect besteht grundsätzlich aus den folgenden High Leve
 * https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer[Anti-corruption layers] für die Kommunikation mit den Systemen "Übungskatalog" und "Benutzerverwaltung"
 
 Diese Entscheidung befasst sich damit, welche Architekturstile für die obigen Komponenten hinsichtlich deren optimalen Kommunikation, Skalier- und Deploybarkeit eingesetzt werden können.
-|**Alternativen**
+|**Alternative A1**
 a|
-**A1) Monolith**
+**Monolith**
 
 __Vorteile:__
 
@@ -635,7 +656,9 @@ Es kann schwierig sein, einen Monolithen horizontal zu skalieren, da die gesamte
 * Hohe Kopplung: +
 Die internen Komponenten eines Monolithen sind meist eng miteinander gekoppelt, was die Änderung, Erweiterung und / oder Wiederverwendung einzelner Komponenten erschwert
 
-**A2) Microservices**
+|**Alternative A2**
+a|
+**Microservices**
 
 __Vorteile:__
 
@@ -654,6 +677,11 @@ Aufgrund der klaren Abgrenzung und losen Kopplung zu anderen Services lassen sic
 * Parallele Entwicklung: +
 Aufgrund der klaren funktionalen Abgrenzung und Unabhängigkeit eines Microservices ist es möglich, pendente Entwicklungsarbeiten an mehreren Microservices zu parallelisieren (z.B. indem unterschiedliche Entwicklungsteams an unterschiedlichen Services arbeiten)
 
+|**Alternative A2** +
+(Platzbedingte Fortsetzung)
+a|
+**Microservices**
+
 __Nachteile:__
 
 * Komplexität: +
@@ -661,7 +689,9 @@ Der Aufbau und die Pflege eines Systems, welches aus vielen kleinen, unabhängig
 * Kommunikation zwischen den Services: +
 Die Kommunikation zwischen einzelnen Microservices ist komplexer als die Kommunikation innerhalb eines Monoliths. Zudem haben externe Einflüsse wie beispielsweise die Netzwerkverbindung (Latenzzeit, Bandbreite, Auslastung, Durchsatz) einen Einfluss auf die Qualität und Geschwindigkeit der Kommunikation
 
-**A3) Self-contained systems (SCS)**
+|**Alternative A3**
+a|
+**Self-contained systems (SCS)**
 
 __Vorteile:__
 
@@ -679,7 +709,9 @@ Es kann schwierig sein, ein SCS horizontal zu skalieren, da das System jeweils a
 * Begrenzte Wiederverwendbarkeit: +
 SCS sind unabhängige Funktionseinheiten, besitzen jedoch meist einen eigenen Stack aus Frontend, Businesslogik und Persistenz. Daher ist die funktionale Wiederverwendung eines SCS eingeschränkter als bei einzelnen Microservices. Mittels dem Einsatz spezifischer Kommunikationsmechanismen (z.B. API, Event-driven) ist es jedoch möglich, Funktionalitäten eines SCS zur Wiederverwendung bereitzustellen.
 
-**A4) Lambda architecture**
+|**Alternative A4**
+a|
+**Lambda architecture**
 
 __Vorteile:__
 
@@ -702,7 +734,7 @@ Die Implementierung einer Lambda-Architektur auf Basis von Open Source-Technolog
 |**Entscheidung**|A2) Microservices
 |**Begründung**|Der Einsatz von Microservices deckt die erhöhte Priorität betreffend den Punkten Wiederverwendbarkeit, Modifizierbarkeit / Erweiterbarkeit und Skalierbarkeit optimal ab. +
 Funktionalitäten können optimal auf einzelne Services aufgeteilt und Letztere mit möglichst loser Kopplung entwickelt, betrieben und gewartet werden. Des Weiteren können einzelne Services je nach anfallender Last dynamisch / automatisiert skaliert werden.
-|**Follow-up Entscheidungen**|-
+
 |===
 
 [cols="2,6"]
@@ -712,9 +744,9 @@ Funktionalitäten können optimal auf einzelne Services aufgeteilt und Letztere 
 |**Kontext**
 a|Diese Entscheidung befasst sich damit, welcher Architekturstil grundlegend für die interne Struktur (Mikroarchitektur) der einzelnen Backend-Komponenten eingesetzt werden soll. +
 Hierbei handelt es sich jedoch nur um den grundlegend zu verwendenden Stil - es ist durchaus legitim und plausibel, dass es aus Sicht einer oder mehrerer Komponenten sinnvoller ist, eine andere interne Struktur zu wählen. Der Einsatz eines komponentenspezifischen Stils sollte jedoch in einem dedizierten ADR konkret begründet werden.
-|**Alternativen**
+|**Alternative A1**
 a|
-**A1) Layered architecture**
+**Layered architecture**
 
 __Vorteile:__
 
@@ -733,7 +765,9 @@ Starre Abhängigkeiten zwischen den einzelnen Layer können zu einer Gesamtstruk
 * Hohe Kopplung durch https://devopedia.org/leaky-abstractions[leaky abstraction]: +
 Wenn ein Layer seine Implementationsdetails nicht vollständig abstrahiert und abhängige Layer nicht korrekt ohne Kenntnis dieser Details kommunizieren können, wird von einer __leaky abstraction__ gesprochen. Dieser Effekt verletzt die Seperation of Concerns und erhöht somit die Kopplung zwischen den betroffenen Layers.
 
-**A2) Hexagonal architecture (Ports & Adapters)**
+|**Alternative A2**
+a|
+**Hexagonal architecture (Ports & Adapters)**
 
 __Vorteile:__
 
@@ -752,7 +786,9 @@ __Nachteile:__
 * Komplexität: +
 Aufgrund der Trennung von Businesslogik und externen Abhängigkeiten und der diesbezüglich eingesetzten Indirektionen / Abstraktionen (z.B. durch den Einsatz von Interfaces) kann dieser Stil schwierig zu verstehen und daher komplexer und aufwändiger zu implementieren sein - vor allem für Entwickler, welche noch wenig / keine Erfahrung mit dem Stil besitzen
 
-**A3) Clean / Onion architecture**
+|**Alternative A3**
+a|
+**Clean / Onion architecture**
 
 __Vorteile:__
 
@@ -770,6 +806,11 @@ Aus Sicht eines inneren Layers (z.B. Domain) können die äusseren Layer (z.B. A
 Durch die lose und gerichtete Kopplung (äussere Schichten "zeigen" nach innen, nie umgekehrt) lassen sich äussere Layer einfach und ohne grossen Mehraufwand modifizieren. Änderungen am Domain Layer (der "Kern" des Domänenmodells) hingegen dürfen zu abhängigen Anpassungen in den äusseren Layern führen, da sie alle (direkt oder indirekt) von der Domäne abhängig sind. +
 Die Erweiterbarkeit ist ebenfalls gegeben, da neue Funktionen durch die Modifizierung der Businesslogik eines Layers hinzugefügt werden können.
 
+|**Alternative A3** +
+(Platzbedingte Fortsetzung)
+a|
+**Clean / Onion architecture**
+
 __Nachteile:__
 
 * Komplexität: +
@@ -779,8 +820,8 @@ Die Verwendung von Layer-Abstraktionen und vordefinierten Mappings zwischen den 
 
 |**Entscheidung**|A2) Hexagonal architecture (Ports & Adapters)
 |**Begründung**|Die Verwendung einer hexagonalen Mikroarchitektur (Ports & Adapters) deckt die erhöhte Priorität betreffend Modifizierbarkeit / Erweiterbarkeit optimal ab. +
-Die Businesslogik wird mit definierten Abstraktionen (Ports) sauber von allen externen Abhängigkeiten (Adapters) separiert, was zu einer losen Kopplung führt. Für die innere Struktur der Businesslogik setzen wir nicht explizit auf Clean / Onion Architecture, da dieser Ansatz für unser Domänenmodell zu komplex wäre und daher over-engineered wäre.
-|**Follow-up Entscheidungen**|-
+Die Businesslogik wird mit definierten Abstraktionen (Ports) sauber von allen externen Abhängigkeiten (Adapters) separiert, was zu einer losen Kopplung führt. Für die innere Struktur der Businesslogik setzen wir nicht explizit auf Clean / Onion Architecture, da dieser Ansatz für unser Domänenmodell zu komplex und daher over-engineered wäre.
+
 |===
 
 ==== Persistenz
@@ -791,9 +832,9 @@ Die Businesslogik wird mit definierten Abstraktionen (Ports) sauber von allen ex
 |**Anliegen (Concern)**|Werden mehrere (unterschiedliche) Datenbanken für PhysioConnect eingesetzt?
 |**Kontext**
 a|PhysioConnect persistiert unterschiedlichste Daten zur Laufzeit. Beispielsweise werden einerseits stetig aufgezeichnete Messdaten des Patienten abgelegt, andererseits aber auch allgemeine Therapiedaten. Im Rahmen dieser Entscheidung soll analysiert werden, ob die Verwendung mehrerer (unterschiedlicher) Datenbanken für die Persistierung der Daten eingesetzt werden sollen.
-|**Alternativen**
+|**Alternative A1**
 a|
-**A1) Alle Daten in derselben Datenbank**
+**Alle Daten in derselben Datenbank**
 
 __Vorteile:__
 
@@ -806,7 +847,9 @@ __Nachteile:__
 
 * Vor allem bei unterschiedlichen Speicherintervallen und verschiedenen, grossen Datenmengen kann die Datenbank sehr schnell an Komplexität gewinnen und an Performance verlieren. Beispielsweise könnten die Patienten-Messdaten im Sekundentakt eingehen und abgelegt werden, während die allgemeinen Therapiedaten vielleicht nur monatlich einmal aktualisiert werden.
 
-**A2) Separate Datenbank für die Patienten-Messdaten**
+|**Alternative A2**
+a|
+**Separate Datenbank für die Patienten-Messdaten**
 
 __Vorteile:__
 
@@ -834,9 +877,9 @@ Welche Datenbankmodelle werden für PhysioConnect eingesetzt?
 |**Anliegen (Concern)**|Welche Datenbankmodelle werden für PhysioConnect eingesetzt?
 |**Kontext**
 a|PhysioConnect persistiert unterschiedlichste Daten zur Laufzeit. Beispielsweise werden einerseits stetig aufgezeichnete Messdaten des Patienten abgelegt, andererseits aber auch allgemeine Therapiedaten. Im Rahmen dieser Entscheidung soll analysiert werden, welche Datenbankmodelle für die unterschiedlichen Datenarten und Anwendungsfälle von PhysioConnect passend sein könnten.
-|**Alternativen**
+|**Alternative A1**
 a|
-**A1) Relationale Datenbank**
+**Relationale Datenbank**
 
 __Verwendungszwecke:__
 
@@ -856,6 +899,11 @@ Relationale Datenbanken sind in der Lage, grosse Datenmengen zu verarbeiten, und
 * Sicherheit: +
 Relationale Datenbanken bieten Sicherheitsfunktionen wie Benutzerauthentifizierung, Datenverschlüsselung und Zugriffskontrolle.
 
+|**Alternative A1** +
+(Platzbedingte Fortsetzung)
+a|
+**Relationale Datenbank**
+
 __Nachteile:__
 
 * Komplexität: +
@@ -867,7 +915,9 @@ Relationale Datenbanken sind nicht so flexibel wie einige NoSQL-Datenbanken, was
 * Kosten: +
 Relationale Datenbanken können im Vergleich zu einigen NoSQL-Datenbanken teurer in der Einrichtung und Wartung sein.
 
-**A2) Objektorientierte Datenbank**
+|**Alternative A2**
+a|
+**Objektorientierte Datenbank**
 
 __Verwendungszwecke:__
 
@@ -887,6 +937,11 @@ Objektorientierte Datenbanken sind in der Lage, grosse Datenmengen zu verarbeite
 * Integration: +
 Objektorientierte Datenbanken lassen sich leicht in objektorientierte Programmiersprachen wie Java oder C++ integrieren.
 
+|**Alternative A2** +
+(Platzbedingte Fortsetzung)
+a|
+**Objektorientierte Datenbank**
+
 __Nachteile:__
 
 * Komplexität: +
@@ -898,7 +953,9 @@ Objektorientierte Datenbanken sind möglicherweise nicht mit allen Anwendungen u
 * Kosten: +
 Die Einrichtung und Wartung objektorientierter Datenbanken kann im Vergleich zu einigen anderen Datenbankarten teurer sein.
 
-**A3) Dokumentdatenbank**
+|**Alternative A3**
+a|
+**Dokumentdatenbank**
 
 __Verwendungszwecke:__
 
@@ -918,6 +975,11 @@ Dokumentdatenbanken sind im Allgemeinen performanter und effizienter als relatio
 * Benutzerfreundlichkeit: +
 Dokumentdatenbanken sind im Vergleich zu relationalen Datenbanken oft einfacher einzurichten und zu pflegen - insbesondere für Entwickler, die mit dem JSON-Datenformat vertraut sind.
 
+|**Alternative A3** +
+(Platzbedingte Fortsetzung)
+a|
+**Dokumentdatenbank**
+
 __Nachteile:__
 
 * Datenmodellierung: +
@@ -929,7 +991,9 @@ Dokumentdatenbanken sind möglicherweise nicht mit allen Anwendungen und Program
 * Kosten: +
 Die Einrichtung und Wartung von Dokumentdatenbanken kann im Vergleich zu anderen Datenbankmodellen teurer sein.
 
-**A4) Graphdatenbank**
+|**Alternative A4**
+a|
+**Graphdatenbank**
 
 __Verwendungszwecke:__
 
@@ -949,6 +1013,11 @@ Graphdatenbanken können grosse Datenmengen verarbeiten und lassen sich bei wach
 * Verarbeitung von Echtzeitdaten: +
 Graphdatenbanken eignen sich gut für die Verarbeitung von Echtzeitdaten und können Daten schnell aktualisieren und abfragen, wenn sie sich ändern.
 
+|**Alternative A4** +
+(Platzbedingte Fortsetzung)
+a|
+**Graphdatenbank**
+
 __Nachteile:__
 
 * Komplexität: +
@@ -960,7 +1029,9 @@ Graphdatenbanken sind möglicherweise nicht mit allen Anwendungen und Programmie
 * Kosten: +
 Die Einrichtung und Wartung von Graphdatenbanken kann im Vergleich zu anderen Datenbankmodellen teurer sein.
 
-**A5) Zeitreihendatenbank**
+|**Alternative A5**
+a|
+**Zeitreihendatenbank**
 
 __Verwendungszwecke:__
 
@@ -979,6 +1050,11 @@ Zeitreihendatenbanken sind für schnelle Schreibvorgänge und effiziente Abfrage
 Zeitreihendatenbanken können grosse Datenmengen verarbeiten und lassen sich leicht skalieren, wenn die Grösse der Datenbank zunimmt.
 * Datenkompression: +
 Zeitreihendatenbanken können Datenkomprimierungstechniken verwenden, um die Grösse der Datenbank zu verringern und die Performance zu verbessern.
+
+|**Alternative A5** +
+(Platzbedingte Fortsetzung)
+a|
+**Zeitreihendatenbank**
 
 __Nachteile:__
 
@@ -1002,7 +1078,7 @@ Für die Patienten-Messdaten
 
 |**Begründung**|Für die Ablage aller Daten, welche nicht zu den Patienten-Messdaten gehören, sollte eine herkömmliche relationale Datenbank allen Anforderungen gerecht werden. Alternativ könnte eine Dokumentdatenbank ebenfalls passend eingesetzt werden. +
 Für die Persistierung der Patienten-Messdaten sollte hingegen primär auf eine Dokumentdatenbank zurückgegriffen werden, da sie auf die Ablage halb- oder unstrukturierter Daten spezialisiert sind und eine hohe Performance bezüglich Schreib- und Lesevorgängen vorweisen können.
-|**Follow-up Entscheidungen**|-
+
 |===
 
 ==== Messaging
@@ -1013,10 +1089,9 @@ Für die Persistierung der Patienten-Messdaten sollte hingegen primär auf eine 
 |**Anliegen (Concern)**|Wie wird das Backend-Messaging innerhalb von Physio Connect umgesetzt?
 |**Kontext**
 |Sowohl Requests von Physiotherapeuten als auch von Patienten werden vom PhysioConnect-Backend gehandhabt. Zu Peak-Zeiten kann es sich dabei um eine hohe Anzahl von Requests bzw. eine hohe eingehende Datenmenge handeln. Da das PhysioConnect-Backend gemäss Architekturentscheid __ADR-BAC-10__ aus mehreren Microservices bestehen wird, soll überprüft werden, ob eine Messaging-Komponente eingesetzt werden soll und falls ja, welche.
-|**Alternativen**
+|**Alternative A1**
 a|
-
-**A1) HTTP(S)**
+**HTTP(S)**
 
 __Vorteile:__
 
@@ -1028,7 +1103,9 @@ __Nachteile:__
 
 * Weniger effizient als einige Alternativen
 
-**A2) Message Queues**
+|**Alternative A2**
+a|
+**Message Queues**
 
 (RabbitMQ, Kafka)
 
@@ -1046,7 +1123,9 @@ __Nachteile:__
 * Erhöht Komplexität der Lösung
 * Know-How kann sehr punktuell sein
 
-**A3) gRPC**
+|**Alternative A3**
+a|
+**gRPC**
 
 __Vorteile:__
 
@@ -1070,7 +1149,6 @@ a|
 
 Es soll jedoch bei Design und Implementation darauf geachtet werden, dass die Möglichkeit der zukünftig gezielten Verwendung von gRPC oder einer Message Queue erhalten bleibt.
 
-|**Follow-up Entscheidungen**|-
 |===
 
 === Hosting
@@ -1080,10 +1158,9 @@ Es soll jedoch bei Design und Implementation darauf geachtet werden, dass die M�
 |**ID**|ADR-HST-10
 |**Anliegen (Concern)**|Wie wird Physio Connect gehosted?
 |**Kontext**|Physio Connect ist eine Unterstützungs- und Integrationssoftware und zielt nicht darauf ab, kundenseitig bereits eingesetzte Systeme und Prozesse abzulösen, sondern nimmt eine komplementäre Rolle ein. Deshalb stellt sich die Frage, welches Hosting-Modell den Kunden das ideale Verhältnis zwischen (Integrations- / Betriebs-)Aufwand, Komplexität, Effizienz und Kompatibilität zur Verfügung stellt.
-|**Alternativen**
+|**Alternative A1**
 a|
-
-**A1) Hosting bei etabliertem Cloud-Provider**
+**Hosting bei etabliertem Cloud-Provider**
 
 (Microsoft, Amazon, Google, IBM)
 
@@ -1101,6 +1178,11 @@ Cloud-Provider bieten häufig Hochverfügbarkeitsoptionen an, z.B. auch über me
 Alle aktuellen Cloud-Provider bieten die Möglichkeit, die benötigten Infrastrukturressourcen automatisiert via Quellcode zu erstellen, modifizieren und - falls nötig - wieder abzubauen. Die automatisierte Verwaltung der Infrastruktur lässt sich zudem nahtlos in eine CI/CD-Pipeline integrieren, was zu einem grundsätzlich agilen Software Development Lifecycle beiträgt. +
 Bei einem on-premise Hosting ist die Möglichkeit von __Infrastructure as Code__ in den meisten Fällen nicht gegeben.
 
+|**Alternative A1** +
+(Platzbedingte Fortsetzung)
+a|
+**Hosting bei etabliertem Cloud-Provider**
+
 __Nachteile:__
 
 * Potenzielle Sicherheitsbedenken: +
@@ -1109,9 +1191,11 @@ Ein ebenfalls zu berücksichtigender Aspekt ist Datenschutz / Privacy - beispiel
 * Begrenzte Kontrolle: +
 Das Hosting der Anwendung bei einem Cloud-Provider bedeutet gleichzeitig auch, dass man von der Infrastruktur und den Serviceangeboten des Providers abhängig ist. Dies kann ein Trade-Off für den Komfort sein, keine eigenen Server(-Farmen) verwalten zu müssen.
 * Interne Vorlagen: +
-Einige Gesundheitsinstitute besitzen (nicht gesetzlichen) Vorlagen, dass Daten in der internen Infrastruktur abgelegt werden müssen. Im Falle einer solchen Vorlage ist das Hosting in der Cloud nicht möglich.
+Einige Gesundheitsinstitute besitzen (nicht-gesetzliche) Vorlagen, dass Daten in der internen Infrastruktur abgelegt werden müssen. Im Falle einer solchen Vorlage ist das Hosting in der Cloud nicht möglich.
 
-**A2) On-premise beim Kunden**
+|**Alternative A2**
+a|
+**On-premise beim Kunden**
 
 __Vorteile:__
 
@@ -1152,10 +1236,9 @@ Hosten wir eine einzige Physio Connect Instanz oder eine pro Kunde?
 |**ID**|ADR-HST-11
 |**Anliegen (Concern)**|Hosten wir eine einzelne Physio Connect-Instanz oder eine Instanz pro Kunde? 
 |**Kontext**|Gemäss __ADR-HST-10__ hosten wir PhysioConnect bei einem etablierten Cloud-Provider (Microsoft, Amazon, Google, IBM). Zu entscheiden gilt nun noch, ob eine einzelne, globale Instanz oder jeweils eine Instanz pro Kunde deployed und betrieben werden soll.
-|**Alternativen**
+|**Alternative A1**
 a|
-
-**A1) Einzelne Instanz**
+**Einzelne Instanz**
 
 __Vorteile:__
 
@@ -1173,7 +1256,9 @@ __Nachteile:__
 * Falls das System abstürzen sollte, ist es für alle Kunden nicht verfügbar
 * Keine direkte Abrechnung bezüglich der Infrastrukturkosten möglich
 
-**A2) Eine Instanz pro Kunde**
+|**Alternative A2**
+a|
+**Eine Instanz pro Kunde**
 
 __Vorteile:__
 
@@ -1199,5 +1284,4 @@ Da die Alternative __A2) On-premise beim Kunden__ des Entscheids __ADR-HST-10__ 
 a|
 Für den Verkauf von PhysioConnect sind tiefe Einführungskosten essenziell. Zusätzlich können wir uns als Startup keinen Support für eine Vielzahl von Versionen leisten. Falls einzelne Instanzen für Kunden gepflegt werden müssen, sollen diese auf der gleichen Version wie unsere "Hauptinstanz" gehalten werden.
 
-|**Follow-up Entscheidungen**|-
 |===
