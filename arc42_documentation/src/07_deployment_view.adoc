@@ -42,6 +42,21 @@ See https://docs.arc42.org/section-7/[Deployment View] in the arc42 documentatio
 
 === Infrastructure Level 1
 
+
+plantuml::structurizr_diagrams/generated/structurizr-deployment-singulaere-physioconnect.puml[format=svg]
+
+plantuml::structurizr_diagrams/generated/structurizr-deployment-sicht-patientenapp.puml[format=svg]
+
+[.landscape]
+<<<
+
+plantuml::structurizr_diagrams/generated/structurizr-deployment-sicht-therapiemanager.puml[format=svg]
+
+plantuml::structurizr_diagrams/generated/structurizr-deployment-mehrere-physioconnect-komplett.puml[format=svg]
+
+[.portrait]
+<<<
+
 [role="arc42help"]
 ****
 Describe (usually in a combination of diagrams, tables, and text):

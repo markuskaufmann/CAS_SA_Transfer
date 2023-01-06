@@ -94,6 +94,61 @@ workspace "Physio integration layer project" {
             patientenApp = softwareSystem "Mobile Patientenapp"
             uebungsKatalog = softwareSystem "Übungskatalog"
             benutzerVerwaltung = softwareSystem "Benutzerverwaltung" "Authentifizierung und Autorisierung"
+        
+            # Because Structurizr doesn't support custom relationships for deployement diagrams, containers
+            # had to be duplicated to showcase a deployment with multiple physio connect systems
+            physioConnectSpital = softwareSystem "Physio Connect Spital" {
+                group "Frontend" {
+                    serverSideTherapieManagerSpital = container "Server Side Therapie Manager" {
+                        description "Liefert auf Anfrage die Single Page Application aus"
+                        technology "React"
+                    }
+                    singlePageTherapieManagerSpital = container "Therapien Manager SPA" {
+                        description "Single Page Applikation zum Verwalten von Therapiedaten. Kann von mobilen Devices als PWA verwendet werden."
+                        technology "Single Page Application, Progressive Web App"
+                    }
+                }
+
+                ingressSpital = container "Ingress" "Reverse Proxy und Load Balancer" {
+                    technology "Ingress"
+                }
+
+                group "Planung" {
+                    planungsServiceSpital = container "Therapie Planungs Service" {
+                        description "Handhabt alle Requests für die Verwaltung von Gesamttherapien. Validiert Requests, beinhaltet Applikations- und Domänenlogik für die Planungsdaten"
+                        technology "Spring Boot"
+                    }
+                    planungsDatenbankSpital = container "Therapie Planungs Datenbank" {
+                        tags "Database"
+                        technology "Relationale oder Dokumentdatenbank"
+                        description "Persistiert alle Planungsdaten. Wird evt. mit der Ausführungs Datenbank fusioniert."
+                    }
+                }
+
+                group "Ausführung" {
+                    ausfuehrungsServiceSpital = container "Ausführungs Service" {
+                        description "Handhabt alle Requests, welche von Patienten während der Ausführung der Therapie-Sessions abgesetzt werden. Validiert Requests, beinhaltet Applikations und Domänenlogik für die Ausführungsdaten."
+                        technology "Spring Boot"
+                    }
+                    ausfuehrungsDatenbankSpital = container "Ausführungs Datenbank" {
+                        tags "Database"
+                        technology "Dokumentdatenbank"
+                        description "Beinhaltet Daten der ausgeführten Therapie-Sessions: Unter anderem Messdaten, Rückmeldungen und effektive Sets und Reps."
+                    }
+                }
+
+                group "Wrappers" {
+                    uebungsKatalogWrapperSpital = container "Übungskatalog Wrapper" {
+                        description "Anti-Corruption Layer (ACL) für die Kommunikation mit dem Übungskatalog"
+                        technology "Spring Boot"
+                    }
+
+                    benutzerVerwaltungWrapperSpital = container "Benutzerverwaltung Wrapper" {
+                        description "Anti-Corruption Layer (ACL) für die Kommunikation mit der Benutzerverwaltung"
+                        technology "Spring Boot"
+                    }
+                }
+            }
         }
 
 
@@ -167,15 +222,41 @@ workspace "Physio integration layer project" {
         ausfuehrungsPersistenzAdapter -> ausfuehrungsApplikationsLogik "Implementiert Adapter für die Port Interfaces der Applikationslogik"
         ausfuehrungsApplikationsLogik -> ausfuehrungsDomaenenLogik "Implementier Adapter für die Port Interfaces der Domänenlogik"
     
+        # Relationships for duplicated Spital containers
+        patientenApp -> ingressSpital "Sendet Messdaten\nSendet Requests für Informationen zu Therapien und Übungen"
+        singlePageTherapieManagerSpital -> ingressSpital  "Sendet Requests zum Verwalten der Gesamttherapien, Übungen und Benutzer"
+
+        ingressSpital -> planungsServiceSpital "Leitet Requests weiter für Gesamttherapien"
+        ingressSpital -> benutzerVerwaltungWrapperSpital "Leitet Requests weiter für die Benutzerverwaltung"
+        ingressSpital -> uebungsKatalogWrapperSpital "Leitet Requests weiter für den Übungskatalog"
+        ingressSpital -> ausfuehrungsServiceSpital "Leitet ausführungsspezifische Requests weiter"
+
+        ausfuehrungsServiceSpital -> ausfuehrungsDatenbankSpital "Persistiert Messdaten und effektive Ausführungsinformationen"
+
+        planungsServiceSpital -> benutzerVerwaltungWrapperSpital "Verwendet Benutzerinformationen von"
+        planungsServiceSpital -> uebungsKatalogWrapperSpital "Verwendet Übungsinformationen von"
+        planungsServiceSpital -> planungsDatenbankSpital "Persistiert Gesamttherapien, Therapie-Sessions, Therapie Übungen und die dazugehörigen Detailinformationen"
+        planungsServiceSpital -> ausfuehrungsServiceSpital "Kombiniert Planugnsdaten mit Ausführungsdaten von"
+
+        benutzerVerwaltungWrapperSpital -> benutzerVerwaltung "Verwaltet Benutzerdaten"
+        uebungsKatalogWrapperSpital -> uebungsKatalog "Verwaltet Übungsdefinitionen"
+
+        serverSideTherapieManagerSpital -> singlePageTherapieManagerSpital "Liefert SPA an den Client aus"
             
         deploymentEnvironment "Cloud Deployment singuläre Physio Connect Instanz" {
-            deploymentNode "Physio Infrastruktur" {
-                deploymentNode "Physiotherapeut Desktop / Laptop" {
-                    kundenBrowser = containerInstance singlePageTherapieManager 
+            deploymentNode "Physio Infrastruktur Praxis" {
+                deploymentNode "Laptop" {
+                    therapeutPraxisLaptop = containerInstance singlePageTherapieManager
                 }
 
-                deploymentNode "Physiotherapeut Mobile Device" {
-                    mobileBrowser = containerInstance singlePageTherapieManager
+                deploymentNode "Mobile Device" {
+                    therapeutPraxisMobile = containerInstance singlePageTherapieManager
+                }
+            }
+
+            deploymentNode "Physio Infrastruktur Reha Klinik" {
+                deploymentNode "Desktop Computer" {
+                    therapeutRehaDesktop = containerInstance singlePageTherapieManager
                 }
             }
 
@@ -218,6 +299,98 @@ workspace "Physio integration layer project" {
                 }
             }
         }
+
+        deploymentEnvironment "Mehrere Physio Connect Instanzen" {
+            infPraxis = deploymentNode "Physio Infrastruktur Praxis" {
+                deploymentNode "Laptop" {
+                    therapeutPraxisLaptop2 = containerInstance singlePageTherapieManager
+                }
+
+                deploymentNode "Mobile Device" {
+                    therapeutPraxisMobile2 = containerInstance singlePageTherapieManager
+                }
+            }
+
+            infReha = deploymentNode "Physio Infrastruktur Reha Klinik" {
+                deploymentNode "Desktop PC" {
+                    therapeutRehaDesktop2 = containerInstance singlePageTherapieManager
+                }
+            }
+
+            infSpital2 = deploymentNode "Physio Infrastruktur Spital 2" {
+                deploymentNode "Tablet" {
+                    therapeutSpital2Tablet = containerInstance singlePageTherapieManager
+                }
+            }
+
+            infPatient = deploymentNode "Patienten Infrastruktur" {
+                deploymentNode "Fitness Tracker" {
+                    fitnessTrackerInstanz2 = softwareSystemInstance fitnessTracker
+                }
+
+                deploymentNode "Mobile Device" {
+                    patientenAppInstanz2 = softwareSystemInstance patientenApp
+                }
+            }
+
+            deploymentNode "Unsere Infrastruktur" {
+                deploymentNode "Kubernetes Cluster" {
+                    deploymentNode "namespace: PhysioConnect" {
+                        mainIngressInstanz = containerInstance ingress "2"
+
+                        mainAusfuehrungsServiceInstanz = containerInstance ausfuehrungsService "2"
+                        mainPlanungsServiceInstanz = containerInstance planungsService "2"
+
+                        mainUebungsKatalogWrapperInstance = containerInstance uebungsKatalogWrapper "2"
+                        mainBenutzerVerwaltungWrapperInstance = containerInstance benutzerVerwaltungWrapper "2"
+
+                        mainServerSideTherapieManagerInstance =  containerInstance serverSideTherapieManager "2"
+                    }
+                }
+
+                storageService = deploymentNode "Storage Service" {
+                    mainAusfuehrungsDatenbankInstanz2 = containerInstance ausfuehrungsDatenbank
+                    mainPlanungsDatenbankInstanz2 = containerInstance planungsDatenbank
+                }
+            }
+
+            deploymentNode "Spital Infrastruktur" {
+                infSpital1 = deploymentNode "Physio Infrastruktur Spital" {
+                    deploymentNode "Desktop" {
+                        therapeutLaptopSpital = containerInstance singlePageTherapieManagerSpital
+                    }
+
+                    deploymentNode "Mobile Device" {
+                        therapeutMobileSpital = containerInstance singlePageTherapieManagerSpital
+                    }
+                }
+
+                deploymentNode "Bare Metal Cluster" {
+                    deploymentNode "namespace: PhysioConnect" {
+                        spitalIngressInstanz = containerInstance ingressSpital
+
+                        spitalAusfuehrungsServiceInstanz = containerInstance ausfuehrungsServiceSpital "1"
+                        spitalPlanungsServiceInstanz = containerInstance planungsServiceSpital "1"
+
+                        spitalUebungsKatalogWrapperInstance = containerInstance uebungsKatalogWrapperSpital "1"
+                        spitalBenutzerVerwaltungWrapperInstance = containerInstance benutzerVerwaltungWrapperSpital "1"
+
+                        spitalServerSideTherapieManagerInstance =  containerInstance serverSideTherapieManagerSpital "1"
+                    }
+                }
+
+                datenbankServer = deploymentNode "Datenbank Server" {
+                    spitalAusfuehrungsDatenbankInstanz = containerInstance ausfuehrungsDatenbankSpital
+                    spitalPlanungsDatenbankInstanz = containerInstance planungsDatenbankSpital
+                }
+            }
+
+            unbekanntesHosting = deploymentNode "Hosting zu diesem Zeitpunkt unbekannt" {
+                mainUebungsKatalogInstanz = softwareSystemInstance uebungsKatalog
+                
+                mainBenutzerVerwaltungInstanz = softwareSystemInstance benutzerVerwaltung
+            }
+        }
     }
 
     views {
@@ -257,8 +430,33 @@ workspace "Physio integration layer project" {
             autoLayout
         }
 
-        deployment physioConnect "Cloud Deployment singuläre Physio Connect Instanz" {
+        deployment physioConnect "Cloud Deployment singuläre Physio Connect Instanz" "deployment-singulaere-physioconnect" {
             include *
+            autoLayout
+        }
+
+        deployment * "Mehrere Physio Connect Instanzen" "deployment-mehrere-physioconnect-komplett" {
+            include *
+            autoLayout
+        }
+
+        deployment * "Mehrere Physio Connect Instanzen" "deployment-sicht-therapiemanager" {
+            include *
+            exclude planungsService planungsServiceSpital ausfuehrungsService ausfuehrungsServiceSpital
+            exclude planungsDatenbank ausfuehrungsDatenbank planungsDatenbankSpital ausfuehrungsDatenbankSpital
+            exclude patientenApp fitnessTracker
+            exclude infPatient datenbankServer storageService
+            autoLayout
+        }
+
+        deployment * "Mehrere Physio Connect Instanzen" "deployment-sicht-patientenapp" {
+            include *
+            exclude serverSideTherapieManager serverSideTherapieManagerSpital
+            exclude singlePageTherapieManager singlePageTherapieManagerSpital
+            exclude uebungsKatalog benutzerVerwaltung
+            exclude uebungsKatalogWrapper uebungsKatalogWrapperSpital benutzerVerwaltungWrapper benutzerVerwaltungWrapperSpital
+            exclude infSpital1 infSpital2 infReha infPraxis
+            exclude unbekanntesHosting
             autoLayout
         }
 
