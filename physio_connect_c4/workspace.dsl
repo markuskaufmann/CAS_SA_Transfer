@@ -226,29 +226,33 @@ workspace "Physio integration layer project" {
 
         deploymentEnvironment "Mehrere Physio Connect Instanzen" {
             mainDeployment = deploymentGroup "Main Deployment" 
-            spitalDeployement = deploymentGroup "Spital Deployment" 
+            spitalDeployement = deploymentGroup "Spital Deployment"
 
-            infPraxis = deploymentNode "Physio Infrastruktur Praxis" {
-                deploymentNode "Laptop" {
-                    therapeutPraxisLaptop2 = containerInstance singlePageTherapieManager mainDeployment
+
+            deploymentNode "SaaS Kunden" {
+                infPraxis = deploymentNode "Physio Infrastruktur Praxis" {
+                    deploymentNode "Laptop" {
+                        therapeutPraxisLaptop2 = containerInstance singlePageTherapieManager mainDeployment
+                    }
+
+                    deploymentNode "Mobile Device" {
+                        therapeutPraxisMobile2 = containerInstance singlePageTherapieManager mainDeployment
+                    }
                 }
 
-                deploymentNode "Mobile Device" {
-                    therapeutPraxisMobile2 = containerInstance singlePageTherapieManager mainDeployment
+                infReha = deploymentNode "Physio Infrastruktur Reha Klinik" {
+                    deploymentNode "Desktop PC" {
+                        therapeutRehaDesktop2 = containerInstance singlePageTherapieManager mainDeployment
+                    }
+                }
+
+                infSpital2 = deploymentNode "Physio Infrastruktur Spital 2" {
+                    deploymentNode "Tablet" {
+                        therapeutSpital2Tablet = containerInstance singlePageTherapieManager mainDeployment
+                    }
                 }
             }
-
-            infReha = deploymentNode "Physio Infrastruktur Reha Klinik" {
-                deploymentNode "Desktop PC" {
-                    therapeutRehaDesktop2 = containerInstance singlePageTherapieManager mainDeployment
-                }
-            }
-
-            infSpital2 = deploymentNode "Physio Infrastruktur Spital 2" {
-                deploymentNode "Tablet" {
-                    therapeutSpital2Tablet = containerInstance singlePageTherapieManager mainDeployment
-                }
-            }
+            
 
             infPatient = deploymentNode "Patienten Infrastruktur" {
                 deploymentNode "Fitness Tracker" {
