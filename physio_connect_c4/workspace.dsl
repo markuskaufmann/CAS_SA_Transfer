@@ -396,11 +396,13 @@ workspace "Physio integration layer project" {
     views {
         systemlandscape "Gesamtuebersicht" {
             include *
+            exclude physioConnectSpital
             autoLayout
         }
 
         systemlandscape "Kontextdiagram" {
             include *
+            exclude physioConnectSpital
             exclude dataScientist versicherungsSchnittstellen patientenDossier
             exclude dokumentationsSoftware therapieFile
             autoLayout
