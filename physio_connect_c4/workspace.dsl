@@ -37,9 +37,7 @@ workspace "Physio integration layer project" {
                     }
                 }
 
-                ingress = container "Ingress" "Reverse Proxy und Load Balancer" {
-                    technology "Ingress"
-                }
+                loadBalancer = container "Load Balancer" "Reverse Proxy und Load Balancer"
 
                 group "Planung" {
                     planungsService = container "Therapie Planungs Service" {
@@ -109,9 +107,7 @@ workspace "Physio integration layer project" {
                     }
                 }
 
-                ingressSpital = container "Ingress" "Reverse Proxy und Load Balancer" {
-                    technology "Ingress"
-                }
+                loadBalancerSpital = container "Load Balancer" "Reverse Proxy und Load Balancer"
 
                 group "Planung" {
                     planungsServiceSpital = container "Therapie Planungs Service" {
@@ -179,13 +175,13 @@ workspace "Physio integration layer project" {
         physioConnect -> versicherungsSchnittstellen "teilt Trainingsdaten"
         
         # relationships to/from containers
-        patientenApp -> ingress "Sendet Messdaten\nSendet Requests für Informationen zu Therapien und Übungen"
-        singlePageTherapieManager -> ingress  "Sendet Requests zum Verwalten der Gesamttherapien, Übungen und Benutzer"
+        patientenApp -> loadBalancer "Sendet Messdaten\nSendet Requests für Informationen zu Therapien und Übungen"
+        singlePageTherapieManager -> loadBalancer  "Sendet Requests zum Verwalten der Gesamttherapien, Übungen und Benutzer"
 
-        ingress -> planungsService "Leitet Requests weiter für Gesamttherapien"
-        ingress -> benutzerVerwaltungWrapper "Leitet Requests weiter für die Benutzerverwaltung"
-        ingress -> uebungsKatalogWrapper "Leitet Requests weiter für den Übungskatalog"
-        ingress -> ausfuehrungsService "Leitet ausführungsspezifische Requests weiter"
+        loadBalancer -> planungsService "Leitet Requests weiter für Gesamttherapien"
+        loadBalancer -> benutzerVerwaltungWrapper "Leitet Requests weiter für die Benutzerverwaltung"
+        loadBalancer -> uebungsKatalogWrapper "Leitet Requests weiter für den Übungskatalog"
+        loadBalancer -> ausfuehrungsService "Leitet ausführungsspezifische Requests weiter"
 
         ausfuehrungsService -> ausfuehrungsDatenbank "Persistiert Messdaten und effektive Ausführungsinformationen"
 
@@ -204,10 +200,10 @@ workspace "Physio integration layer project" {
         therapieUebungsKatalogApiAdapter -> uebungsKatalogWrapper "Sendet API Requests an"
         therapieBenutzerverwaltungApiAdapter -> benutzerVerwaltungWrapper "Sendet API Requests an"
         therapieAusfuehrungsApiAdapter -> ausfuehrungsService "Sendet API Requests an"
-        ingress -> therapieApiController "Leitet Requests weiter für Gesamttherapien"
+        loadBalancer -> therapieApiController "Leitet Requests weiter für Gesamttherapien"
 
         ausfuehrungsPersistenzAdapter -> ausfuehrungsDatenbank "Persistiert Daten in"
-        ingress -> ausfuehrungsApiController "Leitet ausführungsspezifische Requests weiter"
+        loadBalancer -> ausfuehrungsApiController "Leitet ausführungsspezifische Requests weiter"
         planungsService -> ausfuehrungsApiController "Sendet API Requests an"
 
         # relationships to/from components
@@ -223,13 +219,13 @@ workspace "Physio integration layer project" {
         ausfuehrungsApplikationsLogik -> ausfuehrungsDomaenenLogik "Implementier Adapter für die Port Interfaces der Domänenlogik"
     
         # Relationships for duplicated Spital containers
-        patientenApp -> ingressSpital "Sendet Messdaten\nSendet Requests für Informationen zu Therapien und Übungen"
-        singlePageTherapieManagerSpital -> ingressSpital  "Sendet Requests zum Verwalten der Gesamttherapien, Übungen und Benutzer"
+        patientenApp -> loadBalancerSpital "Sendet Messdaten\nSendet Requests für Informationen zu Therapien und Übungen"
+        singlePageTherapieManagerSpital -> loadBalancerSpital  "Sendet Requests zum Verwalten der Gesamttherapien, Übungen und Benutzer"
 
-        ingressSpital -> planungsServiceSpital "Leitet Requests weiter für Gesamttherapien"
-        ingressSpital -> benutzerVerwaltungWrapperSpital "Leitet Requests weiter für die Benutzerverwaltung"
-        ingressSpital -> uebungsKatalogWrapperSpital "Leitet Requests weiter für den Übungskatalog"
-        ingressSpital -> ausfuehrungsServiceSpital "Leitet ausführungsspezifische Requests weiter"
+        loadBalancerSpital -> planungsServiceSpital "Leitet Requests weiter für Gesamttherapien"
+        loadBalancerSpital -> benutzerVerwaltungWrapperSpital "Leitet Requests weiter für die Benutzerverwaltung"
+        loadBalancerSpital -> uebungsKatalogWrapperSpital "Leitet Requests weiter für den Übungskatalog"
+        loadBalancerSpital -> ausfuehrungsServiceSpital "Leitet ausführungsspezifische Requests weiter"
 
         ausfuehrungsServiceSpital -> ausfuehrungsDatenbankSpital "Persistiert Messdaten und effektive Ausführungsinformationen"
 
@@ -274,7 +270,7 @@ workspace "Physio integration layer project" {
             deploymentNode "Cloud Hyperscaler" {
                 deploymentNode "Kubernetes Cluster" {
                     deploymentNode "namespace: PhysioConnect" {
-                        ingressInstanz = containerInstance ingress
+                        loadBalancerInstanz = containerInstance loadBalancer
 
                         ausfuehrungsServiceInstanz = containerInstance ausfuehrungsService
                         planungsServiceInstanz = containerInstance planungsService
@@ -336,15 +332,15 @@ workspace "Physio integration layer project" {
             deploymentNode "Unsere Infrastruktur" {
                 deploymentNode "Kubernetes Cluster" {
                     deploymentNode "namespace: PhysioConnect" {
-                        mainIngressInstanz = containerInstance ingress "2"
+                        mainLoadBalancerInstanz = containerInstance loadBalancer
 
-                        mainAusfuehrungsServiceInstanz = containerInstance ausfuehrungsService "2"
-                        mainPlanungsServiceInstanz = containerInstance planungsService "2"
+                        mainAusfuehrungsServiceInstanz = containerInstance ausfuehrungsService
+                        mainPlanungsServiceInstanz = containerInstance planungsService
 
-                        mainUebungsKatalogWrapperInstance = containerInstance uebungsKatalogWrapper "2"
-                        mainBenutzerVerwaltungWrapperInstance = containerInstance benutzerVerwaltungWrapper "2"
+                        mainUebungsKatalogWrapperInstance = containerInstance uebungsKatalogWrapper
+                        mainBenutzerVerwaltungWrapperInstance = containerInstance benutzerVerwaltungWrapper
 
-                        mainServerSideTherapieManagerInstance =  containerInstance serverSideTherapieManager "2"
+                        mainServerSideTherapieManagerInstance =  containerInstance serverSideTherapieManager
                     }
                 }
 
@@ -367,7 +363,7 @@ workspace "Physio integration layer project" {
 
                 deploymentNode "Bare Metal Cluster" {
                     deploymentNode "namespace: PhysioConnect" {
-                        spitalIngressInstanz = containerInstance ingressSpital
+                        spitalLoadBalancerInstanz = containerInstance loadBalancerSpital
 
                         spitalAusfuehrungsServiceInstanz = containerInstance ausfuehrungsServiceSpital "1"
                         spitalPlanungsServiceInstanz = containerInstance planungsServiceSpital "1"
