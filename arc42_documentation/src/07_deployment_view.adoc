@@ -40,22 +40,7 @@ See https://docs.arc42.org/section-7/[Deployment View] in the arc42 documentatio
 
 ****
 
-=== Infrastructure Level 1
-
-
-plantuml::structurizr_diagrams/generated/structurizr-deployment-singulaere-physioconnect.puml[format=svg]
-
-plantuml::structurizr_diagrams/generated/structurizr-deployment-sicht-patientenapp.puml[format=svg]
-
-[.landscape]
-<<<
-
-plantuml::structurizr_diagrams/generated/structurizr-deployment-sicht-therapiemanager.puml[format=svg]
-
-plantuml::structurizr_diagrams/generated/structurizr-deployment-mehrere-physioconnect-komplett.puml[format=svg]
-
-[.portrait]
-<<<
+=== Infrastruktur mit einem Physio Connect System
 
 [role="arc42help"]
 ****
@@ -69,7 +54,42 @@ Describe (usually in a combination of diagrams, tables, and text):
 For multiple environments or alternative deployments please copy and adapt this section of arc42 for all relevant environments.
 ****
 
-_**<Overview Diagram>**_
+Motivation::
+
+_<explanation in text form>_
+
+Quality and/or Performance Features::
+
+_<explanation in text form>_
+
+Mapping of Building Blocks to Infrastructure::
+
+tbd
+
+plantuml::structurizr_diagrams/generated/structurizr-deployment-singulaere-physioconnect.puml[format=svg]
+
+
+_<description of the mapping>_
+
+=== Infrastruktur mit mehreren Physio Connect System
+
+
+Motivation::
+
+_<explanation in text form>_
+
+==== Zusammenspiel mit Patientenapp
+
+Motivation::
+
+_<explanation in text form>_
+
+Mapping of Building Blocks to Infrastructure::
+_<description of the mapping>_
+
+plantuml::structurizr_diagrams/generated/structurizr-deployment-sicht-patientenapp.puml[format=svg]
+
+==== Verwendung des Therapie Managers
 
 Motivation::
 
@@ -80,28 +100,39 @@ Quality and/or Performance Features::
 _<explanation in text form>_
 
 Mapping of Building Blocks to Infrastructure::
+
 _<description of the mapping>_
 
+[.landscape]
+<<<
 
-=== Infrastructure Level 2
+plantuml::structurizr_diagrams/generated/structurizr-deployment-sicht-therapiemanager.puml[format=svg]
 
-[role="arc42help"]
-****
-Here you can include the internal structure of (some) infrastructure elements from level 1.
+[.portrait]
+<<<
 
-Please copy the structure from level 1 for each selected element.
-****
 
-==== _<Infrastructure Element 1>_
+==== Gesamtübersicht
 
-_<diagram + explanation>_
+Motivation::
 
-==== _<Infrastructure Element 2>_
+_<explanation in text form>_
 
-_<diagram + explanation>_
+Quality and/or Performance Features::
 
-...
+_<explanation in text form>_
 
-==== _<Infrastructure Element n>_
+Mapping of Building Blocks to Infrastructure::
 
-_<diagram + explanation>_
+tbd
+
+[.landscape]
+<<<
+
+plantuml::structurizr_diagrams/generated/structurizr-deployment-mehrere-physioconnect-komplett.puml[format=svg]
+
+
+[.portrait]
+<<<
+
+_<description of the mapping>_

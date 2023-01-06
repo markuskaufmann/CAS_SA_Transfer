@@ -168,19 +168,21 @@ workspace "Physio integration layer project" {
         ausfuehrungsApplikationsLogik -> ausfuehrungsDomaenenLogik "Implementier Adapter für die Port Interfaces der Domänenlogik"
                 
         deploymentEnvironment "Cloud Deployment singuläre Physio Connect Instanz" {
-            deploymentNode "Physio Infrastruktur Praxis" {
-                deploymentNode "Laptop" {
-                    therapeutPraxisLaptop = containerInstance singlePageTherapieManager
+            deploymentNode "SaaS Kunden" {
+                deploymentNode "Physio Infrastruktur Praxis" {
+                    deploymentNode "Laptop" {
+                        therapeutPraxisLaptop = containerInstance singlePageTherapieManager
+                    }
+
+                    deploymentNode "Mobile Device" {
+                        therapeutPraxisMobile = containerInstance singlePageTherapieManager
+                    }
                 }
 
-                deploymentNode "Mobile Device" {
-                    therapeutPraxisMobile = containerInstance singlePageTherapieManager
-                }
-            }
-
-            deploymentNode "Physio Infrastruktur Reha Klinik" {
-                deploymentNode "Desktop Computer" {
-                    therapeutRehaDesktop = containerInstance singlePageTherapieManager
+                deploymentNode "Physio Infrastruktur Reha Klinik" {
+                    deploymentNode "Desktop Computer" {
+                        therapeutRehaDesktop = containerInstance singlePageTherapieManager
+                    }
                 }
             }
 
@@ -195,7 +197,7 @@ workspace "Physio integration layer project" {
             }
 
 
-            deploymentNode "Cloud Hyperscaler" {
+            deploymentNode "Unsere Infrastruktur: Cloud Hyperscaler" {
                 deploymentNode "Kubernetes Cluster" {
                     deploymentNode "namespace: PhysioConnect" {
                         loadBalancerInstanz = containerInstance loadBalancer
@@ -264,7 +266,7 @@ workspace "Physio integration layer project" {
                 }
             }
 
-            deploymentNode "Unsere Infrastruktur" {
+            deploymentNode "Unsere Infrastruktur: Cloud Hyperscaler" {
                 deploymentNode "Kubernetes Cluster" {
                     deploymentNode "namespace: PhysioConnect" {
                         mainLoadBalancerInstanz = containerInstance loadBalancer mainDeployment
