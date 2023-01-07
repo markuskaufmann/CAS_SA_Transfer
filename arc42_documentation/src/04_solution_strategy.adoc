@@ -14,8 +14,8 @@ Die folgenden Prinzipien müssen bestmöglich während dem Design und der Umsetz
 |Falls möglich sollen Open Source-Lösungen für Libraries, Komponenten, Systeme und Tools verwendet werden. Falls eine Open Source-Lösung eine gewünschte Funktionalität nicht unterstützt, soll in Betracht gezogen werden, diese Funktionalität direkt im Open Source-Projekt zu implementieren.
 
 |AP-2
-|Buy before make
-|Falls keine Open Source-Lösung existiert, sollten Lösungen zuerst gekauft werden bevor wir diese selbst herstellen. Dies dient dazu, um eine kurze Markteinführungszeit zu erreichen.
+|"Buy before make"
+|Falls für eine Problemstellung keine Open Source- (siehe AP-1) sondern lediglich eine kostenpflichtige Lösung existiert, sollte zuerst eingeschätzt werden, wie das Verhältnis zwischen (Lizenz-)Kosten und alternativem Aufwand / Komplexität im Falle einer eigenen Implementation aussieht. Spricht das Verhältnis eher für die kostenpflichtige Lösung, soll diese erworben werden bevor wir eine äquivalente Lösungsvariante selbst implementieren. Dieses Prinzip dient unter Anderem dazu, eine kurze Markteinführungszeit (Time-to-Market) zu erreichen.
 
 |AP-3
 |Skalierbarkeit
@@ -23,24 +23,24 @@ Die folgenden Prinzipien müssen bestmöglich während dem Design und der Umsetz
 
 |AP-4
 |Protokolle 
-|Wenn immer möglich sollen standardisierte, etablierte und sichere Protokolle verwenden werden. Sicherheit ist höher zu gewichten als Overhead und Geschwindigkeit.
+|Wenn immer möglich sollen standardisierte, etablierte und sichere Protokolle verwendet werden. Sicherheit ist höher zu gewichten als Overhead und Geschwindigkeit.
 
 |AP-5
 |Programmiersprachen
-|Verwendete Programmiersprachen müssen plattformunabhängig, etabliert und sollten wenn möglich typisiert sein. Zusätzlich sollen bereits im Projekt verwendete Sprachen präferiert werden, um den Technologiestack klein und einfach zu halten.
+|Verwendete Programmiersprachen müssen plattformunabhängig, etabliert und wenn möglich statisch typisiert (= zur Kompilierzeit) sein. Zusätzlich sollen bereits im Projekt verwendete Sprachen präferiert werden, um den Technologiestack klein und einfach zu halten.
 
 |AP-6
 |Cloud Native
 |Alle umzusetzenden Komponenten sollen dem https://aws.amazon.com/what-is/cloud-native/[Cloud Native-Prinzip] entsprechen und in einem lokalen Kubernetes-Cluster ausführbar sein. Clusterweite Standards für Logging, Überwachbarkeit (Monitoring) und Sicherheit müssen eingehalten werden.
 
 |AP-7
-|Everything as Code, Versionierung 
-|Alle Artefakte, welche intern oder extern ausgeliefert werden, müssen als Code existieren und unter Git versioniert sein. Dazu zählen Sourcecode, Softwarearchitekturdokumente, Analysen, Entscheidungen, Geschäftsprozesse, Endbenutzerdokumentationen, Protokolle von Meetings usw. +
+|Everything as Code (EaC), Versionierung 
+|Alle Artefakte, welche intern oder extern ausgeliefert werden, sollen - sofern technisch möglich - als Code existieren und unter Git versioniert sein. Dazu zählen Quellcode, Softwarearchitekturdokumente, Analysen, Entscheidungen, Geschäftsprozesse, Endbenutzerdokumentationen, Protokolle von Meetings usw. +
 Ausgeschlossen sind Wegwerfzeichnungen, Diskussionen, aufgezeichnete Meetings usw.
 
 |AP-8
-|Singuläre Codebasis
-|Es soll nur eine einzelne Codebasis existieren. Falls Apps für verschiedene Devices benötigt werden, muss dies mit einer Codebasis gelöst werden.
+|Gemeinsame Codebasis für alle unterstützten Plattformen
+|Es soll eine gemeinsame Codebasis existieren, welche alle unterstützten Plattformen abdeckt. Falls Apps für verschiedene Devices benötigt werden, muss dies mit einer Codebasis gelöst werden.
 
 |AP-9
 |Verwendete Datenformate
@@ -49,15 +49,19 @@ Die folgende Priorität soll bezüglich der Verwendung von Datenformaten eingeha
 
 1. etablierte, standardisierte Datenformate
 2. Drittanbieter-Datenformate
-3. selbsterstellte Datenformate 
+3. selbsterstellte Datenformate
 
 |AP-10
-|Security
-|Grundsätzlich soll bei Sicherheitskonzepten alle Zugriffe verboten werden ("deny all") und nur Benutzer mit expliziter Erlaubnis sollen Aktionen ausführen dürfen. Dies gilt sowohl für Netzwerkkomponenten wie Firewalls als auch für Code-Level Autorisierungen bei API Requests.
+|Security: Umsetzung einer strikten Zugriffskontrolle
+|Grundsätzlich sollen bei den verwendeten Sicherheitskonzepten jeweils alle Zugriffe verboten werden ("deny all") und nur Benutzer mit expliziter Erlaubnis sollen System- und Datenzugriff erhalten bzw. spezifische Aktionen ausführen dürfen. Dies gilt sowohl für Netzwerkkomponenten wie Firewalls als auch für Code-Level Autorisierungen bei API Requests (zu berücksichtigen bei "User to Service"- sowie "Service to Service"-Requests).
 
 |AP-11
+|Security: Einhaltung von aktuell geltenden Security-Standards
+|Aufgrund der Übermittlung, Verarbeitung und Ablage persönlicher Gesundheitsdaten muss zwingend sichergestellt sein, dass alle beteiligten (Sofware-)Systeme und Komponenten die aktuellsten Sicherheitsstandards erfüllen, welche für den einwandfreien Umgang mit persönlichen Gesundheitsdaten relevant sind. Dies betrifft insbesondere den Schutz vor unbefugtem System- und Datenzugriff (siehe AP-10) und die Anwendung von aktuell empfohlenen Handshake-, Verschlüsselungs- / Hashing- und Ablageverfahren (inkl. korrekter Anonymisierung der Daten bei potenzieller Weitergabe).
+
+|AP-12
 |Continuous Integration & Delivery
-|Alle Systeme müssen so umgesetzt werden, dass sie nach einer Änderung des Sourcecodes automatisiert über eine CI/CD-Pipeline verifiziert (Build, Test) und deployed werden können.
+|Alle Systeme müssen so umgesetzt werden, dass sie nach einer Änderung des Quellcodes automatisiert über eine CI/CD-Pipeline verifiziert (Build, Test) und deployed werden können.
 
 |===
 
