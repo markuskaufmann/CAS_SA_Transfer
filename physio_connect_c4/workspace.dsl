@@ -210,18 +210,16 @@ workspace "Physio integration layer project" {
 
                         serverSideTherapieManagerInstance =  containerInstance serverSideTherapieManager 
                     }
-                    deploymentNode "namespace: Übungskatalog" {
-                        uebungsKatalogInstanz = softwareSystemInstance uebungsKatalog
-                    }
-                    deploymentNode "namespace: Benutzerverwaltung" {
-                        benutzerVerwaltungInstanz = softwareSystemInstance benutzerVerwaltung
-                    }
-                    
                 }
 
                 deploymentNode "Storage Service" {
                     ausfuehrungsDatenbankInstanz = containerInstance ausfuehrungsDatenbank
                     planungsDatenbankInstanz = containerInstance planungsDatenbank
+                }
+
+                deploymentNode "Hosting zu diesem Zeitpunkt unbekannt" {
+                    uebungsKatalogInstanz = softwareSystemInstance uebungsKatalog mainDeployment,spitalDeployement
+                    benutzerVerwaltungInstanz = softwareSystemInstance benutzerVerwaltung mainDeployment,spitalDeployement
                 }
             }
         }
@@ -255,7 +253,6 @@ workspace "Physio integration layer project" {
                 }
             }
             
-
             infPatient = deploymentNode "Patienten Infrastruktur" {
                 deploymentNode "Fitness Tracker" {
                     fitnessTrackerInstanz2 = softwareSystemInstance fitnessTracker mainDeployment,spitalDeployement
