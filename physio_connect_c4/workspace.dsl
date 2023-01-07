@@ -143,8 +143,6 @@ workspace "Physio integration layer project" {
         benutzerVerwaltungWrapper -> benutzerVerwaltung "Verwaltet Benutzerdaten"
         uebungsKatalogWrapper -> uebungsKatalog "Verwaltet Übungsdefinitionen"
 
-        serverSideTherapieManager -> singlePageTherapieManager "Liefert SPA an den Client aus"
-
         # relationships to/from components to/from containers
         therapiePersistenzAdapter -> planungsDatenbank  "Persistiert Daten in"
         therapieUebungsKatalogApiAdapter -> uebungsKatalogWrapper "Sendet API Requests an"
