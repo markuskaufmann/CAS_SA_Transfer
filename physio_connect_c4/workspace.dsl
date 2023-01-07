@@ -131,6 +131,7 @@ workspace "Physio integration layer project" {
         loadBalancer -> benutzerVerwaltungWrapper "Leitet Requests weiter für die Benutzerverwaltung"
         loadBalancer -> uebungsKatalogWrapper "Leitet Requests weiter für den Übungskatalog"
         loadBalancer -> ausfuehrungsService "Leitet ausführungsspezifische Requests weiter"
+        loadBalancer -> serverSideTherapieManager "Leitet requests für die Therapie Manager SPA weiter"
 
         ausfuehrungsService -> ausfuehrungsDatenbank "Persistiert Messdaten und effektive Ausführungsinformationen"
 
@@ -168,7 +169,7 @@ workspace "Physio integration layer project" {
         ausfuehrungsApplikationsLogik -> ausfuehrungsDomaenenLogik "Implementier Adapter für die Port Interfaces der Domänenlogik"
                 
         deploymentEnvironment "Cloud Deployment singuläre Physio Connect Instanz" {
-            deploymentNode "SaaS Kunden" {
+            deploymentNode "SaaS Kunden Infrastruktur" {
                 deploymentNode "Physio Infrastruktur Praxis" {
                     deploymentNode "Laptop" {
                         therapeutPraxisLaptop = containerInstance singlePageTherapieManager
@@ -227,8 +228,8 @@ workspace "Physio integration layer project" {
             spitalDeployement = deploymentGroup "Spital Deployment"
 
 
-            deploymentNode "SaaS Kunden" {
-                infPraxis = deploymentNode "Physio Infrastruktur Praxis" {
+            infrastrukturSaasKunden = deploymentNode "SaaS Kunden Infrastruktur" {
+                deploymentNode "Physio Infrastruktur Praxis" {
                     deploymentNode "Laptop" {
                         therapeutPraxisLaptop2 = containerInstance singlePageTherapieManager mainDeployment
                     }
@@ -238,13 +239,13 @@ workspace "Physio integration layer project" {
                     }
                 }
 
-                infReha = deploymentNode "Physio Infrastruktur Reha Klinik" {
+                deploymentNode "Physio Infrastruktur Reha Klinik" {
                     deploymentNode "Desktop PC" {
                         therapeutRehaDesktop2 = containerInstance singlePageTherapieManager mainDeployment
                     }
                 }
 
-                infSpital2 = deploymentNode "Physio Infrastruktur Spital 2" {
+                deploymentNode "Physio Infrastruktur Spital 2" {
                     deploymentNode "Tablet" {
                         therapeutSpital2Tablet = containerInstance singlePageTherapieManager mainDeployment
                     }
@@ -281,7 +282,7 @@ workspace "Physio integration layer project" {
             }
 
             deploymentNode "Spital Infrastruktur" {
-                infSpital1 = deploymentNode "Physio Infrastruktur Spital" {
+                infSpital = deploymentNode "Physio Infrastruktur Spital" {
                     deploymentNode "Desktop" {
                         therapeutLaptopSpital = containerInstance singlePageTherapieManager spitalDeployement
                     }
@@ -379,7 +380,7 @@ workspace "Physio integration layer project" {
             exclude singlePageTherapieManager
             exclude uebungsKatalog benutzerVerwaltung
             exclude uebungsKatalogWrapper benutzerVerwaltungWrapper
-            exclude infSpital1 infSpital2 infReha infPraxis
+            exclude infSpital infrastrukturSaasKunden
             exclude unbekanntesHosting
             autoLayout
         }
