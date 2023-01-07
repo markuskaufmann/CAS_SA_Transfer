@@ -194,6 +194,7 @@ workspace "Physio integration layer project" {
 
                 deploymentNode "Patient Mobile Device" {
                     patientenAppInstanz = softwareSystemInstance patientenApp
+                    containerInstance singlePageTherapieManager
                 }
             }
 
@@ -244,21 +245,17 @@ workspace "Physio integration layer project" {
                         therapeutRehaDesktop2 = containerInstance singlePageTherapieManager mainDeployment
                     }
                 }
-
-                deploymentNode "Physio Infrastruktur Spital 2" {
-                    deploymentNode "Tablet" {
-                        therapeutSpital2Tablet = containerInstance singlePageTherapieManager mainDeployment
-                    }
-                }
             }
             
             infPatient = deploymentNode "Patienten Infrastruktur" {
-                deploymentNode "Fitness Tracker" {
+                infFitnessTracker = deploymentNode "Fitness Tracker" {
                     fitnessTrackerInstanz2 = softwareSystemInstance fitnessTracker mainDeployment,spitalDeployement
                 }
 
                 deploymentNode "Mobile Device" {
                     patientenAppInstanz2 = softwareSystemInstance patientenApp mainDeployment,spitalDeployement
+                    patientSPA1 = containerInstance singlePageTherapieManager mainDeployment
+                    patientSPA2 = containerInstance singlePageTherapieManager spitalDeployement
                 }
             }
 
@@ -370,7 +367,7 @@ workspace "Physio integration layer project" {
             exclude planungsService ausfuehrungsService
             exclude planungsDatenbank ausfuehrungsDatenbank
             exclude patientenApp fitnessTracker
-            exclude infPatient datenbankServer storageService
+            exclude patientenAppInstanz2 infFitnessTracker datenbankServer storageService
             autoLayout
         }
 
@@ -381,6 +378,7 @@ workspace "Physio integration layer project" {
             exclude uebungsKatalog benutzerVerwaltung
             exclude uebungsKatalogWrapper benutzerVerwaltungWrapper
             exclude infSpital infrastrukturSaasKunden
+            exclude patientSPA1 patientSPA2
             exclude unbekanntesHosting
             autoLayout
         }
