@@ -1,151 +1,116 @@
 [[section-system-scope-and-context]]
-== System Scope and Context
+== Kontextabgrenzung
 
-In diesem Kapitel der arc42-Dokumentation wird der Umfang und der Kontext von Physio Connect beschrieben.
+Im Rahmen dieses Kapitel wird der Systemumfang (Scope) und -Kontext von PhysioConnect beschrieben. Das Ziel ist hierbei, die Abgrenzung zwischen dem System "PhysioConnect" und allen externen Kommunikationspartnern (Nachbarsysteme, Benutzer) zu veranschaulichen. Dabei werden die externen Schnittstellen aus fachlicher Sicht und - falls zusätzlich notwendig - aus technischer Sicht spezifiziert.
 
-[role="arc42help"]
-****
-.Contents
-System scope and context - as the name suggests - delimits your system (i.e. your scope) from all its communication partners
-(neighboring systems and users, i.e. the context of your system). It thereby specifies the external interfaces.
+=== Fachlicher Kontext
 
-If necessary, differentiate the business context (domain specific inputs and outputs) from the technical context (channels, protocols, hardware).
-
-.Motivation
-The domain interfaces and technical interfaces to communication partners are among your system's most critical aspects. Make sure that you completely understand them.
-
-.Form
-Various options:
-
-* Context diagrams
-* Lists of communication partners and their interfaces.
-
-
-.Further Information
-
-See https://docs.arc42.org/section-3/[Context and Scope] in the arc42 documentation.
-
-****
-
-
-=== Business Context
-
-[role="arc42help"]
-****
-.Contents
-Specification of *all* communication partners (users, IT-systems, ...) with explanations of domain specific inputs and outputs or interfaces.
-Optionally you can add domain specific formats or communication protocols.
-
-.Motivation
-All stakeholders should understand which data are exchanged with the environment of the system.
-
-.Form
-All kinds of diagrams that show the system as a black box and specify the domain interfaces to communication partners.
-
-Alternatively (or additionally) you can use a table.
-The title of the table is the name of your system, the three columns contain the name of the communication partner, the inputs, and the outputs.
-
-****
+Im Rahmen des fachlichen Kontexts soll allen relevanten Stakeholdern verständlich aufgezeigt werden, welche Daten aus Sicht der Businessdomäne zwischen PhysioConnect und den bestehenden externen Kommunikationspartnern (Umsysteme, Benutzer) ausgetauscht werden. Dabei werden sowohl die Kommunikationspartner als auch die definierten Schnittstellen inkl. deren Datenspezifikation genauer beschrieben.
 
 ==== Legende
 
 plantuml::structurizr_diagrams/generated/structurizr-Gesamtuebersicht-key.puml[format=svg]
 
-[options="header"]
+[options="header",cols="2,6"]
 |===
-|Element Typ|Beschreibung
-|Main System|Hauptsystem, welches im Rahmen dieses Dokuments analysiert wird.
-|Software System|Software Systeme, welche eine direkte oder inderekte Beziehung zum Hauptsystem besitzen. Können sich sowohl innerhalb als auch ausserhalb der Unternehmensgrenze befinden.
-|Person|Akteure, welche direkt oder indirekt mit dem Hauptsystem interagieren. Können sich sowohl innerhalb als auch ausserhalb der Unternehmensgrenze befinden.
-|File|Eine Datei, welche eine Systemrelevante Rolle einnimt und somit im Kontext abgebildet werden muss.
-|Relationship|Simple gerichtete Beziehung. Jede Beziehung muss mit einem Beschreibungstext genauer beschrieben werden. 
+|Element-Typ|Beschreibung
+|Main System|Hauptsystem, dessen Kontext im Rahmen dieses Dokuments definiert wird.
+|Software System|Softwaresysteme, welche eine direkte oder indirekte Beziehung zum Hauptsystem besitzen. Die Systeme können sich sowohl innerhalb als auch ausserhalb der Unternehmungsgrenze befinden.
+|Person|Akteure, welche direkt oder indirekt mit dem Hauptsystem interagieren. Die Akteure können sich sowohl innerhalb als auch ausserhalb der Unternehmungsgrenze befinden.
+|File|Eine Datei, welche eine systemrelevante Rolle einnimt und somit im Kontext abgebildet werden muss.
+|Relationship|Einfache, gerichtete Beziehung. Jede Beziehung muss mit einem Beschreibungstext genauer erläutert werden. 
 |===
 
 ==== Kontext
 
 plantuml::structurizr_diagrams/generated/structurizr-Kontextdiagram.puml[format=svg]
 
-[options="header"]
+[options="header",cols="3,6"]
 |===
 |Element|Beschreibung
-|Unternehmungsgrenze|Alle Software Elemente innerhalb dieser Grenzen werden von uns gewartet und können direkt beinflusst werden. Auf Elemente ausserhalb dieser Grenzen besitzen wir nur beschränkten bis garkeinen Einfluss. 
-|Gruppe:Patient|Alle Elemente, welche in der Gruppe Patient befinden, stehen in direkter Verbindung zum Akteur "Patient" und werden von diesem Verwendet. Physio Connect hat keinen Einfluss auf die Art von Geräten, welche von Patienten eingesetzt werden.
-|Gruppe:Physiounternehmung|Eine Unternehmung, welche Physiotherapien durchführt. In den meisten Fällen handelt es sich um eine Physio Praxis, es kann sich jedoch auch um eine Spitalabteilung, eine Rehabilitations Klinik oder andere Anbieter handeln. Physio Connect hat nur einen beschränkten Einfluss auf die in Physiounternehmungen eingesetzten Software Systeme. In den meisten Fällen ist es möglich, Informationen zu bestehenden Schnittstellen zu erhalten. 
-|Physio Connect|Hauptsystem, welches im Rahmen dieses Dokuments analysiert wird. Bietet die im Kapitel 1 Beschriebenen Funktionalitäten an.
-|Mobile Patientenapp|App, welche von Patienten verwendet wird. Wird zum Ausführen von Therapiesession verwendet. Erhält Daten zu Therapien von Physio Connect. Sendet falls möglich Messdaten an Physio Connect.
-|Übungs Katalog|Beinhaltet vordefinierte Übungsdefinitionen und bietet die Möglichkeit, Übungen via einer API zu verwalten.
-|Benutzer Verwaltung|Beinhaltet alle Benutzerspezifischen Informationen. Handhabt die Authentifizierung und Autorisierung. Bietet eine API zur Verwaltung von Benutzern an.
-|Patient|Akteur, welcher die Mobile App verwendet, um Therapiesessions auszuführen. Im Normalfall hat dieser eine Verordnung von einem Hausarzt oder einer anderen Gesundheitsstelle zur Teilnahme an einer gewissen Anzahl Physiotherapien. Ebenfalls ist es möglich, dass sich dieser im Spital oder einer Rehabilitations Klinik befindet.
-|Fitness Tracker|Gerät, welches Daten wie Herzschlag, Schritte und Blutdruck misst. Im Normalfall ist dies ein Fitnessband oder eine Sportuhr. Es kann sich jedoch auch um andere Geräte handeln, solange diese eine Schnittstelle zu den Messdaten bereitstellen.
-|Therapeut: in|Therapeuten sind für die Durchführung von Physiotherapien mit Patienten zuständig. Physiotherapeuten planen, dokumentieren und werten Therapien Patientenspezifisch aus. Therapeuten haben die Berechtigung, direkt mit dem Physio Connect System zu Interagieren und somit Therapien und Übungen zu verwalten.
-|Administrator: in|Administratoren sind Personen in Physiounternehmungen, welche die höchstmögliche Authorisierungen im Umgang mit dem Physio Connect System besitzen. Es ist möglich, dass Personen in einer Physio Unternehmung gleichzeitig die Rolle eines Therapeuten und Administrators einnehmen.
+|Unternehmungsgrenze|Alle Elemente innerhalb dieser Grenze werden von uns gewartet und können direkt beinflusst werden. Auf Elemente ausserhalb dieser Grenze besitzen wir nur beschränkten bis gar keinen Einfluss. 
+|Gruppe: Patient|Alle Elemente innerhalb dieser Gruppe stehen in direkter Verbindung zum Akteur "Patient" und werden von diesem verwendet. Physio Connect hat keinen Einfluss auf die Hard- und Software, welche von den Patienten eingesetzt wird.
+|Gruppe: Physiounternehmung|Eine Unternehmung, welche Physiotherapien durchführt. In den meisten Fällen handelt es sich um eine Physio-Praxis, es kann sich jedoch auch um eine Spitalabteilung, eine Rehabilitationsklinik oder andere Anbieter handeln. Physio Connect hat nur einen beschränkten Einfluss auf die in Physiounternehmungen eingesetzten Softwaresysteme. In den meisten Fällen ist es möglich, Informationen zu bestehenden Schnittstellen zu erhalten. 
+|Physio Connect|Hauptsystem, dessen Kontext im Rahmen dieses Dokuments definiert wird. Bietet die im Kapitel link:01_introduction_and_goals.adoc#section-introduction-and-goals[Einführung und Ziele] beschriebenen Funktionalitäten an.
+|Mobile Patientenapp|App, welche von den Patienten mittels eines handelsüblichen Smartphones verwendet werden kann. Wird zum Ausführen von Therapie-Sessions verwendet. Erhält Daten zu Therapien von Physio Connect. Sendet - falls möglich - aufgezeichnete Messdaten an Physio Connect.
+|Übungskatalog|Beinhaltet vordefinierte Übungsdefinitionen und bietet die Möglichkeit, Übungen via einer API zu verwalten.
+|Benutzerverwaltung|Beinhaltet alle benutzerspezifischen Informationen. Handhabt die Authentifizierung und Autorisierung im Rahmen des gesamten Systemkontexts. Bietet eine API zur Verwaltung von Benutzern an.
+|Patient:in|Akteur, welcher die mobile Patientenapp verwendet, um Therapie-Sessions auszuführen. Im Normalfall hat der Patient eine Verordnung von einem Hausarzt oder einer anderen Gesundheitsinstitution zur Teilnahme an einer gewissen Anzahl Physiotherapien. Ebenfalls ist es möglich, dass sich der Patient im Spital oder einer Rehabilitationsklinik befindet. +
+Des Weiteren haben Patienten die Berechtigung, direkt mit Physio Connect zu interagieren und somit selbsterstellte Therapie-Sessions und Übungen zu verwalten.
+|Fitness Tracker|Gerät, welches Daten wie Herzschlag, Anzahl Schritte und Blutdruck während der Durchführung einer Übung aufzeichnet. Im Normalfall handelt es sich hierbei um ein Fitnessband oder eine Sportuhr. Es kann sich jedoch auch um andere Geräte handeln, solange diese eine Schnittstelle zur Aufzeichnung der relevanten Messdaten bereitstellen.
+|Therapeut:in|Therapeuten sind für die Durchführung von Physiotherapien mit Patienten zuständig. Physiotherapeuten planen, dokumentieren und werten Therapien patientenspezifisch aus. Therapeuten haben die Berechtigung, direkt mit Physio Connect zu interagieren und somit Therapien und Übungen zu verwalten.
+|Administrator:in|Administratoren sind Personen in Physiounternehmungen, welche die höchstmögliche Authorisierungsstufe im Umgang mit Physio Connect besitzen. Es ist möglich, dass Personen in einer Physiounternehmung gleichzeitig die Rolle eines Therapeuten und Administrators einnehmen können.
 |===
 
 *FIXME*: Die folgende Tabelle finde ich im momentanen Stand eher verwirrend, sollte auf der Definition oben basieren "Alternatively (or additionally) you can use a table. The title of the table is the name of your system, the three columns contain the name of the communication partner, the inputs, and the outputs."
-Kommunikation aus Sicht von Physio Connect
-|===
-|Kommunikationspartner|Input|Output
-|Mobile App|Informationen zu Therapien, Therapiesessions und Therapieübungen|Fortschritt von laufenden Sessions. Endresultat von Abgeschlossenen Sessions
-|Übungs Katalog|Create/Update/Delete Requests für Übungen|Liste der vorhandenen Übungen
-|Benutzer Verwaltung|Requests zur Validierung von Access Tokens.* Möglicherweise Requests zur Erstellung / Anpassung von Benutzern*|JWT Token mit Authorisierungsinformationen
-|Therapeut: in||Plant Therapien, Sendet Therapieeinladungen, erstellt Übungen
-|Administrator: in||Administriert Personal und Übungen. *Evt. macht eine direkte Verbindung zur Benutzerverwaltung mehr Sinn zum Administrieren der Benutzer.*
-|Patient: in|Erhält Therapieeinladungen|Verwaltet selbst erstellte Therapien
-|===
-
-
 
 [.landscape]
 <<<
 
+**Kommunikation aus Sicht von Physio Connect**
+
+[options="header",cols="2,6,6"]
+|===
+|Kommunikationspartner|Eingehende Daten|Ausgehende Daten
+|Mobile Patientenapp
+a|
+* Fortschritt von laufenden Therapie-Sessions - beinhaltet aktuelle Mess- und Ausführungsdaten wie Puls, Blutdruck, effektive Sets / Reps pro Übung
+* Endresultat von abgeschlossenen Therapie-Sessions inkl. Rückmeldung des Patienten
+
+|Informationen zu verordneten Therapien, verordneten / eigenen Therapie-Sessions und Therapieübungen (inkl. Übungsdetails wie Beschreibungen, Bilder, Audio, Video)
+|Übungskatalog|Liste der vorhandenen / via Request angeforderten Übungen|Requests für die Verwaltung von Übungen - Create / Update / Delete (Archive)
+|Benutzerverwaltung
+a|
+* Identity / Access Tokens mit Autorisierungsinformationen
+* (Liste von) Benutzerinformationen welche via Request angefordert wurden
+
+a|
+* Requests zur Authentifizierung / Login (inkl. Ausstellung von Identity / Access Tokens)
+* Validierung von Access Tokens (Sicherstellung der Authentifizierung / Autorisierung)
+* Requests zur Verwaltung von Systembenutzern
+* Request zur Registrierung eines Patienten (= Erstellung eines Systembenutzers)
+
+|Therapeut:in
+a|
+* Plant Therapien (inkl. Therapie-Sessions)
+* Sendet Einladungen an Patienten zu geplanten Therapien
+* Erstellt Übungen / -vorlagen
+
+|-
+|Administrator:in|Administriert Systembenutzer und Übungen|-
+|Patient:in|Verwaltet selbsterstellte Therapien und Übungen|Erhält Einladungen zur Teilnahme an neu verordneten Therapien
+|===
+
 ==== Erweiterter Kontext
 
-Die Zukunft
-
+Der Systemkontext einer zukünftigen, erweiterten Version von Physio Connect könnte folgendermassen aussehen:
 
 plantuml::structurizr_diagrams/generated/structurizr-Gesamtuebersicht.puml[format=svg]
 
-
 [.portrait]
 <<<
-[options="header"]
+[options="header",cols="2,6"]
 |===
 |Element|Beschreibung
-|Gruppe: Zukünftige Abhängigkeiten|Mögliche Abhängigkeiten, welche in der ersten Implementationszyklus keinen Einfluss auf unser System haben. Die enthaltenen Elemente müssen bei Entscheidungen jedoch berücksichtigt werden, sodass zukünftige Umsetzungen möglichst reibungslos verlaufen.
-|Dokumentationssoftware|Physiotherapeuten dokumentieren mit Dokumentasionssoftwaren die ausgeführten Therapiesessions und planen auszuführende Therapiesessions. Es gibt drei Varianten von Dokumentationssystemen, welche heutzutage im Einsatz sind:
+|Gruppe: +
+Mögliche zukünftige Abhängigkeiten|Mögliche Abhängigkeiten, welche im Rahmen des ersten Implementationszyklus keinen Einfluss auf Physio Connect haben. Die enthaltenen Elemente müssen bei Entscheidungen jedoch berücksichtigt werden, sodass zukünftige Umsetzungen möglichst reibungslos verlaufen.
+|Dokumentationssoftware
+a|
+Physiotherapeuten dokumentieren mit einer kundenseitig bereits eingesetzten Dokumentationssoftware die ausgeführten Therapie-Sessions und planen auszuführende Therapie-Sessions. Es gibt drei Varianten von Dokumentationssystemen, welche heutzutage im Einsatz sind:
 
-* Vollintegriert in einer Software Gesamtlösung: wird meist von Spitälern eingesetzt
+* Vollintegriert in einer Software-Gesamtlösung: +
+Wird meist von Spitälern eingesetzt
+* Einzelne Software, teilweise mit Integrationsschnittstellen: +
+Wird oft von Praxen verwendet
+* Keine digitale Lösung, alles auf Papier: +
+Weiterhin besonders in kleineren Praxen verbreitet
 
-* Einzelne Software, teilweise mit Integrationsschnittstellen: Wird oft von Praxen verwendet
-
-* Keine digitale Lösung, alles auf Papier: Weiterhin sehr in kleineren Praxen verbreitet
-|Therapie File|Therapiefiles beinhalten alle für Therapien relevante Daten. Diese Files können entweder direkt von Therapeuten erstellt oder von Dokumentationssystemen exporteirt werden. Physio Connect kann diese Files importieren und die definierten Therapien im System anlegen / anpassen.
-|Patienten Dossier|Schnittstelle für die Übermittlung der Gesundheitsdaten an das https://www.patientendossier.ch/[Elektronische Patientendossier (EPD)]
-|Versicherungsschnittstellen|Verschiedene Versicherungen bieten Schnittstellen an, um sportliche Leistungen von Kunden zu entlöhnen. Möglicherweise können ausgeführte Therapien der Patienten an diese Schnittstellen gesendet werden.
-|Data Scientist|Data Scientists oder Forschende, welche an den gesammelten Gesunheitsdaten interessiert sind. Es soll die möglichkeit offen gehalten werden, anonymisierte Gesunheitsdaten für Studien anzubieten.
+|Therapie File|Beinhaltet alle therapierelevanten Daten. Das File kann entweder direkt / manuell von Therapeuten erstellt oder aus einer bestehenden Dokumentationssoftware exportiert werden. Physio Connect kann dieses File importieren und die darin definierten Therapien im System anlegen oder anpassen.
+|Patienten Dossier|Schnittstelle für die Übermittlung der patientenspezifischen Gesundheits- / Messdaten an das https://www.patientendossier.ch/[Elektronische Patientendossier (EPD)]
+|Versicherungsschnittstellen|Verschiedene (Kranken-)Versicherungen bieten Schnittstellen an, um sportliche Leistungen von Kunden zu entlöhnen. Möglicherweise können administrative Daten (= ohne Messdaten) der pro Patient ausgeführten Therapien an diese Schnittstellen gesendet werden.
+|Data Scientist|Data Scientists oder Forschende, welche an den gesammelten Gesundheits- / Messdaten interessiert sind. Es soll die Möglichkeit offen gehalten werden, anonymisierte Gesundheitsdaten für Studien anzubieten.
 |===
-**<Diagram or Table>**
 
-**<optionally: Explanation of external domain interfaces>**
+=== Technischer- oder Verteilungskontext
 
-=== Technical Context
-
-[role="arc42help"]
-****
-.Contents
-Technical interfaces (channels and transmission media) linking your system to its environment. In addition a mapping of domain specific input/output to the channels, i.e. an explanation which I/O uses which channel.
-
-.Motivation
-Many stakeholders make architectural decision based on the technical interfaces between the system and its context. Especially infrastructure or hardware designers decide these technical interfaces.
-
-.Form
-E.g. UML deployment diagram describing channels to neighboring systems,
-together with a mapping table showing the relationships between channels and input/output.
-
-****
-
-**<Diagram or Table>**
-
-**<optionally: Explanation of technical interfaces>**
-
-**<Mapping Input/Output to Channels>**
+Eine Darstellung des technischen / Verteilungskontexts inkl. der definierten Schnittstellen und Technologien ist innerhalb der link:05_building_block_view.adoc#section-building-block-view[Bausteinsicht] definiert, um die Erfassung redundanter Informationen / Darstellungen innerhalb dieses Kapitels zu vermeiden.
