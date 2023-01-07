@@ -38,12 +38,6 @@ when your infrastructure is more complex.
 
 See https://docs.arc42.org/section-7/[Deployment View] in the arc42 documentation.
 
-****
-
-=== Infrastruktur mit einem Physio Connect System
-
-[role="arc42help"]
-****
 Describe (usually in a combination of diagrams, tables, and text):
 
 * distribution of a system to multiple locations, environments, computers, processors, .., as well as physical connections between them
@@ -54,54 +48,140 @@ Describe (usually in a combination of diagrams, tables, and text):
 For multiple environments or alternative deployments please copy and adapt this section of arc42 for all relevant environments.
 ****
 
-Motivation::
+=== Infrastruktur mit einem Physio Connect System
 
-_<explanation in text form>_
+==== Cloud Hyperscaler
 
-Quality and/or Performance Features::
+**Motivation**
 
-_<explanation in text form>_
+Gemäss *ADR-HST-10* und *ADR-HST-11* wurde bestimmt, dass nur ein Physio Connect System produktiv eingesetzt werden soll, das von uns gehosted wird.
 
-Mapping of Building Blocks to Infrastructure::
+Um eine skalierbare Umgebung umzusetzen, welche ohne hohe Initialkosten in Betrieb genommen und kosteneffizient betrieben werden kann, wurde gemäss *ADR-HST-10* entschieden, einen Cloud Hyperscaler zu verwenden. Zu diesem Zeitpunkt ist noch unbekannt, welcher Hyperscaler verwendet werden soll.
 
-tbd
+**Qualitäts- und Performanzeigenschaften**
+
+Um Sicherzustellen, dass keine Resourcen die Schweizer Grenzen verlassen, dürfen nur Resourcen des Hyperscalers verwendet werden, welche sich in einer Schweizer Region befinden.
+
+Der Kubernetes Cluster soll zu jeder Zeit mindestens eine Master Node und zwei Worker Nodes besitzen, um die Ausfallsicherheit zu gewährleisten.
+
+Die Kapazität des Clusters soll in der Nacht auf ein Minimum reduziert werden.
+
+Die Anzahl Replikationen der Pods soll automatisch gemäss Resourcenverbrauch skaliert werden.
+
+Zusätzlich soll die Skalierung zeitbasiert optimiert werden, um auf Spitzenbelastungen vorbereitet zu sein.
+
+**Mapping of Building Blocks to Infrastructure**
+
+Die Zuweisung der Bausteine ist in der Abbildung *Referenz Abbildung* visualisiert.
 
 plantuml::structurizr_diagrams/generated/structurizr-deployment-singulaere-physioconnect.puml[format=svg]
 
+[cols="1,1,2"]
+|===
+|Baustein|Zuweisung|Kommentar
 
-_<description of the mapping>_
+|Therapie Planungs Service
+|Managed Kubernetes Cluster
+|Die Skalierung des Therapie Services soll auf die Arbeitszeiten der Therapeuten Rücksicht nehmen.
 
-=== Infrastruktur mit mehreren Physio Connect System
+|Ausführungs Service
+|Managed Kubernetes Cluster
+|Die Skalierung des Ausführungs Services soll auf die typischen Ausführungszeiten der Therapiesessions (Morgen, Feierabend, Abend) Rücksicht nehmen.
 
+|Server Side Therapie Manager
+|Managed Kubernetes Cluster
+|-
 
-Motivation::
+|Übungskatalog Wrapper
+|Managed Kubernetes Cluster
+|-
 
-_<explanation in text form>_
+|Benutzerverwaltung Wrapper
+|Managed Kubernetes Cluster
+|-
 
-==== Zusammenspiel mit Patientenapp
+|Load Balancer
+|Managed Kubernetes Cluster
+|Je nach Hyperscaler kann es sein, dass ein Loadbalancer ausserhalb des Clusters eingerichtet werden muss.
 
-Motivation::
+|Therapie Planungs Datenbank
+|Storage Service
+|Zu diesem Zeitpunkt ist noch nicht entschieden, ob es sich bei dieser Datenbank um eine relationale oder dokumenten Datenbank handeln wird.
 
-_<explanation in text form>_
+|Ausführungsdatenbank
+|Storage Service
+|Dokumentendatenbank. Es soll ein Service gewählt werden, welcher speziell für diesen Typ von Datenbanken ausgelegt ist. Da der spezifische Hyperscaler noch unbekannt ist, kann hier kein expliziter Service genannt werden.
 
-Mapping of Building Blocks to Infrastructure::
-_<description of the mapping>_
+|Übungskatalog
+|Unbekanntes Hosting
+|Der Übungskatalog ist out of Scope. Die Entscheidung, wo der Übungskatalog gehosted wird, ist für uns zu diesem Zeitpunkt irrelevant.
+
+|Benutzerverwaltung
+|Unbekanntes Hosting
+|Die Benutzerverwaltung ist out of Scope. Die Entscheidung, wo die Benutzerverwaltung gehosted wird, ist für uns zu diesem Zeitpunkt irrelevant.
+
+|===
+
+==== Patienten Infrastruktur
+
+Die Patienteninfrastruktur kann von uns nicht direkt Beeinflusst werden. Gemäss des beschriebenen Architekturtreibers *Mehrheitliche Verwendung des Smartphones* wird davon ausgegangen, dass beinahe alle Patienten ein Smartphone besitzen, welches mit der Patientenapp kompatibel sind. Immer mehr Patienten besitzen Fitnesstracker, die Patientenapp funktioniert jedoch auch ohne Fitnesstracker.
+
+In Ausnahmefällen können Patienten Fitnesstracker von einer Privatpraxis oder Reha Klinik erhalten. Dies hat jedoch keinen Einfluss auf unsere Infrastruktur.
+
+==== SaaS Kunden Infrastruktur
+
+Gemäss den *ADR-HST-11* wurde bestimmt, dass möglichst nur ein Physio Connect System produktiv eingesetzt werden sollte. Dies bedeutet, dass Kunden __Physio Connect__ als "System as a Service" beziehen.
+
+Kunden können den __Therapie Manager__ mit den Geräten verwenden, welche sie bereits besitzen. Gemäss *ADR-FRO-10* und *ADR-FRO-13* werden die folgenden Platformen unterstützt.
+
+* Web Browsers
+** Chrome
+** Firefox
+** Edge
+** Safari
+* Mobile Browsers
+** Chrome
+** Safari
+* Android
+* iOS
+
+=== Infrastruktur mit mehreren Physio Connect Systemen
+
+**Motivation**
+
+Gemäss *ADR-HST-10* muss die Möglichkeit offen gehalten werden, dass Kunden eine eigene Instanz von Physio Connect in Betrieb haben. In diesem Kapitel werden die Konsequenzen dieser Eintscheidung auf das Deployment aufgezeigt.
+
+==== Zusammenspiel mit der Patientenapp
+
+**Motivation**
+
+Die Patientenapp muss die Möglichkeit besitzen, die Therapiedaten von mehreren __Physio Connect__ Systemen zu erhalten. Da die jeweiligen Therapiedaten jedoch ganzheitlich von der jeweiligen Instanz gehosted werden, können die Physio Connect Instanzen aus der Sicht der Patientenapp komplett unabhängig bleiben. Wie die Patientenapp die Daten hinterlegt, dass die Requests an die korrekte __Physio Connect__ Instanz gerichtet sind, ist nicht im Scope dieses Dokuments.
+
+**Mapping of Building Blocks to Infrastructure**
 
 plantuml::structurizr_diagrams/generated/structurizr-deployment-sicht-patientenapp.puml[format=svg]
 
+Die folgenden Eigenschaften müssen beim Deployment und der Konfiguration eingehalten werden:
+
+* Die Services eines __Physio Connect__ Systems dürfen nicht mit den Services eines anderen __Physio Connect__ Systems kommunizieren (Andere Systeme wie z.B. die Benutzerverwaltung sind von dieser Regel ausgeschlossen)
+* Therapiedaten eines Systems müssen getrennt von Therapiedaten anderer Systeme persistiert werden, vorzüglich in einer eigenen Datenbank 
+* Ausführungsdaten eines Systems müssen getrennt von Ausführungsdaten anderer Systeme persistiert werden, vorzüglich in einer eigenen Datenbank 
+
+Da wir keinen direkten Einfluss auf die Infrastruktur eines Kunden besitzen, wurden Annahmen getroffen. Die Kunden sollen beim Aufbau der Infrastruktur unterstützt werden, sodass Sicherheits und Performanz Qualitätsattribute eingehalten werden können. Schlussendlich sind jedoch die Kunden für die Adäquanz der Infrastruktur verantwortlich.
+
 ==== Verwendung des Therapie Managers
 
-Motivation::
+**Motivation**
 
-_<explanation in text form>_
+Der __Therapie Manager__ muss mit der Version des unterliegenden __Physio Connect__ Systems übereinstimmen. Aus diesem Grund müssen alle Deployments von __Physio Connect__ einen eigenen __Server Side Therapie Manager__ besitzen.
 
-Quality and/or Performance Features::
+**Qualitäts- und Performanzattribute**
 
-_<explanation in text form>_
+Alle deployeten __Server Side Therapie Manager__ werden eine eigen URL benötigen. Dies führt dazu, dass Therapeuten eines Spitals mit eigenem __Physio Connect__ System eine andere URL verwenden als unsere SaaS Kunden. Da diese Therapeuten immer im gleichen System arbeiten, hat dies keinen Einfluss auf die Usability. Falls Patienten an mehrere Therapien teilnehmen, kann es jedoch sein, dass Sie unterschiedliche Therapie Manager verwenden müssen. Die Verwendung von Unterschiedlichen URLs und unterschiedlich hinterlegten Daten verschlechtern die UX (User Expirience) für Patienten.
 
-Mapping of Building Blocks to Infrastructure::
+**Zuweisung von Bausteinen zur Infrastruktur**
 
-_<description of the mapping>_
+Zu diesem Zeitpunkt ist es noch nicht bekannt, ob alle __Physio Connect__ Systeme die gleiche Benutzerverwaltung und den gleichen Übungskatalog verwenden.
 
 [.landscape]
 <<<
@@ -111,20 +191,9 @@ plantuml::structurizr_diagrams/generated/structurizr-deployment-sicht-therapiema
 [.portrait]
 <<<
 
-
 ==== Gesamtübersicht
 
-Motivation::
-
-_<explanation in text form>_
-
-Quality and/or Performance Features::
-
-_<explanation in text form>_
-
-Mapping of Building Blocks to Infrastructure::
-
-tbd
+Das folgende Diagram ist die Gesamtübersicht eines deployments mit zwei __Physio Connect__ Systemen. Das Diagram wird zum Zwecke der Vollständigkeit aufgeführt, sollte jedoch nur bedingt zur Kommunikation verwendet werden, da es zu überladen ist.
 
 [.landscape]
 <<<
@@ -134,5 +203,3 @@ plantuml::structurizr_diagrams/generated/structurizr-deployment-mehrere-physioco
 
 [.portrait]
 <<<
-
-_<description of the mapping>_
