@@ -272,7 +272,7 @@ workspace "Physio integration layer project" {
                     mainUebungsKatalogWrapperInstance = containerInstance uebungsKatalogWrapper mainDeployment
                     mainBenutzerVerwaltungWrapperInstance = containerInstance benutzerVerwaltungWrapper mainDeployment
 
-                    mainServerSideTherapieManagerInstance =  containerInstance serverSideTherapieManager mainDeploymen
+                    mainServerSideTherapieManagerInstance =  containerInstance serverSideTherapieManager mainDeployment
                 }
 
                 storageService = deploymentNode "Storage Service" {
