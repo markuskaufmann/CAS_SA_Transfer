@@ -198,18 +198,16 @@ workspace "Physio integration layer project" {
 
 
             deploymentNode "Unsere Infrastruktur: Cloud Hyperscaler" {
-                deploymentNode "Kubernetes Cluster" {
-                    deploymentNode "namespace: PhysioConnect" {
-                        loadBalancerInstanz = containerInstance loadBalancer
+                deploymentNode "Managed Kubernetes Cluster" {
+                    loadBalancerInstanz = containerInstance loadBalancer
 
-                        ausfuehrungsServiceInstanz = containerInstance ausfuehrungsService
-                        planungsServiceInstanz = containerInstance planungsService
+                    ausfuehrungsServiceInstanz = containerInstance ausfuehrungsService
+                    planungsServiceInstanz = containerInstance planungsService
 
-                        uebungsKatalogWrapperInstance = containerInstance uebungsKatalogWrapper
-                        benutzerVerwaltungWrapperInstance = containerInstance benutzerVerwaltungWrapper
+                    uebungsKatalogWrapperInstance = containerInstance uebungsKatalogWrapper
+                    benutzerVerwaltungWrapperInstance = containerInstance benutzerVerwaltungWrapper
 
-                        serverSideTherapieManagerInstance =  containerInstance serverSideTherapieManager 
-                    }
+                    serverSideTherapieManagerInstance =  containerInstance serverSideTherapieManager 
                 }
 
                 deploymentNode "Storage Service" {
@@ -264,18 +262,16 @@ workspace "Physio integration layer project" {
             }
 
             deploymentNode "Unsere Infrastruktur: Cloud Hyperscaler" {
-                deploymentNode "Kubernetes Cluster" {
-                    deploymentNode "namespace: PhysioConnect" {
-                        mainLoadBalancerInstanz = containerInstance loadBalancer mainDeployment
+                deploymentNode "Managed Kubernetes Cluster" {
+                    mainLoadBalancerInstanz = containerInstance loadBalancer mainDeployment
 
-                        mainAusfuehrungsServiceInstanz = containerInstance ausfuehrungsService mainDeployment
-                        mainPlanungsServiceInstanz = containerInstance planungsService mainDeployment
+                    mainAusfuehrungsServiceInstanz = containerInstance ausfuehrungsService mainDeployment
+                    mainPlanungsServiceInstanz = containerInstance planungsService mainDeployment
 
-                        mainUebungsKatalogWrapperInstance = containerInstance uebungsKatalogWrapper mainDeployment
-                        mainBenutzerVerwaltungWrapperInstance = containerInstance benutzerVerwaltungWrapper mainDeployment
+                    mainUebungsKatalogWrapperInstance = containerInstance uebungsKatalogWrapper mainDeployment
+                    mainBenutzerVerwaltungWrapperInstance = containerInstance benutzerVerwaltungWrapper mainDeployment
 
-                        mainServerSideTherapieManagerInstance =  containerInstance serverSideTherapieManager mainDeployment
-                    }
+                    mainServerSideTherapieManagerInstance =  containerInstance serverSideTherapieManager mainDeploymen
                 }
 
                 storageService = deploymentNode "Storage Service" {
@@ -295,18 +291,16 @@ workspace "Physio integration layer project" {
                     }
                 }
 
-                deploymentNode "Bare Metal Cluster" {
-                    deploymentNode "namespace: PhysioConnect" {
-                        spitalLoadBalancerInstanz = containerInstance loadBalancer spitalDeployement
+                deploymentNode "Bare Metal Kubernetes Cluster" {
+                    spitalLoadBalancerInstanz = containerInstance loadBalancer spitalDeployement
 
-                        spitalAusfuehrungsServiceInstanz = containerInstance ausfuehrungsService spitalDeployement
-                        spitalPlanungsServiceInstanz = containerInstance planungsService spitalDeployement
+                    spitalAusfuehrungsServiceInstanz = containerInstance ausfuehrungsService spitalDeployement
+                    spitalPlanungsServiceInstanz = containerInstance planungsService spitalDeployement
 
-                        spitalUebungsKatalogWrapperInstance = containerInstance uebungsKatalogWrapper spitalDeployement
-                        spitalBenutzerVerwaltungWrapperInstance = containerInstance benutzerVerwaltungWrapper spitalDeployement
+                    spitalUebungsKatalogWrapperInstance = containerInstance uebungsKatalogWrapper spitalDeployement
+                    spitalBenutzerVerwaltungWrapperInstance = containerInstance benutzerVerwaltungWrapper spitalDeployement
 
-                        spitalServerSideTherapieManagerInstance =  containerInstance serverSideTherapieManager spitalDeployement
-                    }
+                    spitalServerSideTherapieManagerInstance =  containerInstance serverSideTherapieManager spitalDeployement
                 }
 
                 datenbankServer = deploymentNode "Datenbank Server" {
