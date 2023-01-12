@@ -1,0 +1,21 @@
+== Expertenmeeting 2
+
+=== Fazit
+Die erarbeiteten Anforderungen, Stakeholder und der Architekturentwurf stimmen grösstenteils mit der Expertenmeinung überein. Erkenntnisse des Meetings bezogen sich hauptsächlich auf Sprachgebrauch, Wortdefinitionen und Domänenspezifische Kleinigkeiten.
+
+=== Erkenntnisse
+
+- Das Wort "Eingewiesen" wird in der Medizin nicht mehr gebraucht mit wenigen Ausnahmen in psychiatrischen Fällen. Das Wort "Eingewiesen" soll mit "Zugewiesen" ersetzt werden.
+- Verordnungen können nicht nur von Hausärzten sondern auch von Fachärzten ausgestellt werden.
+- Im Text muss konkreter zwischen Therapien, welche von Therapeuten geleitet werden, und Heimtherapien unterschieden werden
+- Verordnete Therapien können sowohl in Praxen als auch Spitälern durchgeführt werden
+- Es gibt ambulante und stationäre Rehabilitationen. Die stationäre Rehabilitation kann via "inpatient" markiert werden
+- "Physiotherapie ausführen" wird eher verstanden als eine Therapie leiten, nicht die Durchführung der Übungen durch die Patienten. Dies sollte im Text noch angepasst werden
+-- Teilnehmen
+-- Bekommen
+-- Erhalten
+-- Übungen ausführen unter Anleitung
+- Reps ersetzen durch Repetitionen oder Wiederholungen
+- Sets ersetzen durch Sätze oder Serien
+- Verordnungen werden nicht von "medizinischen Fachstellen" ausgegeben sondern spezifisch durch Haus- oder Fachärzte
+- Kranken Kassen bezahlen verordnete Therapien im Normalfall, nicht immer 

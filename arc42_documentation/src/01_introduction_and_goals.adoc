@@ -3,7 +3,7 @@
 
 === Systemvision
 
-Das Physio Connect-System ist eine Unterstützungs- und Integrationssoftware für Physiotherapeuten und Patienten, welche Selbsttherapien intuitiver und effektiver gestalten möchten. +
+Das Physio Connect-System ist eine Unterstützungs- und Integrationssoftware für Physiotherapeuten und Patienten, welche Heimtherapien intuitiver und effektiver gestalten möchten. +
 Physio Connect ermöglicht es, mit minimalem Aufwand patientenspezifische Therapien zu planen, den Patienten zur Ausführung bereitzustellen und schlussendlich anhand der gesammelten Messdaten und Patientenrückmeldungen auszuwerten. +
 Anders als bestehende Physio-Gesamtlösungen und Dokumentationssysteme zielt Physio Connect nicht darauf ab, bereits eingesetzte Systeme und Prozesse abzulösen, sondern nimmt eine komplementäre Rolle ein. Somit ist der initiale Einarbeitungsaufwand sehr gering und die für Physiotherapeuten essentielle Flexibilität hinsichtlich der Therapieplanung wird erhöht und nicht eingeschränkt.
 
@@ -19,11 +19,11 @@ Anders als bestehende Physio-Gesamtlösungen und Dokumentationssysteme zielt Phy
 ** Übungskollektionen erstellen und den betroffenen Patienten senden, damit diese nach abgeschlossener Therapie selbstständing Übungen ausführen können
 
 * Patienten können
-** einer verordneten Therapie beitreten
+** einer Therapie beitreten
 ** Therapie-Sessions inkl. der verordneten Übungen durchführen
 ** eine Rückmeldung (Kommentar / Bewertung) zu einer Therapie-Session oder Übung abgeben
-** eigene Therapie-Sessions inkl. eigener Übungen verwalten und durchführen
 ** eigene Therapiedaten einsehen und weiterleiten
+** Therapie-Sessions in für eigene Therapien selbst erstellen inkl. eigener Übungen verwalten und durchführen ohne Physiotherapeuten. Diese eigenen Therapien werden von den Patienten selbst verwaltet und haben keine zugewisenen Physiotherapeut: Innen
 
 * Vorgesetzte von Physiotherapeuten können
 ** den Fortschritt ihrer unterstellten Physiotherapeuten überwachen (Monitoring) und auswerten (Reporting)

@@ -2,26 +2,26 @@
 title Patient Lifecicle Version 1
 
 State Gesund
-State Hospitalisiert
-State InAmbulanterBehandlung
-State InRehabilitation
+State Hospitalisiert #Orange
+State InAmbulanterBehandlung #LightGreen
+State InRehabilitation #LightBlue
 
 [*] --> Gesund
 
-Gesund -->  Hospitalisiert : Eingewiesen oder via Notfall
-Gesund -->  InRehabilitation : Eingewiesen
-Gesund -->  InAmbulanterBehandlung : Verordnet
+Gesund ---->  Hospitalisiert : Zugewiesen via Hausarzt oder Facharzt\nvia Notfall
+Gesund ---->  InRehabilitation : Zugewiesen via Hausarzt oder Facharzt
+Gesund ---->  InAmbulanterBehandlung : Verordnet
 
-Hospitalisiert --> InRehabilitation : Verschoben in Reha
-Hospitalisiert --> InAmbulanterBehandlung : Entlassen mit Verordnung
-Hospitalisiert --> SelbstständigeBehandlung : Entlassen ohne Verordnung
+Hospitalisiert --[#Red]--> InRehabilitation : Umgeteilt in Reha
+Hospitalisiert --[#Red]--> InAmbulanterBehandlung : Entlassen mit Verordnung
+Hospitalisiert --[#Red]--> SelbstständigeBehandlung : Entlassen ohne Verordnung
 
-InRehabilitation --> InAmbulanterBehandlung : Entlassen mit Verordnung
-InRehabilitation --> Hospitalisiert : Lage verschlechtert
-InRehabilitation --> SelbstständigeBehandlung : Entlassen ohne Verordnung
+InRehabilitation --[#Blue]-> InAmbulanterBehandlung : Entlassen mit Verordnung
+InRehabilitation --[#Blue]--> Hospitalisiert : Lage verschlechtert
+InRehabilitation --[#Blue]--> SelbstständigeBehandlung : Entlassen ohne Verordnung
 
-InAmbulanterBehandlung --> Hospitalisiert : Lage verschlechtert
-InAmbulanterBehandlung --> SelbstständigeBehandlung : Verordnung abgeschlossen
+InAmbulanterBehandlung --[#Green]--> Hospitalisiert : Lage verschlechtert
+InAmbulanterBehandlung --[#Green]--> SelbstständigeBehandlung : Verordnung abgeschlossen
 
 SelbstständigeBehandlung --> [*]
 

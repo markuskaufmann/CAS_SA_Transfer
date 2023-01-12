@@ -13,21 +13,21 @@ Im Rahmen dieses Kapitels werden die wichtigsten fachlichen und technischen Begr
 
 |Patient
 |Patient
-|Im Bezug zum System Physio Connect sind Patienten als Personen definiert, die Physiotherapien ausführen oder ausgeführt haben. Diese Therapien können von Physiotherapeuten verwaltet werden oder von den Patienten selbst definiert werden. Genesene Personen werden weiterhin als Patienten bezeichnet.
+|Im Bezug zum System Physio Connect sind Patienten als Personen definiert, die an Physiotherapien teilnehmen oder teilgenommen haben. Diese Therapien können von Physiotherapeuten verwaltet werden oder von den Patienten selbst definiert werden. Genesene Personen werden weiterhin als Patienten bezeichnet.
 
 |Hospitalisiert
 |hospitalized
-|In ein Spital eingewiesen. Falls benötigt werden Physiotherapien mit hospitalisierten Personen ausgeführt. Für mehr Informationen zum Patientenzyklus siehe <<Abbildung: Patientenzyklus>>.
+|Aufgrund von Erkrankung oder Unfall in ein Spital zugewiesen. Falls benötigt werden Physiotherapien mit hospitalisierten Personen ausgeführt. Für mehr Informationen zum Patientenzyklus siehe <<Abbildung: Patientenzyklus>>.
 
-|Rehabilitation
-|Rehabilitation
-|Ziel einer Rehabilitation ist die Wiederherstellung, Kompensation, Verhinderung oder Verlangsamung der Verschlechterung von (sensorischen, körperlichen, intellektuellen, mentalen, kognitiven oder sozialen) Funktionen, um dem Einzelnen zu helfen, sein optimales Niveau zu erreichen https://www.physio-pedia.com/Introduction_to_Rehabilitation. Patienten, welche in Rehabilitation sind, befinden sich in einer speziell dafür ausgerichteten Klinik. In diesen Kliniken erhalten Patienten täglich geführte Therapie-Sessions. Für mehr Informationen zum Patientenzyklus siehe <<Abbildung: Patientenzyklus>>.
+|(stationäre) Rehabilitation
+|(Inpatient) Rehabilitation
+|Ziel einer Rehabilitation ist die Wiederherstellung, Kompensation, Verhinderung oder Verlangsamung der Verschlechterung von (sensorischen, körperlichen, intellektuellen, mentalen, kognitiven oder sozialen) Funktionen, um dem Einzelnen zu helfen, sein optimales Niveau zu erreichen https://www.physio-pedia.com/Introduction_to_Rehabilitation. Patienten, welche in Rehabilitation sind, befinden sich in einer speziell dafür ausgerichteten Klinik. In diesen Kliniken erhalten Patienten täglich geführte Therapie-Sessions. Für mehr Informationen zum Patientenzyklus siehe <<Abbildung: Patientenzyklus>>. Ambulante Rehabilitationen werden im Rahmen dieses Dokumentes nicht einzeln untersucht, da diese die gleichen Anforderungen wie andere ambulante Behandlungen besitzen.
 
 |Ambulante Behandlung
 |Outpatient treatment
-|Im Gegensatz zur stationären Behandlung bleibt der Patient bei der ambulanten Behandlung nicht über Nacht in Betreuung. Das heisst: Sie können am selben Tag wieder nach Hause. https://www.comparis.ch/krankenkassen/leistungen/ambulante-behandlung 
+|Im Gegensatz zur stationären Behandlung bleibt der Patient bei der ambulanten Behandlung nicht über Nacht in Betreuung. Im Normallfall befindet sich ein Patient pro Therapieeinheit nur 30 Minuten vor Ort in Behandlung. Das heisst: Sie können am selben Tag wieder nach Hause. https://www.comparis.ch/krankenkassen/leistungen/ambulante-behandlung 
 
-Im Rahmen der Physiotherapie erhalten Patienten eine Verordnung zur Teilnahme an Physiotherapien. Diese Therapien werden in Praxen ausgeführt. Für mehr Informationen zum Patientenzyklus siehe <<Abbildung: Patientenzyklus>>.
+Im Rahmen der Physiotherapie erhalten Patienten eine Verordnung zur Teilnahme an Physiotherapien. Diese Therapien werden in Praxen oder Spitälern ausgeführt. Für mehr Informationen zum Patientenzyklus siehe <<Abbildung: Patientenzyklus>>.
 
 |Therapie
 |Therapy
@@ -53,17 +53,17 @@ Im Rahmen der Physiotherapie erhalten Patienten eine Verordnung zur Teilnahme an
 |Therapy exercise
 |Therapieübungen werden von Patienten während einzelner Therapie-Sessions ausgeführt. Therapieübungen basieren auf Übungsdefinitionen und enthalten exakte Angaben zur Ausführung inklusive Zeitangaben, Sets und Reps. Zusätzlich sind Therapieübungen einem Patienten und einer Therapie zugeordnet und besitzen einen Lebenszyklus.
 
-|Reps
-|Reps
+|Repetitionen / Reps
+|Repetitions / Reps
 |Anzahl Wiederholungen einer Bewegung. Zum Beispiel 15x Kniebeugen.
 
+|Serien / Sätze / Sets
 |Sets
-|Sets
-|Anzahl Wiederholungen der Reps inklusive Pausenangaben. Zum Beispiel 3 Sets à 15 Reps Kniebeugen mit je 30 Sekunden Pause dazwischen. Bei gewissen Übungen werden Zeitangaben anstatt Reps verwendet, zum Beispiel 2 Sets mit jeweils 30 Sekunden Planking.
+|Anzahl Wiederholungen der Repetitionen inklusive Pausenangaben. Zum Beispiel 3 Serien à 15 Repetitionen Kniebeugen mit je 30 Sekunden Pause dazwischen. Bei gewissen Übungen werden Zeitangaben anstatt Repetitionen verwendet, zum Beispiel 2 Sets mit jeweils 30 Sekunden Planking.
 
 |Verordnung
 |Prescription 
-|Verordnungen von Physiotherapien werden von medizinischen Fachstellen ausgegeben und bewirken, dass eine Krankenkasse die Physiotherapie-Kosten übernehmen muss. Verordnungen werden im Normalfall für 9 geführte Therapie-Sessions à 30 Minuten ausgestellt. In Spezialfällen können Verordnungen auch für längere Perioden und längere Therapie-Sessions ausgestellt werden. https://www.physioswiss.ch/media/8794/download/221028_d_H%C3%A4ufige%20Fragen%20zur%20Verordnung%20von%20Physiotherapie_Update%20Okt%202022.pdf?v=1
+|Verordnungen von Physiotherapien werden von Haus- und Fachärzten ausgestellt. Im Normallfall übernehmen Krankenkassen die Kosten aller verordneten Physiotherapien. Verordnungen werden im Normalfall für 9 geführte Therapie-Sessions à 30 Minuten ausgestellt. In Spezialfällen können Verordnungen auch für längere Perioden und längere Therapie-Sessions ausgestellt werden. https://www.physioswiss.ch/media/8794/download/221028_d_H%C3%A4ufige%20Fragen%20zur%20Verordnung%20von%20Physiotherapie_Update%20Okt%202022.pdf?v=1
 
 |Fitness Tracker
 |Fitness tracker
@@ -83,7 +83,7 @@ Im Rahmen der Physiotherapie erhalten Patienten eine Verordnung zur Teilnahme an
 
 |Dokumentationssystem
 |Documentation system
-|Mittels der Verwendung einer Dokumentationssoftware zeichnen Physiotherapeuten die ausgeführten Therapie-Sessions auf und planen auszuführende Therapie-Sessions. Es kann sich bei Dokumentationssystemen sowohl über digitale als auch auf Papier basierende Systeme handeln.
+|Mittels der Verwendung einer Dokumentationssoftware dokumentieren Physiotherapeuten die ausgeführten Therapie-Sessions und planen auszuführende Therapie-Sessions. Es kann sich bei Dokumentationssystemen sowohl über digitale als auch auf Papier basierende Systeme handeln.
 
 |Planungssoftware
 |Scheduling software
