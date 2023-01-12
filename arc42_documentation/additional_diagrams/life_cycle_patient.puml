@@ -8,20 +8,20 @@ State InRehabilitation #LightBlue
 
 [*] --> Gesund
 
-Gesund ---->  Hospitalisiert : Zugewiesen via Hausarzt oder Facharzt\nvia Notfall
-Gesund ---->  InRehabilitation : Zugewiesen via Hausarzt oder Facharzt
-Gesund ---->  InAmbulanterBehandlung : Verordnet
+Gesund ---->  Hospitalisiert : --[ Zugewiesen via Hausarzt oder Facharzt\nvia Notfall
+Gesund ---->  InRehabilitation : --[ Zugewiesen via Hausarzt oder Facharzt
+Gesund ---->  InAmbulanterBehandlung : --[ Verordnet
 
-Hospitalisiert --[#Red]--> InRehabilitation : Umgeteilt in Reha
-Hospitalisiert --[#Red]--> InAmbulanterBehandlung : Entlassen mit Verordnung
-Hospitalisiert --[#Red]--> SelbstständigeBehandlung : Entlassen ohne Verordnung
+Hospitalisiert --[#Red]--> InRehabilitation : --[ Umgeteilt in Reha
+Hospitalisiert --[#Red]--> InAmbulanterBehandlung : --[ Entlassen mit Verordnung
+Hospitalisiert --[#Red]--> SelbstständigeBehandlung : --[ Entlassen ohne Verordnung
 
-InRehabilitation --[#Blue]-> InAmbulanterBehandlung : Entlassen mit Verordnung
-InRehabilitation --[#Blue]--> Hospitalisiert : Lage verschlechtert
-InRehabilitation --[#Blue]--> SelbstständigeBehandlung : Entlassen ohne Verordnung
+InRehabilitation --[#Blue]-> InAmbulanterBehandlung : --[ Entlassen mit Verordnung
+InRehabilitation --[#Blue]--> Hospitalisiert : --[ Lage verschlechtert
+InRehabilitation --[#Blue]--> SelbstständigeBehandlung : --[ Entlassen ohne Verordnung
 
-InAmbulanterBehandlung --[#Green]--> Hospitalisiert : Lage verschlechtert
-InAmbulanterBehandlung --[#Green]--> SelbstständigeBehandlung : Verordnung abgeschlossen
+InAmbulanterBehandlung --[#Green]--> Hospitalisiert : --[ Lage verschlechtert
+InAmbulanterBehandlung --[#Green]--> SelbstständigeBehandlung : --[ Verordnung abgeschlossen
 
 SelbstständigeBehandlung --> [*]
 
