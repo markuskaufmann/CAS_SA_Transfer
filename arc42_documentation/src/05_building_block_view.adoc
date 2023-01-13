@@ -924,9 +924,9 @@ __Erfüllte link:../requirements_engineering/functional_requirements.adoc#sectio
 
 Diese Ebene repräsentiert unterschiedliche Whitebox-Ansichten der als besonders relevant erachteten Subsysteme von Physio Connect mit den darin beinhalteten Komponenten als einzelne Blackboxes.
 
-==== Therapie Planungs Service
+<<< CAN BE DELETED WHEN DOING REVIEW
 
-plantuml::structurizr_diagrams/generated/structurizr-PlanungsServiceDetails.puml[format=svg]
+see https://faq.arc42.org/questions/B-11/
 
 **Begründung der Struktur**
 The reason why this whitebox is structured like it is.
@@ -934,25 +934,128 @@ The reason why this whitebox is structured like it is.
 **Beinhaltete Blackbox-Bausteine / -Komponenten**
 Names and responsibilities of contained blackboxes, plus references to their detailed description.
 
-**Beziehungen / Schnittstellen zwischen Blackboxes**
-Brief description of the (important) relationships between internal blackboxes, plus references to their detailed description.
+>>> CAN BE DELETED WHEN DOING REVIEW
 
-**Probleme / Risiken**
-Know issues or risks with this whitebox, information about eventual technical debt or ideas for improvement
+==== Therapie Planungs Service
 
+plantuml::structurizr_diagrams/generated/structurizr-PlanungsServiceDetails.puml[format=svg]
+
+**Begründung der Struktur**
+
+Die interne Struktur des __Therapie Planungs Service__ basiert auf der getroffenen link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-20], welche den grundsätzlich zu verwendenden Architekturstil im Rahmen einer deploybaren Backend-Komponente thematisiert. Dabei haben wir uns für die Verwendung einer link:08_concepts.adoc#section-concepts[hexagonalen Architektur (Ports & Adapters)] entschieden, da die damit einhergehenden Vorteile (Flexibilität, Testbarkeit, Modifizier- / Erweiterbarkeit) am besten für die Erfüllung und Einhaltung unseres definierten link:01_introduction_and_goals.adoc#section-quality-goals[Qualitätsziels QG-3 (Modifiability)] geeignet sind.
+
+**Beinhaltete Blackbox-Bausteine / -Komponenten**
+
+[options="header",cols="3,2,6"]
+|===
+|Name|Schicht|Verantwortlichkeit
+
+|Therapie Domänenlogik
+|Domäne
+|Implementiert den Bestandteil der Businesslogik gemäss dem definierten link:08_concepts.adoc#section-concepts[Domänenmodell], welcher für die Planung und Verwaltung von Gesamttherapien, Therapie-Sessions und Therapieübungen verantwortlich ist.
+
+Beinhaltet die aus dem Domain-Driven Design (DDD) (**TBD Link zu Evans Buch**) bekannten Elemente wie Aggregate, Entitäten, Value Objects oder Domain Services.
+
+Stellt die Domänenelemente den darüberliegenden Schichten (Applikation, Infrastruktur) zur Verfügung.
+
+|Therapie Applikationslogik
+|Applikation
+|Realisiert die Interaktions- und Orchestrierungslogik zwischen der darunterliegenden Domänenschicht __Therapie Domänenlogik__ und der darüberliegenden Infrastrukturschicht, welche die jeweiligen Adapter beinhaltet.
+
+Definiert unterschiedliche Schnittstellen (Ports) und stellt diese der Infrastrukturschicht zur entsprechenden Implementation (Adapter) bereit.
+
+|Therapie Persistenz Adapter
+|Infrastruktur / Driven Adapter
+|Implementiert den entsprechenden Port der Applikationsschicht.
+
+Kapselt und abstrahiert die gesamte (technische) Logik, welche mit der Persistenz der Domänenelemente zusammenhängt. Hierzu gehören beispielsweise auch die implementierten Domain Repositories in der Form einzelner (Sub-)Adapter, welche die persistenztechnischen Details der Ablage und Abfrage der Domänenelemente verwalten.
+
+Implementiert den Kommunikationskanal zwischen __Therapie Planungs Service__ und __Therapie Planungs Datenbank__.
+
+|Therapie API Controller
+|Infrastruktur / Driving Adapter
+|Verwaltet die öffentlichen API Endpoints des __Therapie Planungs Service__ und leitet die erhaltenen Request-Daten mit einem entsprechenden Service Call an die __Therapie Applikationslogik__ weiter.
+
+Verifiziert die Daten eingehender Requests (lediglich formelle Prüfung) und beinhaltet die Objekt-Mappings für ausgehende Requests.
+
+Kann als "Driving Adapter" kategorisiert werden, da ein über den API Controller eingehender Request den zugehörigen Prozess in der Applikationsschicht initial anstösst.
+
+|Ausführungs API Adapter
+|Infrastruktur / Driven Adapter
+|Verwaltet den serviceinternen Zugriff auf die API der Komponente __Ausführungs Service__.
+
+Beispielsweise beinhaltet dieser Adapter die Definition des (generierten) API Clients des __Ausführungs Service__ sowie die damit verbundenden Objekt-Mappings, URL Builders und (De-)Serialisierungslogik.
+
+Kann als "Driven Adapter" kategorisiert werden, da er von der Applikationsschicht via zugehörigem Port aufgerufen wird.
+
+|Übungskatalog API Adapter
+|Infrastruktur / Driven Adapter
+|Verwaltet den serviceinternen Zugriff auf die API der Komponente __Übungskatalog Wrapper__.
+
+Beispielsweise beinhaltet dieser Adapter die Definition des (generierten) API Clients des __Übungskatalog Wrapper__ sowie die damit verbundenden Objekt-Mappings, URL Builders und (De-)Serialisierungslogik.
+
+Kann als "Driven Adapter" kategorisiert werden, da er von der Applikationsschicht via zugehörigem Port aufgerufen wird.
+
+|Benutzerverwaltung API Adapter
+|Infrastruktur / Driven Adapter
+|Verwaltet den serviceinternen Zugriff auf die API der Komponente __Benutzerverwaltung Wrapper__.
+
+Beispielsweise beinhaltet dieser Adapter die Definition des (generierten) API Clients des __Benutzerverwaltung Wrapper__ sowie die damit verbundenden Objekt-Mappings, URL Builders und (De-)Serialisierungslogik.
+
+Kann als "Driven Adapter" kategorisiert werden, da er von der Applikationsschicht via zugehörigem Port aufgerufen wird.
+
+|===
+
+**Technische Implementation der Schnittstellen zwischen Blackboxes**
+
+Die grundlegenden Schnittstellendefinitionen zwischen den einzelnen Schichten werden technisch durch Java Interfaces (Ports) und Klassen (Adapter) abgebildet. Die Verknüpfung zwischen Port und jeweiligem Adapter (oder wahlweise auch mehreren Adaptern pro Port) übernimmt der https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans[Dependency Injection Container des Spring Frameworks], da der __Therapie Planungs Service__ als dedizierte https://spring.io/projects/spring-boot/[Spring Boot]-Applikation deployed und betrieben wird.
 
 ==== Ausführungs Service
 
 plantuml::structurizr_diagrams/generated/structurizr-AusfuehrungsServiceDetails.puml[format=svg]
 
 **Begründung der Struktur**
-The reason why this whitebox is structured like it is.
+
+Die interne Struktur des __Ausführungs Service__ basiert auf der getroffenen link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-20], welche den grundsätzlich zu verwendenden Architekturstil im Rahmen einer deploybaren Backend-Komponente thematisiert. Dabei haben wir uns für die Verwendung einer link:08_concepts.adoc#section-concepts[hexagonalen Architektur (Ports & Adapters)] entschieden, da die damit einhergehenden Vorteile (Flexibilität, Testbarkeit, Modifizier- / Erweiterbarkeit) am besten für die Erfüllung und Einhaltung unseres definierten link:01_introduction_and_goals.adoc#section-quality-goals[Qualitätsziels QG-3 (Modifiability)] geeignet sind.
 
 **Beinhaltete Blackbox-Bausteine / -Komponenten**
-Names and responsibilities of contained blackboxes, plus references to their detailed description.
 
-**Beziehungen / Schnittstellen zwischen Blackboxes**
-Brief description of the (important) relationships between internal blackboxes, plus references to their detailed description.
+[options="header",cols="3,2,6"]
+|===
+|Name|Schicht|Verantwortlichkeit
 
-**Probleme / Risiken**
-Know issues or risks with this whitebox, information about eventual technical debt or ideas for improvement
+|Ausführungs Domänenlogik
+|Domäne
+|Implementiert den Bestandteil der Businesslogik gemäss dem definierten link:08_concepts.adoc#section-concepts[Domänenmodell], welcher für die Verarbeitung der Daten verantwortlich ist, die von den Patienten während der Ausführung einer Therapie-Session aufgezeichnet werden.
+
+Beinhaltet die aus dem Domain-Driven Design (DDD) (**TBD Link zu Evans Buch**) bekannten Elemente wie Aggregate, Entitäten, Value Objects oder Domain Services.
+
+Stellt die Domänenelemente den darüberliegenden Schichten (Applikation, Infrastruktur) zur Verfügung.
+
+|Ausführungs Applikationslogik
+|Applikation
+|Realisiert die Interaktions- und Orchestrierungslogik zwischen der darunterliegenden Domänenschicht __Ausführungs Domänenlogik__ und der darüberliegenden Infrastrukturschicht, welche die jeweiligen Adapter beinhaltet.
+
+Definiert unterschiedliche Schnittstellen (Ports) und stellt diese der Infrastrukturschicht zur entsprechenden Implementation (Adapter) bereit.
+
+|Ausführungs Persistenz Adapter
+|Infrastruktur / Driven Adapter
+|Implementiert den entsprechenden Port der Applikationsschicht.
+
+Kapselt und abstrahiert die gesamte (technische) Logik, welche mit der Persistenz der Domänenelemente zusammenhängt. Hierzu gehören beispielsweise auch die implementierten Domain Repositories in der Form einzelner (Sub-)Adapter, welche die persistenztechnischen Details der Ablage und Abfrage der Domänenelemente verwalten.
+
+Implementiert den Kommunikationskanal zwischen __Ausführungs Service__ und __Ausführungs Datenbank__.
+
+|Ausführungs API Controller
+|Infrastruktur / Driving Adapter
+|Verwaltet die öffentlichen API Endpoints des __Ausführungs Service__ und leitet die erhaltenen Request-Daten mit einem entsprechenden Service Call an die __Ausführungs Applikationslogik__ weiter.
+
+Verifiziert die Daten eingehender Requests (lediglich formelle Prüfung) und beinhaltet die Objekt-Mappings für ausgehende Requests.
+
+Kann als "Driving Adapter" kategorisiert werden, da ein über den API Controller eingehender Request den zugehörigen Prozess in der Applikationsschicht initial anstösst.
+
+|===
+
+**Technische Implementation der Schnittstellen zwischen Blackboxes**
+
+Die grundlegenden Schnittstellendefinitionen zwischen den einzelnen Schichten werden technisch durch Java Interfaces (Ports) und Klassen (Adapter) abgebildet. Die Verknüpfung zwischen Port und jeweiligem Adapter (oder wahlweise auch mehreren Adaptern pro Port) übernimmt der https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans[Dependency Injection Container des Spring Frameworks], da der __Ausführungs Service__ als dedizierte https://spring.io/projects/spring-boot/[Spring Boot]-Applikation deployed und betrieben wird.
