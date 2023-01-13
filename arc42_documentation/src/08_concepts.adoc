@@ -1,6 +1,5 @@
 [[section-concepts]]
-== Cross-cutting Concepts
-
+== Querschnittliche Konzepte
 
 [role="arc42help"]
 ****
@@ -53,12 +52,138 @@ image::08-Crosscutting-Concepts-Structure-EN.png["Possible topics for crosscutti
 See https://docs.arc42.org/section-8/[Concepts] in the arc42 documentation.
 ****
 
+****
+Von Dokchess
+Die verschiedenen Systemteile tauschen schachspezifische Daten aus. Hierzu zählen vor allem die Situation auf dem Brett (Stellung), sowie gegnerische und eigene Züge. Als Aufruf- und Rückgabeparameter finden in allen Modulen dieselben Klassen Verwendung.
 
-=== Domain Driven Design (DDD)
+An dieser Stelle finden Sie einen groben Überblick über diese Datenstrukturen und deren Abhängigkeiten untereinander. Details sind in der Quelltextdokumentation (javadoc) enthalten. Die Klassen und Aufzählungstypen (enums) befinden sich im Paket de.dokchess.allgemein.
 
+Eine Schachfigur ist gekennzeichnet durch Farbe (schwarz oder weiß) und Art (König, Dame, …). Im Domänenmodell von DokChess weiß eine Figur nicht, wo sie steht. Die Klasse ist unveränderlich (immutable) wie alle anderen im Domänenmodell auch.
+
+Eine Figur hat eine Farbe und eine Art
+
+Bild: Eine Figur hat eine Farbe (z.B. weiß) und eine Art (z.B. Bauer)
+
+Das Schachbrett besteht aus 8 x 8 Feldern die in 8 Reihen (1-8) und 8 Linien (a-h) angeordnet sind. Die Klasse Feld beschreibt ein ebensolches. Da ein Feld maximal von einer Figur besetzt sein kann, reicht für die Angabe eines Zuges, von wo nach wo gezogen wird. Einzige Ausnahme bildet die Umwandlung eines Bauern auf der gegnerischen Grundlinie, da der Spieler selbst entscheidet, in welche Figur er umwandelt (in der Regel, aber nicht zwingend, eine Dame). Rochadezüge werden als Königszüge über zwei Felder in die entsprechende Richtung repräsentiert.
+
+Ein Zug geht von einem Feld zu einem Feld
+
+Bild: Ein Zug geht von einem Feld zu einem Feld
+
+Die Klasse Stellung stellt die aktuelle Situation auf dem Brett dar. Vor allem sind das die Figuren auf dem Brett, das intern als zweidimensionales Array (8 x 8) implementiert ist. Falls ein Feld unbesetzt ist, steht null im Array. Zur Komplettierung der Spielsituation gehört die Information, wer am Zug ist, ob noch Rochaden möglich sind und ob en passant geschlagen werden kann.
+
+****
+=== Domänenmodell
+
+Die domänenspezifische Logik von Physio Connect wird in einem Domänenmodell abgebildet. Dieses wurde mit der Hilfe einer Domänenexpertin erstellt und überarbeitet. Bei zusätzlichen Erweiterungen / Anpassungen soll wenn möglich weitere Domänenexperten hinzugezogen werden.
+
+Die Aufteilung der Elemente und die Vorgehensweise bei der Entwicklungen basiert auf __Domain Driven Design (DDD)__. 
+
+Elemente, welche sowohl eine eindeutige ID als auch einene Lebenszyklus besitzen, wurden als Entities definiert. Die zugehörigen Staten der Lebenszyklen sind als Enumeratoren definiert. Elemente mit zusätzlichen Informationen wurden als Value Object definiert.
+
+Repositories und Services wurden nicht modelliert und sollen während der Implementationsphase kontinuierlich erarbeitet werden.
+
+Um das Messaging zu entlasten und ein einfacheres Aufteilen der Stories zu ermöglichen wurde entschieden, Aggregate klein zu halten. So wurde das Initiale Hauptaggregat __Gesamttherapie__ in die unten Aufgeführten Aggregate aufgeteilt. Informationen zum Initialen Domänenmodell sind im git Repository vorhanden.
+
+
+plantuml::domain_model/not_generated_gesamttherapie.puml[format=svg]
+
+**Aggregat: GesamtTherapie**
+
+__Definition vom Glossar: Als Gesamttherapie wird eine zusammenhängende Serie von Therapie-Sessions bezeichnet, welche von einem Patienten durchgeführt werden. Eine Gesamttherapie kann von mehreren Wochen bis zu mehreren Jahren dauern. Gesamttherapien werden nach deren vollständiger Absolvierung als abgeschlossen markiert. Patienten können an mehreren Gesamttherapien teilnehmen, im Norrmallfall jedoch nicht zeitgleich.__
+
+Im Normallfall wird eine Gesamttherapie von einem __hauptTherapeut__ geleitet. Das Feld kann aber auch ungesetzt bleiben, zum Beisplie falls die Gesamttherapie vom Patienten selbst erstellt und verwaltet wird.
+
+In vielen Fällen werden Gesamttherapien im Rahmen von Verordnungen erstellt und durchgeführt. Da dies keinen Einfluss auf unsere Applikation hat wurde dies nicht im Modell abgebildet.
+
+Um verschiedene Arten von Gesamttherapien zu unterscheiden und Filterfunktionen zu ermöglichen wurde der TherapieTyp im Modell abgebildet. __Eigenständige__ Therapien werden vom Patienten selbst verwaltet. Die anderen Typen wurden im Glossar definiert.
+
+[options="header"]
+|===
+| Diagram | Status | Beschreibung
+.6+a| plantuml::additional_diagrams/gesamttherapie_lifecicle.puml[format=svg]
+| Entwurf 
+| Die Gesamttherapie wurde erstellt aber noch nicht alle Benötigten Daten erfasst.
+
+| WartenAufPatient 
+| Eine Einladung wurde and en Patient gesendet. Sobald dieser der Therapie beitritt wechselt der Status auf Bereit.
+
+| Bereit
+| Alle benötigten Daten wurden erfasst und der Patient wurde zugewiesen.
+
+| Gestartet
+| Die erste Therapiesession wurde ausgeführt.
+
+| Unterbrochen
+| Die Gesamttherapie wird für eine längere Zeit unterbrochen. Unvorhergesehene Ereignisse wie die Hospitalisierung des Patienten können Grund für einen Unterbruch sein. Kürze Pausen wie Ferien gelten nicht als Unterbruch.
+
+| Abgebrochen
+| Die Gesamttherapie wurde beendet, bevor die geplanten Therapiesessions durchgeführt wurden. Ein Abbruch wird explizit von einem oder einer Therapeut:in gemacht und kann nicht direkt aus den Daten (z.B. offene Therapiesessions) gelesen werden.
+
+|
+| Abgeschlossen
+| Alle geplanten Therapiesessions wurden durchgeführt und der Patient entlassen. Das Abschliessen einer Gesamttherapie wird explizit von einem oder einer Therapeut:in gemacht und kann nicht direkt aus den Daten gelesen werden.
+
+|
+| Archiviert
+| Gesamttherapie muss nicht mehr direkt Verfügbar sein und wird bei den meisten Requests rausgefiltert. Kann in Cold Storage verlagert werden.
+
+|===
+
+**Aggregat: TherapieSession**
+
+__Definition vom Glossar: Als Therapie-Session bezeichnet man eine einzelne Therapieeinheit / -sitzung, welche von einem Patienten durchgeführt wird. Diese kann von einem Physiotherapeuten geleitet oder selbst ausgeführt werden.__
+
+Therapie-Sessionen werden hauptsächlich als Kollektionen von Übungen verwendet. Zusätzlich werden Rückmeldungen der Patienten auf die Therapie Session (nicht die einzelnen Übungen) gespeichert und der Fortschritt im Lebenszyklus abgebildet.
+
+
+plantuml::additional_diagrams/therapiesession_lifecicle.puml[format=svg]
+
+[options="header"]
+|===
+| Status | Beschreibung
+
+| Erstellt 
+| Therapie Sessionen wurde erstellt, wurde noch nicht freigegeben zur Ausführung.
+
+| Nachtraeglich Erfasst
+| Die Therapie Sessionen wurde zu Dokumentationszwecken erfasst, nachdem diese Bereits vom Patienten ausgeführt wurde. Nachträglich erfasste Therapie Sessionen enthalten keine Patienten Messdaten.
+
+| Startbereit
+| Therapie Session kann vom Patienten ausgeführt werden.
+
+| Uebersprungen
+| Therapie Session wurde nicht vom Patienten durchgeführt. Grund dafür kann verpassen des Zeitfensters oder explizites Überspringen durch den Patienten sein.
+
+| Gestartet
+| Therapie Session wird zu diesem Zeitpunkt vom Patienten durchgeführt.
+
+| Unterbrochen
+| Therapie Session wurde vom Patienten unterbrochen.
+
+| Abgebrochen
+| Therapie Session wurde vom Patienten abgebrochen.
+
+| Abgeschlossen
+| Alle Therapie Übungen wurden abgearbeitet und die benötigten Rückmeldungen ausgefüllt. Wichtig: Therapie Sessionen gelten auch als abgeschlossen, wenn Therapie Übungen übersprungen oder abgebrochen wurden.
+
+|===
+
+plantuml::domain_model/not_generated_therapieuebung.puml[format=svg]
+
+
+[.landscape]
+<<<
 plantuml::domain_model/domain_BC_TherapieContext_PhysioConnectV2.puml[format=svg]
+
+[.portrait]
+<<<
+
 plantuml::domain_model/domain_BC_TherapieContext_UebungsKatalog.puml[format=svg]
+
 plantuml::domain_model/domain_BC_TherapieContext_UebungsKollektion.puml[format=svg]
+
+
 
 [.landscape]
 <<<
@@ -72,12 +197,5 @@ _<explanation>_
 
 
 
-=== _<Concept 2>_
+=== Hexagonale Architektur
 
-_<explanation>_
-
-...
-
-=== _<Concept n>_
-
-_<explanation>_

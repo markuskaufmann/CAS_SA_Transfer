@@ -1,0 +1,67 @@
+@startuml
+
+skinparam componentStyle uml2
+
+package ch.hslu.physio.PhysioConnectV2 {
+	package "'TherapieUebung' Aggregate" <<Rectangle>> {
+		class TherapieUebung <<(A,#fffab8) Aggregate Root>> {
+			UebungId uebungId
+			UebungsStatus status
+			UebungsBeschreibung beschreibung
+			TherapieUebungsDurchfuehrung durchfuehrung
+			List<PatientenRueckmeldung> rueckmeldung
+			List<Messdaten> messdaten
+		}
+		enum UebungsStatus {
+			ERSTELLT
+			NACHTRAEGLICH_ERFASST
+			UEBERSPRUNGEN
+			GESTARTET
+			PAUSIERT
+			UNTERBROCHEN
+			ABGEBROCHEN
+			ABGESCHLOSSEN
+		}
+		class Messdaten <<(V,DarkSeaGreen) Value Object>> {
+			String bezeichnung
+			List<Voraussetzungen> voraussetzungen
+			Messart messart
+			Daten daten
+		}
+		class TherapieUebungsDurchfuehrung <<(V,DarkSeaGreen) Value Object>> {
+			Zeit zeit
+			Wiederholungen wiederholungen
+			Boolean eigenangabeMoeglich
+		}
+	}
+	package "'PatientenRueckmeldung' Aggregate" <<Rectangle>> {
+		class PatientenRueckmeldung <<(A,#fffab8) Aggregate Root>> {
+			RueckmeldungsWert effektiveRueckmeldung
+			TherapeutenKommentar antwortVomTherapeuten
+			PatientenRueckmeldungsTyp rueckmeldungsTyp
+		}
+		class PatientenRueckmeldungsTyp <<(V,DarkSeaGreen) Value Object>> {
+			String titel
+			String anzeigetext
+			boolean quantitativ
+			Url resource
+			int minimumWert
+			int maximumWert
+			int interval
+		}
+		class TherapeutenKommentar <<(V,DarkSeaGreen) Value Object>> {
+			String text
+			Url resource
+			Benutzer therapeut
+		}
+	}
+}
+PatientenRueckmeldung --> TherapeutenKommentar : antwortVomTherapeuten
+TherapieUebung "1" *--> "*" Messdaten : messdaten
+PatientenRueckmeldung --> PatientenRueckmeldungsTyp : rueckmeldungsTyp
+TherapieUebung --> TherapieUebungsDurchfuehrung : durchfuehrung
+TherapieUebung "1" o--> "*" PatientenRueckmeldung : rueckmeldung
+TherapieUebung --> UebungsStatus : status
+
+
+@enduml

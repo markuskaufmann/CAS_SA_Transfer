@@ -1,5 +1,5 @@
 @startuml Therapie Lifecicle
-title Therapie Lifecicle Version 1
+title Gesamttherapie Lebenszyklus
 
 State Entwurf
 State WartenAufPatient

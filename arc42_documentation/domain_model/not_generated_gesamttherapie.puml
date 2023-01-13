@@ -1,0 +1,58 @@
+@startuml
+
+skinparam componentStyle uml2
+
+package ch.hslu.physio.PhysioConnectV2 {
+	package "'GesamtTherapie' Aggregate" <<Rectangle>> {
+		class GesamtTherapie <<(A,#fffab8) Aggregate Root>> {
+			TherapieId therapieId
+			TherapieTyp therapieTyp
+			Benutzer patient
+			Benutzer hauptTherapeut
+			List<TherapieSession> session
+			TherapieStatus status
+		}
+		enum TherapieStatus {
+			ENTWURF
+			WARTEN_AUF_PATIENT
+			BEREIT
+			GESTARTET
+			UNTERBROCHEN
+			ABGESCHLOSSEN
+			ABGEBROCHEN
+			ARCHIVIERT
+		}
+		enum TherapieTyp {
+			HOSPITALISIERT
+			REHABILITATION
+			AMBULANT
+			EIGENSTAENDIG
+		}
+	}
+	package "'TherapieSession' Aggregate" <<Rectangle>> {
+		class TherapieSession <<(A,#fffab8) Aggregate Root>> {
+			SessionId sessionId
+			TherapieSessionsStatus status
+			List<TherapieUebung> uebung
+			List<PatientenRueckmeldung> rueckmeldung
+		}
+		enum TherapieSessionsStatus {
+			ERSTELLT
+			NACHTRAEGLICH_ERFASST
+			UEBERSPRUNGEN
+			STARTBEREIT
+			GESTARTET
+			UNTERBROCHEN
+			ABGEBROCHEN
+			ABGESCHLOSSEN
+		}
+	}
+}
+
+GesamtTherapie --> TherapieStatus : status
+TherapieSession --> TherapieSessionsStatus : status
+
+GesamtTherapie --> TherapieTyp : therapieTyp
+GesamtTherapie "1" o--> "*" TherapieSession : session
+
+@enduml
