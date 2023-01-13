@@ -101,7 +101,7 @@ Um verschiedene Arten von Gesamttherapien zu unterscheiden und Filterfunktionen 
 [options="header"]
 |===
 | Diagram | Status | Beschreibung
-.6+a| plantuml::additional_diagrams/gesamttherapie_lifecicle.puml[format=svg]
+.6+a| plantuml::additional_diagrams/gesamttherapie_lifecycle.puml[format=svg]
 | Entwurf 
 | Die Gesamttherapie wurde erstellt aber noch nicht alle Benötigten Daten erfasst.
 
@@ -137,7 +137,7 @@ __Definition vom Glossar: Als Therapie-Session bezeichnet man eine einzelne Ther
 Therapie-Sessionen werden hauptsächlich als Kollektionen von Übungen verwendet. Zusätzlich werden Rückmeldungen der Patienten auf die Therapie Session (nicht die einzelnen Übungen) gespeichert und der Fortschritt im Lebenszyklus abgebildet.
 
 
-plantuml::additional_diagrams/therapiesession_lifecicle.puml[format=svg]
+plantuml::additional_diagrams/therapiesession_lifecycle.puml[format=svg]
 
 [options="header"]
 |===
