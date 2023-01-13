@@ -1,10 +1,9 @@
 @startuml Therapie Lifecicle
-title Therapie Session Lebenszyklus
+title Therapie Übung Lebenszyklus
 
 State Erstellt
 State NachtraeglichErfasst
 State Uebersprungen
-State Startbereit
 State Gestartet
 State Unterbrochen
 State Abgebrochen
@@ -13,9 +12,8 @@ State Abgeschlossen
 [*] --> Erstellt
 
 Erstellt -----> NachtraeglichErfasst
-Erstellt --> Startbereit
-Startbereit ----> Uebersprungen
-Startbereit --> Gestartet
+Erstellt -----> Uebersprungen
+Erstellt --> Gestartet
 Gestartet --> Unterbrochen
 Gestartet --> Abgebrochen
 Gestartet ---> Abgeschlossen

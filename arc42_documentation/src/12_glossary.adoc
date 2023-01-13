@@ -25,7 +25,7 @@ Im Rahmen dieses Kapitels werden die wichtigsten fachlichen und technischen Begr
 
 |Ambulante Behandlung
 |Outpatient treatment
-|Im Gegensatz zur stationären Behandlung bleibt der Patient bei der ambulanten Behandlung nicht über Nacht in Betreuung. Im Normallfall befindet sich ein Patient pro Therapieeinheit nur 30 Minuten vor Ort in Behandlung. Das heisst: Sie können am selben Tag wieder nach Hause. https://www.comparis.ch/krankenkassen/leistungen/ambulante-behandlung 
+|Im Gegensatz zur stationären Behandlung bleibt der Patient bei der ambulanten Behandlung nicht über Nacht in Betreuung. Im Normalfall befindet sich ein Patient pro Therapieeinheit nur 30 Minuten vor Ort in Behandlung. Das heisst: Sie können am selben Tag wieder nach Hause. https://www.comparis.ch/krankenkassen/leistungen/ambulante-behandlung 
 
 Im Rahmen der Physiotherapie erhalten Patienten eine Verordnung zur Teilnahme an Physiotherapien. Diese Therapien werden in Praxen oder Spitälern ausgeführt. Für mehr Informationen zum Patientenzyklus siehe <<Abbildung: Patientenzyklus>>.
 
@@ -51,7 +51,7 @@ Im Rahmen der Physiotherapie erhalten Patienten eine Verordnung zur Teilnahme an
 
 |Therapieübung
 |Therapy exercise
-|Therapieübungen werden von Patienten während einzelner Therapie-Sessions ausgeführt. Therapieübungen basieren auf Übungsdefinitionen und enthalten exakte Angaben zur Ausführung inklusive Zeitangaben, Sets und Reps. Zusätzlich sind Therapieübungen einem Patienten und einer Therapie zugeordnet und besitzen einen Lebenszyklus.
+|Therapieübungen werden von Patienten während einzelner Therapie Sessionen ausgeführt. Therapieübungen basieren auf Übungsdefinitionen und enthalten exakte Angaben zur Ausführung inklusive Zeitangaben, Serien und Repetitionen. Zusätzlich sind Therapieübungen einem Patienten und einer Therapie zugeordnet und besitzen einen Lebenszyklus.
 
 |Repetitionen / Reps
 |Repetitions / Reps
@@ -63,7 +63,7 @@ Im Rahmen der Physiotherapie erhalten Patienten eine Verordnung zur Teilnahme an
 
 |Verordnung
 |Prescription 
-|Verordnungen von Physiotherapien werden von Haus- und Fachärzten ausgestellt. Im Normallfall übernehmen Krankenkassen die Kosten aller verordneten Physiotherapien. Verordnungen werden im Normalfall für 9 geführte Therapie-Sessions à 30 Minuten ausgestellt. In Spezialfällen können Verordnungen auch für längere Perioden und längere Therapie-Sessions ausgestellt werden. https://www.physioswiss.ch/media/8794/download/221028_d_H%C3%A4ufige%20Fragen%20zur%20Verordnung%20von%20Physiotherapie_Update%20Okt%202022.pdf?v=1
+|Verordnungen von Physiotherapien werden von Haus- und Fachärzten ausgestellt. Im Normalfall übernehmen Krankenkassen die Kosten aller verordneten Physiotherapien. Verordnungen werden im Normalfall für 9 geführte Therapie-Sessions à 30 Minuten ausgestellt. In Spezialfällen können Verordnungen auch für längere Perioden und längere Therapie-Sessions ausgestellt werden. https://www.physioswiss.ch/media/8794/download/221028_d_H%C3%A4ufige%20Fragen%20zur%20Verordnung%20von%20Physiotherapie_Update%20Okt%202022.pdf?v=1
 
 |Fitness Tracker
 |Fitness tracker

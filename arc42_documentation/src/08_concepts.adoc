@@ -75,7 +75,7 @@ Die Klasse Stellung stellt die aktuelle Situation auf dem Brett dar. Vor allem s
 ****
 === Domänenmodell
 
-Die domänenspezifische Logik von Physio Connect wird in einem Domänenmodell abgebildet. Dieses wurde mit der Hilfe einer Domänenexpertin erstellt und überarbeitet. Bei zusätzlichen Erweiterungen / Anpassungen soll wenn möglich weitere Domänenexperten hinzugezogen werden.
+Die domänenspezifische Logik von Physio Connect soll mittels eines Domänenmodells implementiert. Das Domänenmodell wurde mit der Hilfe einer Domänenexpertin ausgearbeitet und verfeinert. Bei zusätzlichen Erweiterungen / Anpassungen soll wenn möglich weitere Domänenexperten hinzugezogen werden.
 
 Die Aufteilung der Elemente und die Vorgehensweise bei der Entwicklungen basiert auf __Domain Driven Design (DDD)__. 
 
@@ -83,20 +83,19 @@ Elemente, welche sowohl eine eindeutige ID als auch einene Lebenszyklus besitzen
 
 Repositories und Services wurden nicht modelliert und sollen während der Implementationsphase kontinuierlich erarbeitet werden.
 
-Um das Messaging zu entlasten und ein einfacheres Aufteilen der Stories zu ermöglichen wurde entschieden, Aggregate klein zu halten. So wurde das Initiale Hauptaggregat __Gesamttherapie__ in die unten Aufgeführten Aggregate aufgeteilt. Informationen zum Initialen Domänenmodell sind im git Repository vorhanden.
-
+Um das Messaging zu entlasten und ein einfacheres Aufteilen der Stories zu ermöglichen wurde entschieden, Aggregate klein zu halten. So wurde das Initiale Hauptaggregat __Gesamttherapie__ in die unten Aufgeführten Aggregate aufgeteilt. Einige daraus entstandenen Aggregate Roots besitzen nur banale Lebenszyklen. Diese banalen Lebenszyklen wurden nicht modelliert. Informationen zum Initialen Domänenmodell sind im git Repository vorhanden.
 
 plantuml::domain_model/not_generated_gesamttherapie.puml[format=svg]
 
 **Aggregat: GesamtTherapie**
 
-__Definition vom Glossar: Als Gesamttherapie wird eine zusammenhängende Serie von Therapie-Sessions bezeichnet, welche von einem Patienten durchgeführt werden. Eine Gesamttherapie kann von mehreren Wochen bis zu mehreren Jahren dauern. Gesamttherapien werden nach deren vollständiger Absolvierung als abgeschlossen markiert. Patienten können an mehreren Gesamttherapien teilnehmen, im Norrmallfall jedoch nicht zeitgleich.__
+__Definition vom Glossar: Als Gesamttherapie wird eine zusammenhängende Serie von Therapie-Sessions bezeichnet, welche von einem Patienten durchgeführt werden. Eine Gesamttherapie kann von mehreren Wochen bis zu mehreren Jahren dauern. Gesamttherapien werden nach deren vollständiger Absolvierung als abgeschlossen markiert. Patienten können an mehreren Gesamttherapien teilnehmen, im Normalfall jedoch nicht zeitgleich.__
 
-Im Normallfall wird eine Gesamttherapie von einem __hauptTherapeut__ geleitet. Das Feld kann aber auch ungesetzt bleiben, zum Beisplie falls die Gesamttherapie vom Patienten selbst erstellt und verwaltet wird.
+Im Normallfall wird eine Gesamttherapie von einem __hauptTherapeut__ geleitet. Falls ein Patient die Gesamttherapie selbst verwaltet bleibt das Attribut leer.
 
-In vielen Fällen werden Gesamttherapien im Rahmen von Verordnungen erstellt und durchgeführt. Da dies keinen Einfluss auf unsere Applikation hat wurde dies nicht im Modell abgebildet.
+In vielen Fällen werden Gesamttherapien im Rahmen von Verordnungen erstellt und durchgeführt. Da dies keinen Einfluss auf unsere Applikation hat wurde dies nicht im Modell abgebildet. Eine zukünftige Erweiterung wird aber nicht ausgeschlossen.
 
-Um verschiedene Arten von Gesamttherapien zu unterscheiden und Filterfunktionen zu ermöglichen wurde der TherapieTyp im Modell abgebildet. __Eigenständige__ Therapien werden vom Patienten selbst verwaltet. Die anderen Typen wurden im Glossar definiert.
+Um Typen von Gesamttherapien zu unterscheiden und Filterfunktionen zu ermöglichen wurde der TherapieTyp im Modell abgebildet. __Eigenständige__ Therapien werden vom Patienten selbst verwaltet. Die anderen Typen wurden im Glossar definiert.
 
 [options="header"]
 |===
@@ -106,13 +105,13 @@ Um verschiedene Arten von Gesamttherapien zu unterscheiden und Filterfunktionen 
 | Die Gesamttherapie wurde erstellt aber noch nicht alle Benötigten Daten erfasst.
 
 | WartenAufPatient 
-| Eine Einladung wurde and en Patient gesendet. Sobald dieser der Therapie beitritt wechselt der Status auf Bereit.
+| Eine Einladung wurde an den oder die Patient:in gesendet. Sobald dieser oder diese der Therapie beigetreten ist, wechselt der Status auf Bereit.
 
 | Bereit
-| Alle benötigten Daten wurden erfasst und der Patient wurde zugewiesen.
+| Alle benötigten Daten wurden erfasst und der oder die Patient:in wurde zugewiesen.
 
 | Gestartet
-| Die erste Therapiesession wurde ausgeführt.
+| Mindestens eine Therapiesession wurde ausgeführt.
 
 | Unterbrochen
 | Die Gesamttherapie wird für eine längere Zeit unterbrochen. Unvorhergesehene Ereignisse wie die Hospitalisierung des Patienten können Grund für einen Unterbruch sein. Kürze Pausen wie Ferien gelten nicht als Unterbruch.
@@ -126,7 +125,7 @@ Um verschiedene Arten von Gesamttherapien zu unterscheiden und Filterfunktionen 
 
 |
 | Archiviert
-| Gesamttherapie muss nicht mehr direkt Verfügbar sein und wird bei den meisten Requests rausgefiltert. Kann in Cold Storage verlagert werden.
+| Gesamttherapie muss nicht mehr direkt Verfügbar sein und wird bei den meisten Requests rausgefiltert. Eventuell können die Daten in eine __Cold Storage__ verlagert werden.
 
 |===
 
@@ -144,19 +143,19 @@ plantuml::additional_diagrams/therapiesession_lifecycle.puml[format=svg]
 | Status | Beschreibung
 
 | Erstellt 
-| Therapie Sessionen wurde erstellt, wurde noch nicht freigegeben zur Ausführung.
+| Die Therapie Sessionen wurde erstellt, wurde noch nicht freigegeben zur Ausführung.
 
 | Nachtraeglich Erfasst
-| Die Therapie Sessionen wurde zu Dokumentationszwecken erfasst, nachdem diese Bereits vom Patienten ausgeführt wurde. Nachträglich erfasste Therapie Sessionen enthalten keine Patienten Messdaten.
+| Die Therapie Sessionen wurde zu Dokumentationszwecken erfasst, nachdem diese Bereits vom Patienten durchgeführt wurde. Nachträglich erfasste Therapie Sessionen enthalten keine Patienten Messdaten.
 
 | Startbereit
-| Therapie Session kann vom Patienten ausgeführt werden.
+| Die Therapie Session kann vom Patienten ausgeführt werden.
 
 | Uebersprungen
-| Therapie Session wurde nicht vom Patienten durchgeführt. Grund dafür kann verpassen des Zeitfensters oder explizites Überspringen durch den Patienten sein.
+| Die Therapie Session wurde nicht vom Patienten durchgeführt. Grund dafür kann verpassen des Zeitfensters oder explizites Überspringen durch den Patienten sein.
 
 | Gestartet
-| Therapie Session wird zu diesem Zeitpunkt vom Patienten durchgeführt.
+| Die Therapie Session wird zu diesem Zeitpunkt vom Patienten durchgeführt.
 
 | Unterbrochen
 | Therapie Session wurde vom Patienten unterbrochen.
@@ -171,31 +170,56 @@ plantuml::additional_diagrams/therapiesession_lifecycle.puml[format=svg]
 
 plantuml::domain_model/not_generated_therapieuebung.puml[format=svg]
 
+**Aggregat: TherapieUebung**
+
+__Definition vom Glossar: Therapieübungen werden von Patienten während einzelner Therapie Sessionen ausgeführt. Therapieübungen basieren auf Übungsdefinitionen und enthalten exakte Angaben zur Ausführung inklusive Zeitangaben, Serien und Repetitionen. Zusätzlich sind Therapieübungen einem Patienten und einer Therapie zugeordnet und besitzen einen Lebenszyklus.__
+
+Die Abbildung der Messdaten wurde absichtlich Abstrakt gehalten. Wie unterschiedliche Messdaten auswertbar und erweiterbar implementiert werden können muss zu einem späteren Zeitpunkt definiert werden.
+
+In den Therapieübungs Durchführungen wird angegeben, wie viele Repetitionen, Serien oder für welche Dauer eine Übung durchgeführt werden soll und wieoft diese effektiv durchgeführt wurde.
+
+Der Lebenszyklus einer Therapieübung ist sehr Ähnlich wie der von Therapie Sessionen. Der einzige Unterschied ist, dass darauf verzichtet wurde, den Status "Starbereit" zu verwenden. Dies würde zu unnötig komplexen Abhängigkeiten zwischen Übungen führen, welche weder den Entwicklern und Entwicklerinnen noch den Endusern einen Mehrwert erbringen würden.
+
+plantuml::additional_diagrams/therapieuebung_lifecycle.puml[format=svg]
+
+Alle Therapieübungen besitzen eine Übungsbeschreibung, deren Format vom Module __Übungskatalog__ vorgegeben sind. Übugnsbeschreibungen können für Thearpieübungen modifiziert werden, indem von einer Vorlage eine abgeänderte Version der Übungsbeschreibung erstellt wird. So können die Therapeuten Übungen auf Patientenbedürfnisse zuschneiden.
+
+plantuml::domain_model/domain_BC_TherapieContext_UebungsKatalog.puml[format=svg]
+
+
+**PatientenRueckmeldungen**
+
+Rückmeldungen sind zentral für eine erfolgreiche Physiotherapie. Anhand von Rückmeldungen werden Therapien kontinuierlich angepasst und verbessert.
+
+Die gewünschten Rückmeldungen varieren zwischen Patienten stark. Für Schmerzpatienten werden so zum Beispiel Rückmeldungen für den verspürten Schmerz eingeholt, während bei einer Rehabilitation darauf geschaut wird, dass Patienten körperlich optimal ausgelastet sind.
+
+Patienten Rückmeldungen basieren auf einem Rückmeldungs Typ. Gesundheitseinrichtungen sammeln Rückmeldungen sowohl in standardisierten Formen wie international annerkannte Schmerzskalen als auch mittels individuell definierten Fragen. Aus diesem Grund müssen Rückmeldungstypen abstrakt und einfach erweiterbar implementiert werden.
+
+Um eine bidirektionale Kommunikation zu ermöglichen können Therapeuten und Therapeutinnen wiederum auf Rückmeldungen antworten. Da es nur in Randfällen nötig ist, dass Patienten wiederum auf Therapeutenkommentare antworten, wird dies vom Domänenmodell nicht unterstützt und die Komplexität so verringert.
+
+
+**UebungsKollektion**
+
+plantuml::domain_model/domain_BC_TherapieContext_UebungsKollektion.puml[format=svg]
+
+Übungskollektionen sind unabhängig von Gesamttherapien und sind eine unkomplizierte Alternative zu geführten Therapien.
+
+Therepeuten und Therapeutinnen geben Patienten, die Therapien abgeschlossen haben, oft ausgedruckte Unterlagen oder Broschüren mit, in denen einige Übungen enthalten sind. Übungskollektionen sollen diese Funktionalitäten im Domänenmodell abdecken.
+
+Zusätzlich zu Übungen können Beispielsessionen erstellt werden, welche aus mehreren Übungsbeschreibungen bestehen. Beispielsessionen können nicht ausgeführt werden und sammeln somit auch keine Messdaten. Die einzelnen Übungsbeschreibungen sind generisch und enthalten keine Wiederholungen und Serien. Von der Applikationsschicht aus wird es die Möglichkeit geben, aus Übugnssessionen effektive Therapie Sessionen zu erstellen. Dies wird jedoch nicht im Rahmen des Domänenmodells beschrieben.
+
+**Gesamtübersicht**
+
+In den folgenden Diagrammen ist die Gesamtübersicht des Domänenmodells ersichtlich.
 
 [.landscape]
 <<<
 plantuml::domain_model/domain_BC_TherapieContext_PhysioConnectV2.puml[format=svg]
 
-[.portrait]
-<<<
-
-plantuml::domain_model/domain_BC_TherapieContext_UebungsKatalog.puml[format=svg]
-
-plantuml::domain_model/domain_BC_TherapieContext_UebungsKollektion.puml[format=svg]
-
-
-
-[.landscape]
-<<<
-
 plantuml::domain_model/domain_BC_TherapieContext.puml[format=svg]
 
 [.portrait]
 <<<
-
-_<explanation>_
-
-
 
 === Hexagonale Architektur
 
