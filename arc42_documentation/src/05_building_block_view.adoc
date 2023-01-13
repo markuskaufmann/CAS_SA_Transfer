@@ -28,7 +28,7 @@ Die Ablage der Therapieverwaltungsdaten und Therapie-Session-Ausführungsdaten g
 Die Backend-Kommunikation erfolgt via HTTP(S).
 * **TBD ADR ACL**
 
-Des Weiteren wurde die System-Dekomposition auch durch die sinnvolle Aufteilung der link:../requirements_engineering/functional_requirements.adoc#section-functional-requirements[funktionalen Anforderungen] massgeblich beeinflusst. Prinzipien wie https://blog.cleancoder.com/uncle-bob/2014/05/08/SingleReponsibilityPrinciple.html[Single Responsibility Principle (SRP)] und https://deviq.com/principles/separation-of-concerns[Separation of Concerns (SoC)] boten dabei eine gute Grundlage.
+Des Weiteren wurde die System-Dekomposition auch durch die sinnvolle Aufteilung bzw. logische Zusammengehörigkeit der link:../requirements_engineering/functional_requirements.adoc#section-functional-requirements[funktionalen Anforderungen] massgeblich beeinflusst. Prinzipien wie https://blog.cleancoder.com/uncle-bob/2014/05/08/SingleReponsibilityPrinciple.html[Single Responsibility Principle (SRP)] und https://deviq.com/principles/separation-of-concerns[Separation of Concerns (SoC)] boten dabei eine gute Grundlage.
 
 ==== Beinhaltete Bausteine / Komponenten
 
@@ -47,9 +47,6 @@ What quality requirements does this blackbox satisfy? How fast/secure/robust is 
 
 __Risiken__
 Are there known issues, problems or risks associated with this blackbox?
-
-__Erfüllte funktionale Anforderungen__
-What are the requirements satisfied by this blackbox?
 
 >>> CAN BE DELETED WHEN DOING REVIEW
 
@@ -112,10 +109,6 @@ a|
 
 |===
 
-__Erfüllte funktionale Anforderungen__
-
-Es bestehen keine funktionalen Anforderungen, welche explizit durch diese Komponente realisiert werden.
-
 **Therapien Manager SPA**
 
 __Zweck / Verantwortlichkeiten__
@@ -157,17 +150,6 @@ __Qualitäts- / Performancecharakteristiken__
 __Risiken__
 
 Es bestehen keine spezifischen Risiken im Zusammenhang mit dieser Komponente.
-
-__Erfüllte link:../requirements_engineering/functional_requirements.adoc#section-functional-requirements[funktionale Anforderungen]__
-
-[options="header",cols="1,4"]
-|===
-|ID|Name
-
-|-
-|-
-
-|===
 
 **Load Balancer**
 
@@ -244,10 +226,6 @@ __Risiken__
 |Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn die Komponente nicht mehr erreichbar ist (kontinuierlich abgesetzter Heartbeat)
 
 |===
-
-__Erfüllte funktionale Anforderungen__
-
-Es bestehen keine funktionalen Anforderungen, welche explizit durch diese Komponente realisiert werden.
 
 **Planung (Group)**
 
@@ -394,17 +372,6 @@ a|
 
 |===
 
-__Erfüllte link:../requirements_engineering/functional_requirements.adoc#section-functional-requirements[funktionale Anforderungen]__
-
-[options="header",cols="1,4"]
-|===
-|ID|Name
-
-|-
-|-
-
-|===
-
 **Therapie Planungs Datenbank**
 
 __Zweck / Verantwortlichkeiten__
@@ -480,17 +447,6 @@ Generell können identische Massnahmen wie für __RTD-AUS-20__ in Betracht gezog
 * Transaktionsmanagement
 * Datenreplikation
 * User Access Control (Zugriffskontrolle, Autorisierung)
-
-|===
-
-__Erfüllte link:../requirements_engineering/functional_requirements.adoc#section-functional-requirements[funktionale Anforderungen]__
-
-[options="header",cols="1,4"]
-|===
-|ID|Name
-
-|-
-|-
 
 |===
 
@@ -608,17 +564,6 @@ Massnahmen gemäss __RTD-TRA-10__:
 
 |===
 
-__Erfüllte link:../requirements_engineering/functional_requirements.adoc#section-functional-requirements[funktionale Anforderungen]__
-
-[options="header",cols="1,4"]
-|===
-|ID|Name
-
-|-
-|-
-
-|===
-
 **Ausführungs Datenbank**
 
 __Zweck / Verantwortlichkeiten__
@@ -693,17 +638,6 @@ Massnahmen gemäss __RTD-TRA-10__:
 * Verwendung der Preisrechner, welche von den jeweiligen Cloud-Providern zur Verfügung gestellt werden
 * Definition von Kosten-Thresholds und Einrichtung von Benachrichtigungen im Falle der Erreichung kritischer Kostenwerte
 * Periodisches Monitoring des aktuellen Ressourcenverbrauchs und der prognostizierten Kosten sowie entsprechend transparente Kommunikation mit dem betroffenen Kunden
-
-|===
-
-__Erfüllte link:../requirements_engineering/functional_requirements.adoc#section-functional-requirements[funktionale Anforderungen]__
-
-[options="header",cols="1,4"]
-|===
-|ID|Name
-
-|-
-|-
 
 |===
 
@@ -805,17 +739,6 @@ Massnahmen gemäss __RTD-UEB-10__:
 
 |===
 
-__Erfüllte link:../requirements_engineering/functional_requirements.adoc#section-functional-requirements[funktionale Anforderungen]__
-
-[options="header",cols="1,4"]
-|===
-|ID|Name
-
-|-
-|-
-
-|===
-
 **Benutzerverwaltung Wrapper**
 
 __Zweck / Verantwortlichkeiten__
@@ -906,17 +829,6 @@ Massnahmen gemäss __RTD-USR-10__:
 
 * Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn die Verbindung zwischen __Benutzerverwaltung Wrapper__ und Benutzerverwaltung fehlerhaft ist (kontinuierlich abgesetzter Heartbeat)
 * Wrapper-Komponente möglichst resilient implementieren, sodass PhysioConnect zumindest noch eingeschränkt verwendet werden kann
-
-|===
-
-__Erfüllte link:../requirements_engineering/functional_requirements.adoc#section-functional-requirements[funktionale Anforderungen]__
-
-[options="header",cols="1,4"]
-|===
-|ID|Name
-
-|-
-|-
 
 |===
 
