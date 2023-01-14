@@ -25,7 +25,7 @@ Das Backend ist in mehrere Microservices unterteilt, welche unabhängig voneinan
 * **ADR-BAC-30** +
 Die Ablage der Therapieverwaltungsdaten und Therapie-Session-Ausführungsdaten geschieht in zwei unterschiedlichen Datenbanken, welche unabhängig voneinander deploybar sind.
 * **ADR-BAC-40** +
-Die Backend-Kommunikation erfolgt via HTTP(S).
+Die Backend-Kommunikation erfolgt via HTTPS (SSL / TLS).
 * **ADR-BAC-50**
 Die Abhängigkeiten zwischen Physio Connect und den APIs der Umsysteme __Übungskatalog__ und __Benutzerverwaltung__ werden mittels dedizierten Wrapper Services im Physio Connect-Backend gekapselt, welche als Abstraktionsschicht und anti-corruption layer (ACL) dienen.
 
@@ -889,7 +889,7 @@ Implementiert den Kommunikationskanal zwischen __Therapie Planungs Service__ und
 |Infrastruktur / Driving Adapter
 |Verwaltet die öffentlichen API Endpoints des __Therapie Planungs Service__ und leitet die erhaltenen Request-Daten mit einem entsprechenden Service Call an die __Therapie Applikationslogik__ weiter.
 
-Verifiziert die Daten eingehender Requests (lediglich formelle Prüfung) und beinhaltet die Objekt-Mappings für ausgehende Requests.
+Verifiziert die Daten eingehender Requests (lediglich formale Prüfung) und beinhaltet die Objekt-Mappings für ausgehende Requests.
 
 Kann als "Driving Adapter" kategorisiert werden, da ein über den API Controller eingehender Request den zugehörigen Prozess in der Applikationsschicht initial anstösst.
 
@@ -963,7 +963,7 @@ Implementiert den Kommunikationskanal zwischen __Ausführungs Service__ und __Au
 |Infrastruktur / Driving Adapter
 |Verwaltet die öffentlichen API Endpoints des __Ausführungs Service__ und leitet die erhaltenen Request-Daten mit einem entsprechenden Service Call an die __Ausführungs Applikationslogik__ weiter.
 
-Verifiziert die Daten eingehender Requests (lediglich formelle Prüfung) und beinhaltet die Objekt-Mappings für ausgehende Requests.
+Verifiziert die Daten eingehender Requests (lediglich formale Prüfung) und beinhaltet die Objekt-Mappings für ausgehende Requests.
 
 Kann als "Driving Adapter" kategorisiert werden, da ein über den API Controller eingehender Request den zugehörigen Prozess in der Applikationsschicht initial anstösst.
 

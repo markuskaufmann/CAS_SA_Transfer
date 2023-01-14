@@ -61,7 +61,7 @@ __Vorteile:__
 
 __Nachteile:__
 
-* Sollte nicht ohne HTTPS / SSL / TLS verwendet werden
+* Sollte nicht ohne HTTPS (SSL / TLS) verwendet werden
 * Anfällig für Hijacking- und Man-in-the-middle-Attacken wenn unverschlüsselte Verbindung
 * Grössere Angriffsfläche, da Username / Passwort mit jedem Request quasi als Klartext (Base64) mitgesendet werden
 * Passwort wird eventuell im Browsercache abgelegt, was CSRF-Attacken begünstigt
@@ -83,7 +83,7 @@ __Vorteile:__
 
 __Nachteile:__
 
-* Sollte nicht ohne HTTPS / SSL / TLS verwendet werden
+* Sollte nicht ohne HTTPS (SSL / TLS) verwendet werden
 * Anfällig für Hijacking- und Man-in-the-middle-Attacken wenn unverschlüsselte Verbindung
 * Grössere Angriffsfläche, da der API Key mit jedem Request als Klartext mitgesendet wird
 * Im Falle eines erfolgreichen Angriffs ist die gesamte API kompromittiert
@@ -1093,7 +1093,7 @@ Für die Persistierung der Patienten-Messdaten sollte hingegen primär auf eine 
 |Sowohl Requests von Physiotherapeuten als auch von Patienten werden vom PhysioConnect-Backend gehandhabt. Zu Peak-Zeiten kann es sich dabei um eine hohe Anzahl von Requests bzw. eine hohe eingehende Datenmenge handeln. Da das PhysioConnect-Backend gemäss Architekturentscheid __ADR-BAC-10__ aus mehreren Microservices bestehen wird, soll überprüft werden, ob eine Messaging-Komponente eingesetzt werden soll und falls ja, welche.
 |**Alternative A1**
 a|
-**HTTP(S)**
+**HTTPS (SSL / TLS)**
 
 __Vorteile:__
 
@@ -1140,11 +1140,11 @@ __Nachteile:__
 * Weniger breite Unterstützung als andere Ansätze
 * Weniger Know-How vorhanden
 
-|**Entscheidung**|A1) HTTP(S)
+|**Entscheidung**|A1) HTTPS (SSL / TLS)
 |**Begründung**
 a|
 
-* Kommunikation mit HTTP(S) hat die geringste Komplexität
+* Kommunikation mit HTTPS (SSL / TLS) hat die geringste Komplexität
 * Time-to-Market ist in einem ersten Schritt wichtiger als die Performance
 * Für eine geringe Anzahl Benutzer wird es einfach sein, eine gute Performance mittels Skalierung zu erreichen
 * Es ist einfacher, Bottlenecks zu erkennen und zu optimieren, wenn das System bereits produktiv im Einsatz ist

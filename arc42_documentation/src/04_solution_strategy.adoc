@@ -1,6 +1,8 @@
 [[section-solution-strategy]]
 == Lösungsstrategie
 
+Dieses Kapitel repräsentiert eine Zusammenfassung der fundamentalen Lösungsansätze, Entwurfsentscheidungen und Prinzipien, welche als grundlegender Treiber für den Aufbau und die Evolution der Systemarchitektur von Physio Connect gelten.
+
 === Architekturprinzipien
 
 Die folgenden Prinzipien müssen bestmöglich während dem Design und der Umsetzung von Physio Connect eingehalten werden.
@@ -65,29 +67,201 @@ Die folgende Priorität soll bezüglich der Verwendung von Datenformaten eingeha
 
 |===
 
-[role="arc42help"]
-****
-.Contents
-A short summary and explanation of the fundamental decisions and solution strategies, that shape system architecture. It includes
+===  Lösungsansätze für die Erreichung der Qualitätsziele
 
-* technology decisions
-* decisions about the top-level decomposition of the system, e.g. usage of an architectural pattern or design pattern
-* decisions on how to achieve key quality goals
-* relevant organizational decisions, e.g. selecting a development process or delegating certain tasks to third parties.
+<<< CAN BE DELETED WHEN DOING REVIEW
 
-.Motivation
-These decisions form the cornerstones for your architecture. They are the foundation for many other detailed decisions or implementation rules.
+https://www.embarc.de/arc42-starschnitt-gradle-schnipsel-nr-10-loesungsstrategie/#:~:text=Ihre%20L%C3%B6sungsstrategie%20stark%20verdichtet
+(written by Stefan Zörner, who wrote some of the recommended literature, https://www.orellfuessli.ch/shop/home/artikeldetails/A1062562977)
 
-.Form
-Keep the explanations of such key decisions short.
+>>> CAN BE DELETED WHEN DOING REVIEW
 
-Motivate what was decided and why it was decided that way,
-based upon problem statement, quality goals and key constraints.
-Refer to details in the following sections.
+Die nachfolgende Tabelle visualisiert eine Gegenüberstellung zwischen den zentralen link:01_introduction_and_goals.adoc#section-introduction-and-goals[Qualitätszielen] der Physio Connect-Systemarchitektur und den Lösungsansätzen, welche massgeblich zu der Erreichung dieser Ziele beitragen. Die Lösungsansätze können sich dabei aus einer Kombination von link:09_architecture_decisions.adoc#section-design-decisions[Entscheidungen], link:08_concepts.adoc#section-concepts[Konzepten], link:04_solution_strategy.adoc#section-solution-strategy[Prinzipien], link:10_quality_requirements.adoc#section-quality-requirements[Taktiken] und sonstigen Ideen zusammensetzen.
 
+[options="header",cols="2,2,6"]
+|===
+|Qualitätsziel (ID)|Beschreibung|Lösungsansätze
 
-.Further Information
+|Interoperability +
+(QG-1)
+a|
+Kompatibilität mit Umsystemen:
 
-See https://docs.arc42.org/section-4/[Solution Strategy] in the arc42 documentation.
+* Patienten-App
+* Übungskatalog
+* Benutzerverwaltung
+* Dokumentationssystem +
+(Erweiterung)
 
-****
+a|
+Entscheidungen:
+
+* ADR-BAC-50 +
+Die APIs externer Umsysteme wie __Übungskatalog__ und __Benutzerverwaltung__ werden in dedizierten Wrapper Services gekapselt. Dadurch lässt sich die Interoperabilität mit diesen Umsystemen an einem zentralen Ort sicherstellen.
+
+Prinzipien:
+
+* AP-4 +
+Verwendung von etablierten, standardisierten (Kommunikations-)Protokollen
+* AP-9 +
+Verwendung von etablierten, standardisierten Datenformaten
+
+Taktiken:
+
+* TA-IOP-1 +
+Jede bereitgestellte Schnittstelle (z.B. API Endpoint) muss formal prüfen, ob eingehende Daten den definierten Datentypen entsprechen. Ist dem nicht der Fall, müssen standardisierte Response Codes zurückgegeben werden.
+* TA-IOP-2 +
+Bei Requests, welche intern an weitere Komponenten oder (externe) Umsysteme weitergeleitet werden, soll das Antwortverhalten einem klar definierten Schema folgen.
+
+|Confidentiality +
+(QG-2)
+|Einhaltung bestehender Datenschutzverordnungen und -gesetze im Umgang mit persönlichen Gesundheitsdaten
+a|
+Entscheidungen:
+
+* ADR-SEC-10 +
+Die systemweite Authentifizierung wird mit etablierten Technologien (OAuth 2.0 & OpenID Connect, Multi-factor authentication) sichergestellt. Der dabei verwaltende Identity Provider (https://www.keycloak.org/[Keycloak]) ist Bestandteil des Umsystems __Benutzerverwaltung__.
+* ADR-SEC-11 +
+Mittels der Unterstützung bekannter Social Identity Provider kann auf die redundante Datenhaltung von Passwörtern verzichtet werden.
+* ADR-BAC-40 +
+Die Backend-interne Kommunikation verläuft über verschlüsselte HTTPS-Verbindungen (SSL / TLS).
+
+Prinzipien:
+
+* AP-4 +
+Einsatz von standardisierte, etablierte und sichere Protokollen
+* AP-10 +
+Security: Umsetzung einer strikten Zugriffskontrolle
+* AP-11 +
+Security: Einhaltung von aktuell geltenden Security-Standards
+
+Taktiken:
+
+* TA-CNF-1 +
+Verschlüsselte Kommunikation zwischen allen Systemkomponenten
+* TA-CNF-2 +
+Authentifizierungs- und Autorisierungsmechanismen für jeden eingehenden Request
+* TA-CNF-3 +
+Sicherheitsrichtlinien bei der Implementation neuer API Endpoints
+
+|Confidentiality +
+(QG-2) +
+(Platzbedingte Fortsetzung)
+|Einhaltung bestehender Datenschutzverordnungen und -gesetze im Umgang mit persönlichen Gesundheitsdaten
+a|
+Sonstige Punkte:
+
+* Die systemweite Autorisierung (Zuweisung und Prüfung der Benutzerrollen und -Berechtigungen) verläuft über das Umsystem __Benutzerverwaltung__.
+* Durch die Verwendung eines Load Balancer / Reverse Proxy (siehe link:05_building_block_view.adoc#section-building-block-view[Bausteinsicht]) wird ein zentraler, öffentlicher Einstiegspunkt bereitgestellt, durch welchen alle eingehenden Requests "geschleust" werden. Dies reduziert die allgemeine Angriffsfläche, da die restlichen Systemkomponenten innerhalb eines virtuellen Netzwerks betrieben werden können, welches nicht öffentlich zugänglich ist.
+
+|Modifiability +
+(QG-3)
+|Flexible Modifizier- und Erweiterbarkeit für existierende und zukünftige Schnittstellen
+a|
+Entscheidungen:
+
+* ADR-BAC-10 +
+Das Backend wird in unabhängige, einfach modifzier- und erweiterbare Microservices aufgeteilt.
+* ADR-BAC-20 +
+Die interne Struktur der Backend Services befolgt das Design Pattern der hexagonalen Architektur (Ports & Adapters).
+* ADR-BAC-50 +
+Die APIs externer Umsysteme wie __Übungskatalog__ und __Benutzerverwaltung__ werden in dedizierten Wrapper Services gekapselt. 
+
+Konzepte:
+
+* Hexagonale Architektur (Ports & Adapters)
+
+Taktiken:
+
+* TA-MOD-1 +
+Bei Modifikationen und Erweiterungen müssen bestimmte Implementationsrichtlinien berücksichtigt werden, um stets eine optimale Modifizier- und Erweiterbarkeit aller Systemkomponenten zu gewährleisten.
+* TA-MOD-2 +
+Auf Änderungen der APIs externer Umsysteme kann aufgrund der Verwendung von dedizierten Wrapper Services schnell reagiert werden. 
+
+|===
+
+Des Weiteren stellen die folgenden Qualitätsattribute ebenfalls wichtige Entscheidungsgrundlagen dar:
+
+[options="header",cols="2,2,6"]
+|===
+|Qualitätsattribut|Beschreibung|Lösungsansätze
+
+|Time behaviour
+|Möglichst effiziente Verarbeitung der eingehenden Messdaten +
+(siehe link:10_quality_requirements#section-quality-requirements[Qualitätsszenario SZ-TIB-1])
+a|
+Entscheidungen:
+
+* ADR-BAC-10 +
+Das Backend wird in unabhängige Microservices aufgeteilt, welche bei Bedarf gut skalierbar sind.
+* ADR-BAC-30 +
+Die Verteilung der Datenmengen auf mehrere Datenbanken (sprich in diesem Falle eine separate Datenbank für die Messdaten) kann die Leistung und Skalierbarkeit des Gesamtsystems verbessern.
+* ADR-BAC-31 +
+Dokumentdatenbanken lassen sich bei Bedarf (in der Regel) einfacher skalieren als relationale Datenbanken.
+* ADR-BAC-50 +
+Die APIs externer Umsysteme wie __Übungskatalog__ und __Benutzerverwaltung__ werden in dedizierten Wrapper Services gekapselt, welche ebenfalls gut skalierbar sind.
+* ADR-HST-10 +
+Das standardmässige Hosting von Physio Connect in der Cloud ermöglicht eine effiziente vertikale / horizontale Skalierung.
+
+Prinzipien:
+
+* AP-3 +
+Komponenten, deren Ressourcenverbrauch stark mit der Anzahl aktiver Benutzer korreliert, müssen horizontal skalierbar und zustandslos (stateless) sein.
+* AP-9 +
+Verwendung von etablierten, standardisierten Datenformaten, welche laufend hinsichtlich ihres Ressourcenverbrauchs optimiert werden.
+
+Sonstige Punkte:
+
+* Durch die Verwendung eines Load Balancer / Reverse Proxy (siehe link:05_building_block_view.adoc#section-building-block-view[Bausteinsicht]) können statische Inhalte temporär gecached werden, was die Response-Zeiten reduziert.
+
+|Capacity
+|Parallele Verwendung von Physio Connect durch mehrere Benutzer +
+(siehe link:10_quality_requirements#section-quality-requirements[Qualitätsszenario SZ-CAP-1])
+a|
+Entscheidungen:
+
+* ADR-BAC-10 +
+Das Backend wird in unabhängige Microservices aufgeteilt, welche bei Bedarf gut skalierbar sind.
+* ADR-BAC-30 +
+Die Verteilung der Datenmengen auf mehrere Datenbanken (sprich in diesem Falle eine separate Datenbank für die Messdaten) kann die Leistung und Skalierbarkeit des Gesamtsystems verbessern.
+* ADR-BAC-31 +
+Dokumentdatenbanken lassen sich bei Bedarf (in der Regel) einfacher skalieren als relationale Datenbanken.
+* ADR-BAC-50 +
+Die APIs externer Umsysteme wie __Übungskatalog__ und __Benutzerverwaltung__ werden in dedizierten Wrapper Services gekapselt, welche ebenfalls gut skalierbar sind.
+* ADR-HST-10 +
+Das standardmässige Hosting von Physio Connect in der Cloud ermöglicht eine effiziente vertikale / horizontale Skalierung.
+
+Prinzipien:
+
+* AP-3 +
+Komponenten, deren Ressourcenverbrauch stark mit der Anzahl aktiver Benutzer korreliert, müssen horizontal skalierbar und zustandslos (stateless) sein.
+
+|Fault tolerance
+|Resilientes Verhalten bei einem Ausfall oder fehlerhaften Antworten der Umsysteme +
+(siehe link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien SZ-FLT-1, SZ-FLT-2])
+a|
+Entscheidungen:
+
+* ADR-BAC-50 +
+Die APIs externer Umsysteme wie __Übungskatalog__ und __Benutzerverwaltung__ werden in dedizierten Wrapper Services gekapselt, welche möglichst resilient implementiert sind (z.B. Verwendung von Retry Policies), sodass Physio Connect bei einem Ausfall oder fehlerhaften Verhalten der Umsysteme zumindest noch eingeschränkt verwendet werden kann.
+
+Taktiken:
+
+* TA-IOP-2 +
+Bei Requests, welche intern an weitere Komponenten oder (externe) Umsysteme weitergeleitet werden, soll das Verhalten bei Timeouts oder auftretenden Fehlern einem klar definierten Schema folgen.
+
+|Installability
+|Flexible Konfigurierbarkeit ermöglicht Installation und Betrieb in unterschiedlichen Umgebungen +
+(siehe link:10_quality_requirements#section-quality-requirements[Qualitätsszenario SZ-INT-1])
+a|
+Entscheidungen:
+
+* ADR-HST-10 +
+Das standardmässige Hosting von Physio Connect ist bei einem Cloud-Provider vorgesehen. Beim Design und der Implementation soll jedoch darauf geachtet werden, dass ein potenzielles on-premises-Hosting (beispielsweise durch eine hohe Konfigurierbarkeit) ebenfalls möglich ist.
+
+Prinzipien:
+
+* AP-6 +
+Durch die Anwendung des Cloud Native-Prinzips besitzt Physio Connect bereits ein grundlegendes Mass an Portabilität, da das System in unterschiedlichen Cloud-Umgebungen "installiert" und betrieben werden kann. Durch den Einsatz von https://www.docker.com/resources/what-container/[Containern] (z.B. Docker), welche grundsätzlich plattformunabhängig funktionieren, lässt sich dieser Effekt auch auf on-premises-Umgebungen replizieren.
+
+|===
