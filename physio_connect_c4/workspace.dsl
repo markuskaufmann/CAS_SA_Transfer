@@ -138,7 +138,7 @@ workspace "Physio integration layer project" {
         planungsService -> benutzerVerwaltungWrapper "Verwendet Benutzerinformationen von"
         planungsService -> uebungsKatalogWrapper "Verwendet Übungsinformationen von"
         planungsService -> planungsDatenbank "Persistiert Gesamttherapien, Therapie-Sessions, Therapie Übungen und die dazugehörigen Detailinformationen"
-        planungsService -> ausfuehrungsService "Kombiniert Planugnsdaten mit Ausführungsdaten von"
+        planungsService -> ausfuehrungsService "Kombiniert Planungsdaten mit Ausführungsdaten von"
 
         benutzerVerwaltungWrapper -> benutzerVerwaltung "Verwaltet Benutzerdaten"
         uebungsKatalogWrapper -> uebungsKatalog "Verwaltet Übungsdefinitionen"
