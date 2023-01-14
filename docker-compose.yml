@@ -23,7 +23,7 @@ services:
     volumes:
       - ./:/usr/local/copyer/
   asciidoctor:
-    image: asciidoctor/docker-asciidoctor:latest
+    image: culmi/asciidoctor-with-prawn-gmagick:latest
     pull_policy: always
     depends_on:
       copyer:
