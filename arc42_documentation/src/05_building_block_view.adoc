@@ -24,9 +24,10 @@ Es werden aktuell keine Micro Frontends eingesetzt.
 Das Backend ist in mehrere Microservices unterteilt, welche unabhängig voneinander deploybar sind.
 * **ADR-BAC-30** +
 Die Ablage der Therapieverwaltungsdaten und Therapie-Session-Ausführungsdaten geschieht in zwei unterschiedlichen Datenbanken, welche unabhängig voneinander deploybar sind.
-* **ADR-MES-10** +
+* **ADR-BAC-40** +
 Die Backend-Kommunikation erfolgt via HTTP(S).
-* **TBD ADR ACL**
+* **ADR-BAC-50**
+Die Abhängigkeiten zwischen Physio Connect und den APIs der Umsysteme __Übungskatalog__ und __Benutzerverwaltung__ werden mittels dedizierten Wrapper Services im Physio Connect-Backend gekapselt, welche als Abstraktionsschicht und anti-corruption layer (ACL) dienen.
 
 Des Weiteren wurde die System-Dekomposition auch durch die sinnvolle Aufteilung bzw. logische Zusammengehörigkeit der link:../requirements_engineering/functional_requirements.adoc#section-functional-requirements[funktionalen Anforderungen] massgeblich beeinflusst. Prinzipien wie https://blog.cleancoder.com/uncle-bob/2014/05/08/SingleReponsibilityPrinciple.html[Single Responsibility Principle (SRP)] und https://deviq.com/principles/separation-of-concerns[Separation of Concerns (SoC)] boten dabei eine gute Grundlage.
 
@@ -204,10 +205,7 @@ __Qualitäts- / Performancecharakteristiken__
 
 |Performance Efficiency / Time behaviour
 a|
-Durch das temporäre Caching statischer Inhalte (z.B. Frontend-SPA) kann die allgemeine Performance durch tiefere Response-Zeiten optimiert werden, indem die Weiterleitung des Requests zur Frontend- / Backend-Komponente wegfällt. +
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
-
-* SZ-TIB-1
+Durch das temporäre Caching statischer Inhalte (z.B. Frontend-SPA) kann die allgemeine Performance durch tiefere Response-Zeiten optimiert werden, indem die Weiterleitung des Requests zur Frontend- / Backend-Komponente wegfällt.
 
 |Security
 |Der Reverse Proxy fungiert als Vermittler zwischen Client und Physio Connect-System, wodurch die APIs der internen Komponenten nicht öffentlich gemacht werden müssen. +
@@ -414,11 +412,11 @@ a|Bei der Verwendung einer Dokumentdatenbank profitiert man von einer höheren F
 |Skalierbarkeit
 a|Sowohl relationale als auch Dokumentdatenbanken lassen sich bei Bedarf vertikal sowie horizontal skalieren. Letzere Variante resultiert jedoch in der Abklärung und Definition weiterer Aspekte, wie beispielsweise einer effizienten und zuverlässigen Datensynchronisation zwischen den einzelnen Datenbankinstanzen zur Erhaltung der Datenkonsistenz.
 
-|Performance Efficiency / Time behaviour
+|Performance Efficiency / Capacity
 a|Sowohl relationale als auch aktuelle Dokumentdatenbanken sind auf grosse Datenmengen und die Performance-Optimierung bei Abfragen und Speichervorgängen ausgelegt. Ebenso lassen sich parallele Datenzugriffe und die diesbezügliche Sicherstellung der Datenintegrität und -konsistenz via Transaktionsmanagement sicherstellen. +
 Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
 
-* SZ-TIB-1
+* SZ-CAP-1
 
 |===
 
@@ -596,11 +594,12 @@ a|Bei der Verwendung einer Dokumentdatenbank profitiert man von einer höheren F
 |Skalierbarkeit
 a|Dokumentdatenbanken lassen sich bei Bedarf vertikal sowie horizontal skalieren. Letzere Variante resultiert jedoch in der Abklärung und Definition weiterer Aspekte, wie beispielsweise einer effizienten und zuverlässigen Datensynchronisation zwischen den einzelnen Datenbankinstanzen zur Erhaltung der Datenkonsistenz.
 
-|Performance Efficiency / Time behaviour
+|Performance Efficiency / Time behaviour, Capacity
 a|Aktuelle Dokumentdatenbanken sind auf grosse Datenmengen und die Performance-Optimierung bei Abfragen und Speichervorgängen ausgelegt. Ebenso lassen sich parallele Datenzugriffe und die diesbezügliche Sicherstellung der Datenintegrität und -konsistenz via Transaktionsmanagement sicherstellen. +
 Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
 
 * SZ-TIB-1
+* SZ-CAP-1
 
 |===
 
@@ -654,7 +653,8 @@ __Zweck / Verantwortlichkeiten__
 ** Verwaltung von Übungsdefinitionen
 ** Verwendung / Verknüpfung von Übungsdefinitionen in Therapie-Sessions 
 ** Verwaltung von Übungskollektionen
-* Dient grundsätzlich als https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer[anti-corruption layer (ACL)] zwischen Physio Connect und dem Übungskatalog - gemäss Architekturentscheidung **[TBD Link ADR]**
+* Dient grundsätzlich als Abstraktionsschicht und https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer[anti-corruption layer (ACL)] zwischen Physio Connect und dem Übungskatalog +
+(siehe link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-50])
 
 __Schnittstellen__
 
@@ -715,11 +715,11 @@ Betrifft die folgenden link:10_quality_requirements#section-quality-requirements
 
 * SZ-FLT-1
 
-|Performance Efficiency / Time behaviour
+|Performance Efficiency / Capacity
 a|Der __Übungskatalog Wrapper__ soll einfach und zustandslos (stateless) gehalten werden, sodass die Komponente mit minimalem Aufwand / Komplexität horizontal skaliert werden kann. +
 Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
 
-* SZ-TIB-1
+* SZ-CAP-1
 
 |===
 
@@ -748,7 +748,8 @@ __Zweck / Verantwortlichkeiten__
 ** Verwaltung von Benutzern: +
 Physiotherapeuten, Vorgesetzte der Physiotherapeuten, Patienten, Administratoren, weitere (technische) Benutzer
 ** Verknüpfung von Patienten-Benutzern in Gesamttherapien, Therapie-Sessions und Therapieübungen
-* Dient grundsätzlich als https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer[anti-corruption layer (ACL)] zwischen Physio Connect und der Benutzerverwaltung - gemäss Architekturentscheidung **[TBD Link ADR]**
+* Dient grundsätzlich als Abstraktionsschicht und https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer[anti-corruption layer (ACL)] zwischen Physio Connect und der Benutzerverwaltung +
+(siehe link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-50])
 
 __Schnittstellen__
 
@@ -808,11 +809,11 @@ Betrifft die folgenden link:10_quality_requirements#section-quality-requirements
 
 * SZ-FLT-2
 
-|Performance Efficiency / Time behaviour
+|Performance Efficiency / Capacity
 a|Der __Benutzerverwaltung Wrapper__ soll einfach und zustandslos (stateless) gehalten werden, sodass die Komponente mit minimalem Aufwand / Komplexität horizontal skaliert werden kann. +
 Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
 
-* SZ-TIB-1
+* SZ-CAP-1
 
 |===
 

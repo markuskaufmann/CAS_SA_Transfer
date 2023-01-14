@@ -24,6 +24,8 @@ a|
 * Weshalb wurde Alternative x ausgewählt?
 * Beschreibung der eventuellen Konsequenzen (positiv oder negativ), welche beim Einsatz der Alternative x speziell zu beachten sind
 
+|**Qualitätsszenarien**
+|Referenzierung der link:10_quality_requirements.adoc#section-quality-requirements[Qualitätsszenarien], welche mit dieser Entscheidung in direkter Verbindung stehen.
 |**Follow-up Entscheidungen** +
 (falls vorhanden)
 |Auflistung der benötigten Folgeentscheidungen, welche aus dieser Entscheidung resultieren und zusätzlich getroffen werden müssen.
@@ -1085,7 +1087,7 @@ Für die Persistierung der Patienten-Messdaten sollte hingegen primär auf eine 
 
 [cols="2,6"]
 |===
-|**ID**|ADR-MES-10
+|**ID**|ADR-BAC-40
 |**Anliegen (Concern)**|Wie wird das Backend-Messaging innerhalb von Physio Connect umgesetzt?
 |**Kontext**
 |Sowohl Requests von Physiotherapeuten als auch von Patienten werden vom PhysioConnect-Backend gehandhabt. Zu Peak-Zeiten kann es sich dabei um eine hohe Anzahl von Requests bzw. eine hohe eingehende Datenmenge handeln. Da das PhysioConnect-Backend gemäss Architekturentscheid __ADR-BAC-10__ aus mehreren Microservices bestehen wird, soll überprüft werden, ob eine Messaging-Komponente eingesetzt werden soll und falls ja, welche.
@@ -1148,6 +1150,160 @@ a|
 * Es ist einfacher, Bottlenecks zu erkennen und zu optimieren, wenn das System bereits produktiv im Einsatz ist
 
 Es soll jedoch bei Design und Implementation darauf geachtet werden, dass die Möglichkeit der zukünftig gezielten Verwendung von gRPC oder einer Message Queue erhalten bleibt.
+
+|===
+
+==== Umysteme
+
+[cols="2,6"]
+|===
+|**ID**|ADR-BAC-50
+|**Anliegen (Concern)**|Wie können die Abhängigkeiten zu den APIs externer Umsysteme optimal gekapselt werden?
+|**Kontext**
+a|
+Aus Sicht des definierten link:03_system_scope_and_context.adoc#section-system-scope-and-context[Systemkontexts von Physio Connect] besteht eine grundsätzliche Abhängigkeit zu zwei externen Umsystemen, welche sich jedoch innerhalb der Unternehmungsgrenze befinden:
+
+* **Übungskatalog** +
+System, welches für die Verwaltung (Erstellung, Modifikation, Wiederverwendung) der generell zur Verfügung stehenden (Standard-)Übungsdefinitionen zuständig ist. +
+Für die Übungsverwaltung steht eine entsprechende REST API zur Verfügung.
+
+* **Benutzerverwaltung** +
+System, welches für die Authentifizierung und Autorisierung sowie für die generelle Verwaltung der Benutzer(-informationen) zuständig ist. +
+Für die Benutzerverwaltung steht eine entsprechende REST API zur Verfügung. +
+Die Authentifizierung und Autorisierung erfolgt standardmässig über den systemintegrierten Identity Provider (Keycloak) und ist somit kein relevanter Bestandteil dieses Architekturentscheids.
+
+Im Rahmen dieser Entscheidung soll analysiert und definiert werden, wie die Abhängigkeiten zwischen Physio Connect und den APIs der abhängigen Umsysteme __Übungskatalog__ und __Benutzerverwaltung__ optimal gekapselt werden können, um eine möglichst lose Kopplung zu erreichen.
+
+|**Alternative A1**
+a|
+**Direkte Verwendung der APIs**
+
+Die REST APIs der Umsysteme __Übungskatalog__ und __Benutzerverwaltung__ werden in allen betroffenen Physio Connect-Services und -Komponenten direkt als Teil des jeweiligen Quellcodes angebunden und verwendet. Die Anbindung beinhaltet unter anderem jeweils die gesamte Verbindungs-, Mapping-, Exception Handling- und (De-)Serialisierungslogik.
+
+__Vorteile:__
+
+* Keine Abhängigkeit zu anderen (Wrapper) Komponenten: +
+Durch die direkte Anbindung der APIs als Teil jeder betroffenen Komponente bestehen keine Abhängigkeiten zu weiteren Komponenten (Wrapper Services / Libraries), welche die APIs kapseln.
+* Kontrolle: +
+Im Kontext jeder Komponente hat man die volle Kontrolle über den API-Zugriff und kann auf spezifische API Endpoints kontextspezifisch reagieren.
+* Einfachheit: +
+Dank der https://github.com/OAI/OpenAPI-Specification[OpenAPI-Spezifikation] und den verfügbaren https://openapi-generator.tech/[-Generatoren] kann eine state-of-the-art REST API mit minimalem Aufwand angebunden und verwendet werden.
+
+__Nachteile:__
+
+* Modifizierbar- / Erweiterbarkeit: +
+Da die Anbindung der APIs in jeder betroffenen Komponente implementiert ist, kann dies bei Änderungen / Erweiterungen der APIs schnell in einem akuten Mehraufwand resultieren, da alle betroffenen Komponenten manuell angepasst werden müssen, um den aktuellsten Stand der APIs zu unterstützen.
+* Hohe Kopplung: +
+Durch die direkte Anbindung der APIs entsteht eine dementsprechend hohe Kopplung zwischen allen betroffenen Komponenten und den APIs.
+* Risiko der Vermischung verschiedener Domänenmodelle: +
+Durch die direkte Anbindung der API besteht das Risiko, dass sich die Domäne der API in die Domäne der betroffenen Komponente "einschleicht" und bis in die tieferen Schichten der Komponente mitgezogen wird, was das Domänenmodell der Komponente verunreinigt.
+
+|**Alternative A2**
+a|
+**Verwendung einer Wrapper Library**
+
+Die REST APIs der Umsysteme __Übungskatalog__ und __Benutzerverwaltung__ werden als Bestandteil einer systemweit verfügbaren Wrapper Library gekapselt und in alle betroffenen Physio Connect-Services und -Komponenten direkt eingebunden. Die Library beinhaltet unter anderem die gesamte Verbindungs-, Mapping-, Exception Handling- und (De-)Serialisierungslogik und abstrahiert die API Endpoints der Umsysteme in public-facing Methoden, welche von den Konsumenten der Library normal aufgerufen werden können.
+
+__Vorteile:__
+
+* Domänenspezifische Abstraktionsschicht: +
+Durch die Kapselung der APIs in einer Wrapper Library kann eine klar definierte Abstraktions- und Übersetzungsschicht zwischen die Domäne der betroffenen Komponenten und die Domänen der Umsysteme gesetzt werden. Die Library repräsentiert hierbei einen https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer[anti-corruption layer (ACL)], welcher die Domänen der betroffenen Komponenten und die Domänen der Umsysteme sauber voneinander trennt und zwischen diesen übersetzt bzw. ein internes Mapping durchführt.
+* Code Reuse: +
+Der Quellcode für die Anbindung und Kapselung der API erfolgt einmalig als Teil der Wrapper Library und muss somit nicht mehr von jeder betroffenen Komponenten implementiert werden.
+* Testbarkeit: +
+Die Library kann bei komponentenspezifischen Tests mit geringem Aufwand durch einen entsprechenden Mock ersetzt werden. Alternativ kann die Library auch direkt die zu verwendenden Testing Utilities als Hilfswerkzeuge mitliefern.
+* Sicherheit: +
+Die Wrapper Library kapselt die Authentifizierungs- und Autorisierungsmechanismen für die Kommunikation mit den Umsystem-APIs, damit die konsumierenden Komponenten keine Kenntnis davon haben müssen.  Jedoch reduziert sich hierbei die allgemeine Angriffsfläche nicht, da die Library zusammen mit jeder konsumierenden Komponente deployed wird.
+
+|**Alternative A2** +
+(Platzbedingte Fortsetzung)
+a|
+**Verwendung einer Wrapper Library**
+
+__Nachteile:__
+
+* Modifizierbar- / Erweiterbarkeit: +
+Da die Wrapper Library in jeder betroffenen Komponente eingebunden ist, kann dies bei Änderungen / Erweiterungen der APIs schnell in einem akuten Mehraufwand resultieren. Einerseits müssen die API-Änderungen nur in der Wrapper Library nachgeführt werden, doch trotzdem müssen alle betroffenen Komponenten manuell angepasst werden, damit sie die neuste Version der Library einbinden.
+* Skalierbarkeit: +
+Die Wrapper Library selbst kann nicht skaliert werden, nur die konsumierenden Komponenten. Je nach Komponente kann eine entsprechende Skalierung dabei relativ zeit- und kostenaufwändig sein.
+* Support für Frontend- und Backend-Komponenten: +
+Gerade bei den Umsystemen __Übungskatalog__ und __Benutzerverwaltung__ ist es wahrscheinlich, dass nebst den Backend-Komponenten auch das Physio Connect-Frontend (SPA / PWA) auf die REST APIs der beiden Umsysteme zugreifen soll. Da für die heutigen Frontend- und Backend-Technologiestacks meist unterschiedliche Package Manager verwendet werden (z.B. Maven / Gradle für Java, npm für React), müssen theoretisch auch zwei Versionen der Wrapper Library 
+
+|**Alternative A3**
+a|
+**Verwendung dedizierter Wrapper Services**
+
+Die REST APIs der Umsysteme __Übungskatalog__ und __Benutzerverwaltung__ werden in Form von zwei dedizierten, voneinander unabhängigen Wrapper Services gekapselt. Die Services sind Bestandteil des Physio Connect-Backends und können sowohl von anderen systeminternen Backend-Komponenten als auch vom Physio Connect-Frontend (SPA / PWA) via Load Balancer / Reverse Proxy verwendet werden. +
+Sämtliche Kommunikation zwischen Physio Connect und den APIs der Umsysteme __Übungskatalog__ und __Benutzerverwaltung__ läuft über die beiden dedizierten Wrapper Services.
+
+__Vorteile:__
+
+* Modifizierbar- / Erweiterbarkeit: +
+Aufgrund der vollständigen Kapselung der APIs im Rahmen von dedizierten Wrapper Services können Änderungen / Erweiterungen der APIs effizient an einer zentralen Stelle angepasst werden. Alle konsumierenden Physio Connect-Komponenten / -Services benötigen keine Anpassungen, solange sich die internen APIs der Wrapper Services nicht ändern.
+* Skalierbarkeit: +
+Die Wrapper Services für die Umsysteme __Übungskatalog__ und __Benutzerverwaltung__ können unabhängig voneinander betrieben und vertikal / horizontal skaliert werden. Hierbei ist darauf zu achten, dass die Service-Instanzen je nach Netzwerk-Traffic dynamisch hoch- und runterskaliert werden können (und eventuell auch zeitgesteuert). Um eine besonders einfache horizontale Skalierung sicherzustellen, müssen die Wrapper Services möglichst __stateless__ implementiert werden (sprich ohne Persistenz).
+* Domänenspezifische Abstraktionsschicht: +
+Durch die Kapselung der APIs in eigene Wrapper Services kann eine klar definierte Abstraktions- und Übersetzungsschicht zwischen die Physio Connect-Domäne und die Domänen der Umysteme __Übungskatalog__ und __Benutzerverwaltung__ gesetzt werden. Jeder Wrapper Service repräsentiert hierbei einen https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer[anti-corruption layer (ACL)], welcher die beiden Domänen (Physio Connect <-> Umsystem) sauber voneinander trennt und zwischen diesen übersetzt bzw. ein internes Mapping durchführt.
+* Lose Kopplung: +
+Durch die Verwendung von Wrapper Services entsteht eine lose Kopplung zwischen den betroffenen Physio Connect-Komponenten / -Services und den APIs der Umysteme, da lediglich die Wrapper Services detaillierte Kenntnis von den Umsystem-APIs haben müssen, der Rest des Physio Connect-Systemkontexts jedoch nicht.
+
+|**Alternative A3** +
+(Platzbedingte Fortsetzung)
+a|
+**Verwendung dedizierter Wrapper Services**
+
+__Vorteile:__
+
+* Reliability / Fault Tolerance: +
+Verbindungsunterbrüche, Ausfälle und / oder fehlerhaftes Antwortverhalten der Umsystem-APIs können ebenfalls im Rahmen der dedizierten Wrapper Services abgefangen, behandelt und kontrolliert an die internen Physio Connect-Komponenten weitergeleitet werden. Auf diese Weise kann Physio Connect als Gesamtsystem resilienter bezüglich dem Zustand von bestehenden Umsystemen reagieren und ein unerwartetes Systemverhalten (undefined behevaiour) vermeiden.
+* Sicherheit: +
+Die Wrapper Services kapseln die Authentifizierungs- und Autorisierungsmechanismen für die Kommunikation mit den Umsystem-APIs, damit die konsumierenden Physio Connect-Komponenten keine Kenntnis davon haben müssen. Dies reduziert die allgemeine Angriffsfläche.
+* Testbarkeit: +
+Die Wrapper Services bestehen in der Form herkömmlicher Microservices, also können sie
+** selbst jeweils isoliert getestet werden
+** von den konsumierenden Komponenten durch einen einfachen Mock ersetzt werden
+
+__Nachteile:__
+
+* Komplexität: +
+Der Einsatz von dedizierten Services erhöht die Gesamtkomplexität der Systemarchitektur, da jeder Wrapper Service eine zusätzliche (Infrastruktur-)Komponente ist, welche deployed und verwaltet werden muss.
+* Performance: +
+Da jeder Request an die Umysteme __Übungskatalog__ und __Benutzerverwaltung__ durch die entsprechenden Wrapper Services "geschleust" wird, kann sich die Systemperformance aufgrund der generellen Erhöhung der Netzwerk-Latenzzeit verschlechtern.
+* Zusätzliche Kosten: +
+Jeder Wrapper Service ist ein eigener Microservice, welcher als zusätzliche Infrastrukturkomponente von Physio Connect betrieben werden muss. Dies hat einen negativen Einfluss auf die allgemeinen Infrastruktur- und Betriebskosten.
+
+|**Entscheidung**|A3) Verwendung dedizierter Wrapper Services
+|**Begründung**
+a|Der Entscheid für die Verwendung dedizierter Wrapper Services basiert auf deren Vorteilen, welche im Rahmen der bestehenden link:10_quality_requirements.adoc#section-quality-requirements[Qualitätsanforderungen] als besonders relevant erachtet werden:
+
+* Modifizierbar- / Erweiterbarkeit
+* Skalierbarkeit
+* Sicherheit
+* Domänenspezifische Abstraktionsschicht (anti-corruption layer, ACL)
+* Lose Kopplung
+* Reliability / Fault Tolerance
+
+|**Qualitätsszenarien**
+a|
+**Interoperability**
+
+* SZ-IOP-3
+* SZ-IOP-4
+* SZ-IOP-5
+
+**Modifiability**
+
+* SZ-MOD-3
+* SZ-MOD-4
+
+**Capacity**
+
+* SZ-CAP-1
+
+**Fault tolerance**
+
+* SZ-FLT-1
+* SZ-FLT-2
 
 |===
 
