@@ -85,7 +85,7 @@ HTTP GET Request ohne Parameter
 a|
 * Default: +
 Main Bundle der Frontend-SPA
-* via Name / Pfad angeforderte Ressource / Asset +
+* via Namen / Pfad angeforderte Ressource / Asset +
 (z.B. Translation file, Image)
 ** falls nicht gefunden: +
 Response code 404 (Not Found)
@@ -411,7 +411,7 @@ __Qualitäts- / Performancecharakteristiken__
 a|Bei der Verwendung einer Dokumentdatenbank profitiert man von einer höheren Flexibilität, wenn abzuspeichernde Daten einem dynamischen Schema entsprechen.
 
 |Skalierbarkeit
-a|Sowohl relationale als auch Dokumentdatenbanken lassen sich bei Bedarf vertikal sowie horizontal skalieren. Letzere Variante resultiert jedoch in der Abklärung und Definition weiterer Aspekte, wie beispielsweise einer effizienten und zuverlässigen Datensynchronisation zwischen den einzelnen Datenbankinstanzen zur Erhaltung der Datenkonsistenz.
+a|Sowohl relationale als auch Dokumentdatenbanken lassen sich bei Bedarf vertikal sowie horizontal skalieren. Letztere Variante resultiert jedoch in der Abklärung und Definition weiterer Aspekte, wie beispielsweise einer effizienten und zuverlässigen Datensynchronisation zwischen den einzelnen Datenbankinstanzen zur Erhaltung der Datenkonsistenz.
 
 |Performance Efficiency / Capacity
 a|Sowohl relationale als auch Dokumentdatenbanken sind auf grosse Datenmengen und die Performance-Optimierung bei Abfragen und Speichervorgängen ausgelegt. Ebenso lassen sich parallele Datenzugriffe und die diesbezügliche Sicherstellung der Datenintegrität und -konsistenz via Transaktionsmanagement sicherstellen. +
@@ -457,7 +457,7 @@ Hierbei handelt es sich lediglich um eine logische Gruppierung der Komponenten, 
 
 __Zweck / Verantwortlichkeiten__
 
-Dieser Service ist für die Verarbeitung der Daten verantwortlich, welche von den Patienten während der Ausführung einer Therapie-Session aufgezeichnet werden. Einerseits gehören hierzu Messdaten wie Puls oder Bludruck, andererseits aber auch übungsspezifische Ausführungsinformationen wie effektive Sets / Reps oder Patienten- / Therapeutenrückmeldungen zu durchgeführten Übungen.
+Dieser Service ist für die Verarbeitung der Daten verantwortlich, welche von den Patienten während der Ausführung einer Therapie-Session aufgezeichnet werden. Einerseits gehören hierzu Messdaten wie Puls oder Blutdruck, andererseits aber auch übungsspezifische Ausführungsinformationen wie effektive Sets / Reps oder Patienten- / Therapeutenrückmeldungen zu durchgeführten Übungen.
 
 __Schnittstellen__
 
@@ -476,7 +476,7 @@ HTTP Response abhängig von Situation:
 * Code 403 wenn der aufrufende Benutzer gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
 (= unzureichende Berechtigung)
 * Code 404 wenn eine notwendige Ressource intern nicht gefunden wurde
-* Code 500 wenn ein interner Fehler auftritt (inkl. zusätzilcher Beschreibung des Fehlers)
+* Code 500 wenn ein interner Fehler auftritt (inkl. zusätzlicher Beschreibung des Fehlers)
 
 |REST API für die Verwaltung von Patienten- / Therapeutenrückmeldungen
 |HTTP Request mit Bearer Access Token (JWT) und Payload (notwendig je nach Request)
@@ -489,7 +489,7 @@ HTTP Response abhängig von Situation:
 * Code 403 wenn der aufrufende Benutzer gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
 (= unzureichende Berechtigung)
 * Code 404 wenn eine notwendige Ressource intern nicht gefunden wurde
-* Code 500 wenn ein interner Fehler auftritt (inkl. zusätzilcher Beschreibung des Fehlers)
+* Code 500 wenn ein interner Fehler auftritt (inkl. zusätzlicher Beschreibung des Fehlers)
 
 |Adapter für die Kommunikation mit __Ausführungs Datenbank__
 |Response von Datenbanksystem via TCP/IP zu vorgängig abgesetzter Query / Operation, abstrahiert durch ODBC / JDBC Driver oder Datenbank client library
@@ -674,7 +674,7 @@ HTTP Response abhängig von Situation:
 * Code 403 wenn der aufrufende Benutzer gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
 (= unzureichende Berechtigung)
 * Code 404 wenn eine notwendige Ressource intern nicht gefunden wurde
-* Code 500 wenn ein interner Fehler auftritt (inkl. zusätzilcher Beschreibung des Fehlers)
+* Code 500 wenn ein interner Fehler auftritt (inkl. zusätzlicher Beschreibung des Fehlers)
 
 |REST API Client für HTTP Requests an das System __Übungskatalog__. +
 Der Client-Code wird automatisch über die publizierte Spezifikation der REST API vom __Übungskatalog__ generiert (z.B. via https://openapi-generator.tech/[OpenAPI Generator]).
@@ -758,7 +758,7 @@ __Schnittstellen__
 |===
 |Schnittstelle|Input|Output
 
-|REST API für die Verwaltung und Verknüpftung von Benutzern und -informationen
+|REST API für die Verwaltung und Verknüpfung von Benutzern und -informationen
 |HTTP Request mit Bearer Access Token (JWT) und Payload (notwendig je nach Request)
 a|
 HTTP Response abhängig von Situation:
@@ -769,7 +769,7 @@ HTTP Response abhängig von Situation:
 * Code 403 wenn der aufrufende Benutzer gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
 (= unzureichende Berechtigung)
 * Code 404 wenn eine notwendige Ressource intern nicht gefunden wurde
-* Code 500 wenn ein interner Fehler auftritt (inkl. zusätzilcher Beschreibung des Fehlers)
+* Code 500 wenn ein interner Fehler auftritt (inkl. zusätzlicher Beschreibung des Fehlers)
 
 |REST API Client für HTTP Requests an das System __Benutzerverwaltung__. +
 Der Client-Code wird automatisch über die publizierte Spezifikation der REST API der __Benutzerverwaltung__ generiert (z.B. via https://openapi-generator.tech/[OpenAPI Generator]).
@@ -908,7 +908,7 @@ Kann als "Driving Adapter" kategorisiert werden, da ein über den API Controller
 |Infrastruktur / Driven Adapter
 |Verwaltet den serviceinternen Zugriff auf die API des Containers __Ausführungsservice__.
 
-Beispielsweise beinhaltet dieser Adapter die Definition des (generierten) API Clients des __Ausführungsservice__ sowie die damit verbundenden Objekt-Mappings, URL Builders und (De-)Serialisierungslogik.
+Beispielsweise beinhaltet dieser Adapter die Definition des (generierten) API Clients des __Ausführungsservice__ sowie die damit verbundenen Objekt-Mappings, URL Builders und (De-)Serialisierungslogik.
 
 Kann als "Driven Adapter" kategorisiert werden, da er von der Applikationsschicht via zugehörigem Port aufgerufen wird.
 
@@ -916,7 +916,7 @@ Kann als "Driven Adapter" kategorisiert werden, da er von der Applikationsschich
 |Infrastruktur / Driven Adapter
 |Verwaltet den serviceinternen Zugriff auf die API des Containers __Übungskatalogwrapper__.
 
-Beispielsweise beinhaltet dieser Adapter die Definition des (generierten) API Clients des __Übungskatalogwrapper__ sowie die damit verbundenden Objekt-Mappings, URL Builders und (De-)Serialisierungslogik.
+Beispielsweise beinhaltet dieser Adapter die Definition des (generierten) API Clients des __Übungskatalogwrapper__ sowie die damit verbundenen Objekt-Mappings, URL Builders und (De-)Serialisierungslogik.
 
 Kann als "Driven Adapter" kategorisiert werden, da er von der Applikationsschicht via zugehörigem Port aufgerufen wird.
 
@@ -924,7 +924,7 @@ Kann als "Driven Adapter" kategorisiert werden, da er von der Applikationsschich
 |Infrastruktur / Driven Adapter
 |Verwaltet den serviceinternen Zugriff auf die des Containers __Benutzerverwaltungswrapper__.
 
-Beispielsweise beinhaltet dieser Adapter die Definition des (generierten) API Clients des __Benutzerverwaltungswrapper__ sowie die damit verbundenden Objekt-Mappings, URL Builders und (De-)Serialisierungslogik.
+Beispielsweise beinhaltet dieser Adapter die Definition des (generierten) API Clients des __Benutzerverwaltungswrapper__ sowie die damit verbundenen Objekt-Mappings, URL Builders und (De-)Serialisierungslogik.
 
 Kann als "Driven Adapter" kategorisiert werden, da er von der Applikationsschicht via zugehörigem Port aufgerufen wird.
 
