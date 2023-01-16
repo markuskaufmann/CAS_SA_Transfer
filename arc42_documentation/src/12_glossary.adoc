@@ -93,6 +93,10 @@ Im Rahmen der Physiotherapie erhalten Patienten eine Verordnung zur Teilnahme an
 |Healthcare facility
 |Gesundheitseinrichtungen sind Organisationen, deren Hauptzweck in der Versorgung oder Behandlung von Patient:innen oder der Förderung der öffentlichen Gesundheit besteht. Im System Physio Connect wird der Begriff "Gesundheitseinrichtung" verwendet, wenn es sich entweder um ein Spital, eine Rehabilitationsklinik oder eine private Physio-Praxis handeln kann. https://www.swissmedic.ch/swissmedic/de/home/medizinprodukte/wiederaufbereitung---instandhaltung.html
 
+|Container
+|Container
+|Als Container wird ein Baustein bezeichnet, welcher eigenständig deploybar ist. Dise definition ist auf dem C4 Modell. Falls im Text Referenz auf einen Kubernetes Container genommen wird, soll dieser als __Kubernetes Container__ oder __K8S Container__ bezeichnet werden. https://c4model.com/#ContainerDiagram
+
 |===
 
 === Abbildung: Patientenzyklus
