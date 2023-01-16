@@ -411,11 +411,11 @@ Request-unabhängige Fehlermeldungen der Benutzerverwaltung werden geloggt und f
 |===
 |**ID**|SZ-INT-1 (Erweiterung)
 |**Quelle des Stimulus**|Kunde, Technische Integratoren von PhysioConnect (z.B. IT-Abteilung des Kunden)
-|**Stimulus**|Einrichtung von Premise-Betrieb von PhysioConnect
+|**Stimulus**|Einrichtung von PhysioConnect on-premises
 |**Umgebung**|Installationszeit, Konfigurationszeit
 |**System / Artefakte**|PhysioConnect / Gesamtsystem
-|**Antwort / Verhalten**|PhysioConnect ist in einer kundenspezifischen System- und Applikationslandschaft, welche on premise läuft, mit vertretbarem Aufwand und Komplexität integrierbar (beinhaltet Installation und Konfiguration).
-|**Metrik für Erfüllungsgrad**|PhysioConnect soll unter Einbezug und Verfügbarkeit aller relevanten Parteien (Entwickler / Architekt seitens PhysioConnect, Entwickler / Integratoren seitens IT-Abteilung des Kunden) innerhalb von 1 Personenwoche auf einer beliebigen on premise-Umgebung, welche die System- und Ressourcenanforderungen erfüllt, installiert und initial konfiguriert sein. +
+|**Antwort / Verhalten**|PhysioConnect ist in einer kundenspezifischen System- und Applikationslandschaft, welche on-premises läuft, mit vertretbarem Aufwand und Komplexität integrierbar (beinhaltet Installation und Konfiguration).
+|**Metrik für Erfüllungsgrad**|PhysioConnect soll unter Einbezug und Verfügbarkeit aller relevanten Parteien (Entwickler / Architekt seitens PhysioConnect, Entwickler / Integratoren seitens IT-Abteilung des Kunden) innerhalb von 1 Personenwoche auf einer beliebigen on-premises-Umgebung, welche die System- und Ressourcenanforderungen erfüllt, installiert und initial konfiguriert sein. +
 Der Aufwand und die Komplexität bezüglich der einwandfreien Kommunikation mit bestehenden Umsystemen ist dabei nicht Teil dieses Szenarios und muss individuell evaluiert und szenariotechnisch quantifiziert werden.
 |===
 
@@ -515,7 +515,7 @@ Wenn ein Container von Physio Connect mit einem anderen internen Container oder 
 
 |*Taktik*
 a|
-* Alle APIs in der Produktion sind nur via TLS / SSL (HTTPS) verwendbar
+* Alle APIs in der Produktion sind nur via HTTPS (SSL / TLS) verwendbar
 * Kommunikation zwischen internen Containern ist in der Produktion immer verschlüsselt.
 * Kommunikation mit externen Systemen ist in der Produktion immer verschlüsselt.
 

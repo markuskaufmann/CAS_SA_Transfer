@@ -1,985 +1,1082 @@
-[[section-building-block-view]]
-== Bausteinsicht
-
-Dieses Kapitel veranschaulicht die statische Zerlegung von Physio Connect in dessen technisch fundamentale Bausteine / Komponenten. Das Ziel ist hierbei, die interne Struktur des Systems mittels der Verwendung verschiedener Abstraktionsstufen / -ebenen bis hin zu einem angemessenen Detaillierungsgrad zu beschreiben, um schlussendlich eine gemeinsame Wissens- und Kommunikationsbasis für die relevanten Stakeholder zu bilden. +
-Die Darstellung der einzelnen Abstraktionsebenen entspricht einer hierarchischen Form von https://faq.arc42.org/questions/B-9/[White Boxes], welche wiederum kleinere https://faq.arc42.org/questions/B-8/[Black Boxes] beinhalten.
-
-=== Ebene 1: Physio Connect
-
-Diese Ebene repräsentiert eine Whitebox-Ansicht des Gesamtsystems von Physio Connect mit den darin beinhalteten Komponenten als einzelne Blackboxes. In unserem Falle sind die einzelnen Komponenten als (meist) unabhängig voneinander deploybare Container zu verstehen. 
-
-**Legende**
-
-plantuml::structurizr_diagrams/generated/structurizr-Containers-key.puml[format=svg]
-
-[options="header", cols="1,2"]
-|===
-|Element|Beschreibung
-
-|Container
-|Deploybare einheit des Whitebox Systems
-
-|Container Database
-|Datenbank innerhalb des Whitebox Systems
-
-|Relationship
-|Gerichtete Beziehung zwischen Elementen
-
-|Person
-|Repräsentiert bestimmte Art von Enduser
-
-|Software System
-|Software System. Aus der Sicht der Container eine Blackbox.
-
-|===
-
-==== Übersicht
-
-
-plantuml::structurizr_diagrams/generated/structurizr-Containers.puml[format=svg]
-
-==== Motivation
-
-Die aktuelle Gesamtstruktur von Physio Connect resultiert aus der Kombination mehrerer link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidungen]:
-
-* **ADR-FRO-11** +
-Wir verwenden eine Single Page Application (SPA) als Frontend inkl. separatem Deployment.
-* **ADR-FRO-14** +
-Es werden aktuell keine Micro Frontends eingesetzt.
-* **ADR-BAC-10** +
-Das Backend ist in mehrere Microservices unterteilt, welche unabhängig voneinander deploybar sind.
-* **ADR-BAC-30** +
-Die Ablage der Therapieverwaltungsdaten und Therapie-Session-Ausführungsdaten geschieht in zwei unterschiedlichen Datenbanken, welche unabhängig voneinander deploybar sind.
-* **ADR-BAC-40** +
-Die Backend-Kommunikation erfolgt via HTTP(S).
-* **ADR-BAC-50** +
-Die Abhängigkeiten zwischen Physio Connect und den APIs der Umsysteme __Übungskatalog__ und __Benutzerverwaltung__ werden mittels dedizierten Wrapper Services im Physio Connect-Backend gekapselt, welche als Abstraktionsschicht und anti-corruption layer (ACL) dienen.
-
-Des Weiteren wurde die System-Dekomposition durch die sinnvolle Aufteilung bzw. logische Zusammengehörigkeit der link:../requirements_engineering/functional_requirements.adoc#section-functional-requirements[funktionalen Anforderungen] massgeblich beeinflusst. Prinzipien wie https://blog.cleancoder.com/uncle-bob/2014/05/08/SingleReponsibilityPrinciple.html[Single Responsibility Principle (SRP)] und https://deviq.com/principles/separation-of-concerns[Separation of Concerns (SoC)] boten dabei eine gute Grundlage.
-
-==== Beinhaltete Bausteine
-
-**Frontend (Group)**
-
-Hierbei handelt es sich lediglich um eine logische Gruppierung der Komponenten, welche zusammen das Frontend von Physio Connect abdecken. Die Gruppierung hat jedoch nur visuelle Relevanz - es besteht kein Zusammenhang mit der Deploybarkeit der darin enthaltenen Komponenten.
-
-**Server Side Therapie Manager**
-
-__Zweck / Verantwortlichkeiten__
-
-* Bereitstellung des Physio Connect-Frontends (SPA)
-* Verwaltet die deployten Artefakte des Frontends (Javascript Bundles, Assets) und liefert diese an die Clients (Browser) aus, wenn diese einen entsprechenden Request dafür stellen
-
-__Schnittstellen__
-
-[options="header"]
-|===
-|Schnittstelle|Input|Output
-
-|Direktzugriff via URL auf Frontend-SPA oder zugehörige Ressourcen / Assets 
-a|
-* Default: +
-HTTP GET Request ohne Parameter
-* Name / Pfad der angeforderten Frontend-Ressource / -Asset
-
-a|
-* Default: +
-Main Bundle der Frontend-SPA
-* via Name / Pfad angeforderte Ressource / Asset +
-(z.B. Translation file, Image)
-** falls nicht gefunden: +
-Response code 404 (Not Found)
-
-|===
-
-__Qualitäts- / Performancecharakteristiken__
-
-[options="header",cols="2,4"]
-|===
-|Charakteristik / Qualitätsattribut|Beschreibung
-
-|Availability
-|Die Möglichkeit der horizontalen Skalierung dieses Containers führt zur Sicherstellung einer hohen Verfügbarkeit des Physio Connect-Frontends.
-
-|===
-
-__Risiken__
-
-[options="header",cols="2,4,4"]
-|===
-|Risiko|Beschreibung|Mitigation
-
-|Ausfall / Nichterreichbarkeit
-|Fällt dieser Container aus oder ist anderweitig nicht erreichbar, lässt sich das Physio Connect-Frontend nicht mehr an die Clients ausliefern. +
-Bei der Verwendung einer SPA fällt dies clientseitig möglicherweise erst beim Neuladen / Refresh der Applikation oder beim (Nach-)Laden von zusätzlichen Ressourcen (z.B. Bilder) auf.
-a|
-* Horizontale Skalierung
-* Temporäres Caching des Frontends in der eingesetzten __Load Balancer__-Komponente
-
-|===
-
-**Therapien Manager SPA**
-
-__Zweck / Verantwortlichkeiten__
-
-* Physio Connect-Frontend in Form einer Single Page Application (SPA) +
-(gemäss link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-FRO-11])
-* Kann auf mobilen Plattformen als Progressive Web Application (PWA) verwendet werden +
-(gemäss link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-FRO-13])
-
-__Schnittstellen__
-
-[options="header"]
-|===
-|Schnittstelle|Input|Output
-
-|Benutzerschnittstelle (UI)
-|User Input (Maus, Tastatur, Touch / Gesten-Steuerung)
-|Anzeige des Layouts, grafischen Komponenten, visuellen Effekten usw.
-
-|Integrierter API Client für Backend HTTP Requests / Responses
-|HTTP Responses von Physio Connect-Backend +
-(als Antwort auf Requests)
-|HTTP Requests an Physio Connect-Backend +
-(via __Load Balancer__-Komponente)
-
-|===
-
-__Qualitäts- / Performancecharakteristiken__
-
-[options="header",cols="2,4"]
-|===
-|Charakteristik / Qualitätsattribut|Beschreibung
-
-|Usability / Operability
-|Durch die Verwendung einer PWA kann der Endbenutzer diejenigen Use Cases einfacher realisieren, welche auf die nativen Funktionalitäten eines Smartphones zurückgreifen (z.B. Aufnahme von Fotos / Bildern via eingebauter Kamera, welche als Teil einer Übungsdefinition hochgeladen werden können).
-
-|===
-
-__Risiken__
-
-Es bestehen keine spezifischen Risiken im Zusammenhang mit diesem Container.
-
-**Load Balancer**
-
-__Zweck / Verantwortlichkeiten__
-
-* Zentraler Entrypoint für den Zugriff auf Physio Connect - alle eingehenden Requests laufen über diesen Container
-* Reverse Proxy: +
-** Weiterleitung der eingehenden Requests an die APIs der dafür zuständigen Container
-** Weiterleitung der Frontend- und Backend-Responses an den Client, der den initialen Request gestellt hat
-* Mögliches Caching von statischen, mehrfach angeforderten Inhalten +
-(z.B. Frontend-SPA)
-* Sicherstellung der Verwendung einer verschlüsselten HTTPS-Verbindung (SSL / TLS)
-
-__Schnittstellen__
-
-[options="header"]
-|===
-|Schnittstelle|Input|Output
-
-|Request-Handler für Frontend-URLs
-|Request, für welchen das Physio Connect-Frontend zuständig ist
-|Weiterleitung des Requests an den Container __Server Side Therapie Manager__ +
-(mittels konfiguriertem URL-Mapping)
-
-|Response-Handler für Frontend-URLs
-|Response des Containers __Server Side Therapie Manager__ auf einen initialen Request
-|Weiterleitung der Response an den Client, welcher den initialen Request gestellt hat
-
-|Request-Handler für Backend-URLs
-|Request, für welchen ein Container des Physio Connect-Backends zuständig ist
-|Weiterleitung des Requests an den verantwortliche Backend-Container +
-(mittels konfiguriertem URL-Mapping)
-
-|Response-Handler für Backend-URLs
-|Response eines Backend-Containers auf einen initialen Request
-|Weiterleitung der Response an den Client, welcher den initialen Request gestellt hat
-
-|===
-
-__Qualitäts- / Performancecharakteristiken__
-
-[options="header",cols="2,4"]
-|===
-|Charakteristik / Qualitätsattribut|Beschreibung
-
-|Performance Efficiency / Time behaviour
-a|
-Durch das temporäre Caching statischer Inhalte (z.B. Frontend-SPA) kann die allgemeine Performance durch tiefere Response-Zeiten optimiert werden, indem die Weiterleitung des Requests zum Frontend- / Backend-Container wegfällt.
-
-|Security
-|Der Reverse Proxy fungiert als Vermittler zwischen Client und Physio Connect-System, wodurch die APIs der internen Container nicht öffentlich gemacht werden müssen. +
-Des Weiteren kann der Load Balancer / Reverse Proxy auch dazu verwendet werden, um Sicherheitsmassnahmen wie Verschlüsselung und Authentifizierung sicherzustellen.
-
-|===
-
-__Risiken__
-
-[options="header",cols="2,4,4"]
-|===
-|Risiko|Beschreibung|Mitigation
-
-|Ausfall / Nichterreichbarkeit
-|Fällt der Load Balancer / Reverse Proxy aus oder ist anderweitig nicht erreichbar, ist Physio Connect als Gesamtsystem (öffentlich) nicht mehr erreichbar.
-|Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn die Container nicht mehr erreichbar ist (kontinuierlich abgesetzter Heartbeat)
-
-|===
-
-**Planung (Group)**
-
-Hierbei handelt es sich lediglich um eine logische Gruppierung der Komponenten, welche zusammen die Funktionalität der Gesamttherapie-Verwaltung abdecken. Die Gruppierung hat jedoch nur visuelle Relevanz - es besteht kein direkter Zusammenhang mit der Deploybarkeit der darin enthaltenen Komponenten.
-
-**Therapie Planungs Service**
-
-__Zweck / Verantwortlichkeiten__
-
-Dieser Service ist für die Planung und Verwaltung von Gesamttherapien, Therapie-Sessions und Therapieübungen verantwortlich.
-
-__Schnittstellen__
-
-[options="header"]
-|===
-|Schnittstelle|Input|Output
-
-|REST API für die Planung / Verwaltung von Gesamttherapien
-|HTTP Request mit Bearer Access Token (JWT) und Payload (notwendig je nach Request)
-a|
-HTTP Response abhängig von Situation:
-
-* Code 200 / 201 / 204 wenn die Verarbeitung erfolgreich war
-* Code 401 wenn der mitgelieferte Access Token ungültig ist +
-(= Authentifizierung fehlgeschlagen)
-* Code 403 wenn der aufrufende Benutzer gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
-(= unzureichende Berechtigung)
-* Code 404 wenn eine notwendige Ressource intern nicht gefunden wurde
-* Code 500 wenn ein interner Fehler auftritt (inkl. zusätzlicher Beschreibung des Fehlers)
-
-|REST API für die Planung / Verwaltung von Therapie-Sessions
-|HTTP Request mit Bearer Access Token (JWT) und Payload (notwendig je nach Request)
-a|
-HTTP Response abhängig von Situation:
-
-* Code 200 / 201 / 204 wenn die Verarbeitung erfolgreich war
-* Code 401 wenn der mitgelieferte Access Token ungültig ist +
-(= Authentifizierung fehlgeschlagen)
-* Code 403 wenn der aufrufende Benutzer gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
-(= unzureichende Berechtigung)
-* Code 404 wenn eine notwendige Ressource intern nicht gefunden wurde
-* Code 500 wenn ein interner Fehler auftritt (inkl. zusätzlicher Beschreibung des Fehlers)
-
-|REST API für die Planung / Verwaltung von Therapieübungen
-|HTTP Request mit Bearer Access Token (JWT) und Payload (notwendig je nach Request)
-a|
-HTTP Response abhängig von Situation:
-
-* Code 200 / 201 / 204 wenn die Verarbeitung erfolgreich war
-* Code 401 wenn der mitgelieferte Access Token ungültig ist +
-(= Authentifizierung fehlgeschlagen)
-* Code 403 wenn der aufrufende Benutzer gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
-(= unzureichende Berechtigung)
-* Code 404 wenn eine notwendige Ressource intern nicht gefunden wurde
-* Code 500 wenn ein interner Fehler auftritt (inkl. zusätzlicher Beschreibung des Fehlers)
-
-|REST API Client für ausgehende Requests an __Ausführungsservice__
-|HTTP Response des Containers __Ausführungsservice__ zu einem vorgängig abgesendeten Request +
-(siehe Schnittstellen von __Ausführungsservice__ für die Response Codes der betroffenen REST API)
-|HTTP Requests an REST API des Containers __Ausführungsservice__
-
-|REST API Client für HTTP Requests an __Übungskatalogwrapper__ +
-Der Client-Code wird automatisch über die publizierte Spezifikation der REST API vom __Übungskatalogwrapper__ generiert (z.B. via https://openapi-generator.tech/[OpenAPI Generator]).
-a|
-Je nach API Endpoint benötigte Informationen, welche vom API Client entgegengenommen und in einen entsprechenden Request verpackt werden:
-
-* Route Parameter +
-(z.B. Übungs-ID)
-* Request Parameter
-* HTTP Header Value
-* Request Payload
-
-|HTTP Request an REST API des Containers __Übungskatalogwrapper__ gemäss der aufgerufenen Methode des API Clients und den angegebenen Informationen (siehe Input)
-
-|REST API Client für HTTP Requests an __Benutzerverwaltungswrapper__ +
-Der Client-Code wird automatisch über die publizierte Spezifikation der REST API vom __Benutzerverwaltungswrapper__ generiert (z.B. via https://openapi-generator.tech/[OpenAPI Generator]).
-a|
-Je nach API Endpoint benötigte Informationen, welche vom API Client entgegengenommen und in einen entsprechenden Request verpackt werden:
-
-* Route Parameter +
-(z.B. Benutzer-ID)
-* Request Parameter
-* HTTP Header Value
-* Request Payload
-
-|HTTP Request an REST API des Containers __Benutzerverwaltungswrapper__ gemäss der aufgerufenen Methode des API Clients und den angegebenen Informationen (siehe Input)
-
-|Adapter für die Kommunikation mit __Therapie Planungs Datenbank__
-|Response von Datenbanksystem via TCP/IP zu vorgängig abgesetzter Query / Operation, abstrahiert durch ODBC / JDBC Driver oder Datenbank client library
-|Query / Operation via TCP/IP, abstrahiert durch ODBC / JDBC Driver oder Datenbank client library
-
-|===
-
-__Qualitäts- / Performancecharakteristiken__
-
-[options="header",cols="2,4"]
-|===
-|Charakteristik / Qualitätsattribut|Beschreibung
-
-|Compatibility / Interoperability
-a|
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
-
-* SZ-IOP-2
-* SZ-IOP-3
-* SZ-IOP-4
-* SZ-IOP-5
-* SZ-IOP-6
-
-|Security / Confidentiality
-a|
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
-
-* SZ-CNF-4
-
-|Maintainability / Modifiability
-a|
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
-
-* SZ-MOD-1
-* SZ-MOD-5
-
-|Reliability / Fault tolerance
-a|
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
-
-* SZ-FLT-1
-* SZ-FLT-2
-
-|===
-
-__Risiken__
-
-[options="header",cols="2,4,4"]
-|===
-|Risiko|Beschreibung|Mitigation
-
-|Ausfall / Nichterreichbarkeit
-|Fällt der Therapie Planungs Service aus oder ist anderweitig nicht erreichbar, können Gesamttherapien, Therapie-Sessions und Therapieübungen nicht mehr geplant oder verwaltet werden.
-a|
-* Horizontale Skalierung des Services auf mehrere redundante Instanzen, beispielsweise in Failover-Konfiguration +
-(damit zu jedem Zeitpunkt eine Service-Instanz erreichbar ist)
-* Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn eine Service-Instanz nicht mehr erreichbar ist (kontinuierlich abgesetzter Heartbeat)
-
-|===
-
-**Therapie Planungs Datenbank**
-
-__Zweck / Verantwortlichkeiten__
-
-Diese Datenbank dient zur Persistierung der Daten, welche im Kontext des __Therapie Planungs Service__ verarbeitet werden.
-
-__Schnittstellen__
-
-Die Art und Anzahl der Schnittstellen hängt vom verwendeten Datenbankmodell ab. Im Falle der __Therapie Planungs Datenbank__ fiel die Wahl gemäss link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-31] auf eine relationale (SQL) oder Dokumentdatenbank (NoSQL).
-
-Eine relationale Datenbank stellt typischerweise folgende Schnittstellen bereit:
-
-* Native API
-* JDBC Driver +
-(falls Java als primäre Programmiersprache verwendet wird)
-* ODBC Driver
-* Client library als Abstraktionsschicht für eine unterstütze Programmiersprache
-
-Als Abfragesprache wird normalerweise SQL verwendet, die Kommunikation verläuft via TCP/IP.
-
-Eine Dokumentdatenbank (NoSQL) stellt typischerweise folgende Schnittstellen bereit:
-
-* Native API
-* REST API
-* Query Language +
-(z.B. MongoDB Query Language (MQL) für MongoDB)
-* Client library als Abstraktionsschicht für eine unterstütze Programmiersprache
-
-Als Abfragesprache wird normalerweise das vom jeweiligen Datenbankmanagementsystem unterstütze Protokoll verwendet (z.B. MongoDB Query Language (MQL) für MongoDB), die Kommunikation verläuft via TCP/IP.
-
-__Qualitäts- / Performancecharakteristiken__
-
-[options="header",cols="2,4"]
-|===
-|Charakteristik / Qualitätsattribut|Beschreibung
-
-|Flexibilität
-a|Bei der Verwendung einer Dokumentdatenbank profitiert man von einer höheren Flexibilität, wenn abzuspeichernde Daten einem dynamischen Schema entsprechen.
-
-|Skalierbarkeit
-a|Sowohl relationale als auch Dokumentdatenbanken lassen sich bei Bedarf vertikal sowie horizontal skalieren. Letzere Variante resultiert jedoch in der Abklärung und Definition weiterer Aspekte, wie beispielsweise einer effizienten und zuverlässigen Datensynchronisation zwischen den einzelnen Datenbankinstanzen zur Erhaltung der Datenkonsistenz.
-
-|Performance Efficiency / Capacity
-a|Sowohl relationale als auch Dokumentdatenbanken sind auf grosse Datenmengen und die Performance-Optimierung bei Abfragen und Speichervorgängen ausgelegt. Ebenso lassen sich parallele Datenzugriffe und die diesbezügliche Sicherstellung der Datenintegrität und -konsistenz via Transaktionsmanagement sicherstellen. +
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
-
-* SZ-CAP-1
-
-|===
-
-__Risiken__
-
-[options="header",cols="2,4,4"]
-|===
-|Risiko|Beschreibung|Mitigation
-
-|Ausfall / Nichterreichbarkeit
-|Analog zu dem definierten link:11_technical_risks#section-technical-risks[technischen Risiko RTD-AUS-10] besteht auch für die __Therapie Planungs Datenbank__ die grundsätzliche Gefahr eines unerwarteten Ausfalls, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
-a|
-Generell können identische Massnahmen wie für __RTD-AUS-10__ in Betracht gezogen werden:
-
-* Horizontale Skalierung der Datenbank auf mehrere redundante Instanzen, beispielsweise in Failover-Konfiguration mit aktiver Datenreplikation +
-(damit zu jedem Zeitpunkt ein Datenbank-Instanz erreichbar ist)
-* Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn eine Datenbank-Instanz nicht mehr erreichbar ist (kontinuierlich abgesetzter Heartbeat)
-
-|Datenverlust / -korruption infolge eines technischen Fehlers oder einer Cyber-Attacke
-|Analog zu dem definierten link:11_technical_risks#section-technical-risks[technischen Risiko RTD-AUS-20] besteht auch für die __Therapie Planungs Datenbank__ die grundsätzliche Gefahr, dass die Datenkonsistenz / -integrität durch deren Korruption beeinträchtigt wird, oder dass Daten gänzlich verloren gehen. Im Falle von korrupten Daten muss ebenfalls mit unerwarteten side-effects seitens der Applikationslogik von PhysioConnect gerechnet werden, welche die allgemeine Funktionstüchtigkeit des Systems beeinträchtigen können.
-a|
-Generell können identische Massnahmen wie für __RTD-AUS-20__ in Betracht gezogen werden:
-
-* Regelmässige Backups
-* Datenintegritätsprüfungen
-* Transaktionsmanagement
-* Datenreplikation
-* User Access Control (Zugriffskontrolle, Autorisierung)
-
-|===
-
-**Ausführung (Group)**
-
-Hierbei handelt es sich lediglich um eine logische Gruppierung der Komponenten, welche zusammen die Funktionalität der Therapie-Session-Ausführung abdecken. Die Gruppierung hat jedoch nur visuelle Relevanz - es besteht kein direkter Zusammenhang mit der Deploybarkeit der darin enthaltenen Komponenten.
-
-**Ausführungs Service**
-
-__Zweck / Verantwortlichkeiten__
-
-Dieser Service ist für die Verarbeitung der Daten verantwortlich, welche von den Patienten während der Ausführung einer Therapie-Session aufgezeichnet werden. Einerseits gehören hierzu Messdaten wie Puls oder Bludruck, andererseits aber auch übungsspezifische Ausführungsinformationen wie effektive Sets / Reps oder Patienten- / Therapeutenrückmeldungen zu durchgeführten Übungen.
-
-__Schnittstellen__
-
-[options="header"]
-|===
-|Schnittstelle|Input|Output
-
-|REST API für die Verwaltung von Messdaten und Ausführungsinformationen
-|HTTP Request mit Bearer Access Token (JWT) und Payload (notwendig je nach Request)
-a|
-HTTP Response abhängig von Situation:
-
-* Code 200 / 201 / 204 wenn die Verarbeitung erfolgreich war
-* Code 401 wenn der mitgelieferte Access Token ungültig ist +
-(= Authentifizierung fehlgeschlagen)
-* Code 403 wenn der aufrufende Benutzer gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
-(= unzureichende Berechtigung)
-* Code 404 wenn eine notwendige Ressource intern nicht gefunden wurde
-* Code 500 wenn ein interner Fehler auftritt (inkl. zusätzilcher Beschreibung des Fehlers)
-
-|REST API für die Verwaltung von Patienten- / Therapeutenrückmeldungen
-|HTTP Request mit Bearer Access Token (JWT) und Payload (notwendig je nach Request)
-a|
-HTTP Response abhängig von Situation:
-
-* Code 200 / 201 / 204 wenn die Verarbeitung erfolgreich war
-* Code 401 wenn der mitgelieferte Access Token ungültig ist +
-(= Authentifizierung fehlgeschlagen)
-* Code 403 wenn der aufrufende Benutzer gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
-(= unzureichende Berechtigung)
-* Code 404 wenn eine notwendige Ressource intern nicht gefunden wurde
-* Code 500 wenn ein interner Fehler auftritt (inkl. zusätzilcher Beschreibung des Fehlers)
-
-|Adapter für die Kommunikation mit __Ausführungs Datenbank__
-|Response von Datenbanksystem via TCP/IP zu vorgängig abgesetzter Query / Operation, abstrahiert durch ODBC / JDBC Driver oder Datenbank client library
-|Query / Operation via TCP/IP, abstrahiert durch ODBC / JDBC Driver oder Datenbank client library
-
-|===
-
-__Qualitäts- / Performancecharakteristiken__
-
-[options="header",cols="2,4"]
-|===
-|Charakteristik / Qualitätsattribut|Beschreibung
-
-|Compatibility / Interoperability
-a|
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
-
-* SZ-IOP-1
-
-|Security / Confidentiality
-a|
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
-
-* SZ-CNF-1
-* SZ-CNF-2
-* SZ-CNF-3
-
-|Maintainability / Modifiability
-a|
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
-
-* SZ-MOD-1
-* SZ-MOD-2
-* SZ-MOD-6
-* SZ-MOD-7
-
-|Performance Efficiency / Time behaviour
-a|
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
-
-* SZ-TIB-1
-
-|===
-
-__Risiken__
-
-[options="header",cols="2,4,4"]
-|===
-|Risiko|Beschreibung|Mitigation
-
-|Ausfall / Nichterreichbarkeit
-|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-AUS-10] beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls des __Ausführungsservice__, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
-a|
-Massnahmen gemäss __RTD-AUS-10__:
-
-* Horizontale Skalierung des Services auf mehrere redundante Instanzen, beispielsweise in Failover-Konfiguration +
-(damit zu jedem Zeitpunkt eine Service-Instanz erreichbar ist)
-* Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn eine Service-Instanz nicht mehr erreichbar ist (kontinuierlich abgesetzter Heartbeat)
-* Schadensausmass eines Ausfalls minimieren, indem die __Mobile Patientenapp__ die Möglichkeit besitzt
-** aufgezeichnete Ausführungsdaten lokal zwischenzuspeichern und nachgelagert an PhysioConnect weiterzuleiten oder
-** Therapie-Sessions ohne das Sammeln von Ausführungsdaten durchzuführen
-
-|Messdaten-Traffic führt zu hohen Betriebskosten
-|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-TRA-10] beschreibt die Gefahr, dass die kontinuierliche Übermittlung und Verarbeitung der Patienten-Messdaten je nach Anzahl Patienten und parallel ausgeführter Therapie-Sessions zu einem beachtlichen Netzwerk-Traffic führen kann. In Kombination mit einem "Pay as you go"-Kostenmodell, welches bei aktuellen Cloud-Providern standardmässig verwendet wird, kann dies zu hohen Betriebskosten führen, welche dem Kunden schlussendlich weiterverrechnet werden.
-a|
-Massnahmen gemäss __RTD-TRA-10__:
-
-* Verwendung der Preisrechner, welche von den jeweiligen Cloud-Providern zur Verfügung gestellt werden
-* Definition von Kosten-Thresholds und Einrichtung von Benachrichtigungen im Falle der Erreichung kritischer Kostenwerte
-* Periodisches Monitoring des aktuellen Ressourcenverbrauchs und der prognostizierten Kosten sowie entsprechend transparente Kommunikation mit dem betroffenen Kunden
-
-|===
-
-**Ausführungs Datenbank**
-
-__Zweck / Verantwortlichkeiten__
-
-Diese Datenbank dient zur Persistierung der Daten, welche im Kontext des __Ausführungsservice__ verarbeitet werden (z.B. Patienten-Messdaten).
-
-__Schnittstellen__
-
-Die Art und Anzahl der Schnittstellen hängt vom verwendeten Datenbankmodell ab. Im Falle der __Ausführungs Datenbank__ fiel die Wahl gemäss link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-31] auf eine Dokumentdatenbank (NoSQL).
-
-Eine Dokumentdatenbank stellt typischerweise folgende Schnittstellen bereit:
-
-* Native API
-* REST API
-* Query Language +
-(z.B. MongoDB Query Language (MQL) für MongoDB)
-* Client library als Abstraktionsschicht für eine unterstütze Programmiersprache
-
-Als Abfragesprache wird normalerweise das vom jeweiligen Datenbankmanagementsystem unterstütze Protokoll verwendet (z.B. MongoDB Query Language (MQL) für MongoDB), die Kommunikation verläuft via TCP/IP.
-
-__Qualitäts- / Performancecharakteristiken__
-
-[options="header",cols="2,4"]
-|===
-|Charakteristik / Qualitätsattribut|Beschreibung
-
-|Flexibilität
-a|Bei der Verwendung einer Dokumentdatenbank profitiert man von einer höheren Flexibilität, wenn abzuspeichernde Daten einem dynamischen Schema entsprechen.
-
-|Skalierbarkeit
-a|Dokumentdatenbanken lassen sich bei Bedarf vertikal sowie horizontal skalieren. Letzere Variante resultiert jedoch in der Abklärung und Definition weiterer Aspekte, wie beispielsweise einer effizienten und zuverlässigen Datensynchronisation zwischen den einzelnen Datenbankinstanzen zur Erhaltung der Datenkonsistenz.
-
-|Performance Efficiency / Time behaviour, Capacity
-a|Dokumentdatenbanken sind auf grosse Datenmengen und die Performance-Optimierung bei Abfragen und Speichervorgängen ausgelegt. Ebenso lassen sich parallele Datenzugriffe und die diesbezügliche Sicherstellung der Datenintegrität und -konsistenz via Transaktionsmanagement sicherstellen. +
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
-
-* SZ-TIB-1
-* SZ-CAP-1
-
-|===
-
-__Risiken__
-
-[options="header",cols="2,4,4"]
-|===
-|Risiko|Beschreibung|Mitigation
-
-|Ausfall / Nichterreichbarkeit
-|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-AUS-10] beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls der __Ausführungs Datenbank__, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
-a|
-Massnahmen gemäss __RTD-AUS-10__:
-
-* Horizontale Skalierung der Datenbank auf mehrere redundante Instanzen, beispielsweise in Failover-Konfiguration mit aktiver Datenreplikation +
-(damit zu jedem Zeitpunkt eine Datenbank-Instanz erreichbar ist)
-* Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn eine Datenbank-Instanz nicht mehr erreichbar ist (kontinuierlich abgesetzter Heartbeat)
-
-|Datenverlust / -korruption infolge eines technischen Fehlers oder einer Cyber-Attacke
-|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-AUS-20] beschreibt die grundsätzliche Gefahr für die __Ausführungs Datenbank__, dass die Datenkonsistenz / -integrität durch deren Korruption beeinträchtigt wird, oder dass Daten gänzlich verloren gehen. Im Falle von korrupten Daten muss ebenfalls mit unerwarteten side-effects seitens der Applikationslogik von PhysioConnect gerechnet werden, welche die allgemeine Funktionstüchtigkeit des Systems beeinträchtigen können.
-a|
-Massnahmen gemäss __RTD-AUS-20__:
-
-* Regelmässige Backups
-* Datenintegritätsprüfungen
-* Transaktionsmanagement
-* Datenreplikation
-* User Access Control (Zugriffskontrolle, Autorisierung)
-
-|Messdaten-Traffic führt zu hohen Betriebskosten
-|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-TRA-10] beschreibt die Gefahr, dass die kontinuierliche Übermittlung und Verarbeitung der Patienten-Messdaten je nach Anzahl Patienten und parallel ausgeführter Therapie-Sessions zu einem beachtlichen Netzwerk-Traffic und Ressourcenverbrauch seitens Datenbank führen kann. In Kombination mit einem "Pay as you go"-Kostenmodell, welches bei aktuellen Cloud-Providern standardmässig verwendet wird, kann dies zu hohen Betriebskosten führen, welche dem Kunden schlussendlich weiterverrechnet werden.
-a|
-Massnahmen gemäss __RTD-TRA-10__:
-
-* Verwendung der Preisrechner, welche von den jeweiligen Cloud-Providern zur Verfügung gestellt werden
-* Definition von Kosten-Thresholds und Einrichtung von Benachrichtigungen im Falle der Erreichung kritischer Kostenwerte
-* Periodisches Monitoring des aktuellen Ressourcenverbrauchs und der prognostizierten Kosten sowie entsprechend transparente Kommunikation mit dem betroffenen Kunden
-
-|===
-
-**Wrappers (Group)**
-
-Hierbei handelt es sich lediglich um eine logische Gruppierung der Komponenten, welche zusammen die konzipierten Wrapper-Subsysteme / -Services abdecken. Die Gruppierung hat jedoch nur visuelle Relevanz - es besteht kein direkter Zusammenhang mit der Deploybarkeit der darin enthaltenen Komponenten.
-
-**Übungskatalogwrapper**
-
-__Zweck / Verantwortlichkeiten__
-
-* Container zur generellen Abstraktion und Kapselung der Funktionalitäten, welche im Rahmen der Kommunikation zwischen Physio Connect und dem Übungskatalog relevant sind
-** Abholen von Übungsinformationen
-** Verwaltung von Übungsdefinitionen
-** Verwendung / Verknüpfung von Übungsdefinitionen in Therapie-Sessions 
-** Verwaltung von Übungskollektionen
-* Dient grundsätzlich als Abstraktionsschicht und https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer[anti-corruption layer (ACL)] zwischen Physio Connect und dem Übungskatalog +
-(siehe link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-50])
-
-__Schnittstellen__
-
-[options="header"]
-|===
-|Schnittstelle|Input|Output
-
-|REST API für die Verwaltung von Übungsdefinitionen
-|HTTP Request mit Bearer Access Token (JWT) und Payload (notwendig je nach Request)
-a|
-HTTP Response abhängig von Situation:
-
-* Code 200 / 201 / 204 wenn die Verarbeitung erfolgreich war
-* Code 401 wenn der mitgelieferte Access Token ungültig ist +
-(= Authentifizierung fehlgeschlagen)
-* Code 403 wenn der aufrufende Benutzer gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
-(= unzureichende Berechtigung)
-* Code 404 wenn eine notwendige Ressource intern nicht gefunden wurde
-* Code 500 wenn ein interner Fehler auftritt (inkl. zusätzilcher Beschreibung des Fehlers)
-
-|REST API Client für HTTP Requests an das System __Übungskatalog__. +
-Der Client-Code wird automatisch über die publizierte Spezifikation der REST API vom __Übungskatalog__ generiert (z.B. via https://openapi-generator.tech/[OpenAPI Generator]).
-a|
-Je nach API Endpoint benötigte Informationen, welche vom API Client entgegengenommen und in einen entsprechenden Request verpackt werden:
-
-* Route Parameter +
-(z.B. Übungs-ID)
-* Request Parameter
-* HTTP Header Value
-* Request Payload
-
-|HTTP Request an REST API des Systems __Übungskatalog__ gemäss der aufgerufenen Methode des API Clients und den angegebenen Informationen (siehe Input)
-
-|===
-
-__Qualitäts- / Performancecharakteristiken__
-
-[options="header",cols="2,4"]
-|===
-|Charakteristik / Qualitätsattribut|Beschreibung
-
-|Compatibility / Interoperability
-a|
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
-
-* SZ-IOP-3
-* SZ-IOP-4
-
-|Maintainability / Modifiability
-a|Da der __Übungskatalogwrapper__ als anti-corruption layer (ACL) zwischen den internen PhysioConnect-Komponenten und dem Übungskatalog sitzt, können API-Änderungen an letzterem System mittels dedizierter Anpassung der Wrapper-Komponente umgesetzt und gegen die internen PhysioConnect-Komponenten abstrahiert werden, sodass die interne API des Wrappers kompatibel zum definierten Domänenmodell sowie möglichst stabil und rückwärtskompatibel gehalten werden kann. +
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
-
-* SZ-MOD-3
-
-|Reliability / Fault tolerance
-a|Der __Übungskatalogwrapper__ dient als interner Kommunikationsadapter zwischen PhysioConnect und dem Übungskatalog. Dementsprechend kann die Komponente auch auftretende Verbindungsprobleme mit dem Übungskatalog gegen aussen abstrahieren und den internen Umsystemen eine Antwort zurückgeben, welche zu einem kontrollierten und resilienten Verhalten des Gesamtsystems führen. +
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
-
-* SZ-FLT-1
-
-|Performance Efficiency / Capacity
-a|Der __Übungskatalogwrapper__ soll einfach und zustandslos (stateless) gehalten werden, sodass der Container mit minimalem Aufwand / minimaler Komplexität horizontal skaliert werden kann. +
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
-
-* SZ-CAP-1
-
-|===
-
-__Risiken__
-
-[options="header",cols="2,4,4"]
-|===
-|Risiko|Beschreibung|Mitigation
-
-|Ausfall / Nichterreichbarkeit des Übungskatalogs
-|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-UEB-10] beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls des Übungskatalogs, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
-a|
-Massnahmen gemäss __RTD-UEB-10__:
-
-* Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn die Verbindung zwischen dem __Übungskatalogwrapper__ und dem Übungskatalog fehlerhaft ist (kontinuierlich abgesetzter Heartbeat)
-* Wrapper-Komponente möglichst resilient implementieren, sodass PhysioConnect zumindest noch eingeschränkt verwendet werden kann
-
-|===
-
-**Benutzerverwaltungswrapper**
-
-__Zweck / Verantwortlichkeiten__
-
-* Container zur generellen Abstraktion und Kapselung der Funktionalitäten, welche im Rahmen der Kommunikation zwischen Physio Connect und der Benutzerverwaltung relevant sind
-** Abholen von Benutzerinformationen
-** Verwaltung von Benutzern: +
-Physiotherapeuten, Vorgesetzte der Physiotherapeuten, Patienten, Administratoren, weitere (technische) Benutzer
-** Verknüpfung von Patienten-Benutzern in Gesamttherapien, Therapie-Sessions und Therapieübungen
-* Dient grundsätzlich als Abstraktionsschicht und https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer[anti-corruption layer (ACL)] zwischen Physio Connect und der Benutzerverwaltung +
-(siehe link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-50])
-
-__Schnittstellen__
-
-[options="header"]
-|===
-|Schnittstelle|Input|Output
-
-|REST API für die Verwaltung und Verknüpftung von Benutzern und -informationen
-|HTTP Request mit Bearer Access Token (JWT) und Payload (notwendig je nach Request)
-a|
-HTTP Response abhängig von Situation:
-
-* Code 200 / 201 / 204 wenn die Verarbeitung erfolgreich war
-* Code 401 wenn der mitgelieferte Access Token ungültig ist +
-(= Authentifizierung fehlgeschlagen)
-* Code 403 wenn der aufrufende Benutzer gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
-(= unzureichende Berechtigung)
-* Code 404 wenn eine notwendige Ressource intern nicht gefunden wurde
-* Code 500 wenn ein interner Fehler auftritt (inkl. zusätzilcher Beschreibung des Fehlers)
-
-|REST API Client für HTTP Requests an das System __Benutzerverwaltung__. +
-Der Client-Code wird automatisch über die publizierte Spezifikation der REST API der __Benutzerverwaltung__ generiert (z.B. via https://openapi-generator.tech/[OpenAPI Generator]).
-a|
-Je nach API Endpoint benötigte Informationen, welche vom API Client entgegengenommen und in einen entsprechenden Request verpackt werden:
-
-* Route Parameter +
-(z.B. Benutzer-ID)
-* Request Parameter
-* HTTP Header Value
-* Request Payload
-
-|HTTP Request an REST API des Systems __Benutzerverwaltung__ gemäss der aufgerufenen Methode des API Clients und den angegebenen Informationen (siehe Input)
-
-|===
-
-__Qualitäts- / Performancecharakteristiken__
-
-[options="header",cols="2,4"]
-|===
-|Charakteristik / Qualitätsattribut|Beschreibung
-
-|Compatibility / Interoperability
-a|
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
-
-* SZ-IOP-5
-
-|Maintainability / Modifiability
-a|Da der __Benutzerverwaltungswrapper__ als anti-corruption layer (ACL) zwischen den internen PhysioConnect-Komponenten und der Benutzerverwaltung sitzt, können API-Änderungen an letzterem System mittels dedizierter Anpassung der Wrapper-Komponente umgesetzt und gegen die internen PhysioConnect-Komponenten abstrahiert werden, sodass die interne API des Wrappers kompatibel zum definierten Domänenmodell sowie möglichst stabil und rückwärtskompatibel gehalten werden kann. +
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
-
-* SZ-MOD-4
-
-|Reliability / Fault tolerance
-a|Der __Benutzerverwaltungswrapper__ dient als interner Kommunikationsadapter zwischen PhysioConnect und der Benutzerverwaltung. Dementsprechend kann die Komponente auch auftretende Verbindungsprobleme mit der Benutzerverwaltung gegen aussen abstrahieren und den internen Umsystemen eine Antwort zurückgeben, welche zu einem kontrollierten und resilienten Verhalten des Gesamtsystems führen. +
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
-
-* SZ-FLT-2
-
-|Performance Efficiency / Capacity
-a|Der __Benutzerverwaltungswrapper__ soll einfach und zustandslos (stateless) gehalten werden, sodass der Container mit minimalem Aufwand / minimaler Komplexität horizontal skaliert werden kann. +
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
-
-* SZ-CAP-1
-
-|===
-
-__Risiken__
-
-[options="header",cols="2,4,4"]
-|===
-|Risiko|Beschreibung|Mitigation
-
-|Ausfall / Nichterreichbarkeit der Benutzerverwaltung
-|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-USR-10] beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls der Benutzerverwaltung, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
-a|
-Massnahmen gemäss __RTD-USR-10__:
-
-* Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn die Verbindung zwischen dem __Benutzerverwaltungs Wrapper__ und der Benutzerverwaltung fehlerhaft ist (kontinuierlich abgesetzter Heartbeat)
-* Wrapper-Komponente möglichst resilient implementieren, sodass PhysioConnect zumindest noch eingeschränkt verwendet werden kann
-
-|===
-
-=== Ebene 2: Deploybare Subsysteme (Containers)
-
-Diese Ebene repräsentiert unterschiedliche Whitebox-Ansichten der als besonders relevant erachteten Subsysteme von Physio Connect mit den darin beinhalteten Komponenten als einzelne Blackboxes.
-
-**Legende**
-
-plantuml::structurizr_diagrams/generated/structurizr-PlanungsServiceDetails-key.puml[format=svg]
-
-[options="header", cols="1,2"]
-|===
-|Element|Beschreibung
-
-|Component
-|Komponente des Whitebox Containers
-
-|Container
-|Blackbox Container
-
-|Container Database
-|Backbox Datenbank
-
-|Relationship
-|Gerichtete Beziehung zwischen Elementen
-
-|===
-
-==== Therapie Planungs Service
-
-plantuml::structurizr_diagrams/generated/structurizr-PlanungsServiceDetails.puml[format=svg]
-
-**Begründung der Struktur**
-
-Die interne Struktur des __Therapie Planungs Service__ basiert auf der getroffenen link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-20], welche den zu verwendenden Architekturstil von Backend-Komponenten bestimmt. Dabei haben wir uns für die Verwendung einer link:08_concepts.adoc#section-concepts[hexagonalen Architektur (Ports & Adapters)] entschieden, da die Vorteile (Flexibilität, Testbarkeit, Modifizier- / Erweiterbarkeit) am Besten für die Erfüllung unseres definierten link:01_introduction_and_goals.adoc#section-quality-goals[Qualitätsziels QG-3 (Modifiability)] geeignet sind.
-
-**Beinhaltete Blackbox-Bausteine / -Komponenten**
-
-[options="header",cols="3,2,6"]
-|===
-|Name|Schicht|Verantwortlichkeit
-
-|Therapie Domänenlogik
-|Domäne
-|Implementiert den Bestandteil der Businesslogik gemäss dem definierten link:08_concepts.adoc#section-concepts[Domänenmodell], welcher für die Planung und Verwaltung von Gesamttherapien, Therapie-Sessions und Therapieübungen verantwortlich ist.
-
-Beinhaltet die aus dem Domain-Driven Design (DDD) (**TBD Link zu Evans Buch**) bekannten Elemente wie Aggregate, Entitäten, Value Objects oder Domain Services.
-
-Stellt die Domänenelemente den darüberliegenden Schichten (Applikation, Infrastruktur) zur Verfügung.
-
-|Therapie Applikationslogik
-|Applikation
-|Realisiert die Interaktions- und Orchestrierungslogik zwischen der darunterliegenden Domänenschicht __Therapie Domänenlogik__ und der darüberliegenden Infrastrukturschicht, welche die jeweiligen Adapter beinhaltet.
-
-Definiert unterschiedliche Schnittstellen (Ports) und stellt diese der Infrastrukturschicht zur entsprechenden Implementation (Adapter) bereit.
-
-|Therapie Persistenz Adapter
-|Infrastruktur / Driven Adapter
-|Implementiert den entsprechenden Port der Applikationsschicht.
-
-Kapselt und abstrahiert die Logik, welche mit der Persistenz der Domänenelemente zusammenhängt. Hierzu gehören beispielsweise die implementierten Domain Repositories in der Form einzelner (Sub-)Adapter, welche die persistenztechnischen Details der Ablage und Abfrage der Domänenelemente verwalten.
-
-Implementiert den Kommunikationskanal zwischen __Therapie Planungs Service__ und __Therapie Planungs Datenbank__.
-
-|Therapie API Controller
-|Infrastruktur / Driving Adapter
-|Verwaltet die öffentlichen API Endpoints des __Therapie Planungs Service__ und leitet die erhaltenen Request-Daten mit einem entsprechenden Service Call an die __Therapie Applikationslogik__ weiter.
-
-Verifiziert die Daten eingehender Requests (lediglich formelle Prüfung) und beinhaltet die Objekt-Mappings für ausgehende Requests.
-
-Kann als "Driving Adapter" kategorisiert werden, da ein über den API Controller eingehender Request den zugehörigen Prozess in der Applikationsschicht initial anstösst.
-
-|Ausführungs API Adapter
-|Infrastruktur / Driven Adapter
-|Verwaltet den serviceinternen Zugriff auf die API des Containers __Ausführungsservice__.
-
-Beispielsweise beinhaltet dieser Adapter die Definition des (generierten) API Clients des __Ausführungsservice__ sowie die damit verbundenden Objekt-Mappings, URL Builders und (De-)Serialisierungslogik.
-
-Kann als "Driven Adapter" kategorisiert werden, da er von der Applikationsschicht via zugehörigem Port aufgerufen wird.
-
-|Übungskatalog API Adapter
-|Infrastruktur / Driven Adapter
-|Verwaltet den serviceinternen Zugriff auf die API des Containers __Übungskatalogwrapper__.
-
-Beispielsweise beinhaltet dieser Adapter die Definition des (generierten) API Clients des __Übungskatalogwrapper__ sowie die damit verbundenden Objekt-Mappings, URL Builders und (De-)Serialisierungslogik.
-
-Kann als "Driven Adapter" kategorisiert werden, da er von der Applikationsschicht via zugehörigem Port aufgerufen wird.
-
-|Benutzerverwaltung API Adapter
-|Infrastruktur / Driven Adapter
-|Verwaltet den serviceinternen Zugriff auf die des Containers __Benutzerverwaltungswrapper__.
-
-Beispielsweise beinhaltet dieser Adapter die Definition des (generierten) API Clients des __Benutzerverwaltungswrapper__ sowie die damit verbundenden Objekt-Mappings, URL Builders und (De-)Serialisierungslogik.
-
-Kann als "Driven Adapter" kategorisiert werden, da er von der Applikationsschicht via zugehörigem Port aufgerufen wird.
-
-|===
-
-**Technische Implementation der Schnittstellen zwischen Blackboxes**
-
-Die grundlegenden Schnittstellendefinitionen zwischen den einzelnen Schichten werden technisch durch Java Interfaces (Ports) und Klassen (Adapter) abgebildet. Die Verknüpfung zwischen Port und jeweiligem Adapter (oder wahlweise auch mehreren Adaptern pro Port) übernimmt der https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans[Dependency Injection Container des Spring Frameworks], da der __Therapie Planungs Service__ als dedizierte https://spring.io/projects/spring-boot/[Spring Boot]-Applikation deployed und betrieben wird.
-
-==== Ausführungs Service
-
-plantuml::structurizr_diagrams/generated/structurizr-AusfuehrungsServiceDetails.puml[format=svg]
-
-**Begründung der Struktur**
-
-Die interne Struktur des __Ausführungsservice__ basiert auf der getroffenen link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-20], welche den zu verwendenden Architekturstil von Backend-Komponenten bestimmt. Dabei haben wir uns für die Verwendung einer link:08_concepts.adoc#section-concepts[hexagonalen Architektur (Ports & Adapters)] entschieden, da die Vorteile (Flexibilität, Testbarkeit, Modifizier- / Erweiterbarkeit) am Besten für die Erfüllung unseres definierten link:01_introduction_and_goals.adoc#section-quality-goals[Qualitätsziels QG-3 (Modifiability)] geeignet sind.
-
-**Beinhaltete Blackbox-Bausteine / -Komponenten**
-
-[options="header",cols="3,2,6"]
-|===
-|Name|Schicht|Verantwortlichkeit
-
-|Ausführungs Domänenlogik
-|Domäne
-|Implementiert den Bestandteil der Businesslogik gemäss dem definierten link:08_concepts.adoc#section-concepts[Domänenmodell], welcher für die Verarbeitung der Daten verantwortlich ist, die von den Patienten während der Ausführung einer Therapie-Session aufgezeichnet werden.
-
-Beinhaltet die aus dem Domain-Driven Design (DDD) (**TBD Link zu Evans Buch**) bekannten Elemente wie Aggregate, Entitäten, Value Objects oder Domain Services.
-
-Stellt die Domänenelemente den darüberliegenden Schichten (Applikation, Infrastruktur) zur Verfügung.
-
-|Ausführungs Applikationslogik
-|Applikation
-|Realisiert die Interaktions- und Orchestrierungslogik zwischen der darunterliegenden Domänenschicht __Ausführungs Domänenlogik__ und der darüberliegenden Infrastrukturschicht, welche die jeweiligen Adapter beinhaltet.
-
-Definiert unterschiedliche Schnittstellen (Ports) und stellt diese der Infrastrukturschicht zur entsprechenden Implementation (Adapter) bereit.
-
-|Ausführungs Persistenz Adapter
-|Infrastruktur / Driven Adapter
-|Implementiert den entsprechenden Port der Applikationsschicht.
-
-Kapselt und abstrahiert die Logik, welche mit der Persistenz der Domänenelemente zusammenhängt. Hierzu gehören beispielsweise die implementierten Domain Repositories in der Form einzelner (Sub-)Adapter, welche die persistenztechnischen Details der Ablage und Abfrage der Domänenelemente verwalten.
-
-Implementiert den Kommunikationskanal zwischen __Ausführungsservice__ und __Ausführungs Datenbank__.
-
-|Ausführungs API Controller
-|Infrastruktur / Driving Adapter
-|Verwaltet die öffentlichen API Endpoints des __Ausführungsservice__ und leitet die erhaltenen Request-Daten mit einem entsprechenden Service Call an die __Ausführungs Applikationslogik__ weiter.
-
-Verifiziert die Daten eingehender Requests (lediglich formelle Prüfung) und beinhaltet die Objekt-Mappings für ausgehende Requests.
-
-Kann als "Driving Adapter" kategorisiert werden, da ein über den API Controller eingehender Request den zugehörigen Prozess in der Applikationsschicht initial anstösst.
-
-|===
-
-**Technische Implementation der Schnittstellen zwischen Blackboxes**
-
-Die grundlegenden Schnittstellendefinitionen zwischen den einzelnen Schichten werden technisch durch Java Interfaces (Ports) und Klassen (Adapter) abgebildet. Die Verknüpfung zwischen Port und jeweiligem Adapter (oder wahlweise auch mehreren Adaptern pro Port) übernimmt der https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans[Dependency Injection Container des Spring Frameworks], da der __Ausführungsservice__ als dedizierte https://spring.io/projects/spring-boot/[Spring Boot]-Applikation deployed und betrieben wird.
+ [[section-building-block-view]]
+ == Bausteinsicht
+ 
+ Dieses Kapitel veranschaulicht die statische Zerlegung von Physio Connect in dessen technisch fundamentale Bausteine / Komponenten. Das Ziel ist hierbei, die interne Struktur des Systems mittels der Verwendung verschiedener Abstraktionsstufen / -ebenen bis hin zu einem angemessenen Detaillierungsgrad zu beschreiben, um schlussendlich eine gemeinsame Wissens- und Kommunikationsbasis für die relevanten Stakeholder zu bilden. +
+ Die Darstellung der einzelnen Abstraktionsebenen entspricht einer hierarchischen Form von https://faq.arc42.org/questions/B-9/[White Boxes], welche wiederum kleinere https://faq.arc42.org/questions/B-8/[Black Boxes] beinhalten.
+ 
+ === Ebene 1: Physio Connect
+ 
+ Diese Ebene repräsentiert eine Whitebox-Ansicht des Gesamtsystems von Physio Connect mit den darin beinhalteten Komponenten als einzelne Blackboxes. In unserem Falle sind die einzelnen Komponenten als (meist) unabhängig voneinander deploybare Container zu verstehen. 
+ 
++**Legende**
++
++plantuml::structurizr_diagrams/generated/structurizr-Containers-key.puml[format=svg]
++
++[options="header", cols="1,2"]
++|===
++|Element|Beschreibung
++
++|Container
++|Deploybare einheit des Whitebox Systems
++
++|Container Database
++|Datenbank innerhalb des Whitebox Systems
++
++|Relationship
++|Gerichtete Beziehung zwischen Elementen
++
++|Person
++|Repräsentiert bestimmte Art von Enduser
++
++|Software System
++|Software System. Aus der Sicht der Container eine Blackbox.
++
++|===
++
+ ==== Übersicht
+ 
++
+ plantuml::structurizr_diagrams/generated/structurizr-Containers.puml[format=svg]
+ 
+ ==== Motivation
+ 
+ Die aktuelle Gesamtstruktur von Physio Connect resultiert aus der Kombination mehrerer link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidungen]:
+ 
+ * **ADR-FRO-11** +
+ Wir verwenden eine Single Page Application (SPA) als Frontend inkl. separatem Deployment.
+ * **ADR-FRO-14** +
+ Es werden aktuell keine Micro Frontends eingesetzt.
+ * **ADR-BAC-10** +
+ Das Backend ist in mehrere Microservices unterteilt, welche unabhängig voneinander deploybar sind.
+ * **ADR-BAC-30** +
+ Die Ablage der Therapieverwaltungsdaten und Therapie-Session-Ausführungsdaten geschieht in zwei unterschiedlichen Datenbanken, welche unabhängig voneinander deploybar sind.
+ * **ADR-BAC-40** +
+ Die Backend-Kommunikation erfolgt via HTTPS (SSL / TLS).
+ * **ADR-BAC-50**
+ Die Abhängigkeiten zwischen Physio Connect und den APIs der Umsysteme __Übungskatalog__ und __Benutzerverwaltung__ werden mittels dedizierten Wrapper Services im Physio Connect-Backend gekapselt, welche als Abstraktionsschicht und anti-corruption layer (ACL) dienen.
+ 
+-Des Weiteren wurde die System-Dekomposition auch durch die sinnvolle Aufteilung bzw. logische Zusammengehörigkeit der link:../requirements_engineering/functional_requirements.adoc#section-functional-requirements[funktionalen Anforderungen] massgeblich beeinflusst. Prinzipien wie https://blog.cleancoder.com/uncle-bob/2014/05/08/SingleReponsibilityPrinciple.html[Single Responsibility Principle (SRP)] und https://deviq.com/principles/separation-of-concerns[Separation of Concerns (SoC)] boten dabei eine gute Grundlage.
+-
+-==== Beinhaltete Bausteine / Komponenten
+-
+-<<< CAN BE DELETED WHEN DOING REVIEW
+-
+-see https://faq.arc42.org/questions/B-8/
+-
+-__Zweck / Verantwortlichkeiten__
+-What does this blackbox do, what task or function does it fulfill? What use-cases, use-case-clusters does it handle?
+-
+-__Schnittstellen__
+-What is the interface (input, output) of this blackbox, what is its API, what does it require as input and what does it provide as output.
+-
+-__Qualitäts- / Performancecharakteristiken__
+-What quality requirements does this blackbox satisfy? How fast/secure/robust is it? Does it offer any guarantees or service-level-agreements?
+-
+-__Risiken__
+-Are there known issues, problems or risks associated with this blackbox?
++Des Weiteren wurde die System-Dekomposition durch die sinnvolle Aufteilung bzw. logische Zusammengehörigkeit der link:../requirements_engineering/functional_requirements.adoc#section-functional-requirements[funktionalen Anforderungen] massgeblich beeinflusst. Prinzipien wie https://blog.cleancoder.com/uncle-bob/2014/05/08/SingleReponsibilityPrinciple.html[Single Responsibility Principle (SRP)] und https://deviq.com/principles/separation-of-concerns[Separation of Concerns (SoC)] boten dabei eine gute Grundlage.
+ 
+->>> CAN BE DELETED WHEN DOING REVIEW
++==== Beinhaltete Bausteine
+ 
+ **Frontend (Group)**
+ 
+-Hierbei handelt es sich lediglich um eine logische Gruppierung der Komponenten, welche zusammen das Frontend von Physio Connect abdecken. Die Gruppierung hat jedoch nur visuelle Relevanz - es besteht kein direkter Zusammenhang mit der Deploybarkeit der darin enthaltenen Komponenten.
++Hierbei handelt es sich lediglich um eine logische Gruppierung der Komponenten, welche zusammen das Frontend von Physio Connect abdecken. Die Gruppierung hat jedoch nur visuelle Relevanz - es besteht kein Zusammenhang mit der Deploybarkeit der darin enthaltenen Komponenten.
+ 
+ **Server Side Therapie Manager**
+ 
+ __Zweck / Verantwortlichkeiten__
+ 
+ * Bereitstellung des Physio Connect-Frontends (SPA)
+ * Verwaltet die deployten Artefakte des Frontends (Javascript Bundles, Assets) und liefert diese an die Clients (Browser) aus, wenn diese einen entsprechenden Request dafür stellen
+ 
+ __Schnittstellen__
+ 
+ [options="header"]
+ |===
+ |Schnittstelle|Input|Output
+ 
+ |Direktzugriff via URL auf Frontend-SPA oder zugehörige Ressourcen / Assets 
+ a|
+ * Default: +
+ HTTP GET Request ohne Parameter
+ * Name / Pfad der angeforderten Frontend-Ressource / -Asset
+ 
+ a|
+ * Default: +
+ Main Bundle der Frontend-SPA
+ * via Name / Pfad angeforderte Ressource / Asset +
+ (z.B. Translation file, Image)
+ ** falls nicht gefunden: +
+ Response code 404 (Not Found)
+ 
+ |===
+ 
+ __Qualitäts- / Performancecharakteristiken__
+ 
+ [options="header",cols="2,4"]
+ |===
+ |Charakteristik / Qualitätsattribut|Beschreibung
+ 
+ |Availability
+-|Die Möglichkeit der horizontalen Skalierung dieser Komponente führt zur Sicherstellung einer hohen Verfügbarkeit des Physio Connect-Frontends.
++|Die Möglichkeit der horizontalen Skalierung dieses Containers führt zur Sicherstellung einer hohen Verfügbarkeit des Physio Connect-Frontends.
+ 
+ |===
+ 
+ __Risiken__
+ 
+ [options="header",cols="2,4,4"]
+ |===
+ |Risiko|Beschreibung|Mitigation
+ 
+ |Ausfall / Nichterreichbarkeit
+-|Fällt diese Komponente aus oder ist anderweitig nicht erreichbar, lässt sich das Physio Connect-Frontend nicht mehr an die Clients ausliefern. +
++|Fällt dieser Container aus oder ist anderweitig nicht erreichbar, lässt sich das Physio Connect-Frontend nicht mehr an die Clients ausliefern. +
+ Bei der Verwendung einer SPA fällt dies clientseitig möglicherweise erst beim Neuladen / Refresh der Applikation oder beim (Nach-)Laden von zusätzlichen Ressourcen (z.B. Bilder) auf.
+ a|
+ * Horizontale Skalierung
+ * Temporäres Caching des Frontends in der eingesetzten __Load Balancer__-Komponente
+ 
+ |===
+ 
+ **Therapien Manager SPA**
+ 
+ __Zweck / Verantwortlichkeiten__
+ 
+ * Physio Connect-Frontend in Form einer Single Page Application (SPA) +
+ (gemäss link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-FRO-11])
+ * Kann auf mobilen Plattformen als Progressive Web Application (PWA) verwendet werden +
+ (gemäss link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-FRO-13])
+ 
+ __Schnittstellen__
+ 
+ [options="header"]
+ |===
+ |Schnittstelle|Input|Output
+ 
+ |Benutzerschnittstelle (UI)
+-|User Input (Maus, Tastatur)
++|User Input (Maus, Tastatur, Touch / Gesten-Steuerung)
+ |Anzeige des Layouts, grafischen Komponenten, visuellen Effekten usw.
+ 
+ |Integrierter API Client für Backend HTTP Requests / Responses
+ |HTTP Responses von Physio Connect-Backend +
+ (als Antwort auf Requests)
+ |HTTP Requests an Physio Connect-Backend +
+ (via __Load Balancer__-Komponente)
+ 
+ |===
+ 
+ __Qualitäts- / Performancecharakteristiken__
+ 
+ [options="header",cols="2,4"]
+ |===
+ |Charakteristik / Qualitätsattribut|Beschreibung
+ 
+ |Usability / Operability
+ |Durch die Verwendung einer PWA kann der Endbenutzer diejenigen Use Cases einfacher realisieren, welche auf die nativen Funktionalitäten eines Smartphones zurückgreifen (z.B. Aufnahme von Fotos / Bildern via eingebauter Kamera, welche als Teil einer Übungsdefinition hochgeladen werden können).
+ 
+ |===
+ 
+ __Risiken__
+ 
+-Es bestehen keine spezifischen Risiken im Zusammenhang mit dieser Komponente.
++Es bestehen keine spezifischen Risiken im Zusammenhang mit diesem Container.
+ 
+ **Load Balancer**
+ 
+ __Zweck / Verantwortlichkeiten__
+ 
+-* Zentraler Entrypoint für den Zugriff auf Physio Connect - alle eingehenden Requests laufen über diese Komponente
++* Zentraler Entrypoint für den Zugriff auf Physio Connect - alle eingehenden Requests laufen über diesen Container
+ * Reverse Proxy: +
+-** Weiterleitung der eingehenden Requests an die APIs der dafür zuständigen Komponenten
+-** Weiterleitung der Frontend- / Backend-Responses an den Client, welcher den initialen Request gestellt hat
+-* Lastverteilung von eingehenden, identischen Requests auf redundant betriebene Instanzen der dafür zuständigen Komponente
++** Weiterleitung der eingehenden Requests an die APIs der dafür zuständigen Container
++** Weiterleitung der Frontend- und Backend-Responses an den Client, der den initialen Request gestellt hat
+ * Mögliches Caching von statischen, mehrfach angeforderten Inhalten +
+ (z.B. Frontend-SPA)
+ * Sicherstellung der Verwendung einer verschlüsselten HTTPS-Verbindung (SSL / TLS)
+ 
+ __Schnittstellen__
+ 
+ [options="header"]
+ |===
+ |Schnittstelle|Input|Output
+ 
+ |Request-Handler für Frontend-URLs
+ |Request, für welchen das Physio Connect-Frontend zuständig ist
+-|Weiterleitung des Requests an die Komponente __Server Side Therapie Manager__ +
++|Weiterleitung des Requests an den Container __Server Side Therapie Manager__ +
+ (mittels konfiguriertem URL-Mapping)
+ 
+ |Response-Handler für Frontend-URLs
+-|Response der Komponente __Server Side Therapie Manager__ auf einen initialen Request
++|Response des Containers __Server Side Therapie Manager__ auf einen initialen Request
+ |Weiterleitung der Response an den Client, welcher den initialen Request gestellt hat
+ 
+ |Request-Handler für Backend-URLs
+-|Request, für welchen eine Komponente des Physio Connect-Backends zuständig ist
+-|Weiterleitung des Requests an die verantwortliche Backend-Komponente +
++|Request, für welchen ein Container des Physio Connect-Backends zuständig ist
++|Weiterleitung des Requests an den verantwortliche Backend-Container +
+ (mittels konfiguriertem URL-Mapping)
+ 
+ |Response-Handler für Backend-URLs
+-|Response einer Backend-Komponente auf einen initialen Request
++|Response eines Backend-Containers auf einen initialen Request
+ |Weiterleitung der Response an den Client, welcher den initialen Request gestellt hat
+ 
+ |===
+ 
+ __Qualitäts- / Performancecharakteristiken__
+ 
+ [options="header",cols="2,4"]
+ |===
+ |Charakteristik / Qualitätsattribut|Beschreibung
+ 
+-|Skalierbarkeit
+-|Eingehende Requests können auf unterschiedliche Instanzen einer Komponente weitergeleitet werden, was eine horizontalen Skalierung dieser Komponente ermöglicht.
+-
+-|Availability / Fault Tolerance
+-|Bei dem Ausfall einer Komponenteninstanz können eingehende Requests auf diejenigen Instanzen der Komponente weitergeleitet werden, welche aktuell noch funktionieren.
+-
+ |Performance Efficiency / Time behaviour
+ a|
+-Durch das temporäre Caching statischer Inhalte (z.B. Frontend-SPA) kann die allgemeine Performance durch tiefere Response-Zeiten optimiert werden, indem die Weiterleitung des Requests zur Frontend- / Backend-Komponente wegfällt.
++Durch das temporäre Caching statischer Inhalte (z.B. Frontend-SPA) kann die allgemeine Performance durch tiefere Response-Zeiten optimiert werden, indem die Weiterleitung des Requests zum Frontend- / Backend-Container wegfällt.
+ 
+ |Security
+-|Der Reverse Proxy fungiert als Vermittler zwischen Client und Physio Connect-System, wodurch die APIs der internen Komponenten nicht öffentlich gemacht werden müssen. +
++|Der Reverse Proxy fungiert als Vermittler zwischen Client und Physio Connect-System, wodurch die APIs der internen Container nicht öffentlich gemacht werden müssen. +
+ Des Weiteren kann der Load Balancer / Reverse Proxy auch dazu verwendet werden, um Sicherheitsmassnahmen wie Verschlüsselung und Authentifizierung sicherzustellen.
+ 
+ |===
+ 
+ __Risiken__
+ 
+ [options="header",cols="2,4,4"]
+ |===
+ |Risiko|Beschreibung|Mitigation
+ 
+ |Ausfall / Nichterreichbarkeit
+ |Fällt der Load Balancer / Reverse Proxy aus oder ist anderweitig nicht erreichbar, ist Physio Connect als Gesamtsystem (öffentlich) nicht mehr erreichbar.
+-|Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn die Komponente nicht mehr erreichbar ist (kontinuierlich abgesetzter Heartbeat)
++|Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn die Container nicht mehr erreichbar ist (kontinuierlich abgesetzter Heartbeat)
+ 
+ |===
+ 
+ **Planung (Group)**
+ 
+ Hierbei handelt es sich lediglich um eine logische Gruppierung der Komponenten, welche zusammen die Funktionalität der Gesamttherapie-Verwaltung abdecken. Die Gruppierung hat jedoch nur visuelle Relevanz - es besteht kein direkter Zusammenhang mit der Deploybarkeit der darin enthaltenen Komponenten.
+ 
+ **Therapie Planungs Service**
+ 
+ __Zweck / Verantwortlichkeiten__
+ 
+ Dieser Service ist für die Planung und Verwaltung von Gesamttherapien, Therapie-Sessions und Therapieübungen verantwortlich.
+ 
+ __Schnittstellen__
+ 
+ [options="header"]
+ |===
+ |Schnittstelle|Input|Output
+ 
+ |REST API für die Planung / Verwaltung von Gesamttherapien
+ |HTTP Request mit Bearer Access Token (JWT) und Payload (notwendig je nach Request)
+ a|
+ HTTP Response abhängig von Situation:
+ 
+ * Code 200 / 201 / 204 wenn die Verarbeitung erfolgreich war
+ * Code 401 wenn der mitgelieferte Access Token ungültig ist +
+ (= Authentifizierung fehlgeschlagen)
+ * Code 403 wenn der aufrufende Benutzer gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
+ (= unzureichende Berechtigung)
+ * Code 404 wenn eine notwendige Ressource intern nicht gefunden wurde
+-* Code 500 wenn ein interner Fehler auftritt (inkl. zusätzilcher Beschreibung des Fehlers)
++* Code 500 wenn ein interner Fehler auftritt (inkl. zusätzlicher Beschreibung des Fehlers)
+ 
+ |REST API für die Planung / Verwaltung von Therapie-Sessions
+ |HTTP Request mit Bearer Access Token (JWT) und Payload (notwendig je nach Request)
+ a|
+ HTTP Response abhängig von Situation:
+ 
+ * Code 200 / 201 / 204 wenn die Verarbeitung erfolgreich war
+ * Code 401 wenn der mitgelieferte Access Token ungültig ist +
+ (= Authentifizierung fehlgeschlagen)
+ * Code 403 wenn der aufrufende Benutzer gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
+ (= unzureichende Berechtigung)
+ * Code 404 wenn eine notwendige Ressource intern nicht gefunden wurde
+-* Code 500 wenn ein interner Fehler auftritt (inkl. zusätzilcher Beschreibung des Fehlers)
++* Code 500 wenn ein interner Fehler auftritt (inkl. zusätzlicher Beschreibung des Fehlers)
+ 
+ |REST API für die Planung / Verwaltung von Therapieübungen
+ |HTTP Request mit Bearer Access Token (JWT) und Payload (notwendig je nach Request)
+ a|
+ HTTP Response abhängig von Situation:
+ 
+ * Code 200 / 201 / 204 wenn die Verarbeitung erfolgreich war
+ * Code 401 wenn der mitgelieferte Access Token ungültig ist +
+ (= Authentifizierung fehlgeschlagen)
+ * Code 403 wenn der aufrufende Benutzer gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
+ (= unzureichende Berechtigung)
+ * Code 404 wenn eine notwendige Ressource intern nicht gefunden wurde
+-* Code 500 wenn ein interner Fehler auftritt (inkl. zusätzilcher Beschreibung des Fehlers)
++* Code 500 wenn ein interner Fehler auftritt (inkl. zusätzlicher Beschreibung des Fehlers)
+ 
+-|REST API Client für ausgehende Requests an __Ausführungs Service__
+-|HTTP Response der Komponente __Ausführungs Service__ zu einem vorgängig abgesendeten Request +
+-(siehe Schnittstellen von __Ausführungs Service__ für die Response Codes der betroffenen REST API)
+-|HTTP Requests an REST API der Komponente __Ausführungs Service__
++|REST API Client für ausgehende Requests an __Ausführungsservice__
++|HTTP Response des Containers __Ausführungsservice__ zu einem vorgängig abgesendeten Request +
++(siehe Schnittstellen von __Ausführungsservice__ für die Response Codes der betroffenen REST API)
++|HTTP Requests an REST API des Containers __Ausführungsservice__
+ 
+-|REST API Client für HTTP Requests an __Übungskatalog Wrapper__ +
+-Der Client-Code wird automatisch über die publizierte Spezifikation der REST API vom __Übungskatalog Wrapper__ generiert (z.B. via https://openapi-generator.tech/[OpenAPI Generator]).
++|REST API Client für HTTP Requests an __Übungskatalogwrapper__ +
++Der Client-Code wird automatisch über die publizierte Spezifikation der REST API vom __Übungskatalogwrapper__ generiert (z.B. via https://openapi-generator.tech/[OpenAPI Generator]).
+ a|
+ Je nach API Endpoint benötigte Informationen, welche vom API Client entgegengenommen und in einen entsprechenden Request verpackt werden:
+ 
+ * Route Parameter +
+ (z.B. Übungs-ID)
+ * Request Parameter
+ * HTTP Header Value
+ * Request Payload
+ 
+-|HTTP Request an REST API der Komponente __Übungskatalog Wrapper__ gemäss der aufgerufenen Methode des API Clients und den angegebenen Informationen (siehe Input)
++|HTTP Request an REST API des Containers __Übungskatalogwrapper__ gemäss der aufgerufenen Methode des API Clients und den angegebenen Informationen (siehe Input)
+ 
+-|REST API Client für HTTP Requests an __Benutzerverwaltung Wrapper__ +
+-Der Client-Code wird automatisch über die publizierte Spezifikation der REST API vom __Benutzerverwaltung Wrapper__ generiert (z.B. via https://openapi-generator.tech/[OpenAPI Generator]).
++|REST API Client für HTTP Requests an __Benutzerverwaltungswrapper__ +
++Der Client-Code wird automatisch über die publizierte Spezifikation der REST API vom __Benutzerverwaltungswrapper__ generiert (z.B. via https://openapi-generator.tech/[OpenAPI Generator]).
+ a|
+ Je nach API Endpoint benötigte Informationen, welche vom API Client entgegengenommen und in einen entsprechenden Request verpackt werden:
+ 
+ * Route Parameter +
+ (z.B. Benutzer-ID)
+ * Request Parameter
+ * HTTP Header Value
+ * Request Payload
+ 
+-|HTTP Request an REST API der Komponente __Benutzerverwaltung Wrapper__ gemäss der aufgerufenen Methode des API Clients und den angegebenen Informationen (siehe Input)
++|HTTP Request an REST API des Containers __Benutzerverwaltungswrapper__ gemäss der aufgerufenen Methode des API Clients und den angegebenen Informationen (siehe Input)
+ 
+ |Adapter für die Kommunikation mit __Therapie Planungs Datenbank__
+ |Response von Datenbanksystem via TCP/IP zu vorgängig abgesetzter Query / Operation, abstrahiert durch ODBC / JDBC Driver oder Datenbank client library
+ |Query / Operation via TCP/IP, abstrahiert durch ODBC / JDBC Driver oder Datenbank client library
+ 
+ |===
+ 
+ __Qualitäts- / Performancecharakteristiken__
+ 
+ [options="header",cols="2,4"]
+ |===
+ |Charakteristik / Qualitätsattribut|Beschreibung
+ 
+ |Compatibility / Interoperability
+ a|
+ Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+ 
+ * SZ-IOP-2
+ * SZ-IOP-3
+ * SZ-IOP-4
+ * SZ-IOP-5
+ * SZ-IOP-6
+ 
+ |Security / Confidentiality
+ a|
+ Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+ 
+ * SZ-CNF-4
+ 
+ |Maintainability / Modifiability
+ a|
+ Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+ 
+ * SZ-MOD-1
+ * SZ-MOD-5
+ 
+ |Reliability / Fault tolerance
+ a|
+ Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+ 
+ * SZ-FLT-1
+ * SZ-FLT-2
+ 
+ |===
+ 
+ __Risiken__
+ 
+ [options="header",cols="2,4,4"]
+ |===
+ |Risiko|Beschreibung|Mitigation
+ 
+ |Ausfall / Nichterreichbarkeit
+ |Fällt der Therapie Planungs Service aus oder ist anderweitig nicht erreichbar, können Gesamttherapien, Therapie-Sessions und Therapieübungen nicht mehr geplant oder verwaltet werden.
+ a|
+ * Horizontale Skalierung des Services auf mehrere redundante Instanzen, beispielsweise in Failover-Konfiguration +
+ (damit zu jedem Zeitpunkt eine Service-Instanz erreichbar ist)
+ * Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn eine Service-Instanz nicht mehr erreichbar ist (kontinuierlich abgesetzter Heartbeat)
+ 
+ |===
+ 
+ **Therapie Planungs Datenbank**
+ 
+ __Zweck / Verantwortlichkeiten__
+ 
+-Diese Datenbank dient als Persistenz für die Daten, welche im Kontext des __Therapie Planungs Service__ verarbeitet werden.
++Diese Datenbank dient zur Persistierung der Daten, welche im Kontext des __Therapie Planungs Service__ verarbeitet werden.
+ 
+ __Schnittstellen__
+ 
+ Die Art und Anzahl der Schnittstellen hängt vom verwendeten Datenbankmodell ab. Im Falle der __Therapie Planungs Datenbank__ fiel die Wahl gemäss link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-31] auf eine relationale (SQL) oder Dokumentdatenbank (NoSQL).
+ 
+ Eine relationale Datenbank stellt typischerweise folgende Schnittstellen bereit:
+ 
+ * Native API
+ * JDBC Driver +
+ (falls Java als primäre Programmiersprache verwendet wird)
+ * ODBC Driver
+ * Client library als Abstraktionsschicht für eine unterstütze Programmiersprache
+ 
+ Als Abfragesprache wird normalerweise SQL verwendet, die Kommunikation verläuft via TCP/IP.
+ 
+ Eine Dokumentdatenbank (NoSQL) stellt typischerweise folgende Schnittstellen bereit:
+ 
+ * Native API
+ * REST API
+ * Query Language +
+ (z.B. MongoDB Query Language (MQL) für MongoDB)
+ * Client library als Abstraktionsschicht für eine unterstütze Programmiersprache
+ 
+ Als Abfragesprache wird normalerweise das vom jeweiligen Datenbankmanagementsystem unterstütze Protokoll verwendet (z.B. MongoDB Query Language (MQL) für MongoDB), die Kommunikation verläuft via TCP/IP.
+ 
+ __Qualitäts- / Performancecharakteristiken__
+ 
+ [options="header",cols="2,4"]
+ |===
+ |Charakteristik / Qualitätsattribut|Beschreibung
+ 
+ |Flexibilität
+ a|Bei der Verwendung einer Dokumentdatenbank profitiert man von einer höheren Flexibilität, wenn abzuspeichernde Daten einem dynamischen Schema entsprechen.
+ 
+ |Skalierbarkeit
+ a|Sowohl relationale als auch Dokumentdatenbanken lassen sich bei Bedarf vertikal sowie horizontal skalieren. Letzere Variante resultiert jedoch in der Abklärung und Definition weiterer Aspekte, wie beispielsweise einer effizienten und zuverlässigen Datensynchronisation zwischen den einzelnen Datenbankinstanzen zur Erhaltung der Datenkonsistenz.
+ 
+ |Performance Efficiency / Capacity
+-a|Sowohl relationale als auch aktuelle Dokumentdatenbanken sind auf grosse Datenmengen und die Performance-Optimierung bei Abfragen und Speichervorgängen ausgelegt. Ebenso lassen sich parallele Datenzugriffe und die diesbezügliche Sicherstellung der Datenintegrität und -konsistenz via Transaktionsmanagement sicherstellen. +
++a|Sowohl relationale als auch Dokumentdatenbanken sind auf grosse Datenmengen und die Performance-Optimierung bei Abfragen und Speichervorgängen ausgelegt. Ebenso lassen sich parallele Datenzugriffe und die diesbezügliche Sicherstellung der Datenintegrität und -konsistenz via Transaktionsmanagement sicherstellen. +
+ Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+ 
+ * SZ-CAP-1
+ 
+ |===
+ 
+ __Risiken__
+ 
+ [options="header",cols="2,4,4"]
+ |===
+ |Risiko|Beschreibung|Mitigation
+ 
+ |Ausfall / Nichterreichbarkeit
+ |Analog zu dem definierten link:11_technical_risks#section-technical-risks[technischen Risiko RTD-AUS-10] besteht auch für die __Therapie Planungs Datenbank__ die grundsätzliche Gefahr eines unerwarteten Ausfalls, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
+ a|
+ Generell können identische Massnahmen wie für __RTD-AUS-10__ in Betracht gezogen werden:
+ 
+ * Horizontale Skalierung der Datenbank auf mehrere redundante Instanzen, beispielsweise in Failover-Konfiguration mit aktiver Datenreplikation +
+ (damit zu jedem Zeitpunkt ein Datenbank-Instanz erreichbar ist)
+ * Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn eine Datenbank-Instanz nicht mehr erreichbar ist (kontinuierlich abgesetzter Heartbeat)
+ 
+ |Datenverlust / -korruption infolge eines technischen Fehlers oder einer Cyber-Attacke
+ |Analog zu dem definierten link:11_technical_risks#section-technical-risks[technischen Risiko RTD-AUS-20] besteht auch für die __Therapie Planungs Datenbank__ die grundsätzliche Gefahr, dass die Datenkonsistenz / -integrität durch deren Korruption beeinträchtigt wird, oder dass Daten gänzlich verloren gehen. Im Falle von korrupten Daten muss ebenfalls mit unerwarteten side-effects seitens der Applikationslogik von PhysioConnect gerechnet werden, welche die allgemeine Funktionstüchtigkeit des Systems beeinträchtigen können.
+ a|
+ Generell können identische Massnahmen wie für __RTD-AUS-20__ in Betracht gezogen werden:
+ 
+ * Regelmässige Backups
+ * Datenintegritätsprüfungen
+ * Transaktionsmanagement
+ * Datenreplikation
+ * User Access Control (Zugriffskontrolle, Autorisierung)
+ 
+ |===
+ 
+ **Ausführung (Group)**
+ 
+ Hierbei handelt es sich lediglich um eine logische Gruppierung der Komponenten, welche zusammen die Funktionalität der Therapie-Session-Ausführung abdecken. Die Gruppierung hat jedoch nur visuelle Relevanz - es besteht kein direkter Zusammenhang mit der Deploybarkeit der darin enthaltenen Komponenten.
+ 
+ **Ausführungs Service**
+ 
+ __Zweck / Verantwortlichkeiten__
+ 
+ Dieser Service ist für die Verarbeitung der Daten verantwortlich, welche von den Patienten während der Ausführung einer Therapie-Session aufgezeichnet werden. Einerseits gehören hierzu Messdaten wie Puls oder Bludruck, andererseits aber auch übungsspezifische Ausführungsinformationen wie effektive Sets / Reps oder Patienten- / Therapeutenrückmeldungen zu durchgeführten Übungen.
+ 
+ __Schnittstellen__
+ 
+ [options="header"]
+ |===
+ |Schnittstelle|Input|Output
+ 
+ |REST API für die Verwaltung von Messdaten und Ausführungsinformationen
+ |HTTP Request mit Bearer Access Token (JWT) und Payload (notwendig je nach Request)
+ a|
+ HTTP Response abhängig von Situation:
+ 
+ * Code 200 / 201 / 204 wenn die Verarbeitung erfolgreich war
+ * Code 401 wenn der mitgelieferte Access Token ungültig ist +
+ (= Authentifizierung fehlgeschlagen)
+ * Code 403 wenn der aufrufende Benutzer gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
+ (= unzureichende Berechtigung)
+ * Code 404 wenn eine notwendige Ressource intern nicht gefunden wurde
+ * Code 500 wenn ein interner Fehler auftritt (inkl. zusätzilcher Beschreibung des Fehlers)
+ 
+ |REST API für die Verwaltung von Patienten- / Therapeutenrückmeldungen
+ |HTTP Request mit Bearer Access Token (JWT) und Payload (notwendig je nach Request)
+ a|
+ HTTP Response abhängig von Situation:
+ 
+ * Code 200 / 201 / 204 wenn die Verarbeitung erfolgreich war
+ * Code 401 wenn der mitgelieferte Access Token ungültig ist +
+ (= Authentifizierung fehlgeschlagen)
+ * Code 403 wenn der aufrufende Benutzer gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
+ (= unzureichende Berechtigung)
+ * Code 404 wenn eine notwendige Ressource intern nicht gefunden wurde
+ * Code 500 wenn ein interner Fehler auftritt (inkl. zusätzilcher Beschreibung des Fehlers)
+ 
+ |Adapter für die Kommunikation mit __Ausführungs Datenbank__
+ |Response von Datenbanksystem via TCP/IP zu vorgängig abgesetzter Query / Operation, abstrahiert durch ODBC / JDBC Driver oder Datenbank client library
+ |Query / Operation via TCP/IP, abstrahiert durch ODBC / JDBC Driver oder Datenbank client library
+ 
+ |===
+ 
+ __Qualitäts- / Performancecharakteristiken__
+ 
+ [options="header",cols="2,4"]
+ |===
+ |Charakteristik / Qualitätsattribut|Beschreibung
+ 
+ |Compatibility / Interoperability
+ a|
+ Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+ 
+ * SZ-IOP-1
+ 
+ |Security / Confidentiality
+ a|
+ Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+ 
+ * SZ-CNF-1
+ * SZ-CNF-2
+ * SZ-CNF-3
+ 
+ |Maintainability / Modifiability
+ a|
+ Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+ 
+ * SZ-MOD-1
+ * SZ-MOD-2
+ * SZ-MOD-6
+ * SZ-MOD-7
+ 
+ |Performance Efficiency / Time behaviour
+ a|
+ Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+ 
+ * SZ-TIB-1
+ 
+ |===
+ 
+ __Risiken__
+ 
+ [options="header",cols="2,4,4"]
+ |===
+ |Risiko|Beschreibung|Mitigation
+ 
+ |Ausfall / Nichterreichbarkeit
+-|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-AUS-10] beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls des __Ausführungs Service__, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
++|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-AUS-10] beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls des __Ausführungsservice__, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
+ a|
+ Massnahmen gemäss __RTD-AUS-10__:
+ 
+ * Horizontale Skalierung des Services auf mehrere redundante Instanzen, beispielsweise in Failover-Konfiguration +
+ (damit zu jedem Zeitpunkt eine Service-Instanz erreichbar ist)
+ * Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn eine Service-Instanz nicht mehr erreichbar ist (kontinuierlich abgesetzter Heartbeat)
+ * Schadensausmass eines Ausfalls minimieren, indem die __Mobile Patientenapp__ die Möglichkeit besitzt
+ ** aufgezeichnete Ausführungsdaten lokal zwischenzuspeichern und nachgelagert an PhysioConnect weiterzuleiten oder
+ ** Therapie-Sessions ohne das Sammeln von Ausführungsdaten durchzuführen
+ 
+ |Messdaten-Traffic führt zu hohen Betriebskosten
+-|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-TRA-10] beschreibt die Gefahr, dass die kontinuierliche Übermittlung und Verarbeitung der Patienten-Messdaten je nach Anzahl Patienten und parallel ausgeführter Therapie-Sessions zu einem beachtlichen Netzwerk-Traffic führen kann. In Kombination mit einem "Pay as you go"-Kostenmodell, welches bei aktuellen Cloud-Providern standardmässig verwendet wird, kann dies zu teils hohen Betriebskosten führen, welche dem Kunden schlussendlich weiterverrechnet werden.
++|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-TRA-10] beschreibt die Gefahr, dass die kontinuierliche Übermittlung und Verarbeitung der Patienten-Messdaten je nach Anzahl Patienten und parallel ausgeführter Therapie-Sessions zu einem beachtlichen Netzwerk-Traffic führen kann. In Kombination mit einem "Pay as you go"-Kostenmodell, welches bei aktuellen Cloud-Providern standardmässig verwendet wird, kann dies zu hohen Betriebskosten führen, welche dem Kunden schlussendlich weiterverrechnet werden.
+ a|
+ Massnahmen gemäss __RTD-TRA-10__:
+ 
+ * Verwendung der Preisrechner, welche von den jeweiligen Cloud-Providern zur Verfügung gestellt werden
+ * Definition von Kosten-Thresholds und Einrichtung von Benachrichtigungen im Falle der Erreichung kritischer Kostenwerte
+ * Periodisches Monitoring des aktuellen Ressourcenverbrauchs und der prognostizierten Kosten sowie entsprechend transparente Kommunikation mit dem betroffenen Kunden
+ 
+ |===
+ 
+ **Ausführungs Datenbank**
+ 
+ __Zweck / Verantwortlichkeiten__
+ 
+-Diese Datenbank dient als Persistenz für die Daten, welche im Kontext des __Ausführungs Service__ verarbeitet werden (z.B. Patienten-Messdaten).
++Diese Datenbank dient zur Persistierung der Daten, welche im Kontext des __Ausführungsservice__ verarbeitet werden (z.B. Patienten-Messdaten).
+ 
+ __Schnittstellen__
+ 
+ Die Art und Anzahl der Schnittstellen hängt vom verwendeten Datenbankmodell ab. Im Falle der __Ausführungs Datenbank__ fiel die Wahl gemäss link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-31] auf eine Dokumentdatenbank (NoSQL).
+ 
+ Eine Dokumentdatenbank stellt typischerweise folgende Schnittstellen bereit:
+ 
+ * Native API
+ * REST API
+ * Query Language +
+ (z.B. MongoDB Query Language (MQL) für MongoDB)
+ * Client library als Abstraktionsschicht für eine unterstütze Programmiersprache
+ 
+ Als Abfragesprache wird normalerweise das vom jeweiligen Datenbankmanagementsystem unterstütze Protokoll verwendet (z.B. MongoDB Query Language (MQL) für MongoDB), die Kommunikation verläuft via TCP/IP.
+ 
+ __Qualitäts- / Performancecharakteristiken__
+ 
+ [options="header",cols="2,4"]
+ |===
+ |Charakteristik / Qualitätsattribut|Beschreibung
+ 
+ |Flexibilität
+ a|Bei der Verwendung einer Dokumentdatenbank profitiert man von einer höheren Flexibilität, wenn abzuspeichernde Daten einem dynamischen Schema entsprechen.
+ 
+ |Skalierbarkeit
+ a|Dokumentdatenbanken lassen sich bei Bedarf vertikal sowie horizontal skalieren. Letzere Variante resultiert jedoch in der Abklärung und Definition weiterer Aspekte, wie beispielsweise einer effizienten und zuverlässigen Datensynchronisation zwischen den einzelnen Datenbankinstanzen zur Erhaltung der Datenkonsistenz.
+ 
+ |Performance Efficiency / Time behaviour, Capacity
+-a|Aktuelle Dokumentdatenbanken sind auf grosse Datenmengen und die Performance-Optimierung bei Abfragen und Speichervorgängen ausgelegt. Ebenso lassen sich parallele Datenzugriffe und die diesbezügliche Sicherstellung der Datenintegrität und -konsistenz via Transaktionsmanagement sicherstellen. +
++a|Dokumentdatenbanken sind auf grosse Datenmengen und die Performance-Optimierung bei Abfragen und Speichervorgängen ausgelegt. Ebenso lassen sich parallele Datenzugriffe und die diesbezügliche Sicherstellung der Datenintegrität und -konsistenz via Transaktionsmanagement sicherstellen. +
+ Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+ 
+ * SZ-TIB-1
+ * SZ-CAP-1
+ 
+ |===
+ 
+ __Risiken__
+ 
+ [options="header",cols="2,4,4"]
+ |===
+ |Risiko|Beschreibung|Mitigation
+ 
+ |Ausfall / Nichterreichbarkeit
+ |Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-AUS-10] beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls der __Ausführungs Datenbank__, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
+ a|
+ Massnahmen gemäss __RTD-AUS-10__:
+ 
+ * Horizontale Skalierung der Datenbank auf mehrere redundante Instanzen, beispielsweise in Failover-Konfiguration mit aktiver Datenreplikation +
+ (damit zu jedem Zeitpunkt eine Datenbank-Instanz erreichbar ist)
+ * Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn eine Datenbank-Instanz nicht mehr erreichbar ist (kontinuierlich abgesetzter Heartbeat)
+ 
+ |Datenverlust / -korruption infolge eines technischen Fehlers oder einer Cyber-Attacke
+-|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-AUS-20] die grundsätzliche Gefahr für die __Ausführungs Datenbank__, dass die Datenkonsistenz / -integrität durch deren Korruption beeinträchtigt wird, oder dass Daten gänzlich verloren gehen. Im Falle von korrupten Daten muss ebenfalls mit unerwarteten side-effects seitens der Applikationslogik von PhysioConnect gerechnet werden, welche die allgemeine Funktionstüchtigkeit des Systems beeinträchtigen können.
++|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-AUS-20] beschreibt die grundsätzliche Gefahr für die __Ausführungs Datenbank__, dass die Datenkonsistenz / -integrität durch deren Korruption beeinträchtigt wird, oder dass Daten gänzlich verloren gehen. Im Falle von korrupten Daten muss ebenfalls mit unerwarteten side-effects seitens der Applikationslogik von PhysioConnect gerechnet werden, welche die allgemeine Funktionstüchtigkeit des Systems beeinträchtigen können.
+ a|
+ Massnahmen gemäss __RTD-AUS-20__:
+ 
+ * Regelmässige Backups
+ * Datenintegritätsprüfungen
+ * Transaktionsmanagement
+ * Datenreplikation
+ * User Access Control (Zugriffskontrolle, Autorisierung)
+ 
+ |Messdaten-Traffic führt zu hohen Betriebskosten
+-|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-TRA-10] beschreibt die Gefahr, dass die kontinuierliche Übermittlung und Verarbeitung der Patienten-Messdaten je nach Anzahl Patienten und parallel ausgeführter Therapie-Sessions zu einem beachtlichen Netzwerk-Traffic und Ressourcenverbrauch seitens Datenbank führen kann. In Kombination mit einem "Pay as you go"-Kostenmodell, welches bei aktuellen Cloud-Providern standardmässig verwendet wird, kann dies zu teils hohen Betriebskosten führen, welche dem Kunden schlussendlich weiterverrechnet werden.
++|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-TRA-10] beschreibt die Gefahr, dass die kontinuierliche Übermittlung und Verarbeitung der Patienten-Messdaten je nach Anzahl Patienten und parallel ausgeführter Therapie-Sessions zu einem beachtlichen Netzwerk-Traffic und Ressourcenverbrauch seitens Datenbank führen kann. In Kombination mit einem "Pay as you go"-Kostenmodell, welches bei aktuellen Cloud-Providern standardmässig verwendet wird, kann dies zu hohen Betriebskosten führen, welche dem Kunden schlussendlich weiterverrechnet werden.
+ a|
+ Massnahmen gemäss __RTD-TRA-10__:
+ 
+ * Verwendung der Preisrechner, welche von den jeweiligen Cloud-Providern zur Verfügung gestellt werden
+ * Definition von Kosten-Thresholds und Einrichtung von Benachrichtigungen im Falle der Erreichung kritischer Kostenwerte
+ * Periodisches Monitoring des aktuellen Ressourcenverbrauchs und der prognostizierten Kosten sowie entsprechend transparente Kommunikation mit dem betroffenen Kunden
+ 
+ |===
+ 
+ **Wrappers (Group)**
+ 
+ Hierbei handelt es sich lediglich um eine logische Gruppierung der Komponenten, welche zusammen die konzipierten Wrapper-Subsysteme / -Services abdecken. Die Gruppierung hat jedoch nur visuelle Relevanz - es besteht kein direkter Zusammenhang mit der Deploybarkeit der darin enthaltenen Komponenten.
+ 
+-**Übungskatalog Wrapper**
++**Übungskatalogwrapper**
+ 
+ __Zweck / Verantwortlichkeiten__
+ 
+-* Komponente zur generellen Abstraktion und Kapselung der Funktionalitäten, welche im Rahmen der Kommunikation zwischen Physio Connect und dem Übungskatalog relevant sind
++* Container zur generellen Abstraktion und Kapselung der Funktionalitäten, welche im Rahmen der Kommunikation zwischen Physio Connect und dem Übungskatalog relevant sind
+ ** Abholen von Übungsinformationen
+ ** Verwaltung von Übungsdefinitionen
+ ** Verwendung / Verknüpfung von Übungsdefinitionen in Therapie-Sessions 
+ ** Verwaltung von Übungskollektionen
+ * Dient grundsätzlich als Abstraktionsschicht und https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer[anti-corruption layer (ACL)] zwischen Physio Connect und dem Übungskatalog +
+ (siehe link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-50])
+ 
+ __Schnittstellen__
+ 
+ [options="header"]
+ |===
+ |Schnittstelle|Input|Output
+ 
+ |REST API für die Verwaltung von Übungsdefinitionen
+ |HTTP Request mit Bearer Access Token (JWT) und Payload (notwendig je nach Request)
+ a|
+ HTTP Response abhängig von Situation:
+ 
+ * Code 200 / 201 / 204 wenn die Verarbeitung erfolgreich war
+ * Code 401 wenn der mitgelieferte Access Token ungültig ist +
+ (= Authentifizierung fehlgeschlagen)
+ * Code 403 wenn der aufrufende Benutzer gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
+ (= unzureichende Berechtigung)
+ * Code 404 wenn eine notwendige Ressource intern nicht gefunden wurde
+ * Code 500 wenn ein interner Fehler auftritt (inkl. zusätzilcher Beschreibung des Fehlers)
+ 
+ |REST API Client für HTTP Requests an das System __Übungskatalog__. +
+-Der Client-Code wird automatisch über die publizierte Spezifikation der REST API der __Übungskatalog__ generiert (z.B. via https://openapi-generator.tech/[OpenAPI Generator]).
++Der Client-Code wird automatisch über die publizierte Spezifikation der REST API vom __Übungskatalog__ generiert (z.B. via https://openapi-generator.tech/[OpenAPI Generator]).
+ a|
+ Je nach API Endpoint benötigte Informationen, welche vom API Client entgegengenommen und in einen entsprechenden Request verpackt werden:
+ 
+ * Route Parameter +
+ (z.B. Übungs-ID)
+ * Request Parameter
+ * HTTP Header Value
+ * Request Payload
+ 
+ |HTTP Request an REST API des Systems __Übungskatalog__ gemäss der aufgerufenen Methode des API Clients und den angegebenen Informationen (siehe Input)
+ 
+ |===
+ 
+ __Qualitäts- / Performancecharakteristiken__
+ 
+ [options="header",cols="2,4"]
+ |===
+ |Charakteristik / Qualitätsattribut|Beschreibung
+ 
+ |Compatibility / Interoperability
+ a|
+ Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+ 
+ * SZ-IOP-3
+ * SZ-IOP-4
+ 
+ |Maintainability / Modifiability
+-a|Da der __Übungskatalog Wrapper__ als anti-corruption layer (ACL) zwischen den internen PhysioConnect-Komponenten und dem Übungskatalog sitzt, können API-Änderungen an letzterem System mittels dedizierter Anpassung der Wrapper-Komponente umgesetzt und gegen die internen PhysioConnect-Komponenten abstrahiert werden, sodass die interne API des Wrappers kompatibel zum definierten Domänenmodell sowie möglichst stabil und rückwärtskompatibel gehalten werden kann. +
++a|Da der __Übungskatalogwrapper__ als anti-corruption layer (ACL) zwischen den internen PhysioConnect-Komponenten und dem Übungskatalog sitzt, können API-Änderungen an letzterem System mittels dedizierter Anpassung der Wrapper-Komponente umgesetzt und gegen die internen PhysioConnect-Komponenten abstrahiert werden, sodass die interne API des Wrappers kompatibel zum definierten Domänenmodell sowie möglichst stabil und rückwärtskompatibel gehalten werden kann. +
+ Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+ 
+ * SZ-MOD-3
+ 
+ |Reliability / Fault tolerance
+-a|Der __Übungskatalog Wrapper__ dient als interner Kommunikationsadapter zwischen PhysioConnect und dem Übungskatalog. Dementsprechend kann die Komponente auch auftretende Verbindungsprobleme mit dem Übungskatalog gegen aussen abstrahieren und den internen Umsystemen eine Antwort zurückgeben, welche zu einem kontrollierten und resilienten Verhalten des Gesamtsystems führen. +
++a|Der __Übungskatalogwrapper__ dient als interner Kommunikationsadapter zwischen PhysioConnect und dem Übungskatalog. Dementsprechend kann die Komponente auch auftretende Verbindungsprobleme mit dem Übungskatalog gegen aussen abstrahieren und den internen Umsystemen eine Antwort zurückgeben, welche zu einem kontrollierten und resilienten Verhalten des Gesamtsystems führen. +
+ Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+ 
+ * SZ-FLT-1
+ 
+ |Performance Efficiency / Capacity
+-a|Der __Übungskatalog Wrapper__ soll einfach und zustandslos (stateless) gehalten werden, sodass die Komponente mit minimalem Aufwand / Komplexität horizontal skaliert werden kann. +
++a|Der __Übungskatalogwrapper__ soll einfach und zustandslos (stateless) gehalten werden, sodass der Container mit minimalem Aufwand / minimaler Komplexität horizontal skaliert werden kann. +
+ Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+ 
+ * SZ-CAP-1
+ 
+ |===
+ 
+ __Risiken__
+ 
+ [options="header",cols="2,4,4"]
+ |===
+ |Risiko|Beschreibung|Mitigation
+ 
+ |Ausfall / Nichterreichbarkeit des Übungskatalogs
+ |Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-UEB-10] beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls des Übungskatalogs, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
+ a|
+ Massnahmen gemäss __RTD-UEB-10__:
+ 
+-* Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn die Verbindung zwischen __Übungskatalog Wrapper__ und Übungskatalog fehlerhaft ist (kontinuierlich abgesetzter Heartbeat)
++* Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn die Verbindung zwischen dem __Übungskatalogwrapper__ und dem Übungskatalog fehlerhaft ist (kontinuierlich abgesetzter Heartbeat)
+ * Wrapper-Komponente möglichst resilient implementieren, sodass PhysioConnect zumindest noch eingeschränkt verwendet werden kann
+ 
+ |===
+ 
+-**Benutzerverwaltung Wrapper**
++**Benutzerverwaltungswrapper**
+ 
+ __Zweck / Verantwortlichkeiten__
+ 
+-* Komponente zur generellen Abstraktion und Kapselung der Funktionalitäten, welche im Rahmen der Kommunikation zwischen Physio Connect und der Benutzerverwaltung relevant sind
++* Container zur generellen Abstraktion und Kapselung der Funktionalitäten, welche im Rahmen der Kommunikation zwischen Physio Connect und der Benutzerverwaltung relevant sind
+ ** Abholen von Benutzerinformationen
+ ** Verwaltung von Benutzern: +
+ Physiotherapeuten, Vorgesetzte der Physiotherapeuten, Patienten, Administratoren, weitere (technische) Benutzer
+ ** Verknüpfung von Patienten-Benutzern in Gesamttherapien, Therapie-Sessions und Therapieübungen
+ * Dient grundsätzlich als Abstraktionsschicht und https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer[anti-corruption layer (ACL)] zwischen Physio Connect und der Benutzerverwaltung +
+ (siehe link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-50])
+ 
+ __Schnittstellen__
+ 
+ [options="header"]
+ |===
+ |Schnittstelle|Input|Output
+ 
+ |REST API für die Verwaltung und Verknüpftung von Benutzern und -informationen
+ |HTTP Request mit Bearer Access Token (JWT) und Payload (notwendig je nach Request)
+ a|
+ HTTP Response abhängig von Situation:
+ 
+ * Code 200 / 201 / 204 wenn die Verarbeitung erfolgreich war
+ * Code 401 wenn der mitgelieferte Access Token ungültig ist +
+ (= Authentifizierung fehlgeschlagen)
+ * Code 403 wenn der aufrufende Benutzer gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
+ (= unzureichende Berechtigung)
+ * Code 404 wenn eine notwendige Ressource intern nicht gefunden wurde
+ * Code 500 wenn ein interner Fehler auftritt (inkl. zusätzilcher Beschreibung des Fehlers)
+ 
+ |REST API Client für HTTP Requests an das System __Benutzerverwaltung__. +
+ Der Client-Code wird automatisch über die publizierte Spezifikation der REST API der __Benutzerverwaltung__ generiert (z.B. via https://openapi-generator.tech/[OpenAPI Generator]).
+ a|
+ Je nach API Endpoint benötigte Informationen, welche vom API Client entgegengenommen und in einen entsprechenden Request verpackt werden:
+ 
+ * Route Parameter +
+ (z.B. Benutzer-ID)
+ * Request Parameter
+ * HTTP Header Value
+ * Request Payload
+ 
+ |HTTP Request an REST API des Systems __Benutzerverwaltung__ gemäss der aufgerufenen Methode des API Clients und den angegebenen Informationen (siehe Input)
+ 
+ |===
+ 
+ __Qualitäts- / Performancecharakteristiken__
+ 
+ [options="header",cols="2,4"]
+ |===
+ |Charakteristik / Qualitätsattribut|Beschreibung
+ 
+ |Compatibility / Interoperability
+ a|
+ Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+ 
+ * SZ-IOP-5
+ 
+ |Maintainability / Modifiability
+-a|Da der __Benutzerverwaltung Wrapper__ als anti-corruption layer (ACL) zwischen den internen PhysioConnect-Komponenten und der Benutzerverwaltung sitzt, können API-Änderungen an letzterem System mittels dedizierter Anpassung der Wrapper-Komponente umgesetzt und gegen die internen PhysioConnect-Komponenten abstrahiert werden, sodass die interne API des Wrappers kompatibel zum definierten Domänenmodell sowie möglichst stabil und rückwärtskompatibel gehalten werden kann. +
++a|Da der __Benutzerverwaltungswrapper__ als anti-corruption layer (ACL) zwischen den internen PhysioConnect-Komponenten und der Benutzerverwaltung sitzt, können API-Änderungen an letzterem System mittels dedizierter Anpassung der Wrapper-Komponente umgesetzt und gegen die internen PhysioConnect-Komponenten abstrahiert werden, sodass die interne API des Wrappers kompatibel zum definierten Domänenmodell sowie möglichst stabil und rückwärtskompatibel gehalten werden kann. +
+ Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+ 
+ * SZ-MOD-4
+ 
+ |Reliability / Fault tolerance
+-a|Der __Benutzerverwaltung Wrapper__ dient als interner Kommunikationsadapter zwischen PhysioConnect und der Benutzerverwaltung. Dementsprechend kann die Komponente auch auftretende Verbindungsprobleme mit der Benutzerverwaltung gegen aussen abstrahieren und den internen Umsystemen eine Antwort zurückgeben, welche zu einem kontrollierten und resilienten Verhalten des Gesamtsystems führen. +
++a|Der __Benutzerverwaltungswrapper__ dient als interner Kommunikationsadapter zwischen PhysioConnect und der Benutzerverwaltung. Dementsprechend kann die Komponente auch auftretende Verbindungsprobleme mit der Benutzerverwaltung gegen aussen abstrahieren und den internen Umsystemen eine Antwort zurückgeben, welche zu einem kontrollierten und resilienten Verhalten des Gesamtsystems führen. +
+ Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+ 
+ * SZ-FLT-2
+ 
+ |Performance Efficiency / Capacity
+-a|Der __Benutzerverwaltung Wrapper__ soll einfach und zustandslos (stateless) gehalten werden, sodass die Komponente mit minimalem Aufwand / Komplexität horizontal skaliert werden kann. +
++a|Der __Benutzerverwaltungswrapper__ soll einfach und zustandslos (stateless) gehalten werden, sodass der Container mit minimalem Aufwand / minimaler Komplexität horizontal skaliert werden kann. +
+ Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+ 
+ * SZ-CAP-1
+ 
+ |===
+ 
+ __Risiken__
+ 
+ [options="header",cols="2,4,4"]
+ |===
+ |Risiko|Beschreibung|Mitigation
+ 
+ |Ausfall / Nichterreichbarkeit der Benutzerverwaltung
+ |Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-USR-10] beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls der Benutzerverwaltung, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
+ a|
+ Massnahmen gemäss __RTD-USR-10__:
+ 
+-* Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn die Verbindung zwischen __Benutzerverwaltung Wrapper__ und Benutzerverwaltung fehlerhaft ist (kontinuierlich abgesetzter Heartbeat)
++* Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn die Verbindung zwischen dem __Benutzerverwaltungs Wrapper__ und der Benutzerverwaltung fehlerhaft ist (kontinuierlich abgesetzter Heartbeat)
+ * Wrapper-Komponente möglichst resilient implementieren, sodass PhysioConnect zumindest noch eingeschränkt verwendet werden kann
+ 
+ |===
+ 
+ === Ebene 2: Deploybare Subsysteme (Containers)
+ 
+ Diese Ebene repräsentiert unterschiedliche Whitebox-Ansichten der als besonders relevant erachteten Subsysteme von Physio Connect mit den darin beinhalteten Komponenten als einzelne Blackboxes.
+ 
+-<<< CAN BE DELETED WHEN DOING REVIEW
++**Legende**
+ 
+-see https://faq.arc42.org/questions/B-11/
++plantuml::structurizr_diagrams/generated/structurizr-PlanungsServiceDetails-key.puml[format=svg]
+ 
+-**Begründung der Struktur**
+-The reason why this whitebox is structured like it is.
++[options="header", cols="1,2"]
++|===
++|Element|Beschreibung
+ 
+-**Beinhaltete Blackbox-Bausteine / -Komponenten**
+-Names and responsibilities of contained blackboxes, plus references to their detailed description.
++|Component
++|Komponente des Whitebox Containers
+ 
+->>> CAN BE DELETED WHEN DOING REVIEW
++|Container
++|Blackbox Container
++
++|Container Database
++|Backbox Datenbank
++
++|Relationship
++|Gerichtete Beziehung zwischen Elementen
++
++|===
+ 
+ ==== Therapie Planungs Service
+ 
+ plantuml::structurizr_diagrams/generated/structurizr-PlanungsServiceDetails.puml[format=svg]
+ 
+ **Begründung der Struktur**
+ 
+-Die interne Struktur des __Therapie Planungs Service__ basiert auf der getroffenen link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-20], welche den grundsätzlich zu verwendenden Architekturstil im Rahmen einer deploybaren Backend-Komponente thematisiert. Dabei haben wir uns für die Verwendung einer link:08_concepts.adoc#section-concepts[hexagonalen Architektur (Ports & Adapters)] entschieden, da die damit einhergehenden Vorteile (Flexibilität, Testbarkeit, Modifizier- / Erweiterbarkeit) am besten für die Erfüllung und Einhaltung unseres definierten link:01_introduction_and_goals.adoc#section-quality-goals[Qualitätsziels QG-3 (Modifiability)] geeignet sind.
++Die interne Struktur des __Therapie Planungs Service__ basiert auf der getroffenen link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-20], welche den zu verwendenden Architekturstil von Backend-Komponenten bestimmt. Dabei haben wir uns für die Verwendung einer link:08_concepts.adoc#section-concepts[hexagonalen Architektur (Ports & Adapters)] entschieden, da die Vorteile (Flexibilität, Testbarkeit, Modifizier- / Erweiterbarkeit) am Besten für die Erfüllung unseres definierten link:01_introduction_and_goals.adoc#section-quality-goals[Qualitätsziels QG-3 (Modifiability)] geeignet sind.
+ 
+ **Beinhaltete Blackbox-Bausteine / -Komponenten**
+ 
+ [options="header",cols="3,2,6"]
+ |===
+ |Name|Schicht|Verantwortlichkeit
+ 
+ |Therapie Domänenlogik
+ |Domäne
+ |Implementiert den Bestandteil der Businesslogik gemäss dem definierten link:08_concepts.adoc#section-concepts[Domänenmodell], welcher für die Planung und Verwaltung von Gesamttherapien, Therapie-Sessions und Therapieübungen verantwortlich ist.
+ 
+ Beinhaltet die aus dem Domain-Driven Design (DDD) (**TBD Link zu Evans Buch**) bekannten Elemente wie Aggregate, Entitäten, Value Objects oder Domain Services.
+ 
+ Stellt die Domänenelemente den darüberliegenden Schichten (Applikation, Infrastruktur) zur Verfügung.
+ 
+ |Therapie Applikationslogik
+ |Applikation
+ |Realisiert die Interaktions- und Orchestrierungslogik zwischen der darunterliegenden Domänenschicht __Therapie Domänenlogik__ und der darüberliegenden Infrastrukturschicht, welche die jeweiligen Adapter beinhaltet.
+ 
+ Definiert unterschiedliche Schnittstellen (Ports) und stellt diese der Infrastrukturschicht zur entsprechenden Implementation (Adapter) bereit.
+ 
+ |Therapie Persistenz Adapter
+ |Infrastruktur / Driven Adapter
+ |Implementiert den entsprechenden Port der Applikationsschicht.
+ 
+-Kapselt und abstrahiert die gesamte (technische) Logik, welche mit der Persistenz der Domänenelemente zusammenhängt. Hierzu gehören beispielsweise auch die implementierten Domain Repositories in der Form einzelner (Sub-)Adapter, welche die persistenztechnischen Details der Ablage und Abfrage der Domänenelemente verwalten.
++Kapselt und abstrahiert die Logik, welche mit der Persistenz der Domänenelemente zusammenhängt. Hierzu gehören beispielsweise die implementierten Domain Repositories in der Form einzelner (Sub-)Adapter, welche die persistenztechnischen Details der Ablage und Abfrage der Domänenelemente verwalten.
+ 
+ Implementiert den Kommunikationskanal zwischen __Therapie Planungs Service__ und __Therapie Planungs Datenbank__.
+ 
+ |Therapie API Controller
+ |Infrastruktur / Driving Adapter
+ |Verwaltet die öffentlichen API Endpoints des __Therapie Planungs Service__ und leitet die erhaltenen Request-Daten mit einem entsprechenden Service Call an die __Therapie Applikationslogik__ weiter.
+ 
+ Verifiziert die Daten eingehender Requests (lediglich formale Prüfung) und beinhaltet die Objekt-Mappings für ausgehende Requests.
+ 
+ Kann als "Driving Adapter" kategorisiert werden, da ein über den API Controller eingehender Request den zugehörigen Prozess in der Applikationsschicht initial anstösst.
+ 
+ |Ausführungs API Adapter
+ |Infrastruktur / Driven Adapter
+-|Verwaltet den serviceinternen Zugriff auf die API der Komponente __Ausführungs Service__.
++|Verwaltet den serviceinternen Zugriff auf die API des Containers __Ausführungsservice__.
+ 
+-Beispielsweise beinhaltet dieser Adapter die Definition des (generierten) API Clients des __Ausführungs Service__ sowie die damit verbundenden Objekt-Mappings, URL Builders und (De-)Serialisierungslogik.
++Beispielsweise beinhaltet dieser Adapter die Definition des (generierten) API Clients des __Ausführungsservice__ sowie die damit verbundenden Objekt-Mappings, URL Builders und (De-)Serialisierungslogik.
+ 
+ Kann als "Driven Adapter" kategorisiert werden, da er von der Applikationsschicht via zugehörigem Port aufgerufen wird.
+ 
+ |Übungskatalog API Adapter
+ |Infrastruktur / Driven Adapter
+-|Verwaltet den serviceinternen Zugriff auf die API der Komponente __Übungskatalog Wrapper__.
++|Verwaltet den serviceinternen Zugriff auf die API des Containers __Übungskatalogwrapper__.
+ 
+-Beispielsweise beinhaltet dieser Adapter die Definition des (generierten) API Clients des __Übungskatalog Wrapper__ sowie die damit verbundenden Objekt-Mappings, URL Builders und (De-)Serialisierungslogik.
++Beispielsweise beinhaltet dieser Adapter die Definition des (generierten) API Clients des __Übungskatalogwrapper__ sowie die damit verbundenden Objekt-Mappings, URL Builders und (De-)Serialisierungslogik.
+ 
+ Kann als "Driven Adapter" kategorisiert werden, da er von der Applikationsschicht via zugehörigem Port aufgerufen wird.
+ 
+ |Benutzerverwaltung API Adapter
+ |Infrastruktur / Driven Adapter
+-|Verwaltet den serviceinternen Zugriff auf die API der Komponente __Benutzerverwaltung Wrapper__.
++|Verwaltet den serviceinternen Zugriff auf die des Containers __Benutzerverwaltungswrapper__.
+ 
+-Beispielsweise beinhaltet dieser Adapter die Definition des (generierten) API Clients des __Benutzerverwaltung Wrapper__ sowie die damit verbundenden Objekt-Mappings, URL Builders und (De-)Serialisierungslogik.
++Beispielsweise beinhaltet dieser Adapter die Definition des (generierten) API Clients des __Benutzerverwaltungswrapper__ sowie die damit verbundenden Objekt-Mappings, URL Builders und (De-)Serialisierungslogik.
+ 
+ Kann als "Driven Adapter" kategorisiert werden, da er von der Applikationsschicht via zugehörigem Port aufgerufen wird.
+ 
+ |===
+ 
+ **Technische Implementation der Schnittstellen zwischen Blackboxes**
+ 
+ Die grundlegenden Schnittstellendefinitionen zwischen den einzelnen Schichten werden technisch durch Java Interfaces (Ports) und Klassen (Adapter) abgebildet. Die Verknüpfung zwischen Port und jeweiligem Adapter (oder wahlweise auch mehreren Adaptern pro Port) übernimmt der https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans[Dependency Injection Container des Spring Frameworks], da der __Therapie Planungs Service__ als dedizierte https://spring.io/projects/spring-boot/[Spring Boot]-Applikation deployed und betrieben wird.
+ 
+ ==== Ausführungs Service
+ 
+ plantuml::structurizr_diagrams/generated/structurizr-AusfuehrungsServiceDetails.puml[format=svg]
+ 
+ **Begründung der Struktur**
+ 
+-Die interne Struktur des __Ausführungs Service__ basiert auf der getroffenen link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-20], welche den grundsätzlich zu verwendenden Architekturstil im Rahmen einer deploybaren Backend-Komponente thematisiert. Dabei haben wir uns für die Verwendung einer link:08_concepts.adoc#section-concepts[hexagonalen Architektur (Ports & Adapters)] entschieden, da die damit einhergehenden Vorteile (Flexibilität, Testbarkeit, Modifizier- / Erweiterbarkeit) am besten für die Erfüllung und Einhaltung unseres definierten link:01_introduction_and_goals.adoc#section-quality-goals[Qualitätsziels QG-3 (Modifiability)] geeignet sind.
++Die interne Struktur des __Ausführungsservice__ basiert auf der getroffenen link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-20], welche den zu verwendenden Architekturstil von Backend-Komponenten bestimmt. Dabei haben wir uns für die Verwendung einer link:08_concepts.adoc#section-concepts[hexagonalen Architektur (Ports & Adapters)] entschieden, da die Vorteile (Flexibilität, Testbarkeit, Modifizier- / Erweiterbarkeit) am Besten für die Erfüllung unseres definierten link:01_introduction_and_goals.adoc#section-quality-goals[Qualitätsziels QG-3 (Modifiability)] geeignet sind.
+ 
+ **Beinhaltete Blackbox-Bausteine / -Komponenten**
+ 
+ [options="header",cols="3,2,6"]
+ |===
+ |Name|Schicht|Verantwortlichkeit
+ 
+ |Ausführungs Domänenlogik
+ |Domäne
+ |Implementiert den Bestandteil der Businesslogik gemäss dem definierten link:08_concepts.adoc#section-concepts[Domänenmodell], welcher für die Verarbeitung der Daten verantwortlich ist, die von den Patienten während der Ausführung einer Therapie-Session aufgezeichnet werden.
+ 
+ Beinhaltet die aus dem Domain-Driven Design (DDD) (**TBD Link zu Evans Buch**) bekannten Elemente wie Aggregate, Entitäten, Value Objects oder Domain Services.
+ 
+ Stellt die Domänenelemente den darüberliegenden Schichten (Applikation, Infrastruktur) zur Verfügung.
+ 
+ |Ausführungs Applikationslogik
+ |Applikation
+ |Realisiert die Interaktions- und Orchestrierungslogik zwischen der darunterliegenden Domänenschicht __Ausführungs Domänenlogik__ und der darüberliegenden Infrastrukturschicht, welche die jeweiligen Adapter beinhaltet.
+ 
+ Definiert unterschiedliche Schnittstellen (Ports) und stellt diese der Infrastrukturschicht zur entsprechenden Implementation (Adapter) bereit.
+ 
+ |Ausführungs Persistenz Adapter
+ |Infrastruktur / Driven Adapter
+ |Implementiert den entsprechenden Port der Applikationsschicht.
+ 
+-Kapselt und abstrahiert die gesamte (technische) Logik, welche mit der Persistenz der Domänenelemente zusammenhängt. Hierzu gehören beispielsweise auch die implementierten Domain Repositories in der Form einzelner (Sub-)Adapter, welche die persistenztechnischen Details der Ablage und Abfrage der Domänenelemente verwalten.
++Kapselt und abstrahiert die Logik, welche mit der Persistenz der Domänenelemente zusammenhängt. Hierzu gehören beispielsweise die implementierten Domain Repositories in der Form einzelner (Sub-)Adapter, welche die persistenztechnischen Details der Ablage und Abfrage der Domänenelemente verwalten.
+ 
+-Implementiert den Kommunikationskanal zwischen __Ausführungs Service__ und __Ausführungs Datenbank__.
++Implementiert den Kommunikationskanal zwischen __Ausführungsservice__ und __Ausführungs Datenbank__.
+ 
+ |Ausführungs API Controller
+ |Infrastruktur / Driving Adapter
+-|Verwaltet die öffentlichen API Endpoints des __Ausführungs Service__ und leitet die erhaltenen Request-Daten mit einem entsprechenden Service Call an die __Ausführungs Applikationslogik__ weiter.
++|Verwaltet die öffentlichen API Endpoints des __Ausführungsservice__ und leitet die erhaltenen Request-Daten mit einem entsprechenden Service Call an die __Ausführungs Applikationslogik__ weiter.
+ 
+ Verifiziert die Daten eingehender Requests (lediglich formale Prüfung) und beinhaltet die Objekt-Mappings für ausgehende Requests.
+ 
+ Kann als "Driving Adapter" kategorisiert werden, da ein über den API Controller eingehender Request den zugehörigen Prozess in der Applikationsschicht initial anstösst.
+ 
+ |===
+ 
+ **Technische Implementation der Schnittstellen zwischen Blackboxes**
+ 
+-Die grundlegenden Schnittstellendefinitionen zwischen den einzelnen Schichten werden technisch durch Java Interfaces (Ports) und Klassen (Adapter) abgebildet. Die Verknüpfung zwischen Port und jeweiligem Adapter (oder wahlweise auch mehreren Adaptern pro Port) übernimmt der https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans[Dependency Injection Container des Spring Frameworks], da der __Ausführungs Service__ als dedizierte https://spring.io/projects/spring-boot/[Spring Boot]-Applikation deployed und betrieben wird.
++Die grundlegenden Schnittstellendefinitionen zwischen den einzelnen Schichten werden technisch durch Java Interfaces (Ports) und Klassen (Adapter) abgebildet. Die Verknüpfung zwischen Port und jeweiligem Adapter (oder wahlweise auch mehreren Adaptern pro Port) übernimmt der https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans[Dependency Injection Container des Spring Frameworks], da der __Ausführungsservice__ als dedizierte https://spring.io/projects/spring-boot/[Spring Boot]-Applikation deployed und betrieben wird.
