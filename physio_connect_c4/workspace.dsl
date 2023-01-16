@@ -48,9 +48,9 @@ workspace "Physio integration layer project" {
                         therapieApplikationsLogik = component "Therapie Applikationslogik"
                         therapiePersistenzAdapter = component "Therapie Persistenz Adapter"
                         therapieDomaenenLogik = component "Therapie Domänenlogik" "" "POJO"
-                        therapieUebungsKatalogApiAdapter = component "Übungskatalog API Adapter" "Verwaltet den serviceinternen Zugriff auf die API des Übungskatalog Wrappers"
-                        therapieBenutzerVerwaltungApiAdapter = component "Benutzerverwaltung API Adapter" "Verwaltet den serviceinternen Zugriff auf die API des Benutzerverwaltung Wrappers"
-                        therapieAusfuehrungsApiAdapter = component "Ausführungs API Adapter" "Verwaltet den serviceinternen Zugriff auf die API des Ausführungs Service"
+                        therapieUebungsKatalogApiAdapter = component "Übungskatalog API Adapter" "Verwaltet den serviceinternen Zugriff auf die API des Übungskatalogwrappers"
+                        therapieBenutzerVerwaltungApiAdapter = component "Benutzerverwaltung API Adapter" "Verwaltet den serviceinternen Zugriff auf die API des Benutzerverwaltungswrappers"
+                        therapieAusfuehrungsApiAdapter = component "Ausführungs API Adapter" "Verwaltet den serviceinternen Zugriff auf die API des Ausführungsservice"
                     }
                     planungsDatenbank = container "Therapie Planungs Datenbank" {
                         tags "Database"
@@ -60,7 +60,7 @@ workspace "Physio integration layer project" {
                 }
 
                 group "Ausführung" {
-                    ausfuehrungsService = container "Ausführungs Service" {
+                    ausfuehrungsService = container "Ausführungsservice" {
                         description "Handhabt alle Requests, welche von Patienten während der Ausführung der Therapie-Sessions abgesetzt werden. Validiert Requests, beinhaltet Applikations und Domänenlogik für die Ausführungsdaten."
                         technology "Spring Boot"
 
@@ -77,12 +77,12 @@ workspace "Physio integration layer project" {
                 }
 
                 group "Wrappers" {
-                    uebungsKatalogWrapper = container "Übungskatalog Wrapper" {
+                    uebungsKatalogWrapper = container "Übungskatalogwrapper" {
                         description "Anti-Corruption Layer (ACL) für die Kommunikation mit dem Übungskatalog"
                         technology "Spring Boot"
                     }
 
-                    benutzerVerwaltungWrapper = container "Benutzerverwaltung Wrapper" {
+                    benutzerVerwaltungWrapper = container "Benutzerverwaltungswrapper" {
                         description "Anti-Corruption Layer (ACL) für die Kommunikation mit der Benutzerverwaltung"
                         technology "Spring Boot"
                     }

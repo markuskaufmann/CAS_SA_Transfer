@@ -39,9 +39,9 @@ plantuml::structurizr_diagrams/generated/structurizr-deployment-singulaere-physi
 |Managed Kubernetes Cluster
 |Die Skalierung des __Therapie Planungs Service__ soll auf die Arbeitszeiten der Therapeuten Rücksicht nehmen.
 
-|Ausführungs Service
+|Ausführungsservice
 |Managed Kubernetes Cluster
-|Die Skalierung des __Ausführungs Service__ soll auf die typischen Ausführungszeiten der Therapie-Sessions (Morgen, Feierabend, Abend) Rücksicht nehmen.
+|Die Skalierung des __Ausführungsservice__ soll auf die typischen Ausführungszeiten der Therapie-Sessions (Morgen, Feierabend, Abend) Rücksicht nehmen.
 
 |Server Side Therapie Manager
 |Managed Kubernetes Cluster

@@ -327,10 +327,10 @@
 -* Code 500 wenn ein interner Fehler auftritt (inkl. zusätzilcher Beschreibung des Fehlers)
 +* Code 500 wenn ein interner Fehler auftritt (inkl. zusätzlicher Beschreibung des Fehlers)
  
--|REST API Client für ausgehende Requests an __Ausführungs Service__
--|HTTP Response der Komponente __Ausführungs Service__ zu einem vorgängig abgesendeten Request +
--(siehe Schnittstellen von __Ausführungs Service__ für die Response Codes der betroffenen REST API)
--|HTTP Requests an REST API der Komponente __Ausführungs Service__
+-|REST API Client für ausgehende Requests an __Ausführungsservice__
+-|HTTP Response der Komponente __Ausführungsservice__ zu einem vorgängig abgesendeten Request +
+-(siehe Schnittstellen von __Ausführungsservice__ für die Response Codes der betroffenen REST API)
+-|HTTP Requests an REST API der Komponente __Ausführungsservice__
 +|REST API Client für ausgehende Requests an __Ausführungsservice__
 +|HTTP Response des Containers __Ausführungsservice__ zu einem vorgängig abgesendeten Request +
 +(siehe Schnittstellen von __Ausführungsservice__ für die Response Codes der betroffenen REST API)
@@ -511,7 +511,7 @@
  
  Hierbei handelt es sich lediglich um eine logische Gruppierung der Komponenten, welche zusammen die Funktionalität der Therapie-Session-Ausführung abdecken. Die Gruppierung hat jedoch nur visuelle Relevanz - es besteht kein direkter Zusammenhang mit der Deploybarkeit der darin enthaltenen Komponenten.
  
- **Ausführungs Service**
+ **Ausführungsservice**
  
  __Zweck / Verantwortlichkeiten__
  
@@ -599,7 +599,7 @@
  |Risiko|Beschreibung|Mitigation
  
  |Ausfall / Nichterreichbarkeit
--|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-AUS-10] beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls des __Ausführungs Service__, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
+-|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-AUS-10] beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls des __Ausführungsservice__, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
 +|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-AUS-10] beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls des __Ausführungsservice__, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
  a|
  Massnahmen gemäss __RTD-AUS-10__:
@@ -627,7 +627,7 @@
  
  __Zweck / Verantwortlichkeiten__
  
--Diese Datenbank dient als Persistenz für die Daten, welche im Kontext des __Ausführungs Service__ verarbeitet werden (z.B. Patienten-Messdaten).
+-Diese Datenbank dient als Persistenz für die Daten, welche im Kontext des __Ausführungsservice__ verarbeitet werden (z.B. Patienten-Messdaten).
 +Diese Datenbank dient zur Persistierung der Daten, welche im Kontext des __Ausführungsservice__ verarbeitet werden (z.B. Patienten-Messdaten).
  
  __Schnittstellen__
@@ -992,10 +992,10 @@
  
  |Ausführungs API Adapter
  |Infrastruktur / Driven Adapter
--|Verwaltet den serviceinternen Zugriff auf die API der Komponente __Ausführungs Service__.
+-|Verwaltet den serviceinternen Zugriff auf die API der Komponente __Ausführungsservice__.
 +|Verwaltet den serviceinternen Zugriff auf die API des Containers __Ausführungsservice__.
  
--Beispielsweise beinhaltet dieser Adapter die Definition des (generierten) API Clients des __Ausführungs Service__ sowie die damit verbundenden Objekt-Mappings, URL Builders und (De-)Serialisierungslogik.
+-Beispielsweise beinhaltet dieser Adapter die Definition des (generierten) API Clients des __Ausführungsservice__ sowie die damit verbundenden Objekt-Mappings, URL Builders und (De-)Serialisierungslogik.
 +Beispielsweise beinhaltet dieser Adapter die Definition des (generierten) API Clients des __Ausführungsservice__ sowie die damit verbundenden Objekt-Mappings, URL Builders und (De-)Serialisierungslogik.
  
  Kann als "Driven Adapter" kategorisiert werden, da er von der Applikationsschicht via zugehörigem Port aufgerufen wird.
@@ -1026,13 +1026,13 @@
  
  Die grundlegenden Schnittstellendefinitionen zwischen den einzelnen Schichten werden technisch durch Java Interfaces (Ports) und Klassen (Adapter) abgebildet. Die Verknüpfung zwischen Port und jeweiligem Adapter (oder wahlweise auch mehreren Adaptern pro Port) übernimmt der https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans[Dependency Injection Container des Spring Frameworks], da der __Therapie Planungs Service__ als dedizierte https://spring.io/projects/spring-boot/[Spring Boot]-Applikation deployed und betrieben wird.
  
- ==== Ausführungs Service
+ ==== Ausführungsservice
  
  plantuml::structurizr_diagrams/generated/structurizr-AusfuehrungsServiceDetails.puml[format=svg]
  
  **Begründung der Struktur**
  
--Die interne Struktur des __Ausführungs Service__ basiert auf der getroffenen link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-20], welche den grundsätzlich zu verwendenden Architekturstil im Rahmen einer deploybaren Backend-Komponente thematisiert. Dabei haben wir uns für die Verwendung einer link:08_concepts.adoc#section-concepts[hexagonalen Architektur (Ports & Adapters)] entschieden, da die damit einhergehenden Vorteile (Flexibilität, Testbarkeit, Modifizier- / Erweiterbarkeit) am besten für die Erfüllung und Einhaltung unseres definierten link:01_introduction_and_goals.adoc#section-quality-goals[Qualitätsziels QG-3 (Modifiability)] geeignet sind.
+-Die interne Struktur des __Ausführungsservice__ basiert auf der getroffenen link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-20], welche den grundsätzlich zu verwendenden Architekturstil im Rahmen einer deploybaren Backend-Komponente thematisiert. Dabei haben wir uns für die Verwendung einer link:08_concepts.adoc#section-concepts[hexagonalen Architektur (Ports & Adapters)] entschieden, da die damit einhergehenden Vorteile (Flexibilität, Testbarkeit, Modifizier- / Erweiterbarkeit) am besten für die Erfüllung und Einhaltung unseres definierten link:01_introduction_and_goals.adoc#section-quality-goals[Qualitätsziels QG-3 (Modifiability)] geeignet sind.
 +Die interne Struktur des __Ausführungsservice__ basiert auf der getroffenen link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-20], welche den zu verwendenden Architekturstil von Backend-Komponenten bestimmt. Dabei haben wir uns für die Verwendung einer link:08_concepts.adoc#section-concepts[hexagonalen Architektur (Ports & Adapters)] entschieden, da die Vorteile (Flexibilität, Testbarkeit, Modifizier- / Erweiterbarkeit) am Besten für die Erfüllung unseres definierten link:01_introduction_and_goals.adoc#section-quality-goals[Qualitätsziels QG-3 (Modifiability)] geeignet sind.
  
  **Beinhaltete Blackbox-Bausteine / -Komponenten**
@@ -1062,12 +1062,12 @@
 -Kapselt und abstrahiert die gesamte (technische) Logik, welche mit der Persistenz der Domänenelemente zusammenhängt. Hierzu gehören beispielsweise auch die implementierten Domain Repositories in der Form einzelner (Sub-)Adapter, welche die persistenztechnischen Details der Ablage und Abfrage der Domänenelemente verwalten.
 +Kapselt und abstrahiert die Logik, welche mit der Persistenz der Domänenelemente zusammenhängt. Hierzu gehören beispielsweise die implementierten Domain Repositories in der Form einzelner (Sub-)Adapter, welche die persistenztechnischen Details der Ablage und Abfrage der Domänenelemente verwalten.
  
--Implementiert den Kommunikationskanal zwischen __Ausführungs Service__ und __Ausführungs Datenbank__.
+-Implementiert den Kommunikationskanal zwischen __Ausführungsservice__ und __Ausführungs Datenbank__.
 +Implementiert den Kommunikationskanal zwischen __Ausführungsservice__ und __Ausführungs Datenbank__.
  
  |Ausführungs API Controller
  |Infrastruktur / Driving Adapter
--|Verwaltet die öffentlichen API Endpoints des __Ausführungs Service__ und leitet die erhaltenen Request-Daten mit einem entsprechenden Service Call an die __Ausführungs Applikationslogik__ weiter.
+-|Verwaltet die öffentlichen API Endpoints des __Ausführungsservice__ und leitet die erhaltenen Request-Daten mit einem entsprechenden Service Call an die __Ausführungs Applikationslogik__ weiter.
 +|Verwaltet die öffentlichen API Endpoints des __Ausführungsservice__ und leitet die erhaltenen Request-Daten mit einem entsprechenden Service Call an die __Ausführungs Applikationslogik__ weiter.
  
  Verifiziert die Daten eingehender Requests (lediglich formale Prüfung) und beinhaltet die Objekt-Mappings für ausgehende Requests.
@@ -1078,5 +1078,5 @@
  
  **Technische Implementation der Schnittstellen zwischen Blackboxes**
  
--Die grundlegenden Schnittstellendefinitionen zwischen den einzelnen Schichten werden technisch durch Java Interfaces (Ports) und Klassen (Adapter) abgebildet. Die Verknüpfung zwischen Port und jeweiligem Adapter (oder wahlweise auch mehreren Adaptern pro Port) übernimmt der https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans[Dependency Injection Container des Spring Frameworks], da der __Ausführungs Service__ als dedizierte https://spring.io/projects/spring-boot/[Spring Boot]-Applikation deployed und betrieben wird.
+-Die grundlegenden Schnittstellendefinitionen zwischen den einzelnen Schichten werden technisch durch Java Interfaces (Ports) und Klassen (Adapter) abgebildet. Die Verknüpfung zwischen Port und jeweiligem Adapter (oder wahlweise auch mehreren Adaptern pro Port) übernimmt der https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans[Dependency Injection Container des Spring Frameworks], da der __Ausführungsservice__ als dedizierte https://spring.io/projects/spring-boot/[Spring Boot]-Applikation deployed und betrieben wird.
 +Die grundlegenden Schnittstellendefinitionen zwischen den einzelnen Schichten werden technisch durch Java Interfaces (Ports) und Klassen (Adapter) abgebildet. Die Verknüpfung zwischen Port und jeweiligem Adapter (oder wahlweise auch mehreren Adaptern pro Port) übernimmt der https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans[Dependency Injection Container des Spring Frameworks], da der __Ausführungsservice__ als dedizierte https://spring.io/projects/spring-boot/[Spring Boot]-Applikation deployed und betrieben wird.
