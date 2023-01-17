@@ -223,3 +223,155 @@ plantuml::domain_model/domain_BC_TherapieContext.puml[format=svg]
 
 === Hexagonale Architektur
 
+Gemäss ADR-BAC20 soll die Architektur der deploybaren Einheiten den hexagonalen Architekturstil befolgen. In diesem Kapitel werden die einzuhaltenden Richtlinien definiert. In Ausnahmefällen kann von diesem Architekturstiel abgewichen werden, z.B. falls die Komplexität einer Einheit zu niedrig ist, um den Aufwand der Implementation im hexagonalen Stil zu rechtfertigen.
+
+Zusätzlich zu der in der hexagonalen Architektur vorgegebenen Ports und Adapter Architektur sollen die folgenden Designvorschriften eingehalten werden:
+
+* Die Businesslogik soll aufgetrennt werden in eine Applikationslogik Komponente und eine Domänenlogik Komponente.
+* Für die Kommunikation mit externen Services soll immer die Ports und Adapter Architektur eingehalten werden.
+
+image::not_generated/hexagon_arch1.png["Hexagonale Architektur"]
+
+https://vaadin.com/blog/ddd-part-3-domain-driven-design-and-the-hexagonal-architecture
+
+==== Adapter Entwurfsmuster
+
+Im Zentrum der Umsetzugn einer hexagonalen Architektur ist das Adapter-Muster. Das Adapter-Muster ist ein Entwurfsmuster, das dazu verwendet wird, die Schnittstellen von bestehenden Klassen oder Objekten an die Anforderungen einer neuen Anwendung anzupassen, ohne dass die ursprünglichen Klassen oder Objekte geändert werden müssen. Es ermöglicht es, die Funktionalität von bestehenden Klassen oder Objekten in neue Anwendungen zu integrieren, indem es eine neue Schnittstelle bereitstellt, die mit der neuen Anwendung kompatibel ist. In der hexagonalen Architektur wird das "Target Interface" als Port bezeichnet. Das Pattern besteht aus den folgenden Hauptkomponenten:
+
+* Target / Port
+* Adapter
+* Adaptee
+
+Als einfaches Beispiel kann die Kommunikation mit der Datenbank genommen werden. Eine Klasse benutzt das Interface __PersistUserPort__ um Benutzer zu persistieren. Die Klasse __DbBridge__ existiert bereits, um Benutzer in die MongoDB abzuspeichern. Da die Klasse __DbBridge__ inkompatibel mit dem Interface __PersistUserPort__ ist und nicht angepasst werden soll wird der *Adapter* __DbPersistenceAdapter__ implementiert, welcher das *Target* Interface __PersistUserPort__ implementiert und den *Adaptee* __DbBridge__ verwendet.
+
+plantuml::additional_diagrams/adapter_pattern.puml[format=svg]
+
+*Anleitung zur Implementation des Adapter Patterns in Java:*
+
+https://www.baeldung.com/java-adapter-pattern
+
+*Anleitung zur Implementation des Adapter Patterns in TypeScript:*
+
+https://sbcode.net/typescript/adapter/
+
+==== Treibende / Getriebene Seite
+
+Hexagonale Architekturen werden in eine treibende linke Seite und eine getriebene rechte Seite aufgeteilt. Die folgende Abbildung ist ein generisches Beispiel einer hexagonalen Architektur und bezieht sich nicht auf das __Physio Connect__ System. Die Seiten bestehen jeweils aus Akteuren, Adaptern und Ports. Komponenten innerhalb des Hexagons werden von den Treibenden Adaptern aufgerufen und lösen so Use Cases aus. Treibende Adapter werden von den Komponenten innerhalb des Hexagons aufgerufen und kommunizieren mit getriebenen Akteuren wie Datenbanken.
+
+image::not_generated/hexagon_detail.webp["Hexagonale Architektur"]
+
+https://herbertograca.com/2017/11/16/explicit-architecture-01-ddd-hexagonal-onion-clean-cqrs-how-i-put-it-all-together/
+
+Ports befinden sich immer innerhalb des Hexagons. Treibende Adapter werden innerhalb des Hexagons implementiert, getriebene Adapter ausserhalb. Da es keine Definition von Layern in der hexagonalen Architektur gibt wird im Rahmen von Physio Connect die folgende Aufteilung verwendet:
+
+*Innerhalb des Hexagons*
+
+* Domänenlayer
+* Applikationslayer
+
+*Ausserhalb des Hexagons*
+
+* Infrastrukturlayer
+* Externe Komponenten
+
+Die Ports werden hauptsächlich vom Applikationslayer zur Verfügung gestellt, können aber auch direkt vom Domänenlayer stammen. 
+
+Das Beispiel eines Adapter Patterns, welches früher in diesem Kapitel aufgeführt wurde, kann durch eine treibenden Seite und einer Abgrenzung des Hexagons folgendermassen erweitert werden, um alle Qualifikationen einer hexagonalen Architektur einzuhalten.
+
+plantuml::additional_diagrams/hexagon_adapter_pattern.puml[format=svg]
+
+Die wichtigsten Komponenten vom Physio Connect System wurde bereits im Kapitel [*Link Bausteinsicht*] als treibende und getriebene Adapter markiert.
+
+**Treibende Seite**
+
+Folgend sind die häufigsten Akteure und Adapter der Treibenden Seite aufgeführt. Die Definitionen wurden absichtlich abstrakt gehalten, sodass diese auf mehrere Komponenten zutreffen können.
+
+|===
+
+|Akteuer|Adapter|Zweck
+
+|Therapeut:in via Therapie Manager
+|API Controller
+|Produktive Verwendung von Physio Connect
+
+|Patient:in via Therapie Manager
+|API Controller
+|Produktive Verwendung von Physio Connect
+
+|Mobile Patientenapp
+|API Controller
+|Senden der Ausführungsdaten
+
+|Testcases
+|API Controller
+|Qualitätssicherung
+
+|===
+
+*Mögliche zukünftige Erweiterungen*
+
+|===
+
+|Akteuer|Adapter|Zweck
+
+|Message Queue
+|Unbekannt
+|Effektive, asynchrone und verlustfreie Abarbeitung von Requests
+
+|Unbekannt
+|gRPC Komponente
+|Effizientere alternative zu HTTPS
+
+|Dokumentationssoftware
+|Unbekannt
+|Automatische importierung der Therapiedaten
+
+|===
+
+**Getriebene Seite**
+
+|===
+
+|Adapter|Akteur|Zweck
+
+|Ausführungspersistierungsadapter
+|Ausführungsdatenbank
+|Verwaltung von Ausführungsdaten
+
+|Therapiepersistierungsadapter
+|Therapiedatenbank
+|Verwaltung von Therapiedaten
+
+|Mehrere
+|Mobile Patientenapp
+|Senden von Benachrichtigungen (Therapiedaten, Termine, Rückmeldungen)
+
+|Übungskatalogsadapter
+|Übungskatalog
+|Beziehen und verwalten von Übungen
+
+|Benutzerverwaltungsadapter
+|Benutzerverwaltung
+|Authentifizierung, Autorisierung und verwaltung von Benutzern
+
+|===
+
+*Mögliche zukünftige Erweiterungen*
+
+|===
+
+|Adapter|Akteuer|Zweck
+
+|Unbekannt
+|Message Queue
+|Senden von asynchronen Requests
+
+|Unbekannt
+|Patienten Dossier
+|Synchronisierung der Patientendaten
+
+|Unbekannt
+|Versicherungsschnittstellen
+|Senden von relevanten Patientendaten zu Prämienzwecken
+
+|===

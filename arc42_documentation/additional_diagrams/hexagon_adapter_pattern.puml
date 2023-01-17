@@ -1,0 +1,36 @@
+@startuml
+
+class TherapistController {
+    + handleCreateTherapistRequest(req: Req)
+}
+
+hexagon "Innerhalb des Hexagons" {
+    class TherapistService {
+      -persistence: DrivenPersistUserPort
+      + createTherapist(therapist: Therapist)
+    }
+
+    interface DrivingCreateTherapistPort {
+      + createTherapist(therapist: Therapist)
+    }
+
+    interface DrivenPersistUserPort {
+      +store(user: User)
+    }
+}
+
+class DbPersistenceAdapter {
+  -db: Database
+  +store(data: User)
+}
+
+class DbBridge {
+  +executeQuery(query: Query)
+}
+
+DrivenPersistUserPort <|-- DbPersistenceAdapter
+DbPersistenceAdapter --> DbBridge
+TherapistController --> DrivingCreateTherapistPort
+TherapistService --|> DrivingCreateTherapistPort
+TherapistService --> DrivenPersistUserPort
+@enduml

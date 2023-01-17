@@ -1,0 +1,23 @@
+@startuml
+
+class ApplicationClass {
+}
+
+interface PersistUserPort {
+  +store(user: User)
+}
+
+
+class DbPersistenceAdapter {
+  -db: Database
+  +store(data: User)
+}
+
+class DbBridge {
+  +executeQuery(query: Query)
+}
+
+ApplicationClass --> PersistUserPort
+PersistUserPort <|-- DbPersistenceAdapter
+DbPersistenceAdapter --> DbBridge
+@enduml
