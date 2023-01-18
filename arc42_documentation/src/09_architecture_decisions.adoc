@@ -1161,7 +1161,7 @@ Es soll jedoch bei Design und Implementation darauf geachtet werden, dass die M�
 |**Anliegen (Concern)**|Wie können die Abhängigkeiten zu den APIs externer Umsysteme optimal gekapselt werden?
 |**Kontext**
 a|
-Aus Sicht des definierten link:03_system_scope_and_context.adoc#section-system-scope-and-context[Systemkontexts von Physio Connect] besteht eine grundsätzliche Abhängigkeit zu zwei externen Umsystemen, welche sich jedoch innerhalb der Unternehmungsgrenze befinden:
+Aus Sicht des definierten link:03_system_scope_and_context.adoc#section-system-scope-and-context[Systemkontexts von Physio Connect] besteht eine Abhängigkeit zu zwei externen Umsystemen, welche sich jedoch innerhalb der Unternehmungsgrenze befinden:
 
 * **Übungskatalog** +
 System, welches für die Verwaltung (Erstellung, Modifikation, Wiederverwendung) der generell zur Verfügung stehenden (Standard-)Übungsdefinitionen zuständig ist. +
@@ -1196,13 +1196,13 @@ Da die Anbindung der APIs in jeder betroffenen Komponente implementiert ist, kan
 * Hohe Kopplung: +
 Durch die direkte Anbindung der APIs entsteht eine dementsprechend hohe Kopplung zwischen allen betroffenen Komponenten und den APIs.
 * Risiko der Vermischung verschiedener Domänenmodelle: +
-Durch die direkte Anbindung der API besteht das Risiko, dass sich die Domäne der API in die Domäne der betroffenen Komponente "einschleicht" und bis in die tieferen Schichten der Komponente mitgezogen wird, was das Domänenmodell der Komponente verunreinigt.
+Durch die direkte Anbindung der API besteht das Risiko, dass sich die Domäne der API in die Domäne der betroffenen Komponente einschleicht und bis in die tieferen Schichten mitgezogen wird, was das Domänenmodell verunreinigt.
 
 |**Alternative A2**
 a|
 **Verwendung einer Wrapper Library**
 
-Die REST APIs der Umsysteme __Übungskatalog__ und __Benutzerverwaltung__ werden als Bestandteil einer systemweit verfügbaren Wrapper Library gekapselt und in alle betroffenen Physio Connect-Services und -Komponenten direkt eingebunden. Die Library beinhaltet unter anderem die gesamte Verbindungs-, Mapping-, Exception Handling- und (De-)Serialisierungslogik und abstrahiert die API Endpoints der Umsysteme in public-facing Methoden, welche von den Konsumenten der Library normal aufgerufen werden können.
+Die REST APIs der Umsysteme __Übungskatalog__ und __Benutzerverwaltung__ werden als Bestandteil einer systemweit verfügbaren Wrapper Library gekapselt und in alle betroffenen Physio Connect-Services und -Komponenten direkt eingebunden. Die Library beinhaltet unter anderem die gesamte Verbindungs-, Mapping-, Exception Handling- und (De-)Serialisierungslogik und abstrahiert die API Endpoints der Umsysteme in public-facing Methoden, welche von den Konsumenten der Library aufgerufen werden können.
 
 __Vorteile:__
 
@@ -1223,11 +1223,11 @@ a|
 __Nachteile:__
 
 * Modifizierbar- / Erweiterbarkeit: +
-Da die Wrapper Library in jeder betroffenen Komponente eingebunden ist, kann dies bei Änderungen / Erweiterungen der APIs schnell in einem akuten Mehraufwand resultieren. Einerseits müssen die API-Änderungen nur in der Wrapper Library nachgeführt werden, doch trotzdem müssen alle betroffenen Komponenten manuell angepasst werden, damit sie die neuste Version der Library einbinden.
+Da die Wrapper Library in jeder betroffenen Komponente eingebunden ist, kann dies bei Änderungen / Erweiterungen der APIs schnell in einem Mehraufwand führen. API-Änderungen in Wrapper Libraries führen dazu, dass alle betroffenen Komponenten angepasst werden müssen, um die neuste Version der Library einzubinden.
 * Skalierbarkeit: +
 Die Wrapper Library selbst kann nicht skaliert werden, nur die konsumierenden Komponenten. Je nach Komponente kann eine entsprechende Skalierung dabei relativ zeit- und kostenaufwändig sein.
 * Support für Frontend- und Backend-Komponenten: +
-Gerade bei den Umsystemen __Übungskatalog__ und __Benutzerverwaltung__ ist es wahrscheinlich, dass nebst den Backend-Komponenten auch das Physio Connect-Frontend (SPA / PWA) auf die REST APIs der beiden Umsysteme zugreifen soll. Da für die heutigen Frontend- und Backend-Technologiestacks meist unterschiedliche Package Manager verwendet werden (z.B. Maven / Gradle für Java, npm für React), müssen theoretisch auch zwei Versionen der Wrapper Library 
+Gerade bei den Umsystemen __Übungskatalog__ und __Benutzerverwaltung__ ist es wahrscheinlich, dass nebst den Backend-Komponenten auch das Physio Connect-Frontend (SPA / PWA) auf die REST APIs der beiden Umsysteme zugreifen soll. Da für die Frontend- und Backend-Technologiestacks meist unterschiedliche Package Manager verwendet werden (z.B. Maven / Gradle für Java, npm für React), müssen auch mehrere Versionen der Wrapper Libraries implementiert werden.
 
 |**Alternative A3**
 a|
@@ -1241,7 +1241,7 @@ __Vorteile:__
 * Modifizierbar- / Erweiterbarkeit: +
 Aufgrund der vollständigen Kapselung der APIs im Rahmen von dedizierten Wrapper Services können Änderungen / Erweiterungen der APIs effizient an einer zentralen Stelle angepasst werden. Alle konsumierenden Physio Connect-Komponenten / -Services benötigen keine Anpassungen, solange sich die internen APIs der Wrapper Services nicht ändern.
 * Skalierbarkeit: +
-Die Wrapper Services für die Umsysteme __Übungskatalog__ und __Benutzerverwaltung__ können unabhängig voneinander betrieben und vertikal / horizontal skaliert werden. Hierbei ist darauf zu achten, dass die Service-Instanzen je nach Netzwerk-Traffic dynamisch hoch- und runterskaliert werden können (und eventuell auch zeitgesteuert). Um eine besonders einfache horizontale Skalierung sicherzustellen, müssen die Wrapper Services möglichst __stateless__ implementiert werden (sprich ohne Persistenz).
+Die Wrapper Services für die Umsysteme __Übungskatalog__ und __Benutzerverwaltung__ können unabhängig voneinander betrieben und vertikal / horizontal skaliert werden. Hierbei ist darauf zu achten, dass die Service-Instanzen sowohl nach Kapazitätsauslastung als auch zeitgesteuert hoch- und runterskaliert werden können. Um eine besonders einfache horizontale Skalierung sicherzustellen, müssen die Wrapper Services möglichst __stateless__ implementiert werden.
 * Domänenspezifische Abstraktionsschicht: +
 Durch die Kapselung der APIs in eigene Wrapper Services kann eine klar definierte Abstraktions- und Übersetzungsschicht zwischen die Physio Connect-Domäne und die Domänen der Umysteme __Übungskatalog__ und __Benutzerverwaltung__ gesetzt werden. Jeder Wrapper Service repräsentiert hierbei einen https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer[anti-corruption layer (ACL)], welcher die beiden Domänen (Physio Connect <-> Umsystem) sauber voneinander trennt und zwischen diesen übersetzt bzw. ein internes Mapping durchführt.
 * Lose Kopplung: +
@@ -1259,16 +1259,14 @@ Verbindungsunterbrüche, Ausfälle und / oder fehlerhaftes Antwortverhalten der 
 * Sicherheit: +
 Die Wrapper Services kapseln die Authentifizierungs- und Autorisierungsmechanismen für die Kommunikation mit den Umsystem-APIs, damit die konsumierenden Physio Connect-Komponenten keine Kenntnis davon haben müssen. Dies reduziert die allgemeine Angriffsfläche.
 * Testbarkeit: +
-Die Wrapper Services bestehen in der Form herkömmlicher Microservices, also können sie
-** selbst jeweils isoliert getestet werden
-** von den konsumierenden Komponenten durch einen einfachen Mock ersetzt werden
+Die Wrapper Services sind Microservices und können sowohl selbst isoliert getestet werden als auch von konsumierenden Komponenten durch einen Mock ersetzt werden
 
 __Nachteile:__
 
 * Komplexität: +
 Der Einsatz von dedizierten Services erhöht die Gesamtkomplexität der Systemarchitektur, da jeder Wrapper Service eine zusätzliche (Infrastruktur-)Komponente ist, welche deployed und verwaltet werden muss.
 * Performance: +
-Da jeder Request an die Umysteme __Übungskatalog__ und __Benutzerverwaltung__ durch die entsprechenden Wrapper Services "geschleust" wird, kann sich die Systemperformance aufgrund der generellen Erhöhung der Netzwerk-Latenzzeit verschlechtern.
+Da jeder Request an die Umysteme __Übungskatalog__ und __Benutzerverwaltung__ durch die entsprechenden Wrapper Services geschleust wird, kann sich die Systemperformance aufgrund der generellen Erhöhung der Netzwerk-Latenzzeit verschlechtern.
 * Zusätzliche Kosten: +
 Jeder Wrapper Service ist ein eigener Microservice, welcher als zusätzliche Infrastrukturkomponente von Physio Connect betrieben werden muss. Dies hat einen negativen Einfluss auf die allgemeinen Infrastruktur- und Betriebskosten.
 
