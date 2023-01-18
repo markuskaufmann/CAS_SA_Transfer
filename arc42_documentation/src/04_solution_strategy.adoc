@@ -69,13 +69,6 @@ Die folgende Priorität soll bezüglich der Verwendung von Datenformaten eingeha
 
 ===  Lösungsansätze für die Erreichung der Qualitätsziele
 
-<<< CAN BE DELETED WHEN DOING REVIEW
-
-https://www.embarc.de/arc42-starschnitt-gradle-schnipsel-nr-10-loesungsstrategie/#:~:text=Ihre%20L%C3%B6sungsstrategie%20stark%20verdichtet
-(written by Stefan Zörner, who wrote some of the recommended literature, https://www.orellfuessli.ch/shop/home/artikeldetails/A1062562977)
-
->>> CAN BE DELETED WHEN DOING REVIEW
-
 Die nachfolgende Tabelle visualisiert eine Gegenüberstellung zwischen den zentralen link:01_introduction_and_goals.adoc#section-introduction-and-goals[Qualitätszielen] der Physio Connect-Systemarchitektur und den Lösungsansätzen, welche massgeblich zu der Erreichung dieser Ziele beitragen. Die Lösungsansätze können sich dabei aus einer Kombination von link:09_architecture_decisions.adoc#section-design-decisions[Entscheidungen], link:08_concepts.adoc#section-concepts[Konzepten], link:04_solution_strategy.adoc#section-solution-strategy[Prinzipien], link:10_quality_requirements.adoc#section-quality-requirements[Taktiken] und sonstigen Ideen zusammensetzen.
 
 [options="header",cols="2,2,6"]
@@ -161,7 +154,7 @@ a|
 Entscheidungen:
 
 * ADR-BAC-10 +
-Das Backend wird in unabhängige, einfach modifzier- und erweiterbare Microservices aufgeteilt.
+Das Backend wird in unabhängige, einfach modifizier- und erweiterbare Microservices aufgeteilt.
 * ADR-BAC-20 +
 Die interne Struktur der Backend Services befolgt das Design Pattern der hexagonalen Architektur (Ports & Adapters).
 * ADR-BAC-50 +
