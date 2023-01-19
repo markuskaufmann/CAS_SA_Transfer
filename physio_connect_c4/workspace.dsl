@@ -319,7 +319,8 @@ workspace "Physio integration layer project" {
             autoLayout
         }
 
-        systemlandscape "Kontextdiagram" {
+        systemlandscape "SystemLandscape" {
+            title "Systemlandschaft von Physio Connect"
             include *
             exclude dataScientist versicherungsSchnittstellen patientenDossier
             exclude dokumentationsSoftware therapieFile
