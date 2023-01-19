@@ -872,7 +872,7 @@ plantuml::structurizr_diagrams/generated/structurizr-PlanungsServiceDetails.puml
 
 **Begründung der Struktur**
 
-Die interne Struktur des __Therapie Planungs Service__ basiert auf der getroffenen link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-20], welche den zu verwendenden Architekturstil innerhalb der Backend-Komponenten bestimmt. Dabei haben wir uns für die Verwendung einer link:08_concepts.adoc#section-concepts[hexagonalen Architektur (Ports & Adapters)] entschieden, da die Vorteile (Flexibilität, Testbarkeit, Modifizier- / Erweiterbarkeit) am besten zur Erfüllung unseres definierten link:01_introduction_and_goals.adoc#section-quality-goals[Qualitätsziels QG-3 (Modifiability)] beitragen.
+Die interne Struktur des __Therapie Planungs Service__ basiert auf der getroffenen link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-20], welche den zu verwendenden Architekturstil innerhalb eines Backend Containers bestimmt. Dabei haben wir uns für die Verwendung einer link:08_concepts.adoc#section-concepts[hexagonalen Architektur (Ports & Adapters)] entschieden, da die Vorteile (Flexibilität, Testbarkeit, Modifizier- / Erweiterbarkeit) am besten zur Erfüllung unseres definierten link:01_introduction_and_goals.adoc#section-quality-goals[Qualitätsziels QG-3 (Modifiability)] beitragen.
 
 **Beinhaltete Blackbox-Bausteine / -Komponenten**
 
@@ -948,7 +948,7 @@ plantuml::structurizr_diagrams/generated/structurizr-AusfuehrungsServiceDetails.
 
 **Begründung der Struktur**
 
-Die interne Struktur des __Ausführungsservice__ basiert auf der getroffenen link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-20], welche den zu verwendenden Architekturstil innerhalb der Backend-Komponenten bestimmt. Dabei haben wir uns für die Verwendung einer link:08_concepts.adoc#section-concepts[hexagonalen Architektur (Ports & Adapters)] entschieden, da die Vorteile (Flexibilität, Testbarkeit, Modifizier- / Erweiterbarkeit) am Besten für die Erfüllung unseres definierten link:01_introduction_and_goals.adoc#section-quality-goals[Qualitätsziels QG-3 (Modifiability)] geeignet sind.
+Die interne Struktur des __Ausführungsservice__ basiert auf der getroffenen link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-20], welche den zu verwendenden Architekturstil innerhalb eines Backend Containers bestimmt. Dabei haben wir uns für die Verwendung einer link:08_concepts.adoc#section-concepts[hexagonalen Architektur (Ports & Adapters)] entschieden, da die Vorteile (Flexibilität, Testbarkeit, Modifizier- / Erweiterbarkeit) am Besten für die Erfüllung unseres definierten link:01_introduction_and_goals.adoc#section-quality-goals[Qualitätsziels QG-3 (Modifiability)] geeignet sind.
 
 **Beinhaltete Blackbox-Bausteine / -Komponenten**
 
