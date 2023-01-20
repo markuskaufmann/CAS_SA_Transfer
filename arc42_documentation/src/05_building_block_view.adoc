@@ -35,7 +35,6 @@ plantuml::structurizr_diagrams/generated/structurizr-Containers-key.puml[format=
 
 ==== Übersicht
 
-
 plantuml::structurizr_diagrams/generated/structurizr-Containers.puml[format=svg]
 
 ==== Motivation
@@ -55,7 +54,7 @@ Die Ablage der Therapieverwaltungsdaten und Therapie-Session-Ausführungsdaten g
 * **ADR-BAC-50** +
 Die Abhängigkeiten zwischen Physio Connect und den APIs der Umsysteme __Übungskatalog__ und __Benutzerverwaltung__ werden mittels dedizierten Wrapper Services im Physio Connect-Backend gekapselt, welche als Abstraktionsschicht und anti-corruption layer (ACL) dienen.
 
-Des Weiteren wurde die System-Dekomposition durch die sinnvolle Aufteilung bzw. logische Zusammengehörigkeit der link:../requirements_engineering/functional_requirements.adoc#section-functional-requirements[funktionalen Anforderungen] massgeblich beeinflusst. Prinzipien wie https://blog.cleancoder.com/uncle-bob/2014/05/08/SingleReponsibilityPrinciple.html[Single Responsibility Principle (SRP)] und https://deviq.com/principles/separation-of-concerns[Separation of Concerns (SoC)] boten dabei eine gute Grundlage.
+Des Weiteren wurde die System-Dekomposition sowohl durch das ausgearbeitete link:08_concepts.adoc#section-concepts[Domänenmodell] als auch durch die logische Zusammengehörigkeit / Gruppierung der link:../requirements_engineering/functional_requirements.adoc#section-functional-requirements[funktionalen Anforderungen] massgeblich beeinflusst. Dabei boten die Prinzipien https://blog.cleancoder.com/uncle-bob/2014/05/08/SingleReponsibilityPrinciple.html[Single Responsibility Principle (SRP)] und https://deviq.com/principles/separation-of-concerns[Separation of Concerns (SoC)] eine gute Hilfestellung.
 
 ==== Beinhaltete Bausteine
 
