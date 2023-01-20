@@ -1,140 +1,72 @@
 [[section-concepts]]
 == Querschnittliche Konzepte
 
-[role="arc42help"]
-****
-.Content
-This section describes overall, principal regulations and solution ideas that are relevant in multiple parts (= cross-cutting) of your system.
-Such concepts are often related to multiple building blocks.
-They can include many different topics, such as
+Dieses Kapitel repräsentiert eine Zusammenfassung der übergreifenden Prinzipien und Lösungsansätze, welche im Rahmen der Systemarchitektur von Physio Connect an mehreren Stellen einheitlich verwendet werden und somit einen direkten Einfluss auf die Architektur besitzen.
 
-* models, especially domain models
-* architecture or design patterns
-* rules for using specific technology
-* principal, often technical decisions of an overarching (= cross-cutting) nature
-* implementation rules
-
-
-.Motivation
-Concepts form the basis for _conceptual integrity_ (consistency, homogeneity) of the architecture. 
-Thus, they are an important contribution to achieve inner qualities of your system.
-
-Some of these concepts cannot be assigned to individual building blocks, e.g. security or safety. 
-
-
-.Form
-The form can be varied:
-
-* concept papers with any kind of structure
-* cross-cutting model excerpts or scenarios using notations of the architecture views
-* sample implementations, especially for technical concepts
-* reference to typical usage of standard frameworks (e.g. using Hibernate for object/relational mapping)
-
-.Structure
-A potential (but not mandatory) structure for this section could be:
-
-* Domain concepts
-* User Experience concepts (UX)
-* Safety and security concepts
-* Architecture and design patterns
-* "Under-the-hood"
-* development concepts
-* operational concepts
-
-Note: it might be difficult to assign individual concepts to one specific topic
-on this list.
-
-image::08-Crosscutting-Concepts-Structure-EN.png["Possible topics for crosscutting concepts"]
-
-
-.Further Information
-
-See https://docs.arc42.org/section-8/[Concepts] in the arc42 documentation.
-****
-
-****
-Von Dokchess
-Die verschiedenen Systemteile tauschen schachspezifische Daten aus. Hierzu zählen vor allem die Situation auf dem Brett (Stellung), sowie gegnerische und eigene Züge. Als Aufruf- und Rückgabeparameter finden in allen Modulen dieselben Klassen Verwendung.
-
-An dieser Stelle finden Sie einen groben Überblick über diese Datenstrukturen und deren Abhängigkeiten untereinander. Details sind in der Quelltextdokumentation (javadoc) enthalten. Die Klassen und Aufzählungstypen (enums) befinden sich im Paket de.dokchess.allgemein.
-
-Eine Schachfigur ist gekennzeichnet durch Farbe (schwarz oder weiß) und Art (König, Dame, …). Im Domänenmodell von DokChess weiß eine Figur nicht, wo sie steht. Die Klasse ist unveränderlich (immutable) wie alle anderen im Domänenmodell auch.
-
-Eine Figur hat eine Farbe und eine Art
-
-Bild: Eine Figur hat eine Farbe (z.B. weiß) und eine Art (z.B. Bauer)
-
-Das Schachbrett besteht aus 8 x 8 Feldern die in 8 Reihen (1-8) und 8 Linien (a-h) angeordnet sind. Die Klasse Feld beschreibt ein ebensolches. Da ein Feld maximal von einer Figur besetzt sein kann, reicht für die Angabe eines Zuges, von wo nach wo gezogen wird. Einzige Ausnahme bildet die Umwandlung eines Bauern auf der gegnerischen Grundlinie, da der Spieler selbst entscheidet, in welche Figur er umwandelt (in der Regel, aber nicht zwingend, eine Dame). Rochadezüge werden als Königszüge über zwei Felder in die entsprechende Richtung repräsentiert.
-
-Ein Zug geht von einem Feld zu einem Feld
-
-Bild: Ein Zug geht von einem Feld zu einem Feld
-
-Die Klasse Stellung stellt die aktuelle Situation auf dem Brett dar. Vor allem sind das die Figuren auf dem Brett, das intern als zweidimensionales Array (8 x 8) implementiert ist. Falls ein Feld unbesetzt ist, steht null im Array. Zur Komplettierung der Spielsituation gehört die Information, wer am Zug ist, ob noch Rochaden möglich sind und ob en passant geschlagen werden kann.
-
-****
 === Domänenmodell
 
-Die domänenspezifische Logik von Physio Connect soll mittels eines Domänenmodells implementiert. Das Domänenmodell wurde mit der Hilfe einer Domänenexpertin ausgearbeitet und verfeinert. Bei zusätzlichen Erweiterungen / Anpassungen soll wenn möglich weitere Domänenexperten hinzugezogen werden.
+Physio Connect implementiert die fachspezifische Logik der Geschäftsdomäne mittels eines Domänenmodells. Das Domänenmodell wurde mit der Hilfe einer Domänenexpertin ausgearbeitet und verfeinert. Bei zusätzlichen Erweiterungen / Anpassungen sollen wenn möglich weitere Domänenexperten hinzugezogen werden.
 
-Die Aufteilung der Elemente und die Vorgehensweise bei der Entwicklungen basiert auf __Domain Driven Design (DDD)__. 
+Die Aufteilung der Domänenelemente sowie die Vorgehensweise bei der Entwicklung des Domänenmodells basiert auf __Domain Driven Design (DDD)__ (**TBD LINK AUF BUCH EVANS**). 
 
-Elemente, welche sowohl eine eindeutige ID als auch einene Lebenszyklus besitzen, wurden als Entities definiert. Die zugehörigen Staten der Lebenszyklen sind als Enumeratoren definiert. Elemente mit zusätzlichen Informationen wurden als Value Object definiert.
+Elemente, welche sowohl einen eindeutigen Identifikator (ID) als auch einen Lebenszyklus besitzen, wurden als __Entities__ definiert. Die zugehörigen Staten der Lebenszyklen sind als __Enumeration (Enum)__ definiert. Elemente mit zusätzlichen Informationen, aber ohne Identifikator wurden als __Value Objects__ definiert. +
+Elemente, welche konzeptionell zusammengehörende Entities und Value Objects als logische Einheit kapseln und deren Konsistenz sicherstellen, werden als __Aggregate__ definiert. Pro Aggregat gibt es zudem ein __Aggregate Root__ - eine dem Aggregat zugehörige Entity, welche als externer Zugriffs- und Referenzpunkt des Aggregats gilt und somit die Integrität und Konsistenz des gesamten Aggregats gewährleistet.
 
-Repositories und Services wurden nicht modelliert und sollen während der Implementationsphase kontinuierlich erarbeitet werden.
+Weitere Elemente wie __Repositories__ und __Services__ wurden nicht modelliert und sollen während der Implementationsphase kontinuierlich erarbeitet werden.
 
-Um das Messaging zu entlasten und ein einfacheres Aufteilen der Stories zu ermöglichen wurde entschieden, Aggregate klein zu halten. So wurde das Initiale Hauptaggregat __Gesamttherapie__ in die unten Aufgeführten Aggregate aufgeteilt. Einige daraus entstandenen Aggregate Roots besitzen nur banale Lebenszyklen. Diese banalen Lebenszyklen wurden nicht modelliert. Informationen zum Initialen Domänenmodell sind im git Repository vorhanden.
+Um das Messaging zu entlasten und ein einfacheres Aufteilen der User Stories zu ermöglichen, wurde sich grundsätzlich dafür entschieden, Aggregate klein zu halten. So wurde das initiale Hauptaggregat __GesamtTherapie__ in die nachfolgend aufgeführten Aggregate aufgeteilt. Einige daraus entstandenen Aggregate Roots besitzen nur banale Lebenszyklen, welche dementsprechend nicht modelliert wurden. Informationen zur initialen Version des Domänenmodell sind innerhalb des Git-Repositories **TBD Link** vorzufinden.
 
 plantuml::domain_model/not_generated_gesamttherapie.puml[format=svg]
 
 **Aggregat: GesamtTherapie**
 
-__Definition vom Glossar: Als Gesamttherapie wird eine zusammenhängende Serie von Therapie-Sessions bezeichnet, welche von einem Patienten durchgeführt werden. Eine Gesamttherapie kann von mehreren Wochen bis zu mehreren Jahren dauern. Gesamttherapien werden nach deren vollständiger Absolvierung als abgeschlossen markiert. Patienten können an mehreren Gesamttherapien teilnehmen, im Normalfall jedoch nicht zeitgleich.__
+Definition vom Glossar: +
+__Als Gesamttherapie wird eine zusammenhängende Serie von Therapie-Sessions bezeichnet, welche von einem Patienten durchgeführt werden. Eine Gesamttherapie kann von mehreren Wochen bis zu mehreren Jahren dauern. Gesamttherapien werden nach deren vollständiger Absolvierung als abgeschlossen markiert. Patienten können an mehreren Gesamttherapien teilnehmen, im Normalfall jedoch nicht zeitgleich.__
 
-Im Normallfall wird eine Gesamttherapie von einem __hauptTherapeut__ geleitet. Falls ein Patient die Gesamttherapie selbst verwaltet bleibt das Attribut leer.
+Im Normallfall wird eine Gesamttherapie von einem __hauptTherapeut__ geleitet. Falls ein Patient die Gesamttherapie selbst verwaltet, bleibt dieses Attribut leer.
 
-In vielen Fällen werden Gesamttherapien im Rahmen von Verordnungen erstellt und durchgeführt. Da dies keinen Einfluss auf unsere Applikation hat wurde dies nicht im Modell abgebildet. Eine zukünftige Erweiterung wird aber nicht ausgeschlossen.
+In vielen Fällen werden Gesamttherapien im Rahmen von Verordnungen erstellt und durchgeführt. Da dies keinen Einfluss auf unsere Applikation hat, wurde dieser Fall auch nicht im Modell abgebildet. Eine zukünftige Erweiterung wird jedoch nicht ausgeschlossen.
 
-Um Typen von Gesamttherapien zu unterscheiden und Filterfunktionen zu ermöglichen wurde der TherapieTyp im Modell abgebildet. __Eigenständige__ Therapien werden vom Patienten selbst verwaltet. Die anderen Typen wurden im Glossar definiert.
+Um Typen von Gesamttherapien zu unterscheiden und Filterfunktionen zu ermöglichen, wurde der __TherapieTyp__ im Modell abgebildet. __Eigenständige__ Therapien werden vom Patienten selbst verwaltet. Die anderen Therapietypen wurden im Glossar definiert.
 
 [options="header"]
 |===
-| Diagram | Status | Beschreibung
+| Diagramm | Status | Beschreibung
 .6+a| plantuml::additional_diagrams/gesamttherapie_lifecycle.puml[format=svg]
 | Entwurf 
-| Die Gesamttherapie wurde erstellt aber noch nicht alle Benötigten Daten erfasst.
+| Die Gesamttherapie wurde erstellt, aber noch nicht alle benötigten Therapiedaten erfasst.
 
 | WartenAufPatient 
-| Eine Einladung wurde an den oder die Patient:in gesendet. Sobald dieser oder diese der Therapie beigetreten ist, wechselt der Status auf Bereit.
+| Eine Einladung wurde an den oder die Patient:in gesendet. Sobald dieser oder diese der Therapie beigetreten ist, wechselt der Status auf __Bereit__.
 
 | Bereit
-| Alle benötigten Daten wurden erfasst und der oder die Patient:in wurde zugewiesen.
+| Alle benötigten Therapiedaten wurden erfasst und der oder die Patient:in wurde zugewiesen.
 
 | Gestartet
-| Mindestens eine Therapiesession wurde ausgeführt.
+| Mindestens eine der definierten Therapie-Sessions wurde ausgeführt.
 
 | Unterbrochen
-| Die Gesamttherapie wird für eine längere Zeit unterbrochen. Unvorhergesehene Ereignisse wie die Hospitalisierung des Patienten können Grund für einen Unterbruch sein. Kürze Pausen wie Ferien gelten nicht als Unterbruch.
+| Die Gesamttherapie wird für eine längere Zeit unterbrochen. Unvorhergesehene Ereignisse wie die Hospitalisierung des Patienten können Grund für einen Unterbruch sein. Kürzere Pausen wie beispielsweise Ferienabwesenheiten gelten nicht als Unterbruch.
 
 | Abgebrochen
-| Die Gesamttherapie wurde beendet, bevor die geplanten Therapiesessions durchgeführt wurden. Ein Abbruch wird explizit von einem oder einer Therapeut:in gemacht und kann nicht direkt aus den Daten (z.B. offene Therapiesessions) gelesen werden.
+| Die Gesamttherapie wurde beendet, bevor alle geplanten Therapie-Sessions durchgeführt wurden. Ein Abbruch wird explizit von einem oder einer Therapeut:in gemacht und kann nicht direkt aus den Therapiedaten (z.B. offene Therapie-Sessions) gelesen werden.
 
 |
 | Abgeschlossen
-| Alle geplanten Therapiesessions wurden durchgeführt und der Patient entlassen. Das Abschliessen einer Gesamttherapie wird explizit von einem oder einer Therapeut:in gemacht und kann nicht direkt aus den Daten gelesen werden.
+| Alle geplanten Therapie-Sessions wurden durchgeführt und der Patient entlassen. Das Abschliessen einer Gesamttherapie wird explizit von einem oder einer Therapeut:in gemacht und kann nicht direkt aus den Therapiedaten gelesen werden.
 
 |
 | Archiviert
-| Gesamttherapie muss nicht mehr direkt Verfügbar sein und wird bei den meisten Requests rausgefiltert. Eventuell können die Daten in eine __Cold Storage__ verlagert werden.
+| Die Gesamttherapie muss nicht mehr direkt verfügbar sein und wird bei den meisten Requests exkludiert. Eventuell können die Therapiedaten in einen https://www.storage-insider.de/was-ist-cold-storage-a-816004/[Cold Storage] verlagert werden.
 
 |===
 
 **Aggregat: TherapieSession**
 
-__Definition vom Glossar: Als Therapie-Session bezeichnet man eine einzelne Therapieeinheit / -sitzung, welche von einem Patienten durchgeführt wird. Diese kann von einem Physiotherapeuten geleitet oder selbst ausgeführt werden.__
+Definition vom Glossar: +
+__Als Therapie-Session bezeichnet man eine einzelne Therapieeinheit / -sitzung, welche von einem Patienten durchgeführt wird. Diese kann von einem Physiotherapeuten geleitet oder selbst ausgeführt werden.__
 
-Therapie-Sessionen werden hauptsächlich als Kollektionen von Übungen verwendet. Zusätzlich werden Rückmeldungen der Patienten auf die Therapie Session (nicht die einzelnen Übungen) gespeichert und der Fortschritt im Lebenszyklus abgebildet.
-
+Therapie-Sessions werden hauptsächlich als Kollektionen von Übungen verwendet. Zusätzlich werden Rückmeldungen der Patienten auf die Therapie-Session (nicht die einzelnen Übungen) gespeichert und der Fortschritt im entsprechenden Lebenszyklus __TherapieSessionsStatus__ abgebildet.
 
 plantuml::additional_diagrams/therapiesession_lifecycle.puml[format=svg]
 
@@ -143,28 +75,29 @@ plantuml::additional_diagrams/therapiesession_lifecycle.puml[format=svg]
 | Status | Beschreibung
 
 | Erstellt 
-| Die Therapie Sessionen wurde erstellt, wurde noch nicht freigegeben zur Ausführung.
+| Die Therapie-Session wurde erstellt, aber noch nicht zur Ausführung freigegeben.
 
-| Nachtraeglich Erfasst
-| Die Therapie Sessionen wurde zu Dokumentationszwecken erfasst, nachdem diese Bereits vom Patienten durchgeführt wurde. Nachträglich erfasste Therapie Sessionen enthalten keine Patienten Messdaten.
+| NachtraeglichErfasst
+| Die Therapie-Session wurde zu Dokumentationszwecken erfasst, nachdem diese bereits vom Patienten durchgeführt wurde. Nachträglich erfasste Therapie-Sessions enthalten keine Patienten-Messdaten.
 
 | Startbereit
-| Die Therapie Session kann vom Patienten ausgeführt werden.
+| Die Therapie-Session kann vom Patienten ausgeführt werden.
 
 | Uebersprungen
-| Die Therapie Session wurde nicht vom Patienten durchgeführt. Grund dafür kann verpassen des Zeitfensters oder explizites Überspringen durch den Patienten sein.
+| Die Therapie-Session wurde nicht vom Patienten durchgeführt. Grund dafür kann das Verpassen des Zeitfensters oder ein explizites Überspringen der Session durch den Patienten sein.
 
 | Gestartet
-| Die Therapie Session wird zu diesem Zeitpunkt vom Patienten durchgeführt.
+| Die Therapie-Session wird aktuell vom Patienten durchgeführt.
 
 | Unterbrochen
-| Therapie Session wurde vom Patienten unterbrochen.
+| Die Therapie-Session wurde vom Patienten unterbrochen und kann zu einem späteren Zeitpunkt wieder fortgesetzt werden, was die Session in den Status __Gestartet__ versetzt.
 
 | Abgebrochen
-| Therapie Session wurde vom Patienten abgebrochen.
+| Die Therapie-Session wurde vom Patienten explizit abgebrochen.
 
 | Abgeschlossen
-| Alle Therapie Übungen wurden abgearbeitet und die benötigten Rückmeldungen ausgefüllt. Wichtig: Therapie Sessionen gelten auch als abgeschlossen, wenn Therapie Übungen übersprungen oder abgebrochen wurden.
+| Alle als Teil der Therapie-Session definierten Therapieübungen wurden abgearbeitet und die benötigten Rückmeldungen ausgefüllt. +
+Wichtig: Therapie-Sessions gelten auch als abgeschlossen, wenn beinhaltete Therapieübungen übersprungen oder abgebrochen wurden.
 
 |===
 
@@ -172,45 +105,44 @@ plantuml::domain_model/not_generated_therapieuebung.puml[format=svg]
 
 **Aggregat: TherapieUebung**
 
-__Definition vom Glossar: Therapieübungen werden von Patienten während einzelner Therapie Sessionen ausgeführt. Therapieübungen basieren auf Übungsdefinitionen und enthalten exakte Angaben zur Ausführung inklusive Zeitangaben, Serien und Repetitionen. Zusätzlich sind Therapieübungen einem Patienten und einer Therapie zugeordnet und besitzen einen Lebenszyklus.__
+Definition vom Glossar: +
+__Therapieübungen werden von Patienten während einzelner Therapie-Sessions ausgeführt. Therapieübungen basieren auf Übungsdefinitionen und enthalten exakte Angaben zur Ausführung inklusive Zeitangaben, Serien und Repetitionen. Zusätzlich sind Therapieübungen einem Patienten und einer Therapie zugeordnet und besitzen einen Lebenszyklus.__
 
-Die Abbildung der Messdaten wurde absichtlich Abstrakt gehalten. Wie unterschiedliche Messdaten auswertbar und erweiterbar implementiert werden können muss zu einem späteren Zeitpunkt definiert werden.
+Die Abbildung der Messdaten wurde absichtlich abstrakt gehalten. Wie unterschiedliche Messdaten auswertbar und erweiterbar implementiert werden können, muss zu einem späteren Zeitpunkt definiert werden.
 
-In den Therapieübungs Durchführungen wird angegeben, wie viele Repetitionen, Serien oder für welche Dauer eine Übung durchgeführt werden soll und wieoft diese effektiv durchgeführt wurde.
+In den Therapieübungs-Durchführungen (Value Object __TherapieUebungsDurchfuehrung__) wird angegeben, wie viele Repetitionen, Serien oder für welche Dauer eine Übung durchgeführt werden soll und wie oft diese effektiv durchgeführt wurde.
 
-Der Lebenszyklus einer Therapieübung ist sehr Ähnlich wie der von Therapie Sessionen. Der einzige Unterschied ist, dass darauf verzichtet wurde, den Status "Starbereit" zu verwenden. Dies würde zu unnötig komplexen Abhängigkeiten zwischen Übungen führen, welche weder den Entwicklern und Entwicklerinnen noch den Endusern einen Mehrwert erbringen würden.
+Der Lebenszyklus einer Therapieübung (Enum __UebungsStatus__) ist sehr ähnlich wie derjenige einer Therapie-Session. Der einzige Unterschied hierbei ist, dass darauf verzichtet wurde, den Status __Startbereit__ zu verwenden. Dies würde zu unnötig komplexen Abhängigkeiten zwischen den Übungen führen, welche weder den Entwickler:innen noch den Endbenutzer:innen einen Mehrwert erbringen würden.
 
 plantuml::additional_diagrams/therapieuebung_lifecycle.puml[format=svg]
 
-Alle Therapieübungen besitzen eine Übungsbeschreibung, deren Format vom Module __Übungskatalog__ vorgegeben sind. Übugnsbeschreibungen können für Thearpieübungen modifiziert werden, indem von einer Vorlage eine abgeänderte Version der Übungsbeschreibung erstellt wird. So können die Therapeuten Übungen auf Patientenbedürfnisse zuschneiden.
+Alle Therapieübungen besitzen eine Übungsbeschreibung, deren Format vom Aggregat __UebungsKatalog__ vorgegeben ist. Übungsbeschreibungen können für Therapieübungen modifiziert werden, indem von einer Vorlage eine abgeänderte Version der Übungsbeschreibung erstellt wird. So können die Therapeuten gewisse Übungen auf individuelle Patientenbedürfnisse zuschneiden.
 
 plantuml::domain_model/domain_BC_TherapieContext_UebungsKatalog.puml[format=svg]
 
+**Aggregat: PatientenRueckmeldung**
 
-**PatientenRueckmeldungen**
+Patientenrückmeldungen sind zentral für eine erfolgreiche Physiotherapie. Anhand dieser Rückmeldungen werden Therapien kontinuierlich angepasst und verbessert.
 
-Rückmeldungen sind zentral für eine erfolgreiche Physiotherapie. Anhand von Rückmeldungen werden Therapien kontinuierlich angepasst und verbessert.
+Die gewünschten Rückmeldungen variieren stark zwischen Patienten. Für Schmerzpatienten werden so zum Beispiel Rückmeldungen für den verspürten Schmerz eingeholt, während bei einer Rehabilitation darauf geschaut wird, dass Patienten körperlich optimal ausgelastet sind.
 
-Die gewünschten Rückmeldungen varieren zwischen Patienten stark. Für Schmerzpatienten werden so zum Beispiel Rückmeldungen für den verspürten Schmerz eingeholt, während bei einer Rehabilitation darauf geschaut wird, dass Patienten körperlich optimal ausgelastet sind.
+Patientenrückmeldungen basieren auf einem Rückmeldungstyp (Value Object __PatientenRueckmeldungsTyp__). Gesundheitseinrichtungen sammeln Rückmeldungen sowohl in standardisierten Formen wie international annerkannten Schmerzskalen als auch mittels individuell definierten Fragen. Aus diesem Grund müssen Rückmeldungstypen abstrakt und einfach erweiterbar implementiert werden.
 
-Patienten Rückmeldungen basieren auf einem Rückmeldungs Typ. Gesundheitseinrichtungen sammeln Rückmeldungen sowohl in standardisierten Formen wie international annerkannte Schmerzskalen als auch mittels individuell definierten Fragen. Aus diesem Grund müssen Rückmeldungstypen abstrakt und einfach erweiterbar implementiert werden.
+Um eine bidirektionale Kommunikation zu ermöglichen, können Therapeut:innen wiederum auf Rückmeldungen antworten. Da es nur in Randfällen nötig ist, dass Patienten wiederum auf Therapeutenrückmeldungen antworten, wird dies vom Domänenmodell nicht unterstützt und die Komplexität somit verringert.
 
-Um eine bidirektionale Kommunikation zu ermöglichen können Therapeuten und Therapeutinnen wiederum auf Rückmeldungen antworten. Da es nur in Randfällen nötig ist, dass Patienten wiederum auf Therapeutenkommentare antworten, wird dies vom Domänenmodell nicht unterstützt und die Komplexität so verringert.
-
-
-**UebungsKollektion**
+**Aggregat: UebungsKollektion**
 
 plantuml::domain_model/domain_BC_TherapieContext_UebungsKollektion.puml[format=svg]
 
-Übungskollektionen sind unabhängig von Gesamttherapien und sind eine unkomplizierte Alternative zu geführten Therapien.
+Übungskollektionen sind unabhängig von Gesamttherapien und stellen eine unkomplizierte Alternative zu geführten Therapien dar.
 
-Therepeuten und Therapeutinnen geben Patienten, die Therapien abgeschlossen haben, oft ausgedruckte Unterlagen oder Broschüren mit, in denen einige Übungen enthalten sind. Übungskollektionen sollen diese Funktionalitäten im Domänenmodell abdecken.
+Therapeut:innen geben Patienten, welche ihre Therapien abgeschlossen haben, oft ausgedruckte Unterlagen oder Broschüren mit, in denen einige Übungen zur selbstständigen Ausführung enthalten sind. Übungskollektionen sollen diese Funktionalitäten im Domänenmodell abdecken.
 
-Zusätzlich zu Übungen können Beispielsessionen erstellt werden, welche aus mehreren Übungsbeschreibungen bestehen. Beispielsessionen können nicht ausgeführt werden und sammeln somit auch keine Messdaten. Die einzelnen Übungsbeschreibungen sind generisch und enthalten keine Wiederholungen und Serien. Von der Applikationsschicht aus wird es die Möglichkeit geben, aus Übugnssessionen effektive Therapie Sessionen zu erstellen. Dies wird jedoch nicht im Rahmen des Domänenmodells beschrieben.
+Zusätzlich zu Übungen können Beispiel-Therapie-Sessions (Value Object __BeispielSession__) erstellt werden, welche jeweils aus mehreren Übungsbeschreibungen bestehen. Beispiel-Therapie-Sessions können nicht ausgeführt werden und sammeln somit auch keine Messdaten. Die einzelnen Übungsbeschreibungen sind generisch und enthalten keine Wiederholungen und Serien. Die Applikationsschicht wird die Möglichkeit anbieten, aus Beispiel-Therapie-Sessions effektive Therapie-Sessions zu erstellen. Dies wird jedoch nicht im Rahmen des Domänenmodells beschrieben.
 
 **Gesamtübersicht**
 
-In den folgenden Diagrammen ist die Gesamtübersicht des Domänenmodells ersichtlich.
+Die nachfolgenden Diagramme stellen eine Gesamtübersicht des Domänenmodells dar.
 
 [.landscape]
 <<<
@@ -223,84 +155,80 @@ plantuml::domain_model/domain_BC_TherapieContext.puml[format=svg]
 
 === Hexagonale Architektur
 
-Gemäss ADR-BAC20 soll die Architektur der deploybaren Einheiten den hexagonalen Architekturstil befolgen. In diesem Kapitel werden die einzuhaltenden Richtlinien definiert. In Ausnahmefällen kann von diesem Architekturstiel abgewichen werden, z.B. falls die Komplexität einer Einheit zu niedrig ist, um den Aufwand der Implementation im hexagonalen Stil zu rechtfertigen.
+Gemäss der link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-20] soll die Mikroarchitektur der deploybaren Einheiten den hexagonalen Architekturstil befolgen. In diesem Kapitel werden die dabei einzuhaltenden Richtlinien definiert. In Ausnahmefällen kann von diesem Architekturstil abgewichen werden, z.B. falls die Komplexität einer Einheit zu niedrig ist, um den Aufwand der Implementation im hexagonalen Architekturstil zu rechtfertigen.
 
-Zusätzlich zu der in der hexagonalen Architektur vorgegebenen Ports und Adapter Architektur sollen die folgenden Designvorschriften eingehalten werden:
+Zusätzlich zu der in der hexagonalen Architektur vorgegebenen __Ports & Adapter__-Architektur sollen die folgenden Designvorschriften eingehalten werden:
 
-* Die Businesslogik soll aufgetrennt werden in eine Applikationslogik Komponente und eine Domänenlogik Komponente.
-* Für die Kommunikation mit externen Services soll immer die Ports und Adapter Architektur eingehalten werden.
+* Die Businesslogik soll in zwei Komponenten aufgetrennt werden: Applikationslogik und Domänenlogik.
+* Für die Kommunikation mit externen Services soll immer die Ports & Adapter-Architektur eingehalten werden.
 
 image::not_generated/hexagon_arch1.png["Hexagonale Architektur"]
 
 https://vaadin.com/blog/ddd-part-3-domain-driven-design-and-the-hexagonal-architecture
 
-==== Adapter Entwurfsmuster
+==== Adapter Pattern
 
-Im Zentrum der Umsetzugn einer hexagonalen Architektur ist das Adapter-Muster. Das Adapter-Muster ist ein Entwurfsmuster, das dazu verwendet wird, die Schnittstellen von bestehenden Klassen oder Objekten an die Anforderungen einer neuen Anwendung anzupassen, ohne dass die ursprünglichen Klassen oder Objekte geändert werden müssen. Es ermöglicht es, die Funktionalität von bestehenden Klassen oder Objekten in neue Anwendungen zu integrieren, indem es eine neue Schnittstelle bereitstellt, die mit der neuen Anwendung kompatibel ist. In der hexagonalen Architektur wird das "Target Interface" als Port bezeichnet. Das Pattern besteht aus den folgenden Hauptkomponenten:
+Im Zentrum der Umsetzung einer hexagonalen Architektur ist das Adapter Pattern. Das Adapter Pattern ist ein Entwurfsmuster, welches dazu verwendet wird, die Schnittstellen von bestehenden Klassen oder Objekten an die Anforderungen einer neuen Anwendung anzupassen, ohne dass die ursprünglichen Klassen oder Objekte geändert werden müssen. Es ermöglicht es, die Funktionalität von bestehenden Klassen oder Objekten in neue Anwendungen zu integrieren, indem es eine neue Schnittstelle bereitstellt, die mit der neuen Anwendung kompatibel ist. In der hexagonalen Architektur wird das "Target Interface" als __Port__ bezeichnet. Das Pattern besteht aus den folgenden Hauptkomponenten:
 
 * Target / Port
 * Adapter
 * Adaptee
 
-Als einfaches Beispiel kann die Kommunikation mit der Datenbank genommen werden. Eine Klasse benutzt das Interface __PersistUserPort__ um Benutzer zu persistieren. Die Klasse __DbBridge__ existiert bereits, um Benutzer in die MongoDB abzuspeichern. Da die Klasse __DbBridge__ inkompatibel mit dem Interface __PersistUserPort__ ist und nicht angepasst werden soll wird der *Adapter* __DbPersistenceAdapter__ implementiert, welcher das *Target* Interface __PersistUserPort__ implementiert und den *Adaptee* __DbBridge__ verwendet.
+Als einfaches Beispiel kann die Kommunikation mit einer Datenbank genommen werden. Eine Klasse benutzt das Interface __PersistUserPort__ um Benutzer zu persistieren. Die Klasse __DbBridge__ existiert bereits, um Benutzer in eine Datenbank (z.B. MongoDB) abzuspeichern. Da die Klasse __DbBridge__ inkompatibel mit dem Interface __PersistUserPort__ ist und nicht angepasst werden soll, wird der *Adapter* __DbPersistenceAdapter__ implementiert, welcher das *Target* Interface __PersistUserPort__ implementiert und den *Adaptee* __DbBridge__ verwendet.
 
 plantuml::additional_diagrams/adapter_pattern.puml[format=svg]
 
-*Anleitung zur Implementation des Adapter Patterns in Java:*
+https://www.baeldung.com/java-adapter-pattern[Anleitung zur Implementation des Adapter Patterns in Java]
 
-https://www.baeldung.com/java-adapter-pattern
-
-*Anleitung zur Implementation des Adapter Patterns in TypeScript:*
-
-https://sbcode.net/typescript/adapter/
+https://sbcode.net/typescript/adapter/[Anleitung zur Implementation des Adapter Patterns in TypeScript]
 
 ==== Treibende / Getriebene Seite
 
-Hexagonale Architekturen werden in eine treibende linke Seite und eine getriebene rechte Seite aufgeteilt. Die folgende Abbildung ist ein generisches Beispiel einer hexagonalen Architektur und bezieht sich nicht auf das __Physio Connect__ System. Die Seiten bestehen jeweils aus Akteuren, Adaptern und Ports. Komponenten innerhalb des Hexagons werden von den Treibenden Adaptern aufgerufen und lösen so Use Cases aus. Treibende Adapter werden von den Komponenten innerhalb des Hexagons aufgerufen und kommunizieren mit getriebenen Akteuren wie Datenbanken.
+Hexagonale Architekturen werden in eine treibende (__driving__) linke Seite und eine getriebene (__driven__) rechte Seite aufgeteilt. Die folgende Abbildung ist ein generisches Beispiel einer hexagonalen Architektur und bezieht sich nicht auf das Physio Connect-System. Die Seiten bestehen jeweils aus Akteuren, Adaptern und Ports. Komponenten innerhalb des Hexagons werden von den treibenden Adaptern aufgerufen und lösen so die intern definierten Use Cases aus. Getriebene Adapter werden von den Komponenten innerhalb des Hexagons aufgerufen und kommunizieren mit getriebenen Akteuren wie beispielsweise einer Datenbank.
 
 image::not_generated/hexagon_detail.webp["Hexagonale Architektur"]
 
 https://herbertograca.com/2017/11/16/explicit-architecture-01-ddd-hexagonal-onion-clean-cqrs-how-i-put-it-all-together/
 
-Ports befinden sich immer innerhalb des Hexagons. Treibende Adapter werden innerhalb des Hexagons implementiert, getriebene Adapter ausserhalb. Da es keine Definition von Layern in der hexagonalen Architektur gibt wird im Rahmen von Physio Connect die folgende Aufteilung verwendet:
+Ports befinden sich immer innerhalb des Hexagons. Getriebene Adapter werden normalerweise innerhalb des Hexagons implementiert, treibende Adapter hingegen ausserhalb. Da es keine explizite Schichten- / Layer-Definition in der hexagonalen Architektur gibt, wird im Rahmen von Physio Connect die folgende Aufteilung verwendet:
 
 *Innerhalb des Hexagons*
 
-* Domänenlayer
-* Applikationslayer
+* Domänenlayer / -schicht
+* Applikationslayer / -schicht
+
+Die Ports werden hauptsächlich vom Applikationslayer zur Verfügung gestellt, können aber auch direkt vom Domänenlayer stammen.
 
 *Ausserhalb des Hexagons*
 
-* Infrastrukturlayer
+* Infrastrukturlayer / -schicht
 * Externe Komponenten
 
-Die Ports werden hauptsächlich vom Applikationslayer zur Verfügung gestellt, können aber auch direkt vom Domänenlayer stammen. 
-
-Das Beispiel eines Adapter Patterns, welches früher in diesem Kapitel aufgeführt wurde, kann durch eine treibenden Seite und einer Abgrenzung des Hexagons folgendermassen erweitert werden, um alle Qualifikationen einer hexagonalen Architektur einzuhalten.
+Das vorherige Beispiel bezüglich der Kommunikation mit einer Datenbank kann durch eine treibende Seite und eine Abgrenzung des Hexagons folgendermassen erweitert werden, um alle Qualifikationen einer hexagonalen Architektur einzuhalten:
 
 plantuml::additional_diagrams/hexagon_adapter_pattern.puml[format=svg]
 
-Die wichtigsten Komponenten vom Physio Connect System wurde bereits im Kapitel [*Link Bausteinsicht*] als treibende und getriebene Adapter markiert.
+Die wichtigsten Komponenten des Physio Connect-Systems wurden bereits innerhalb der link:05_building_block_view.adoc#section-building-block-view[Bausteinsicht] als treibende und getriebene Adapter markiert.
 
 **Treibende Seite**
 
-Folgend sind die häufigsten Akteure und Adapter der Treibenden Seite aufgeführt. Die Definitionen wurden absichtlich abstrakt gehalten, sodass diese auf mehrere Komponenten zutreffen können.
+Folgend sind die häufigsten Akteure und Adapter der treibenden Seite aufgeführt. Die Definitionen wurden absichtlich abstrakt gehalten, sodass diese auf mehrere Komponenten zutreffen können.
 
 |===
 
-|Akteuer|Adapter|Zweck
+|Akteur|Adapter|Zweck
 
-|Therapeut:in via Therapie Manager
+|Therapeut:in via Therapie Manager (SPA)
 |API Controller
 |Produktive Verwendung von Physio Connect
 
-|Patient:in via Therapie Manager
+|Patient:in via Therapie Manager (SPA)
 |API Controller
 |Produktive Verwendung von Physio Connect
 
 |Mobile Patientenapp
 |API Controller
-|Senden der Ausführungsdaten
+|Senden von Ausführungsdaten
 
 |Testcases
 |API Controller
@@ -308,23 +236,23 @@ Folgend sind die häufigsten Akteure und Adapter der Treibenden Seite aufgeführ
 
 |===
 
-*Mögliche zukünftige Erweiterungen*
+__Mögliche zukünftige Erweiterungen__
 
 |===
 
-|Akteuer|Adapter|Zweck
+|Akteur|Adapter|Zweck
 
 |Message Queue
 |Unbekannt
-|Effektive, asynchrone und verlustfreie Abarbeitung von Requests
+|Effiziente, asynchrone und verlustfreie Abarbeitung von Requests
 
 |Unbekannt
 |gRPC Komponente
-|Effizientere alternative zu HTTPS
+|Effizientere Alternative zu HTTPS
 
 |Dokumentationssoftware
 |Unbekannt
-|Automatische importierung der Therapiedaten
+|Automatischer Import von Therapiedaten
 
 |===
 
@@ -334,11 +262,11 @@ Folgend sind die häufigsten Akteure und Adapter der Treibenden Seite aufgeführ
 
 |Adapter|Akteur|Zweck
 
-|Ausführungspersistierungsadapter
+|Ausführungspersistenzadapter
 |Ausführungsdatenbank
 |Verwaltung von Ausführungsdaten
 
-|Therapiepersistierungsadapter
+|Therapiepersistenzadapter
 |Therapiedatenbank
 |Verwaltung von Therapiedaten
 
@@ -346,21 +274,21 @@ Folgend sind die häufigsten Akteure und Adapter der Treibenden Seite aufgeführ
 |Mobile Patientenapp
 |Senden von Benachrichtigungen (Therapiedaten, Termine, Rückmeldungen)
 
-|Übungskatalogsadapter
+|Übungskatalogadapter
 |Übungskatalog
-|Beziehen und verwalten von Übungen
+|Abfrage / Verwaltung von Übungen
 
 |Benutzerverwaltungsadapter
 |Benutzerverwaltung
-|Authentifizierung, Autorisierung und verwaltung von Benutzern
+|Authentifizierung, Autorisierung und Abfrage / Verwaltung von Benutzern
 
 |===
 
-*Mögliche zukünftige Erweiterungen*
+__Mögliche zukünftige Erweiterungen__
 
 |===
 
-|Adapter|Akteuer|Zweck
+|Adapter|Akteur|Zweck
 
 |Unbekannt
 |Message Queue
@@ -368,10 +296,10 @@ Folgend sind die häufigsten Akteure und Adapter der Treibenden Seite aufgeführ
 
 |Unbekannt
 |Patienten Dossier
-|Synchronisierung der Patientendaten
+|Synchronisierung von Patientendaten
 
 |Unbekannt
-|Versicherungsschnittstellen
-|Senden von relevanten Patientendaten zu Prämienzwecken
+|Krankenversicherungsschnittstellen
+|Senden von relevanten Patientendaten zu Marketingzwecken
 
 |===
