@@ -1,5 +1,5 @@
 @startuml
-title Kontextdiagram
+title Kontextdiagramm
 
 left to right direction
 
@@ -59,7 +59,7 @@ skinparam rectangle<<Übungskatalog>> {
 skinparam PackageBorderColor<<enterprise>> #444444
 skinparam PackageFontColor<<enterprise>> #444444
 
-rectangle "==Physio Connect\n<size:10>[Software System]</size>\n\nBietet ein WebApp an zur Verwaltung von Therapie Planugnsdaten und eine Schnittstelle zum Empfangen und Persistieren von Ausführungsdaten." <<PhysioConnect>> as PhysioConnect
+rectangle "==Physio Connect\n<size:10>[Software System]</size>\n\nBietet eine Webapplikation zur Verwaltung von Therapie-Planungsdaten und eine Schnittstelle zum Empfangen und Persistieren von Ausführungsdaten an." <<PhysioConnect>> as PhysioConnect
 rectangle "==Mobile Patientenapp\n<size:10>[Software System]</size>" <<MobilePatientenapp>> as MobilePatientenapp
 rectangle "==Übungskatalog\n<size:10>[Software System]</size>" <<Übungskatalog>> as Übungskatalog
 rectangle "==Benutzerverwaltung\n<size:10>[Software System]</size>\n\nAuthentifizierung und Autorisierung" <<Benutzerverwaltung>> as Benutzerverwaltung
@@ -82,15 +82,15 @@ person "==Administrator: in\n<size:10>[Person]</size>" <<Administratorin>> as Ad
 
 
 PhysioConnect .[#707070,thickness=2].> Patientin : "<color:#707070>Sendet Einladung für Therapie"
-Administratorin .[#707070,thickness=2].> PhysioConnect : "<color:#707070>Administriert Personal und Uebungen"
-Therapeutin .[#707070,thickness=2].> PhysioConnect : "<color:#707070>Plant Therapien direkt\nsendet Therapieeinladungen\nerstellt eigene Uebungen"
-Patientin .[#707070,thickness=2].> MobilePatientenapp : "<color:#707070>Registriert sich\nNimmt Therapieeinladungen an\nBenutzt App für selbstständige ausführung von Therapien"
-Patientin .[#707070,thickness=2].> FitnessTracker : "<color:#707070>besitzt"
+Administratorin .[#707070,thickness=2].> PhysioConnect : "<color:#707070>Administriert Personal und Übungen"
+Therapeutin .[#707070,thickness=2].> PhysioConnect : "<color:#707070>Plant Therapien direkt,\nSendet Therapieeinladungen,\nErstellt eigene Übungen"
+Patientin .[#707070,thickness=2].> MobilePatientenapp : "<color:#707070>Registriert sich,\nNimmt Therapieeinladungen an,\nBenutzt App für selbstständige Ausführung von Therapien"
+Patientin .[#707070,thickness=2].> FitnessTracker : "<color:#707070>Besitzt"
 Patientin .[#707070,thickness=2]> PhysioConnect : "<color:#707070>Verwaltet selbsterstellte Therapien"
 MobilePatientenapp .[#707070,thickness=2].> FitnessTracker : "<color:#707070>Verbindet sich mit"
 FitnessTracker .[#707070,thickness=2].> MobilePatientenapp : "<color:#707070>Sendet Messdaten"
-MobilePatientenapp .[#707070,thickness=2].> PhysioConnect : "<color:#707070>Sendet Session Updates mit Messdaten, Registrierung neuer Benutzer\n Authentifiziert Benutzer"
-PhysioConnect .[#707070,thickness=2].> MobilePatientenapp : "<color:#707070>Sendet Therapien, Sessions und Uebungen"
-PhysioConnect .[#707070,thickness=2].> Übungskatalog : "<color:#707070>Importiert Uebungen"
-PhysioConnect .[#707070,thickness=2].> Benutzerverwaltung : "<color:#707070>Autorisiert und Authentifiziert Benutzer\n Erstellt neue Benutzer"
+MobilePatientenapp .[#707070,thickness=2].> PhysioConnect : "<color:#707070>Sendet Session-Updates mit Messdaten,\nRegistrierung neuer Benutzer,\nAuthentifiziert Benutzer"
+PhysioConnect .[#707070,thickness=2].> MobilePatientenapp : "<color:#707070>Sendet Therapien, Sessions und Übungen"
+PhysioConnect .[#707070,thickness=2].> Übungskatalog : "<color:#707070>Importiert Übungen"
+PhysioConnect .[#707070,thickness=2].> Benutzerverwaltung : "<color:#707070>Authentifiziert und autorisiert Benutzer,\nErstellt neue Benutzer"
 @enduml

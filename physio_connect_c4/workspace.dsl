@@ -24,7 +24,7 @@ workspace "Physio integration layer project" {
         
         enterprise "Unternehmungsgrenze" {
             physioConnect = softwareSystem "Physio Connect" {
-                description "Bietet ein WebApp an zur Verwaltung von Therapie Planugnsdaten und eine Schnittstelle zum Empfangen und Persistieren von Ausführungsdaten."
+                description "Bietet eine Webapplikation zur Verwaltung von Therapie-Planungsdaten und eine Schnittstelle zum Empfangen und Persistieren von Ausführungsdaten an."
                 tags "mainSystem"
                 group "Frontend" {
                     serverSideTherapieManager = container "Server Side Therapie Manager" {
@@ -32,7 +32,7 @@ workspace "Physio integration layer project" {
                         technology "React"
                     }
                     singlePageTherapieManager = container "Therapien Manager SPA" {
-                        description "Single Page Applikation zum Verwalten von Therapiedaten. Kann von mobilen Devices als PWA verwendet werden."
+                        description "Single Page Application zum Verwalten von Therapiedaten. Kann von mobilen Devices als Progressive Web App verwendet werden."
                         technology "Single Page Application, Progressive Web App"
                     }
                 }
@@ -41,7 +41,7 @@ workspace "Physio integration layer project" {
 
                 group "Planung" {
                     planungsService = container "Therapie Planungs Service" {
-                        description "Handhabt alle Requests für die Verwaltung von Gesamttherapien. Validiert Requests, beinhaltet Applikations- und Domänenlogik für die Planungsdaten"
+                        description "Handhabt alle Requests für die Verwaltung von Gesamttherapien. Validiert Requests, beinhaltet Applikations- und Domänenlogik für die Planungsdaten."
                         technology "Spring Boot"
 
                         therapieApiController = component "Therapie API Controller" "Verwaltet die bereitgestellten API Endpoints des Services, z.B. Verifiziert die eingehenden Requests."
@@ -100,44 +100,44 @@ workspace "Physio integration layer project" {
         # relationships between people and software systems
         physioConnect -> patient "Sendet Einladung für Therapie"
 
-        admin -> physioConnect "Administriert Personal und Uebungen"
+        admin -> physioConnect "Administriert Personal und Übungen"
         therapeut -> dokumentationsSoftware "Plant / Dokumentiert Therapien" 
 
         therapeut -> therapieFile "Editiert" 
-        therapeut -> singlePageTherapieManager "Plant Therapien direkt\nsendet Therapieeinladungen\nerstellt eigene Uebungen" 
+        therapeut -> singlePageTherapieManager "Plant Therapien direkt,\nSendet Therapieeinladungen,\nErstellt eigene Übungen" 
         dataScientist -> physioConnect "Benutzt Daten"
-        patient -> patientenApp "Registriert sich\nNimmt Therapieeinladungen an\nBenutzt App für selbstständige ausführung von Therapien"
-        patient -> fitnessTracker "besitzt"
+        patient -> patientenApp "Registriert sich,\nNimmt Therapieeinladungen an,\nBenutzt App für selbstständige Ausführung von Therapien"
+        patient -> fitnessTracker "Besitzt"
         patient -> singlePageTherapieManager "Verwaltet selbsterstellte Therapien"
         patientenApp -> fitnessTracker "Verbindet sich mit"
         fitnessTracker ->  patientenApp "Sendet Messdaten"
 
         # relationships to/from software systems
         dokumentationsSoftware -> therapieFile "Exportiert"
-        patientenApp -> physioConnect "Sendet Session Updates mit Messdaten, Registrierung neuer Benutzer\n Authentifiziert Benutzer"
-        physioConnect -> patientenApp "Sendet Therapien, Sessions und Uebungen"
-        physioConnect -> uebungsKatalog "Importiert Uebungen"
-        physioConnect -> therapieFile "importiert Uebungen"
-        physioConnect -> dokumentationssoftware "importiert Uebungen"
-        physioConnect -> benutzerVerwaltung "Autorisiert und Authentifiziert Benutzer\n Erstellt neue Benutzer"
+        patientenApp -> physioConnect "Sendet Session-Updates mit Messdaten,\nRegistrierung neuer Benutzer,\nAuthentifiziert Benutzer"
+        physioConnect -> patientenApp "Sendet Therapien, Sessions und Übungen"
+        physioConnect -> uebungsKatalog "Importiert Übungen"
+        physioConnect -> therapieFile "Importiert Übungen"
+        physioConnect -> dokumentationssoftware "Importiert Übungen"
+        physioConnect -> benutzerVerwaltung "Authentifiziert und autorisiert Benutzer,\nErstellt neue Benutzer"
         physioConnect -> patientenDossier "Automatischer Datenaustausch"
-        physioConnect -> versicherungsSchnittstellen "teilt Trainingsdaten"
+        physioConnect -> versicherungsSchnittstellen "Teilt Trainingsdaten"
         
         # relationships to/from containers
-        patientenApp -> loadBalancer "Sendet Messdaten\nSendet Requests für Informationen zu Therapien und Übungen"
+        patientenApp -> loadBalancer "Sendet Messdaten,\nSendet Requests für Informationen zu Therapien und Übungen"
         singlePageTherapieManager -> loadBalancer  "Sendet Requests zum Verwalten der Gesamttherapien, Übungen und Benutzer"
 
         loadBalancer -> planungsService "Leitet Requests weiter für Gesamttherapien"
         loadBalancer -> benutzerVerwaltungWrapper "Leitet Requests weiter für die Benutzerverwaltung"
         loadBalancer -> uebungsKatalogWrapper "Leitet Requests weiter für den Übungskatalog"
         loadBalancer -> ausfuehrungsService "Leitet ausführungsspezifische Requests weiter"
-        loadBalancer -> serverSideTherapieManager "Leitet requests für die Therapie Manager SPA weiter"
+        loadBalancer -> serverSideTherapieManager "Leitet Requests für die Therapie Manager SPA weiter"
 
         ausfuehrungsService -> ausfuehrungsDatenbank "Persistiert Messdaten und effektive Ausführungsinformationen"
 
         planungsService -> benutzerVerwaltungWrapper "Verwendet Benutzerinformationen von"
         planungsService -> uebungsKatalogWrapper "Verwendet Übungsinformationen von"
-        planungsService -> planungsDatenbank "Persistiert Gesamttherapien, Therapie-Sessions, Therapie Übungen und die dazugehörigen Detailinformationen"
+        planungsService -> planungsDatenbank "Persistiert Gesamttherapien, Therapie-Sessions, Therapieübungen und die dazugehörigen Detailinformationen"
         planungsService -> ausfuehrungsService "Kombiniert Planungsdaten mit Ausführungsdaten von"
 
         benutzerVerwaltungWrapper -> benutzerVerwaltung "Verwaltet Benutzerdaten"
@@ -157,14 +157,14 @@ workspace "Physio integration layer project" {
         # relationships to/from components
         therapieApiController -> therapieApplikationsLogik "Führt Service Calls mit den verifizierten Daten aus"
         therapiePersistenzAdapter -> therapieApplikationsLogik "Implementiert Adapter für die Port Interfaces der Applikationslogik"
-        therapieApplikationsLogik -> therapieDomaenenLogik "Implementier Adapter für die Port Interfaces der Domänenlogik"
+        therapieApplikationsLogik -> therapieDomaenenLogik "Implementiert Adapter für die Port Interfaces der Domänenlogik"
         therapieUebungsKatalogApiAdapter -> therapieApplikationsLogik "Implementiert Adapter für die Port Interfaces der Applikationslogik"
         therapieBenutzerverwaltungApiAdapter -> therapieApplikationsLogik "Implementiert Adapter für die Port Interfaces der Applikationslogik"
         therapieAusfuehrungsApiAdapter -> therapieApplikationsLogik "Implementiert Adapter für die Port Interfaces der Applikationslogik"
 
         ausfuehrungsApiController -> ausfuehrungsApplikationsLogik "Führt Service Calls mit den verifizierten Daten aus"
         ausfuehrungsPersistenzAdapter -> ausfuehrungsApplikationsLogik "Implementiert Adapter für die Port Interfaces der Applikationslogik"
-        ausfuehrungsApplikationsLogik -> ausfuehrungsDomaenenLogik "Implementier Adapter für die Port Interfaces der Domänenlogik"
+        ausfuehrungsApplikationsLogik -> ausfuehrungsDomaenenLogik "Implementiert Adapter für die Port Interfaces der Domänenlogik"
                 
         deploymentEnvironment "Cloud Deployment singuläre Physio Connect Instanz" {
             deploymentNode "SaaS Kunden Infrastruktur" {
