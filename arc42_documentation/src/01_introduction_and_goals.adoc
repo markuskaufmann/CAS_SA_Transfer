@@ -1,4 +1,4 @@
-[[section-introduction-and-goals]]
+[#introduction-and-goals]
 == Einführung und Ziele
 
 === Systemvision
@@ -7,6 +7,7 @@ Das Physio Connect-System ist eine Unterstützungs- und Integrationssoftware fü
 Physio Connect ermöglicht es, mit minimalem Aufwand patientenspezifische Therapien zu planen, den Patient*innen zur Ausführung bereitzustellen und schlussendlich anhand der gesammelten Messdaten und Patientenrückmeldungen auszuwerten. +
 Anders als bestehende Physio-Gesamtlösungen und Dokumentationssysteme zielt Physio Connect nicht darauf ab, bereits eingesetzte Systeme und Prozesse abzulösen, sondern nimmt eine komplementäre Rolle ein. Somit ist der initiale Einarbeitungsaufwand sehr gering und die für Physiotherapeut*innen essentielle Flexibilität hinsichtlich der Therapieplanung wird erhöht und nicht eingeschränkt.
 
+[#main-features]
 === Übersicht der wesentlichen Features
 
 * Physiotherapeut*innen können
@@ -29,13 +30,13 @@ Anders als bestehende Physio-Gesamtlösungen und Dokumentationssysteme zielt Phy
 ** den Fortschritt ihrer unterstellten Physiotherapeut*innen überwachen (Monitoring) und auswerten (Reporting)
 ** den Therapiefortschritt von Patient*innen kontrollieren
 
-Eine genaue Auflistung der konkreten funktionalen Anforderungen ist im entsprechenden link:../requirements_engineering/functional_requirements.adoc#section-functional-requirements[Anforderungsdokument] ersichtlich.
+Eine genaue Auflistung der konkreten funktionalen Anforderungen ist im entsprechenden <<#functional-requirements,Anforderungsdokument>> ersichtlich.
 
-[[section-quality-goals]]
+[#quality-goals]
 === Qualitätsziele
 
 Im Rahmen dieses Abschnitts sind die zentralen Qualitätsziele gemäss https://iso25000.com/index.php/en/iso-25000-standards/iso-25010[ISO 25010] definiert, welche hinsichtlich der Ausarbeitung von fundamentalen Architekturentscheidungen von erhöhter Priorität sind.
-Die Qualitätsziele werden von den nicht-funktionalen Requirements der relevanten <<Stakeholder>> abgeleitet.
+Die Qualitätsziele werden von den nicht-funktionalen Requirements der relevanten <<#stakeholder,Stakeholder>> abgeleitet.
 
 image::01_02_iso-25010.png["Quality attributes (ISO 25010)"]
 
@@ -59,8 +60,9 @@ Kompatibilität mit Umsystemen:
 |QG-3|Modifiability|Flexible Modifizier- und Erweiterbarkeit für existierende und zukünftige Schnittstellen|Aus Sicht des Kunden/der Kundin und Physiotherapeut*innen soll die Möglichkeit offengehalten werden, eine jeweilige Schnittstelle für den Datenimport aus einem kundenseitig verwendeten Dokumentationssystem bereitzustellen. Des Weiteren soll mit möglichst geringem Implementationsaufwand auf etwaige Änderungen der Schnittstellen seitens der Softwaresysteme "Patienten-App", "Übungskatalog" oder "Benutzerverwaltung" reagiert werden können. Ebenfalls soll Physio Connect einfach mit neuen Schnittstellen erweitert werden können (beispielsweise für die Bereitstellung anonymisierter Gesundheitsdaten an die medizinische Forschung).
 |===
 
-Die Qualitätsszenarien im Kapitel link:10_quality_requirements.adoc#section-quality-requirements[Qualitätsanforderungen] konkretisieren die oben genannten Qualitätsziele und dienen aufgrund von definierten Metriken auch dazu, ihren Erfüllungsgrad zu bewerten.
+Die Qualitätsszenarien im Kapitel <<#quality-requirements,Qualitätsanforderungen>> konkretisieren die oben genannten Qualitätsziele und dienen aufgrund von definierten Metriken auch dazu, ihren Erfüllungsgrad zu bewerten.
 
+[#stakeholder]
 === Stakeholder
 
 Die nachfolgende Tabelle repräsentiert eine Zusammenfassung der bestehenden Stakeholder sowie der jeweiligen Systemaspekte und -komponenten, welche von ihnen im Kontext von PhysioConnect als relevant erachtet werden.
@@ -205,16 +207,17 @@ __Informiert halten__
 * Vorgesetzte des Physiotherapeut*innen
 * Technische Integratoren von PhysioConnect
 
+[#forces]
 === Zusätzliche Architekturtreiber (Forces)
 
-Nebst den Architekturtreibern, welche aus den bestehenden link:../requirements_engineering/functional_requirements.adoc#section-functional-requirements[Requirements] und link:02_architecture_constraints.adoc#section-architecture-constraints[Constraints] hervorgehen, sind die nachfolgenden Faktoren für den Entwurf der Systemarchitektur ebenfalls zu berückzsichtigen:
+Nebst den Architekturtreibern, welche aus den bestehenden <<#functional-requirements,funktionalen Anforderungen>> und <<#constraints,Constraints>> hervorgehen, sind die nachfolgenden Faktoren für den Entwurf der Systemarchitektur ebenfalls zu berückzsichtigen:
 
 * **Cloud Native** +
 Die Verwendung aktueller Cloud-Technologien von Microsoft, Amazon oder Google (oder wahlweise alternativer Hyperscaler) ist heutzutage ein zentraler Diskussionspunkt beim Entwurf und der Entwicklung von Softwaresystemen. Informationen und Funktionalitäten müssen von überall stets zugreifbar sein und die Anzahl der verwendeten Ressourcen kann je nach Auslastung dynamisch skaliert werden, um eine konstante Performance und - darausfolgend - eine optimale User Experience zu erzielen. +
 Unter dem Begriff __Cloud Native__ versteht man ein System, welches bereits in dessen Entwurfsphase auf den Betrieb in der Cloud ausgerichtet wird. Im Gegensatz dazu stehen Systeme, welche initial on-premises betrieben und erst später in die Cloud migriert werden.
 Die Systemarchitektur von Physio Connect soll ebenfalls dem __Cloud Native__-Paradigma folgen, damit auf zukünftige Anwendungs- und Integrationsszenarien dynamischer und effizienter reagiert werden kann.
 
-* **Mehrheitliche Verwendung des Smartphones** +
+* [[force-smartphone-usage]]**Mehrheitliche Verwendung des Smartphones** +
 Das Smartphone ist zu einem digitalen Alltagsgegenstand mutiert, welches meist häufiger als ein traditioneller Desktop-PC oder Laptop verwendet wird. Diesbezüglich muss bei der Architektur einer aktuellen Webapplikation speziell darauf geachtet werden, welche Priorität den folgenden Aspekten zugeordnet werden soll:
 ** __Responsive Web App__ +
 Design und Verhalten der Applikation auf unterschiedlichen Geräten / Umgebungen

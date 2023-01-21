@@ -1,8 +1,9 @@
-[[section-solution-strategy]]
+[#solution-strategy]
 == Lösungsstrategie
 
 Dieses Kapitel repräsentiert eine Zusammenfassung der fundamentalen Lösungsansätze, Entwurfsentscheidungen und Prinzipien, welche als grundlegender Treiber für den Aufbau und die Evolution der Systemarchitektur von Physio Connect gelten.
 
+[#architecture-principles]
 === Architekturprinzipien
 
 Die folgenden Prinzipien müssen bestmöglich während dem Design und der Umsetzung von Physio Connect eingehalten werden.
@@ -69,7 +70,7 @@ Die folgende Priorität soll bezüglich der Verwendung von Datenformaten eingeha
 
 ===  Lösungsansätze für die Erreichung der Qualitätsziele
 
-Die nachfolgende Tabelle visualisiert eine Gegenüberstellung zwischen den zentralen link:01_introduction_and_goals.adoc#section-introduction-and-goals[Qualitätszielen] der Physio Connect-Systemarchitektur und den Lösungsansätzen, welche massgeblich zu der Erreichung dieser Ziele beitragen. Die Lösungsansätze können sich dabei aus einer Kombination von link:09_architecture_decisions.adoc#section-design-decisions[Entscheidungen], link:08_concepts.adoc#section-concepts[Konzepten], link:04_solution_strategy.adoc#section-solution-strategy[Prinzipien], link:10_quality_requirements.adoc#section-quality-requirements[Taktiken] und sonstigen Ideen zusammensetzen.
+Die nachfolgende Tabelle visualisiert eine Gegenüberstellung zwischen den zentralen <<#quality-goals,Qualitätszielen>> der Physio Connect-Systemarchitektur und den Lösungsansätzen, welche massgeblich zu der Erreichung dieser Ziele beitragen. Die Lösungsansätze können sich dabei aus einer Kombination von <<#architecture-decisions,Entscheidungen>>, <<#concepts,Konzepten>>, <<#architecture-principles,Prinzipien>>, <<#architecture-tactics,Taktiken>> und sonstigen Ideen zusammensetzen.
 
 [options="header",cols="2,2,6"]
 |===
@@ -145,7 +146,7 @@ a|
 Sonstige Punkte:
 
 * Die systemweite Autorisierung (Zuweisung und Prüfung der Benutzerrollen und -Berechtigungen) verläuft über das Umsystem __Benutzerverwaltung__.
-* Durch die Verwendung eines Load Balancer / Reverse Proxy (siehe link:05_building_block_view.adoc#section-building-block-view[Bausteinsicht]) wird ein zentraler, öffentlicher Einstiegspunkt bereitgestellt, durch welchen alle eingehenden Requests "geschleust" werden. Dies reduziert die allgemeine Angriffsfläche, da die restlichen Systemkomponenten innerhalb eines virtuellen Netzwerks betrieben werden können, welches nicht öffentlich zugänglich ist.
+* Durch die Verwendung eines Load Balancer / Reverse Proxy (siehe <<#building-block-view,Bausteinsicht>>) wird ein zentraler, öffentlicher Einstiegspunkt bereitgestellt, durch welchen alle eingehenden Requests "geschleust" werden. Dies reduziert die allgemeine Angriffsfläche, da die restlichen Systemkomponenten innerhalb eines virtuellen Netzwerks betrieben werden können, welches nicht öffentlich zugänglich ist.
 
 |Modifiability +
 (QG-3)
@@ -181,7 +182,7 @@ Des Weiteren stellen die folgenden Qualitätsattribute ebenfalls wichtige Entsch
 
 |Time behaviour
 |Möglichst effiziente Verarbeitung der eingehenden Messdaten +
-(siehe link:10_quality_requirements#section-quality-requirements[Qualitätsszenario SZ-TIB-1])
+(siehe <<#scenarios-time-behaviour,Qualitätsszenario __SZ-TIB-1__>>)
 a|
 Entscheidungen:
 
@@ -205,11 +206,11 @@ Verwendung von etablierten, standardisierten Datenformaten, welche laufend hinsi
 
 Sonstige Punkte:
 
-* Durch die Verwendung eines Load Balancer / Reverse Proxy (siehe link:05_building_block_view.adoc#section-building-block-view[Bausteinsicht]) können statische Inhalte temporär gecached werden, was die Response-Zeiten reduziert.
+* Durch die Verwendung eines Load Balancer / Reverse Proxy (siehe <<#building-block-view,Bausteinsicht>>) können statische Inhalte temporär gecached werden, was die Response-Zeiten reduziert.
 
 |Capacity
 |Parallele Verwendung von Physio Connect durch mehrere Benutzer*innen +
-(siehe link:10_quality_requirements#section-quality-requirements[Qualitätsszenario SZ-CAP-1])
+(siehe <<#scenarios-capacity,Qualitätsszenario __SZ-CAP-1__>>)
 a|
 Entscheidungen:
 
@@ -231,7 +232,7 @@ Komponenten, deren Ressourcenverbrauch stark mit der Anzahl aktiver Benutzer*inn
 
 |Fault tolerance
 |Resilientes Verhalten bei einem Ausfall oder fehlerhaften Antworten der Umsysteme +
-(siehe link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien SZ-FLT-1, SZ-FLT-2])
+(siehe <<#scenarios-fault-tolerance,Qualitätsszenarien __SZ-FLT-1__, __SZ-FLT-2__>>)
 a|
 Entscheidungen:
 
@@ -245,7 +246,7 @@ Bei Requests, welche intern an weitere Komponenten oder (externe) Umsysteme weit
 
 |Installability
 |Flexible Konfigurierbarkeit ermöglicht Installation und Betrieb in unterschiedlichen Umgebungen +
-(siehe link:10_quality_requirements#section-quality-requirements[Qualitätsszenario SZ-INT-1])
+(siehe <<#scenarios-installability,Qualitätsszenario __SZ-INT-1__>>)
 a|
 Entscheidungen:
 

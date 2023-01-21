@@ -1,13 +1,13 @@
-[[section-quality-requirements]]
+[#quality-requirements]
 == Qualitätsanforderungen
 
 In diesem Kapitel werden die nicht-funktionalen bzw. Qualitätsanforderungen an PhysioConnect anhand der Definition expliziter Szenarien konkretisiert. Die wichtigsten Szenarien werden in Form eines Quality Trees gemäss ATAM (Architecture Tradeoff Analysis Method) ihrer Relevanz entsprechend priorisiert / gewichtet.
 
-Die primären Qualitätsziele von PhysioConnect sind im Kapitel link:01_introduction_and_goals.adoc#section-quality-goals[Qualitätsziele] vorzufinden.
+Die primären Qualitätsziele von PhysioConnect sind im Kapitel <<#quality-goals,Qualitätsziele>> vorzufinden.
 
 === Qualitätsszenarien
 
-Gemäss den primären link:01_introduction_and_goals.adoc#section-quality-goals[Qualitätszielen] werden die aus Sicht der Stakeholder erwarteten Qualitätsattribute der Systemarchitektur in Form von messbaren Szenarien nachfolgend erläutert. +
+Gemäss den primären <<#quality-goals,Qualitätszielen>> werden die aus Sicht der <<#stakeholder,Stakeholder>> erwarteten Qualitätsattribute der Systemarchitektur in Form von messbaren Szenarien nachfolgend erläutert. +
 Die mit __(Erweiterung)__ gekennzeichneten Szenarien sind ein potenzieller Bestandteil zukünftiger Versionen / Iterationen der Systemarchitektur.
 
 ==== Interoperability (Compatibility)
@@ -350,6 +350,7 @@ Es kann sichergestellt werden, dass 100% der bereitgestellten Gesundheitsdaten a
 Es kann sichergestellt werden, dass 100% der bereitgestellten Gesundheitsdaten mit den vorgeschlagenen Labels versehen sind. 
 |===
 
+[#scenarios-time-behaviour]
 ==== Time behaviour (Performance Efficiency)
 
 [cols="2,6"]
@@ -363,11 +364,12 @@ Es kann sichergestellt werden, dass 100% der bereitgestellten Gesundheitsdaten m
 |**Metrik für Erfüllungsgrad**|99% der API-Requests zum Ablegen eingehender Messdaten werden intern (sprich abzüglich der Netzwerk-Latenzzeit) innerhalb von 100 Millisekunden verarbeitet (Eingang des Requests, formale Prüfung, Persistierung, Response).
 |===
 
+[#scenarios-capacity]
 ==== Capacity (Performance Efficiency)
 
 [cols="2,6"]
 |===
-|**ID**|SZ-CAP-1
+|**ID**|[[sz-cap-1]]SZ-CAP-1
 |**Quelle des Stimulus**|Benutzer*in von PhysioConnect
 |**Stimulus**|Parallele Verwendung von PhysioConnect durch mehrere Benutzer*innen (z.B. Physiotherapeut*innen + Vorgesetzte + Patient*innen)
 |**Umgebung**|Spitzenbelastung
@@ -377,6 +379,7 @@ Es kann sichergestellt werden, dass 100% der bereitgestellten Gesundheitsdaten m
 95% aller Requests, deren Response zu einem sichtbaren Ergebnis auf Benutzerseite führen, dauern weniger als 1 Sekunde.
 |===
 
+[#scenarios-fault-tolerance]
 ==== Fault tolerance (Reliability)
 
 [cols="2,6"]
@@ -405,6 +408,7 @@ Request-unabhängige Fehlermeldungen der Benutzerverwaltung werden geloggt und f
 100% der auftretenden Verbindungsprobleme zu der Benutzerverwaltung werden geloggt.
 |===
 
+[#scenarios-installability]
 ==== Installability (Portability)
 
 [cols="2,6"]
@@ -440,7 +444,7 @@ Einfache und effiziente Erweiterung von PhysioConnect bezüglich der Unterstütz
 
 2. Die restlichen Szenarien (und damit verbundenen Quality Attributes) befinden sich mehrheitlich auf derselben Relevanzstufe, wodurch sie bei Architekturentscheidungen zu gleichen Teilen berücksichtigt werden müssen.
 
-
+[#architecture-tactics]
 === Architekturtaktiken
 
 Mit den folgenden Taktiken soll die Einhaltung der Qualitätsszenarien ermöglicht werden. Die Gewichtung der Szenarien wurde bei der Auswahl der Taktiken beachtet.

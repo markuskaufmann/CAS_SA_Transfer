@@ -1,4 +1,4 @@
-[[section-design-decisions]]
+[#architecture-decisions]
 == Architekturentscheidungen
 
 In diesem Kapitel werden alle relevanten Architekturentscheidungen in Form von __Architectural Decision Records (ADRs)__ gemäss https://www.iso.org/standard/50508.html[ISO 42010] definiert. +
@@ -857,7 +857,7 @@ Dank seiner losen Kopplung lässt sich jeder Microservice genau so resilient / f
 
 [cols="2,6"]
 |===
-|**ID**|ADR-BAC-20
+|**ID**|[[adr-bac-20]]ADR-BAC-20
 |**Anliegen (Concern)**|Welcher Architekturstil soll grundlegend innerhalb einer deploybaren Einheit eingesetzt werden?
 |**Kontext**
 a|Diese Entscheidung befasst sich damit, welcher Architekturstil grundlegend für die interne Struktur (Mikroarchitektur) der einzelnen Backend-Komponenten eingesetzt werden soll. +
@@ -977,7 +977,7 @@ a|
 
 __Vorteile:__
 
-* Besser geeignet wenn Daten mit unterschiedlichen Speicher- und Verarbeitungsanforderungen abgelegt werden sollen. Bei Daten, welche unterschiedliche Speicher- oder Verarbeitungsfunktionen erfordern, kann es sinnvoll sein, diese in getrennten Datenbanken zu speichern. So können beispielsweise strukturierte Daten, auf die häufig zugegriffen wird, in einer relationalen Datenbank und grosse Mengen unstrukturierter Daten in einer NoSQL-Datenbank persistiert werden.
+* Besser geeignet wenn Daten mit unterschiedlichen Speicher- und Verarbeitungsanforderungen abgelegt werden sollen. Bei Daten, welche unterschiedliche Speicher- oder Verarbeitungsfunktionen erfordern, kann es sinnvoll sein, diese in getrennten Datenbanken zu speichern. So können beispielsweise strukturierte Daten, auf die häufig zugegriffen wird, in einer relationalen Datenbank und grosse Mengen halb- oder unstrukturierter Daten in einer NoSQL-Datenbank persistiert werden.
 * Besser geeignet wenn Daten mit unterschiedlichen Sicherheitsanforderungen abgelegt werden sollen. Bei Daten, welche unterschiedliche Sicherheitsstufen erfordern, kann es sinnvoll sein, diese in getrennten Datenbanken zu speichern. So können beispielsweise sensible Patienten-Messdaten in einer separaten, eventuell verschlüsselten Datenbank persistiert werden, während Therapiedaten in einer "normalen" Datenbank abgelegt werden.
 * Besser geeignet wenn man grosse Datenmengen verzeichnet. Eine diesbezügliche Verteilung der Datenmengen auf mehrere Datenbanken kann die Leistung und Skalierbarkeit des Gesamtsystems verbessern.
 * Besser geeignet wenn man mehrere Anwendungen unterstützen soll, welche jeweils auf unterschiedliche Teilmengen von Daten zugreifen müssen.
@@ -1054,44 +1054,6 @@ Relationale Datenbanken können im Vergleich zu einigen NoSQL-Datenbanken teurer
 
 |**Alternative A2**
 a|
-**Objektorientierte Datenbank**
-
-__Verwendungszwecke:__
-
-* Verwaltung von komplexen Datenstrukturen, welche nicht in ein herkömmliches relationales Schema passen
-* Integration in Anwendungen, welche objektorientierte Programmiersprachen wie Java und C++ verwenden
-* Verwaltung grosser Datenmengen
-* Eignet sich für Anwendungen, welche ein hohes Mass an Flexibilität und Anpassungsfähigkeit erfordern, wie beispielsweise Datenanalyse- oder maschinelle Lernsysteme
-
-__Vorteile:__
-
-* Datenmodellierung: +
-Objektorientierte Datenbanken ermöglichen eine natürlichere und intuitivere Datenmodellierung mittels Verwendung von Objekten und Klassen.
-* Datenintegrität: +
-Objektorientierte Datenbanken erzwingen Datenintegritätsbeschränkungen und stellen so sicher, dass die Daten konsistent und korrekt gespeichert werden.
-* Skalierbarkeit: +
-Objektorientierte Datenbanken sind in der Lage, grosse Datenmengen zu verarbeiten und lassen sich leicht skalieren, wenn der Umfang der Datenbank wächst.
-* Integration: +
-Objektorientierte Datenbanken lassen sich leicht in objektorientierte Programmiersprachen wie Java oder C++ integrieren.
-
-|**Alternative A2** +
-(Platzbedingte Fortsetzung)
-a|
-**Objektorientierte Datenbank**
-
-__Nachteile:__
-
-* Komplexität: +
-Objektorientierte Datenbanken können sehr komplex in der Einrichtung und Wartung sein, insbesondere bei grossen und komplexen Systemen.
-* Performance: +
-Bei objektorientierten Datenbanken kann es zu Performanceproblemen kommen, wenn grosse Datenmengen oder eine hohe Anzahl gleichzeitiger Benutzer*innen verarbeitet werden.
-* Kompatibilität: +
-Objektorientierte Datenbanken sind möglicherweise nicht mit allen Anwendungen und Programmiersprachen kompatibel.
-* Kosten: +
-Die Einrichtung und Wartung objektorientierter Datenbanken kann im Vergleich zu einigen anderen Datenbankarten teurer sein.
-
-|**Alternative A3**
-a|
 **Dokumentdatenbank**
 
 __Verwendungszwecke:__
@@ -1112,7 +1074,7 @@ Dokumentdatenbanken sind im Allgemeinen performanter und effizienter als relatio
 * Benutzerfreundlichkeit: +
 Dokumentdatenbanken sind im Vergleich zu relationalen Datenbanken oft einfacher einzurichten und zu pflegen - insbesondere für Entwickler*innen, die mit dem JSON-Datenformat vertraut sind.
 
-|**Alternative A3** +
+|**Alternative A2** +
 (Platzbedingte Fortsetzung)
 a|
 **Dokumentdatenbank**
@@ -1128,7 +1090,7 @@ Dokumentdatenbanken sind möglicherweise nicht mit allen Anwendungen und Program
 * Kosten: +
 Die Einrichtung und Wartung von Dokumentdatenbanken kann im Vergleich zu anderen Datenbankmodellen teurer sein.
 
-|**Alternative A4**
+|**Alternative A3**
 a|
 **Graphdatenbank**
 
@@ -1150,7 +1112,7 @@ Graphdatenbanken können grosse Datenmengen verarbeiten und lassen sich bei wach
 * Verarbeitung von Echtzeitdaten: +
 Graphdatenbanken eignen sich gut für die Verarbeitung von Echtzeitdaten und können Daten schnell aktualisieren und abfragen, wenn sie sich ändern.
 
-|**Alternative A4** +
+|**Alternative A3** +
 (Platzbedingte Fortsetzung)
 a|
 **Graphdatenbank**
@@ -1166,7 +1128,7 @@ Graphdatenbanken sind möglicherweise nicht mit allen Anwendungen und Programmie
 * Kosten: +
 Die Einrichtung und Wartung von Graphdatenbanken kann im Vergleich zu anderen Datenbankmodellen teurer sein.
 
-|**Alternative A5**
+|**Alternative A4**
 a|
 **Zeitreihendatenbank**
 
@@ -1188,7 +1150,7 @@ Zeitreihendatenbanken können grosse Datenmengen verarbeiten und lassen sich lei
 * Datenkompression: +
 Zeitreihendatenbanken können Datenkomprimierungstechniken verwenden, um die Grösse der Datenbank zu verringern und die Performance zu verbessern.
 
-|**Alternative A5** +
+|**Alternative A4** +
 (Platzbedingte Fortsetzung)
 a|
 **Zeitreihendatenbank**
@@ -1206,15 +1168,14 @@ Zeitreihendatenbanken sind für die Speicherung und Abfrage von Zeitstempeldaten
 
 |**Entscheidung**
 a|
-Kombination aus
+Zwei dedizierte Datenbanken (gemäss __ADR-BAC-30__):
 
-* A1) Relationale Datenbank oder A3) Dokumentdatenbank +
+* A2) Dokumentdatenbank +
 Für alle Daten ausser die Patienten-Messdaten
-* A3) Dokumentdatenbank +
+* A2) Dokumentdatenbank +
 Für die Patienten-Messdaten
 
-|**Begründung**|Für die Ablage aller Daten, welche nicht zu den Patienten-Messdaten gehören, sollte eine herkömmliche relationale Datenbank allen Anforderungen gerecht werden. Alternativ könnte eine Dokumentdatenbank ebenfalls passend eingesetzt werden. +
-Für die Persistierung der Patienten-Messdaten sollte hingegen primär auf eine Dokumentdatenbank zurückgegriffen werden, da sie auf die Ablage halb- oder unstrukturierter Daten spezialisiert sind und eine hohe Performance bezüglich Schreib- und Lesevorgängen vorweisen können.
+|**Begründung**|Für die Ablage aller relevanten Daten wird eine Kombination zweier dedizierter Dokumentdatenbanken eingesetzt, da Letztere eine hohe Performance bezüglich Schreib- und Lesevorgängen vorweisen und bei Bedarf gut skaliert werden können.
 
 |link:10_quality_requirements.adoc#section-quality-requirements[**Qualitätsanforderungen**]
 a|
@@ -1465,6 +1426,7 @@ Verbindungsunterbrüche, Ausfälle und / oder fehlerhaftes Antwortverhalten der 
 
 |===
 
+[#decisions-hosting]
 === Hosting
 
 [cols="2,6"]

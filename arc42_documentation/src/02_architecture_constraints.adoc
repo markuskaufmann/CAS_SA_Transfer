@@ -1,4 +1,4 @@
-[[section-architecture-constraints]]
+[#constraints]
 == Randbedingungen
 
 Die Systemarchitektur von Physio Connect unterliegt bestimmten Randbedingungen, welche im Rahmen jedes Architekturentscheids explizit berücksichtigt werden müssen. +
@@ -27,6 +27,7 @@ Abhängigkeiten zu Umsystemen können konfiguriert werden, sodass PhysioConnect 
 |CS-TEC-40|Architekturdokumentation|Für die Architekturdokumentation kommt https://arc42.org/[arc42] und https://c4model.com/[C4] zum Einsatz. Die Terminologie und Gliederung der Dokumentation entspricht dem deutschen arc42-Template in der Version 8 (Release: Februar 2022).
 |===
 
+[#organizational-constraints]
 === Organisatorische Randbedingungen
 
 [options="header",cols="1,2,4"]
@@ -34,7 +35,7 @@ Abhängigkeiten zu Umsystemen können konfiguriert werden, sodass PhysioConnect 
 |ID|Bedingung|Beschreibung
 |CS-ORG-10|Zeitplan|Für die Sicherstellung einer möglichst kurzen Time-to-Market soll ein initiales __Minimum Viable Product (MVP)__ innerhalb von 4-6 Monaten realisierbar sein.
 |CS-ORG-20|Vorgehensmodell|Entwickelt wird iterativ-inkrementell nach https://www.scrum.org/resources/what-is-scrum[Scrum].
-|CS-ORG-30|Team|Bestehend aus den Gründungsmitgliedern des Startups: Cyrille Ulmi, Markus Kaufmann
+|CS-ORG-30|Entwicklungsteam|Bestehend aus den Gründungsmitgliedern des Startups: Cyrille Ulmi, Markus Kaufmann
 |===
 
 === Konventionen

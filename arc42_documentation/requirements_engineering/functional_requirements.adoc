@@ -1,8 +1,5 @@
-[[section-functional-requirements]]
+[#functional-requirements]
 === Funktionale Anforderungen
-
-**TODO**:
-Create & Include use case diagrams
 
 Das nachfolgende Kapitel bietet eine Zusammenfassung der funktionalen Anforderungen, welche von mindestens einem der bestehenden Stakeholder gestellt werden und sich in der Gesamtfunktionalität von PhysioConnect widerspiegeln sollen.
 
