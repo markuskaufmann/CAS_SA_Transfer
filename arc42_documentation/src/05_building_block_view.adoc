@@ -235,9 +235,12 @@ __Zweck / Verantwortlichkeiten__
 
 Dieser Service ist für die Planung und Verwaltung von Gesamttherapien, Therapie-Sessions und Therapieübungen verantwortlich.
 
+[.landscape]
+<<<
+
 __Schnittstellen__
 
-[options="header"]
+[options="header",cols="2,2,4"]
 |===
 |Schnittstelle|Input|Output
 
@@ -324,6 +327,9 @@ HTTP Request an REST API des Containers __Benutzerverwaltungswrapper__ gemäss d
 |Query / Operation via TCP/IP, abstrahiert durch ODBC / JDBC Driver oder Datenbank client library
 
 |===
+
+[.portrait]
+<<<
 
 __Qualitäts- / Performancecharakteristiken__
 
@@ -456,7 +462,12 @@ __Zweck / Verantwortlichkeiten__
 
 Dieser Service ist für die Verarbeitung der Daten verantwortlich, welche von den Patient*innen während der Ausführung einer Therapie-Session aufgezeichnet werden. Einerseits gehören hierzu Messdaten wie Puls oder Blutdruck, andererseits aber auch übungsspezifische Ausführungsinformationen wie effektive Sets / Reps oder Patienten- / Therapeutenrückmeldungen zu durchgeführten Übungen.
 
+[.landscape]
+<<<
+
 __Schnittstellen__
+
+[options="header",cols="2,2,4"]
 
 [options="header"]
 |===
@@ -493,6 +504,9 @@ HTTP Response abhängig von Situation:
 |Query / Operation via TCP/IP, abstrahiert durch ODBC / JDBC Driver oder Datenbank client library
 
 |===
+
+[.portrait]
+<<<
 
 __Qualitäts- / Performancecharakteristiken__
 
@@ -654,7 +668,12 @@ __Zweck / Verantwortlichkeiten__
 * Dient grundsätzlich als Abstraktionsschicht und https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer[anti-corruption layer (ACL)] zwischen Physio Connect und dem Übungskatalog +
 (siehe link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-50])
 
+[.landscape]
+<<<
+
 __Schnittstellen__
+
+[options="header",cols="2,2,4"]
 
 [options="header"]
 |===
@@ -686,6 +705,9 @@ HTTP Request an REST API des Umsystems __Übungskatalog__ gemäss der aufgerufen
 * Request Payload
 
 |===
+
+[.portrait]
+<<<
 
 __Qualitäts- / Performancecharakteristiken__
 
@@ -748,7 +770,12 @@ Physiotherapeut*innen, Vorgesetzte der Physiotherapeut*innen, Patient*innen, Adm
 * Dient grundsätzlich als Abstraktionsschicht und https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer[anti-corruption layer (ACL)] zwischen Physio Connect und der Benutzerverwaltung +
 (siehe link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-50])
 
+[.landscape]
+<<<
+
 __Schnittstellen__
+
+[options="header",cols="2,2,4"]
 
 [options="header"]
 |===
@@ -780,6 +807,9 @@ HTTP Request an REST API des Umsystems __Benutzerverwaltung__ gemäss der aufger
 * Request Payload
 
 |===
+
+[.portrait]
+<<<
 
 __Qualitäts- / Performancecharakteristiken__
 
