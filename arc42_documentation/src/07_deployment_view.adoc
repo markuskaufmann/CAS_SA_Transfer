@@ -1,7 +1,7 @@
-[[section-deployment-view]]
+[#deployment-view]
 == Verteilungssicht
 
-Dieses Kapitel bietet eine detaillierte Beschreibung der technischen Infrastruktur, welche für das Deployment und den Betrieb von Physio Connect verwendet wird. Zudem wird definiert, wie die fundamentalen link:05_building_block_view.adoc#section-building-block-view[Software-Bausteine / -Komponenten] des Systems auf die eingesetzte Infrastruktur abgebildet werden.
+Dieses Kapitel bietet eine detaillierte Beschreibung der technischen Infrastruktur, welche für das Deployment und den Betrieb von Physio Connect verwendet wird. Zudem wird definiert, wie die fundamentalen <<#building-block-view,Software-Bausteine / -Komponenten>> des Systems auf die eingesetzte Infrastruktur abgebildet werden.
 
 === Infrastruktur mit einer Physio Connect-Instanz
 
@@ -9,7 +9,7 @@ Dieses Kapitel bietet eine detaillierte Beschreibung der technischen Infrastrukt
 
 **Motivation**
 
-Gemäss den link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidungen] *ADR-HST-10* und *ADR-HST-11* wurde bestimmt, dass nur eine globale Instanz des Physio Connect-Systems produktiv eingesetzt werden soll, welche von uns gehosted wird.
+Gemäss den <<#decisions-hosting,Architekturentscheidungen **ADR-HST-10** und **ADR-HST-11**>> wurde bestimmt, dass nur eine globale Instanz des Physio Connect-Systems produktiv eingesetzt werden soll, welche von uns gehosted wird.
 
 Um eine skalierbare Umgebung umzusetzen, welche ohne hohe Initialkosten in Betrieb genommen und kosteneffizient betrieben werden kann, wurde gemäss *ADR-HST-10* entschieden, einen Cloud Hyperscaler zu verwenden. Zu diesem Zeitpunkt ist noch unbekannt, welcher Hyperscaler verwendet werden soll.
 
@@ -81,7 +81,7 @@ Die Entscheidung, wo die Benutzerverwaltung gehosted wird, ist für uns zu diese
 
 ==== Patienten Infrastruktur
 
-Die Patienteninfrastruktur kann von uns nicht direkt beeinflusst werden. Gemäss des beschriebenen link:01_introduction_and_goals.adoc#section-introduction-and-goals[Architekturtreibers] *Mehrheitliche Verwendung des Smartphones* wird davon ausgegangen, dass der Grossteil aller Patienten ein Smartphone besitzt, welches mit der __mobilen Patientenapp__ kompatibel ist. Immer mehr Patienten besitzen __Fitness Tracker__, die Patientenapp funktioniert jedoch auch ohne Fitnesstracker.
+Die Patienteninfrastruktur kann von uns nicht direkt beeinflusst werden. Gemäss des beschriebenen <<#force-smartphone-usage,Architekturtreibers **Mehrheitliche Verwendung des Smartphones**>> wird davon ausgegangen, dass der Grossteil aller Patienten ein Smartphone besitzt, welches mit der __mobilen Patientenapp__ kompatibel ist. Immer mehr Patienten besitzen __Fitness Tracker__, die Patientenapp funktioniert jedoch auch ohne Fitnesstracker.
 
 In Ausnahmefällen können Patienten einen Fitnesstracker von ihrer jeweiligen Privatpraxis oder Rehabilitationsklinik erhalten. Dies hat jedoch keinen Einfluss auf unsere Infrastruktur.
 

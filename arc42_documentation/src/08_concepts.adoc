@@ -1,4 +1,4 @@
-[[section-concepts]]
+[#concepts]
 == Querschnittliche Konzepte
 
 Dieses Kapitel repräsentiert eine Zusammenfassung der übergreifenden Prinzipien und Lösungsansätze, welche im Rahmen der Systemarchitektur von Physio Connect an mehreren Stellen einheitlich verwendet werden und somit einen direkten Einfluss auf die Architektur besitzen.
@@ -155,7 +155,7 @@ plantuml::domain_model/domain_BC_TherapieContext.puml[format=svg]
 
 === Hexagonale Architektur
 
-Gemäss der link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-20] soll die Mikroarchitektur der deploybaren Einheiten den hexagonalen Architekturstil befolgen. In diesem Kapitel werden die dabei einzuhaltenden Richtlinien definiert. In Ausnahmefällen kann von diesem Architekturstil abgewichen werden, z.B. falls die Komplexität einer Einheit zu niedrig ist, um den Aufwand der Implementation im hexagonalen Architekturstil zu rechtfertigen.
+Gemäss der <<#adr-bac-20,Architekturentscheidung __ADR-BAC-20__>> soll die Mikroarchitektur der deploybaren Einheiten den hexagonalen Architekturstil befolgen. In diesem Kapitel werden die dabei einzuhaltenden Richtlinien definiert. In Ausnahmefällen kann von diesem Architekturstil abgewichen werden, z.B. falls die Komplexität einer Einheit zu niedrig ist, um den Aufwand der Implementation im hexagonalen Architekturstil zu rechtfertigen.
 
 Zusätzlich zu der in der hexagonalen Architektur vorgegebenen __Ports & Adapter__-Architektur sollen die folgenden Designvorschriften eingehalten werden:
 
@@ -208,7 +208,7 @@ Das vorherige Beispiel bezüglich der Kommunikation mit einer Datenbank kann dur
 
 plantuml::additional_diagrams/hexagon_adapter_pattern.puml[format=svg]
 
-Die wichtigsten Komponenten des Physio Connect-Systems wurden bereits innerhalb der link:05_building_block_view.adoc#section-building-block-view[Bausteinsicht] als treibende und getriebene Adapter markiert.
+Die wichtigsten Komponenten des Physio Connect-Systems wurden bereits innerhalb der <<#building-block-view,Bausteinsicht>> als treibende und getriebene Adapter markiert.
 
 **Treibende Seite**
 

@@ -1,4 +1,4 @@
-[[section-appendix]]
+[#appendix]
 == Anhang
 
 include::../requirements_engineering/functional_requirements.adoc[]

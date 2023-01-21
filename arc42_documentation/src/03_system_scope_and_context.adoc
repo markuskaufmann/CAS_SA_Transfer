@@ -1,4 +1,4 @@
-[[section-system-scope-and-context]]
+[#scope-and-context]
 == Kontextabgrenzung
 
 Im Rahmen dieses Kapitel wird der Systemumfang (Scope) und -Kontext von PhysioConnect beschrieben. Das Ziel ist hierbei, die Abgrenzung zwischen dem System "PhysioConnect" und allen externen Kommunikationspartnern (Nachbarsysteme, Benutzer) zu veranschaulichen. Dabei werden die externen Schnittstellen aus fachlicher Sicht spezifiziert. Eine zusätzliche Veranschaulichung aus technischer Sicht ist zu diesem Zeitpunkt nicht nötig.
@@ -37,7 +37,7 @@ plantuml::structurizr_diagrams/generated/structurizr-SystemLandscape.puml[format
 |Unternehmungsgrenze|Alle Elemente innerhalb dieser Grenze werden von uns gewartet und können direkt beinflusst werden. Auf Elemente ausserhalb dieser Grenze besitzen wir nur beschränkten bis gar keinen Einfluss. 
 |Gruppe: Patient|Alle Elemente innerhalb dieser Gruppe stehen in direkter Verbindung zum Akteur "Patient" und werden von diesem verwendet. Physio Connect hat keinen Einfluss auf die Hard- und Software, welche von den Patienten eingesetzt wird.
 |Gruppe: Physiounternehmung|Eine Unternehmung, welche Physiotherapien durchführt. In den meisten Fällen handelt es sich um eine Physio-Praxis, es kann sich jedoch auch um eine Spitalabteilung, eine Rehabilitationsklinik oder andere Anbieter handeln. Physio Connect hat nur einen beschränkten Einfluss auf die in Physiounternehmungen eingesetzten Softwaresysteme. In den meisten Fällen ist es möglich, Informationen zu bestehenden Schnittstellen zu erhalten. 
-|Physio Connect|Hauptsystem, dessen Kontext im Rahmen dieses Dokuments definiert wird. Bietet die im Kapitel link:01_introduction_and_goals.adoc#section-introduction-and-goals[Einführung und Ziele] beschriebenen Funktionalitäten an.
+|Physio Connect|Hauptsystem, dessen Kontext im Rahmen dieses Dokuments definiert wird. Bietet die im Kapitel <<#main-features,Übersicht der wesentlichen Features>> beschriebenen Funktionalitäten an.
 |Mobile Patientenapp|App, welche von den Patienten mittels eines handelsüblichen Smartphones verwendet werden kann. Wird zum Ausführen von Therapie-Sessions verwendet. Erhält Daten zu Therapien von Physio Connect. Sendet - falls möglich - aufgezeichnete Messdaten an Physio Connect.
 |Übungskatalog|Beinhaltet vordefinierte Übungsdefinitionen und bietet die Möglichkeit, Übungen via einer API zu verwalten.
 |Benutzerverwaltung|Beinhaltet alle benutzerspezifischen Informationen. Handhabt die Authentifizierung und Autorisierung im Rahmen des gesamten Systemkontexts. Bietet eine API zur Verwaltung von Benutzern an.
@@ -117,4 +117,4 @@ Weiterhin besonders in kleineren Praxen verbreitet
 
 === Technischer- oder Verteilungskontext
 
-Eine detaillierte Darstellung des technischen / Verteilungskontexts inkl. der definierten Schnittstellen und Technologien ist innerhalb der link:05_building_block_view.adoc#section-building-block-view[Bausteinsicht] zu finden.
+Eine detaillierte Darstellung des (technischen) Verteilungskontexts inkl. der definierten Schnittstellen und Technologien ist innerhalb der <<#building-block-view,Bausteinsicht>> zu finden.

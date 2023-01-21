@@ -1,4 +1,4 @@
-[[section-building-block-view]]
+[#building-block-view]
 == Bausteinsicht
 
 Dieses Kapitel veranschaulicht die statische Zerlegung von Physio Connect in dessen technisch fundamentale Bausteine / Komponenten. Das Ziel ist hierbei, die interne Struktur des Systems mittels der Verwendung verschiedener Abstraktionsstufen / -ebenen bis hin zu einem angemessenen Detaillierungsgrad zu beschreiben, um schlussendlich eine gemeinsame Wissens- und Kommunikationsbasis für die relevanten Stakeholder zu bilden. +

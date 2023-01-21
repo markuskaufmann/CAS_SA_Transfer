@@ -1,4 +1,4 @@
-[[section-design-decisions]]
+[#architecture-decisions]
 == Architekturentscheidungen
 
 In diesem Kapitel werden alle relevanten Architekturentscheidungen in Form von __Architectural Decision Records (ADRs)__ gemäss https://www.iso.org/standard/50508.html[ISO 42010] definiert. +
@@ -857,7 +857,7 @@ Dank seiner losen Kopplung lässt sich jeder Microservice genau so resilient / f
 
 [cols="2,6"]
 |===
-|**ID**|ADR-BAC-20
+|**ID**|[[adr-bac-20]]ADR-BAC-20
 |**Anliegen (Concern)**|Welcher Architekturstil soll grundlegend innerhalb einer deploybaren Einheit eingesetzt werden?
 |**Kontext**
 a|Diese Entscheidung befasst sich damit, welcher Architekturstil grundlegend für die interne Struktur (Mikroarchitektur) der einzelnen Backend-Komponenten eingesetzt werden soll. +
@@ -1426,6 +1426,7 @@ Verbindungsunterbrüche, Ausfälle und / oder fehlerhaftes Antwortverhalten der 
 
 |===
 
+[#decisions-hosting]
 === Hosting
 
 [cols="2,6"]
