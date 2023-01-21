@@ -1,0 +1,50 @@
+extends: default
+base:
+  font-size: 10
+page:
+  margin: [0.8in, 0.67in, 0.8in, 0.67in]
+title-page:
+  text-align: center
+  background-color: #FFFFFF
+  logo:
+    align: center
+  title:
+    font-size: 24
+    font-color: #000000
+  subtitle:
+    font-color: #333333
+    font-style: normal
+    font-size: 14
+    margin-top: 16
+  authors:
+    margin-top: 40
+running-content:
+  start-at: body
+header:
+  height: 0.55in
+  line-height: 1
+  font-color: #555555
+  border_color: #BBBBBB
+  border_width: 0.25
+  recto: &shared_header
+    left:
+      content: '{document-title}'
+    center:
+      content: '{section-or-chapter-title}'
+    right:
+      content: ~
+  verso: *shared_header
+footer:
+  height: 0.75in
+  line-height: 1
+  font-color: #555555
+  border_color: #BBBBBB
+  border_width: 0.25
+  recto: &shared_footer
+    left:
+      content: ~
+    center:
+      content: ~
+    right:
+      content: '{page-number} / {page-count}'
+  verso: *shared_footer

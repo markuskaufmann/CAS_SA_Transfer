@@ -2,10 +2,10 @@
 include::src/config.adoc[]
 
 :title-page:
-= Physio Connect
+= Physio Connect: HSLU Transferarbeit I.CAS-SA.2201
 Cyrille Ulmi, Markus Kaufmann
 v1.0, 22.01.2023
-:title-logo-image: image:arc42-logo.png[align=center]
+:title-logo-image: image:title_logo.svg[Static,500]
 
 // numbering from here on
 :numbered:
