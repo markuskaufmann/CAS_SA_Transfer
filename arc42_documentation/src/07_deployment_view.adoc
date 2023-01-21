@@ -61,7 +61,7 @@ plantuml::structurizr_diagrams/generated/structurizr-deployment-singulaere-physi
 
 |Therapie Planungs Datenbank
 |Storage Service
-|Zu diesem Zeitpunkt ist noch nicht entschieden, ob es sich bei dieser Datenbank um eine relationale oder Dokumentdatenbank handeln wird.
+|Dokumentdatenbank. Es soll ein Service gewählt werden, welcher speziell für dieses Datenbankmodell ausgelegt ist. Da der spezifische Hyperscaler noch unbekannt ist, kann hier kein expliziter Service genannt werden.
 
 |Ausführungs Datenbank
 |Storage Service

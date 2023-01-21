@@ -54,8 +54,8 @@ workspace "Physio integration layer project" {
                     }
                     planungsDatenbank = container "Therapie Planungs Datenbank" {
                         tags "Database"
-                        technology "Relationale oder Dokumentdatenbank"
-                        description "Persistiert alle Planungsdaten. Wird evt. mit der Ausführungs Datenbank fusioniert."
+                        technology "Dokumentdatenbank"
+                        description "Persistiert alle Planungsdaten. Wird eventuell mit der Ausführungs Datenbank fusioniert."
                     }
                 }
 

@@ -386,19 +386,9 @@ Diese Datenbank dient zur Persistierung der Daten, welche im Kontext des __Thera
 
 __Schnittstellen__
 
-Die Art und Anzahl der Schnittstellen hängt vom verwendeten Datenbankmodell ab. Im Falle der __Therapie Planungs Datenbank__ fiel die Wahl gemäss link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-31] auf eine relationale (SQL) oder Dokumentdatenbank (NoSQL).
+Die Art und Anzahl der Schnittstellen hängt vom verwendeten Datenbankmodell ab. Im Falle der __Therapie Planungs Datenbank__ fiel die Wahl gemäss link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-31] auf eine Dokumentdatenbank (NoSQL).
 
-Eine relationale Datenbank stellt typischerweise folgende Schnittstellen bereit:
-
-* Native API
-* JDBC Driver +
-(falls Java als primäre Programmiersprache verwendet wird)
-* ODBC Driver
-* Client library als Abstraktionsschicht für die verwendete Programmiersprache
-
-Als Abfragesprache wird normalerweise SQL verwendet, die Kommunikation verläuft via TCP/IP.
-
-Eine Dokumentdatenbank (NoSQL) stellt typischerweise folgende Schnittstellen bereit:
+Eine Dokumentdatenbank stellt typischerweise folgende Schnittstellen bereit:
 
 * Native API
 * REST API
@@ -418,10 +408,10 @@ __Qualitäts- / Performancecharakteristiken__
 a|Bei der Verwendung einer Dokumentdatenbank profitiert man von einer höheren Flexibilität, wenn abzuspeichernde Daten einem dynamischen Schema entsprechen.
 
 |Skalierbarkeit
-a|Sowohl relationale als auch Dokumentdatenbanken lassen sich bei Bedarf vertikal sowie horizontal skalieren. Letztere Variante resultiert jedoch in der Abklärung und Definition weiterer Aspekte, wie beispielsweise einer effizienten und zuverlässigen Datensynchronisation zwischen den einzelnen Datenbankinstanzen zur Sicherstellung der Datenkonsistenz.
+a|Dokumentdatenbanken lassen sich bei Bedarf vertikal sowie horizontal skalieren. Letztere Variante resultiert jedoch in der Abklärung und Definition weiterer Aspekte, wie beispielsweise einer effizienten und zuverlässigen Datensynchronisation zwischen den einzelnen Datenbankinstanzen zur Sicherstellung der Datenkonsistenz.
 
 |Performance Efficiency / Capacity
-a|Sowohl relationale als auch Dokumentdatenbanken sind auf grosse Datenmengen und die Performance-Optimierung bei Abfragen und Speichervorgängen ausgelegt. Ebenso lassen sich parallele Datenzugriffe und die diesbezügliche Sicherstellung der Datenintegrität und -konsistenz via Transaktionsmanagement sicherstellen. +
+a|Dokumentdatenbanken sind auf grosse Datenmengen und die Performance-Optimierung bei Abfragen und Speichervorgängen ausgelegt. Ebenso lassen sich parallele Datenzugriffe und die diesbezügliche Sicherstellung der Datenintegrität und -konsistenz via Transaktionsmanagement sicherstellen. +
 Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
 
 * SZ-CAP-1
