@@ -47,11 +47,11 @@ plantuml::structurizr_diagrams/generated/structurizr-deployment-singulaere-physi
 |Managed Kubernetes Cluster
 |-
 
-|Übungskatalog Wrapper
+|Übungskatalogwrapper
 |Managed Kubernetes Cluster
 |-
 
-|Benutzerverwaltung Wrapper
+|Benutzerverwaltungswrapper
 |Managed Kubernetes Cluster
 |-
 

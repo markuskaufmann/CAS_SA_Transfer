@@ -1483,14 +1483,14 @@ __Vorteile:__
 * Keine Vorlaufkosten für die Infrastruktur: +
 Der Aufwand und die Komplexität bezüglich Kauf, Einrichtung und Wartung physischer Server fallen weg. Dies kann besonders für kleine bis mittlere Unternehmen (KMU) oder Startups nützlich sein, die möglicherweise nicht über die Ressourcen und / oder das Know-How verfügen, um eine eigene Infrastruktur zu betreiben.
 * "Pay as you go": +
-Bei den aktuellen Cloud-Providern zahlt man nur für die Ressourcen, welche man auch effektiv nutzt. Dies kann kosteneffizienter sein als das Hosting on-premise, insbesondere wenn es zu variablen oder unvorhersehbaren Mustern im Netzwerkverkehr / -auslastung kommen kann.
+Bei den aktuellen Cloud-Providern zahlt man nur für die Ressourcen, welche man auch effektiv nutzt. Dies kann kosteneffizienter sein als das on-premises-Hosting, insbesondere wenn es zu variablen oder unvorhersehbaren Mustern im Netzwerkverkehr / -auslastung kommen kann.
 * Skalierbarkeit: +
 Bei den aktuellen Cloud-Providern kann die Leistung je nach Bedarf problemlos erhöht oder verringert werden. Bei einem plötzlichen Anstieg des Datenverkehrs können schnell weitere Ressourcen horizontal oder vertikal hinzugefügt werden, um die Last zu bewältigen.
 * Hohe Verfügbarkeit: +
 Cloud-Provider bieten häufig Hochverfügbarkeitsoptionen an, z.B. auch über mehrere Verfügbarkeitszonen oder Regionen, welche sicherstellen, dass die gehostete Anwendung optimal verfügbar ist.
 * Infrastructure as Code: +
 Alle aktuellen Cloud-Provider bieten die Möglichkeit, die benötigten Infrastrukturressourcen automatisiert via Quellcode zu erstellen, modifizieren und - falls nötig - wieder abzubauen. Die automatisierte Verwaltung der Infrastruktur lässt sich zudem nahtlos in eine CI/CD-Pipeline integrieren, was zu einem grundsätzlich agilen Software Development Lifecycle beiträgt. +
-Bei einem on-premise Hosting ist die Möglichkeit von __Infrastructure as Code__ in den meisten Fällen nicht gegeben.
+Bei einem on-premises-Hosting ist die Möglichkeit von __Infrastructure as Code__ in den meisten Fällen nicht gegeben.
 
 |**Alternative A1** +
 (Platzbedingte Fortsetzung)
@@ -1509,35 +1509,35 @@ Einige Gesundheitsinstitute besitzen (nicht-gesetzliche) Vorlagen, dass Daten in
 
 |**Alternative A2**
 a|
-**On-premise beim Kunden**
+**On-premises beim Kunden**
 
 __Vorteile:__
 
 * Vollständige Kontrolle: +
-Bei einem on-premise Hosting besitzt man (bzw. in diesem Fall der Kunde) die vollständige Kontrolle über die Hardware, Software und Infrastruktur. Dies kann von Vorteil sein, wenn spezielle Sicherheits- oder Compliance-Anforderungen vorliegen, welche von einem Cloud-Provider nicht (oder nur eingeschränkt) erfüllt werden können.
+Bei einem on-premises-Hosting besitzt man (bzw. in diesem Fall der Kunde) die vollständige Kontrolle über die Hardware, Software und Infrastruktur. Dies kann von Vorteil sein, wenn spezielle Sicherheits- oder Compliance-Anforderungen vorliegen, welche von einem Cloud-Provider nicht (oder nur eingeschränkt) erfüllt werden können.
 * Vorhersehbare Kosten: +
-Bei einem on-premise Hosting können die Kosten in der Regel genauer und verlässlicher prognostiziert werden, da sie nicht an die Nutzung ("Pay as you go") gebunden sind.
+Bei einem on-premises-Hosting können die Kosten in der Regel genauer und verlässlicher prognostiziert werden, da sie nicht an die Nutzung ("Pay as you go") gebunden sind.
 * (Potenziell) Bessere Performance: +
-In einigen Fällen kann ein on-premise Hosting zu einer besseren Performance führen, da man nicht von einer konstanten Internetverbindung oder der Leistung eines Remote-Servers abhängig ist.
+In einigen Fällen kann ein on-premises-Hosting zu einer besseren Performance führen, da man nicht von einer konstanten Internetverbindung oder der Leistung eines Remote-Servers abhängig ist.
 
 __Nachteile:__
 
 * Höhere Vorabkosten: +
-Ein on-premise Hosting erfordert grössere vorgängige Investitionen in Hardware, Software und Infrastruktur.
+Ein on-premises-Hosting erfordert grössere vorgängige Investitionen in Hardware, Software und Infrastruktur.
 * Wartung und Support: +
-Bei einem on-premise Hosting ist der Kunde selbst für die Wartung und Unterstützung der Infrastruktur verantwortlich. Dies kann ressourcenaufwändig sein und spezielles technisches Know-How erfordern.
+Bei einem on-premises-Hosting ist der Kunde selbst für die Wartung und Unterstützung der Infrastruktur verantwortlich. Dies kann ressourcenaufwändig sein und spezielles technisches Know-How erfordern.
 * Eingeschränkte Skalierbarkeit: +
-Es kann komplex und kostenaufwändig sein, eine on-premise gehostete Infrastruktur nach Bedarf horizontal oder vertikal zu skalieren.
+Es kann komplex und kostenaufwändig sein, eine on-premises betriebene Infrastruktur nach Bedarf horizontal oder vertikal zu skalieren.
 * Kleinere, selbstgewartete IT Infrastrukturen besitzen häufiger Sicherheitslücken als die von grossen Cloud Anbietern.
 
 |**Entscheidung**|A1) Hosting bei etabliertem Cloud-Provider
 
-Die Möglichkeit, dass - je nach Kunde - die Alternative __A2) On-premise beim Kunden__ zum Einsatz kommen kann, wird nicht ausgeschlossen, sollte jedoch ein Ausnahmefall bleiben.
+Die Möglichkeit, dass - je nach Kunde - die Alternative __A2) On-premises beim Kunden__ zum Einsatz kommen kann, wird nicht ausgeschlossen, sollte jedoch ein Ausnahmefall bleiben.
 |**Begründung**
 a|
 Das definierte link:04_solution_strategy.adoc#section-solution-strategy[Architekturprinzip AP-6] gibt bereits die Richtlinie vor, im Rahmen von Physio Connect grundsätzlich das https://aws.amazon.com/what-is/cloud-native/[Cloud Native-Prinzip] zu befolgen. Auf diese Weise bleibt Physio Connect skalierbar, flexibel, resilient und kann effizient auf neue Kundenbedürfnisse angepasst werden.
 
-Es soll jedoch bei Design und Implementation darauf geachtet werden, dass ein potenzielles on-premise Hosting aus technischer Sicht nicht verbaut wird.
+Es soll jedoch bei Design und Implementation darauf geachtet werden, dass ein potenzielles on-premises-Hosting aus technischer Sicht nicht verbaut wird.
 
 |link:10_quality_requirements.adoc#section-quality-requirements[**Qualitätsanforderungen**]
 a|
@@ -1592,7 +1592,7 @@ __Vorteile:__
 * Einfachere Individualisierbarkeit und Konfigurierbarkeit pro Kunde.
 * Möglichkeit für das Hosting bei verschiedenen Cloud-Providern.
 * Infrastrukturkosten pro Kunde können genau abgerechnet werden.
-* Deploymentprozess wäre besser darauf ausgerichtet, ein on-premise Hosting beim Kunden zusätzlich zu unterstützen.
+* Deploymentprozess wäre besser darauf ausgerichtet, ein on-premises-Hosting beim Kunden zusätzlich zu unterstützen.
 * Versionsupgrades können phasenweise ausgerollt werden.
 
 __Nachteile:__
@@ -1606,7 +1606,7 @@ __Nachteile:__
  
 |**Entscheidung**|A1) Einzelne Instanz
 
-Da die Alternative __A2) On-premise beim Kunden__ des Entscheids __ADR-HST-10__ potenziell zum Einsatz kommen kann, wird es trotzdem möglich sein, eine einzelne Instanz für einen Kunden in der Cloud zu deployen.
+Da die Alternative __A2) On-premises beim Kunden__ des Entscheids __ADR-HST-10__ potenziell zum Einsatz kommen kann, wird es trotzdem möglich sein, eine einzelne Instanz für einen Kunden in der Cloud zu deployen.
 |**Begründung**
 a|
 Für den Verkauf von PhysioConnect sind tiefe Einführungskosten essenziell. Zusätzlich können wir uns als Startup keinen Support für eine Vielzahl von Versionen leisten. Falls einzelne Instanzen für Kunden gepflegt werden müssen, sollen diese auf der gleichen Version wie unsere "Hauptinstanz" gehalten werden.
@@ -1623,7 +1623,7 @@ Die Skalierbarkeit einer globalen Instanz kann gemäss dem Gesetz der grossen Za
 
 **Installability** +
 Die Installation und Konfiguration einer globalen Instanz wird einmalig durchgeführt und kann durch die Verwendung einer CI/CD-Pipeline effizient durchgeführt werden. +
-Zu beachten ist jedoch, dass die Alternative __A2) On-premise beim Kunden__ des Entscheids __ADR-HST-10__ potenziell zum Einsatz kommen kann, was in der Installation und dem Betrieb weiterer Physio Connect-Instanzen resultieren würde.
+Zu beachten ist jedoch, dass die Alternative __A2) On-premises beim Kunden__ des Entscheids __ADR-HST-10__ potenziell zum Einsatz kommen kann, was in der Installation und dem Betrieb weiterer Physio Connect-Instanzen resultieren würde.
 
 * SZ-INT-1
 

@@ -834,7 +834,7 @@ __Risiken__
 a|
 Massnahmen gemäss __RTD-USR-10__:
 
-* Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn die Verbindung zwischen dem __Benutzerverwaltungs Wrapper__ und der Benutzerverwaltung fehlerhaft ist (kontinuierlich abgesetzter Heartbeat)
+* Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn die Verbindung zwischen dem __Benutzerverwaltungswrapper__ und der Benutzerverwaltung fehlerhaft ist (kontinuierlich abgesetzter Heartbeat)
 * Wrapper-Komponente möglichst resilient implementieren, sodass PhysioConnect zumindest noch eingeschränkt verwendet werden kann
 
 |===
