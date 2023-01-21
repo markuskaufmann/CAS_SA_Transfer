@@ -147,7 +147,7 @@ Der korrekte Informationsaustausch sowie die Verarbeitung der eingehenden Daten 
 Betrifft alle diesbezüglichen Qualitätsszenarien (SZ-IOP-*).
 
 **Confidentiality** +
-Die Kommunikation mit Physio Connect erfolgt stets über eine verschlüsselte Verbindung. Zudem ist eine aktive Benutzerauthentifizierung mittels Access Token-Validierung zwingend. Die Gültigkeitsprüfung erfolgt dabei über den systemweit eingesetzten Identity Provider (Keycloak), welcher ebenso für die initiale Ausstellung der Identity / Access / Refresh Tokens zuständig ist. Der Identity Provider ist Bestandteil des Umsystems __Benutzerverwaltung__.
+Die Kommunikation mit Physio Connect erfolgt stets über eine verschlüsselte Verbindung. Zudem ist eine aktive Benutzerauthentifizierung mittels Access Token-Validierung zwingend notwendig. Die Gültigkeitsprüfung erfolgt dabei über den systemweit eingesetzten Identity Provider (Keycloak), welcher ebenso für die initiale Ausstellung der Identity / Access / Refresh Tokens zuständig ist. Der Identity Provider ist Bestandteil des Umsystems __Benutzerverwaltung__.
 
 * SZ-CNF-1
 * SZ-CNF-2
@@ -708,7 +708,7 @@ a|
 Da Micro Frontends in der Regel relativ kompakt und unabhängig von anderen Komponenten sind, können Modifikationen und / oder Erweiterungen an einer zentralen Stelle implementiert werden.
 
 **Capacity** +
-Micro Frontends können theoretisch einfacher skaliert werden als vollwertige Webapplikationen.
+Micro Frontends können einfacher skaliert werden als vollwertige Webapplikationen.
 
 * SZ-CAP-1
 
@@ -1622,7 +1622,7 @@ Die Skalierbarkeit einer globalen Instanz kann gemäss dem Gesetz der grossen Za
 * SZ-CAP-1
 
 **Installability** +
-Die Installation und Konfiguration einer globalen Instanz wird einmalig durchgeführt und ist daher sehr pragmatisch und kann durch die Verwendung einer CI/CD-Pipeline effizient durchgeführt werden. +
+Die Installation und Konfiguration einer globalen Instanz wird einmalig durchgeführt und kann durch die Verwendung einer CI/CD-Pipeline effizient durchgeführt werden. +
 Zu beachten ist jedoch, dass die Alternative __A2) On-premise beim Kunden__ des Entscheids __ADR-HST-10__ potenziell zum Einsatz kommen kann, was in der Installation und dem Betrieb weiterer Physio Connect-Instanzen resultieren würde.
 
 * SZ-INT-1
