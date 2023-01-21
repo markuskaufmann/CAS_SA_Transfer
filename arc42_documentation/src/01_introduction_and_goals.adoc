@@ -3,31 +3,31 @@
 
 === Systemvision
 
-Das Physio Connect-System ist eine Unterstützungs- und Integrationssoftware für Physiotherapeuten und Patienten, welche Heimtherapien intuitiver und effektiver gestalten möchten. +
-Physio Connect ermöglicht es, mit minimalem Aufwand patientenspezifische Therapien zu planen, den Patienten zur Ausführung bereitzustellen und schlussendlich anhand der gesammelten Messdaten und Patientenrückmeldungen auszuwerten. +
-Anders als bestehende Physio-Gesamtlösungen und Dokumentationssysteme zielt Physio Connect nicht darauf ab, bereits eingesetzte Systeme und Prozesse abzulösen, sondern nimmt eine komplementäre Rolle ein. Somit ist der initiale Einarbeitungsaufwand sehr gering und die für Physiotherapeuten essentielle Flexibilität hinsichtlich der Therapieplanung wird erhöht und nicht eingeschränkt.
+Das Physio Connect-System ist eine Unterstützungs- und Integrationssoftware für Physiotherapeut*innen und Patient*innen, welche Heimtherapien intuitiver und effektiver gestalten möchten. +
+Physio Connect ermöglicht es, mit minimalem Aufwand patientenspezifische Therapien zu planen, den Patient*innen zur Ausführung bereitzustellen und schlussendlich anhand der gesammelten Messdaten und Patientenrückmeldungen auszuwerten. +
+Anders als bestehende Physio-Gesamtlösungen und Dokumentationssysteme zielt Physio Connect nicht darauf ab, bereits eingesetzte Systeme und Prozesse abzulösen, sondern nimmt eine komplementäre Rolle ein. Somit ist der initiale Einarbeitungsaufwand sehr gering und die für Physiotherapeut*innen essentielle Flexibilität hinsichtlich der Therapieplanung wird erhöht und nicht eingeschränkt.
 
 === Übersicht der wesentlichen Features
 
-* Physiotherapeuten können
-** Therapien erstellen und Patienten dazu einladen
+* Physiotherapeut*innen können
+** Therapien erstellen und Patient*innen dazu einladen
 ** generische und patientenspezifische Übungen verwalten
-** Therapien und Übungen in der Form von Therapie-Sessions kombinieren, welche von den Patienten durchgeführt werden
+** Therapien und Übungen in der Form von Therapie-Sessions kombinieren, welche von den Patient*innen durchgeführt werden
 ** Übungen patienten- und therapiespezifisch modifizieren
-** den Therapiefortschritt von Patienten überwachen (Monitoring) und auswerten (Reporting)
-** eine Rückmeldung (Kommentar / Bewertung) zu einer abgeschlossenen Therapie-Session, Übung oder zu der Rückmeldung eines Patienten abgeben
-** Übungskollektionen erstellen und den betroffenen Patienten senden, damit diese nach abgeschlossener Therapie selbstständing Übungen ausführen können
+** den Therapiefortschritt von Patient*innen überwachen (Monitoring) und auswerten (Reporting)
+** eine Rückmeldung (Kommentar / Bewertung) zu einer abgeschlossenen Therapie-Session, Übung oder zu der Rückmeldung eines Patienten/einer Patientin abgeben
+** Übungskollektionen erstellen und den betroffenen Patient*innen senden, damit diese nach abgeschlossener Therapie selbstständing Übungen ausführen können
 
-* Patienten können
+* Patient*innen können
 ** einer Therapie beitreten
 ** Therapie-Sessions inkl. der verordneten Übungen durchführen
 ** eine Rückmeldung (Kommentar / Bewertung) zu einer Therapie-Session oder Übung abgeben
 ** eigene Therapiedaten einsehen und weiterleiten
-** Therapie-Sessions in für eigene Therapien selbst erstellen inkl. eigener Übungen verwalten und durchführen ohne Physiotherapeuten. Diese eigenen Therapien werden von den Patienten selbst verwaltet und haben keine zugewisenen Physiotherapeut: Innen
+** Therapie-Sessions in für eigene Therapien selbst erstellen inkl. eigener Übungen verwalten und durchführen ohne Physiotherapeut*innen. Diese eigenen Therapien werden von den Patient*innen selbst verwaltet und haben keine zugewisenen Physiotherapeut*innen
 
-* Vorgesetzte von Physiotherapeuten können
-** den Fortschritt ihrer unterstellten Physiotherapeuten überwachen (Monitoring) und auswerten (Reporting)
-** den Therapiefortschritt von Patienten kontrollieren
+* Vorgesetzte von Physiotherapeut*innen können
+** den Fortschritt ihrer unterstellten Physiotherapeut*innen überwachen (Monitoring) und auswerten (Reporting)
+** den Therapiefortschritt von Patient*innen kontrollieren
 
 Eine genaue Auflistung der konkreten funktionalen Anforderungen ist im entsprechenden link:../requirements_engineering/functional_requirements.adoc#section-functional-requirements[Anforderungsdokument] ersichtlich.
 
@@ -54,9 +54,9 @@ Kompatibilität mit Umsystemen:
 * Dokumentationssystem +
 (Erweiterung)
 
-|Die eigenständigen Softwaresysteme "Patienten-App", "Übungskatalog" und "Benutzerverwaltung" stehen in direkter Verbindung zu Physio Connect. Die definierten Kommunikationsschnittstellen und -protokolle müssen stets eingehalten und - aus Sicht von Physio Connect - kompatibel gehalten werden, sodass Informationen zwischen den Systemen ausgetauscht und zielführend verarbeitet werden können. Des Weiteren soll - gemäss den Anforderungen seitens Kunde und Physiotherapeut - die Möglichkeit offengehalten werden, eine jeweilige Schnittstelle für den Datenimport aus einem kundenseitig verwendeten Dokumentationssystem bereitzustellen, welche mit möglichst geringem Integrationsaufwand benutzt werden kann.
+|Die eigenständigen Softwaresysteme "Patienten-App", "Übungskatalog" und "Benutzerverwaltung" stehen in direkter Verbindung zu Physio Connect. Die definierten Kommunikationsschnittstellen und -protokolle müssen stets eingehalten und - aus Sicht von Physio Connect - kompatibel gehalten werden, sodass Informationen zwischen den Systemen ausgetauscht und zielführend verarbeitet werden können. Des Weiteren soll - gemäss den Anforderungen seitens Kund*in und Physiotherapeut*in - die Möglichkeit offengehalten werden, eine jeweilige Schnittstelle für den Datenimport aus einem kundenseitig verwendeten Dokumentationssystem bereitzustellen, welche mit möglichst geringem Integrationsaufwand benutzt werden kann.
 |QG-2|Confidentiality|Einhaltung bestehender Datenschutzverordnungen und -gesetze im Umgang mit persönlichen Gesundheitsdaten|Aus staatlicher sowie Patientensicht ist die Einhaltung der aktuell geltenden Schweizer Datenschutzverordnungen und -gesetze von hoher Relevanz. Dies betrifft die Aufzeichnung, Verarbeitung, Ablage und Weitergabe der persönlichen Gesundheitsdaten, welche während der Durchführung der einzelnen Übungen (als Teil der Therapie-Sessions) gemessen werden. Diese Punkte betreffen sowohl anonymisierte als auch personalisierte Gesundheitsdaten.
-|QG-3|Modifiability|Flexible Modifizier- und Erweiterbarkeit für existierende und zukünftige Schnittstellen|Aus Sicht des Kunden und Physiotherapeuten soll die Möglichkeit offengehalten werden, eine jeweilige Schnittstelle für den Datenimport aus einem kundenseitig verwendeten Dokumentationssystem bereitzustellen. Des Weiteren soll mit möglichst geringem Implementationsaufwand auf etwaige Änderungen der Schnittstellen seitens der Softwaresysteme "Patienten-App", "Übungskatalog" oder "Benutzerverwaltung" reagiert werden können. Ebenfalls soll Physio Connect einfach mit neuen Schnittstellen erweitert werden können (beispielsweise für die Bereitstellung anonymisierter Gesundheitsdaten an die medizinische Forschung).
+|QG-3|Modifiability|Flexible Modifizier- und Erweiterbarkeit für existierende und zukünftige Schnittstellen|Aus Sicht des Kunden/der Kundin und Physiotherapeut*innen soll die Möglichkeit offengehalten werden, eine jeweilige Schnittstelle für den Datenimport aus einem kundenseitig verwendeten Dokumentationssystem bereitzustellen. Des Weiteren soll mit möglichst geringem Implementationsaufwand auf etwaige Änderungen der Schnittstellen seitens der Softwaresysteme "Patienten-App", "Übungskatalog" oder "Benutzerverwaltung" reagiert werden können. Ebenfalls soll Physio Connect einfach mit neuen Schnittstellen erweitert werden können (beispielsweise für die Bereitstellung anonymisierter Gesundheitsdaten an die medizinische Forschung).
 |===
 
 Die Qualitätsszenarien im Kapitel link:10_quality_requirements.adoc#section-quality-requirements[Qualitätsanforderungen] konkretisieren die oben genannten Qualitätsziele und dienen aufgrund von definierten Metriken auch dazu, ihren Erfüllungsgrad zu bewerten.
@@ -68,7 +68,7 @@ Die nachfolgende Tabelle repräsentiert eine Zusammenfassung der bestehenden Sta
 [options="header",cols="4,6"]
 |===
 |Stakeholder|Systemaspekte / -komponenten
-|Physiotherapeut
+|Physiotherapeut*in
 a|
 __Erforderlich__
 
@@ -83,7 +83,7 @@ __Optional__
 
 * Schnittstelle für den Datenimport aus dem verwendeten Dokumentationssystem (Mitigation von redundanter Datenerfassung)
 
-|Patient
+|Patient*in
 a|
 __Erforderlich__
 
@@ -92,7 +92,7 @@ __Erforderlich__
 * Explizite Einwilligung zur Datenweitergabe an Drittpersonen (z.B. medizinische Forschung)
 * Verwaltung persönlicher Therapie-Sessions und Übungskollektionen
 
-|Vorgesetzter des Physiotherapeuten
+|Vorgesetzte von Physiotherapeut*innen
 (z.B. Abteilungsleiter innerhalb eines Spitals)
 a|
 __Erforderlich__
@@ -100,13 +100,13 @@ __Erforderlich__
 * Monitoring
 * Reporting
 
-|Kunde (finanziert die Verwendung von PhysioConnect, z.B. Spitalleitung)
+|Kund*in (finanziert die Verwendung von PhysioConnect, z.B. Spitalleitung)
 a|
 __Erforderlich__
 
 * Möglichst hohe Kosteneffizienz bezüglich Installation, Betrieb und Wartung
-* Intuitive Benutzerschnittstelle soll zu guter Resonanz bei Hauptbenutzergruppen (Physiotherapeut, Patient) führen
-* Hoher Automatisierungsgrad soll Auslastungslücken bei Physiotherapeuten minimieren (= möglichst viele Patienten mit möglichst wenigen Therapeuten behandeln)
+* Intuitive Benutzerschnittstelle soll zu guter Resonanz bei Hauptbenutzergruppen (Physiotherapeut*in, Patient*in) führen
+* Hoher Automatisierungsgrad soll Auslastungslücken bei Physiotherapeut*innen minimieren (= möglichst viele Patient*innen mit möglichst wenigen Therapeut*innen behandeln)
 
 __Optional__
 
@@ -157,14 +157,14 @@ __Erforderlich__
 * Kurze Time-to-Market
 * Kostengünstige Entwicklung und Erweiterung
 
-|Entwickler von PhysioConnect
+|Entwickler*in von PhysioConnect
 a|
 __Erforderlich__
 
 * Einfache Erweiterbarkeit bei neuen Features
 * Möglichst hoher Automatisierungsgrad (Entwicklung, Testing, CI/CD)
 
-|Technische Integratoren von PhysioConnect (z.B. IT-Abteilung des Kunden)
+|Technische Integratoren von PhysioConnect (z.B. IT-Abteilung von Kund*innen)
 a|
 __Erforderlich__
 
@@ -188,12 +188,12 @@ image::01_03_stakeholder-powergrid.drawio.svg[Static,width=100%]
 
 Basierend auf dem Verhältnis zwischen Einfluss (Power) und Interessensgrad (Level of Interest) des Stakeholder Powergrids werden die Bedürfnisse der Stakeholder folgendermassen berücksichtigt.
 
-__Wichtigste Akteure__
+__Wichtigste Akteur*innen__
 
-* Anbieter / Product Owner von PhysioConnect
-* Kunde
-* Physiotherapeut
-* Patient
+* Anbieter*in / Product Owner von PhysioConnect
+* Kund*in
+* Physiotherapeut*in
+* Patient*in
 
 __Zufriedenstellen__
 
@@ -201,8 +201,8 @@ __Zufriedenstellen__
 
 __Informiert halten__
 
-* Entwickler von PhysioConnect
-* Vorgesetzter des Physiotherapeuten
+* Entwickler*in von PhysioConnect
+* Vorgesetzte des Physiotherapeut*innen
 * Technische Integratoren von PhysioConnect
 
 === Zusätzliche Architekturtreiber (Forces)

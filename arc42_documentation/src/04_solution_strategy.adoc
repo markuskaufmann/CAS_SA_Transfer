@@ -21,7 +21,7 @@ Die folgenden Prinzipien müssen bestmöglich während dem Design und der Umsetz
 
 |AP-3
 |Skalierbarkeit
-|Alle Container, deren Ressourcenverbrauch stark mit der Anzahl aktiver Benutzer korreliert, müssen horizontal skalierbar und zustandslos (stateless) sein. Container, deren Ressourcenverbrauch *nicht* oder nur minimal mit der Anzahl aktiver Benutzer korreliert, müssen nicht optimal skalierbar aufgebaut werden.
+|Alle Container, deren Ressourcenverbrauch stark mit der Anzahl aktiver Benutzer*innen korreliert, müssen horizontal skalierbar und zustandslos (stateless) sein. Container, deren Ressourcenverbrauch *nicht* oder nur minimal mit der Anzahl aktiver Benutzer*innen korreliert, müssen nicht optimal skalierbar aufgebaut werden.
 
 |AP-4
 |Protokolle 
@@ -55,7 +55,7 @@ Die folgende Priorität soll bezüglich der Verwendung von Datenformaten eingeha
 
 |AP-10
 |Security: Umsetzung einer strikten Zugriffskontrolle
-|Grundsätzlich sollen bei den verwendeten Sicherheitskonzepten jeweils alle Zugriffe verboten werden ("deny all") und nur Benutzer mit expliziter Erlaubnis sollen System- und Datenzugriff erhalten bzw. spezifische Aktionen ausführen dürfen. Dies gilt sowohl für Netzwerkkomponenten wie Firewalls als auch für Code-Level Autorisierungen bei API Requests (zu berücksichtigen bei "User to Service"- sowie "Service to Service"-Requests).
+|Grundsätzlich sollen bei den verwendeten Sicherheitskonzepten jeweils alle Zugriffe verboten werden ("deny all") und nur Benutzer*innen mit expliziter Erlaubnis sollen System- und Datenzugriff erhalten bzw. spezifische Aktionen ausführen dürfen. Dies gilt sowohl für Netzwerkkomponenten wie Firewalls als auch für Code-Level Autorisierungen bei API Requests (zu berücksichtigen bei "User to Service"- sowie "Service to Service"-Requests).
 
 |AP-11
 |Security: Einhaltung von aktuell geltenden Security-Standards
@@ -199,7 +199,7 @@ Das standardmässige Hosting von Physio Connect in der Cloud ermöglicht eine ef
 Prinzipien:
 
 * AP-3 +
-Komponenten, deren Ressourcenverbrauch stark mit der Anzahl aktiver Benutzer korreliert, müssen horizontal skalierbar und zustandslos (stateless) sein.
+Komponenten, deren Ressourcenverbrauch stark mit der Anzahl aktiver Benutzer*innen korreliert, müssen horizontal skalierbar und zustandslos (stateless) sein.
 * AP-9 +
 Verwendung von etablierten, standardisierten Datenformaten, welche laufend hinsichtlich ihres Ressourcenverbrauchs optimiert werden.
 
@@ -208,7 +208,7 @@ Sonstige Punkte:
 * Durch die Verwendung eines Load Balancer / Reverse Proxy (siehe link:05_building_block_view.adoc#section-building-block-view[Bausteinsicht]) können statische Inhalte temporär gecached werden, was die Response-Zeiten reduziert.
 
 |Capacity
-|Parallele Verwendung von Physio Connect durch mehrere Benutzer +
+|Parallele Verwendung von Physio Connect durch mehrere Benutzer*innen +
 (siehe link:10_quality_requirements#section-quality-requirements[Qualitätsszenario SZ-CAP-1])
 a|
 Entscheidungen:
@@ -227,7 +227,7 @@ Das standardmässige Hosting von Physio Connect in der Cloud ermöglicht eine ef
 Prinzipien:
 
 * AP-3 +
-Komponenten, deren Ressourcenverbrauch stark mit der Anzahl aktiver Benutzer korreliert, müssen horizontal skalierbar und zustandslos (stateless) sein.
+Komponenten, deren Ressourcenverbrauch stark mit der Anzahl aktiver Benutzer*innen korreliert, müssen horizontal skalierbar und zustandslos (stateless) sein.
 
 |Fault tolerance
 |Resilientes Verhalten bei einem Ausfall oder fehlerhaften Antworten der Umsysteme +

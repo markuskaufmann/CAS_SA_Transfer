@@ -36,15 +36,15 @@ a|
 [cols="2,6"]
 |===
 |**ID**|ADR-SEC-10
-|**Anliegen (Concern)**|Wie wird ein Systemkonsument sicher authentifiziert?
-|**Kontext**|Sowohl die bereitgestellte API als auch die Webapplikation (SPA, PWA) von PhysioConnect darf lediglich von Konsumenten (Benutzer oder Systeme) verwendet werden, welche in der Benutzerverwaltung als gültige Benutzer registriert sind. Bei jedem Kommunikationsvorgang muss daher sichergestellt werden, dass die Identität der konsumierenden Partei erfolgreich verifiziert werden konnte.
+|**Anliegen (Concern)**|Wie werden Systemkonsument*innen sicher authentifiziert?
+|**Kontext**|Sowohl die bereitgestellte API als auch die Webapplikation (SPA, PWA) von PhysioConnect darf lediglich von Konsument*innen (Benutzer*innen oder Systeme) verwendet werden, welche in der Benutzerverwaltung als gültige Benutzer*innen registriert sind. Bei jedem Kommunikationsvorgang muss daher sichergestellt werden, dass die Identität der konsumierenden Partei erfolgreich verifiziert werden konnte.
 |**Voraussetzungen**
 a|
 Das System "Benutzerverwaltung" gibt bereits die folgenden Rahmenbedingungen vor:
 
 * Als Identity Provider wird https://www.keycloak.org/[Keycloak] verwendet
 * Keycloak unterstützt Multi-factor authentication (MFA)
-1. Passwort des Benutzers
+1. Passwort des Benutzers/der Benutzerin
 2. One-time password via https://googleauthenticator.net/[Google Authenticator] oder https://freeotp.github.io/[FreeOTP]
 
 |**Alternative A1**
@@ -65,7 +65,7 @@ __Nachteile:__
 * Anfällig für Hijacking- und Man-in-the-middle-Attacken wenn unverschlüsselte Verbindung
 * Grössere Angriffsfläche, da Username / Passwort mit jedem Request quasi als Klartext (Base64) mitgesendet werden
 * Passwort wird eventuell im Browsercache abgelegt, was CSRF-Attacken begünstigt
-* Im Falle eines erfolgreichen Angriffs sind die Benutzer-Credentials (Username & Passwort) in den Händen des Angreifers, was (je nach internen Rollen und Berechtigungen des betroffenen Benutzers) zu einer immensen Verletzlichkeit des Gesamtsystems führen kann
+* Im Falle eines erfolgreichen Angriffs sind die Benutzer-Credentials (Username & Passwort) in den Händen des Angreifers, was (je nach internen Rollen und Berechtigungen des betroffenen Benutzers/der betroffenen Benutzerin) zu einer immensen Verletzlichkeit des Gesamtsystems führen kann
 
 |**Alternative A2**
 a|
@@ -134,7 +134,7 @@ a|
 * A3) OAuth 2.0 mit OpenID Connect und Bearer Token (JWT)
 * Multi-factor authentication (MFA)
 
-|**Begründung**|Die Authentifizierung mit OAuth 2.0 und OpenID Connect ist eine etablierte und (zurzeit) sichere Methode zur Verifikation der Identität eines Systemkonsumenten. In der direkten Gegenüberstellung mit den restlichen Alternativen ist OAuth & OpenID Connect spezifisch darauf ausgelegt, den Authentifizierungsworkflow zwischen Frontend (SPA, PWA) und Backend (API) so sicher wie möglich zu gestalten. +
+|**Begründung**|Die Authentifizierung mit OAuth 2.0 und OpenID Connect ist eine etablierte und (zurzeit) sichere Methode zur Verifikation der Identität von Systemkonsument*innen. In der direkten Gegenüberstellung mit den restlichen Alternativen ist OAuth & OpenID Connect spezifisch darauf ausgelegt, den Authentifizierungsworkflow zwischen Frontend (SPA, PWA) und Backend (API) so sicher wie möglich zu gestalten. +
 Vorsicht ist jedoch bei der Implementation und Konfiguration geboten - wie bereits als Nachteil dieser Variante erfasst, kann eine falsche Implementation und / oder Konfiguration zu Sicherheitslücken führen. Dies kann jedoch theoretisch bei jeder Alternative der Fall sein. +
 OAuth 2.0 & OpenID Connect wird zudem von allen gängigen (Social) Identity Providern einwandfrei unterstützt.
 
@@ -156,17 +156,17 @@ Die Kommunikation mit Physio Connect erfolgt stets über eine verschlüsselte Ve
 |**Follow-up Entscheidungen**
 a|
 * **ADR-SEC-11** +
-Mit welchen Social Identity Providern kann sich ein Systembenutzer authentifizieren?
+Mit welchen Social Identity Providern kann sich ein Systembenutzer/eine Systembenutzerin authentifizieren?
 
 |===
 
 [cols="2,6"]
 |===
 |**ID**|ADR-SEC-11
-|**Anliegen (Concern)**|Mit welchen Social Identity Providern kann sich ein Systembenutzer authentifizieren?
+|**Anliegen (Concern)**|Mit welchen Social Identity Providern kann sich ein Systembenutzer/eine Systembenutzerin authentifizieren?
 |**Kontext**
-a|Social Identity Providers wie Google, Microsoft oder Apple ermöglichen die Authentifizierung eines Benutzers über bereits existierende (Social Media) Accounts. Auf diese Weise werden Benutzerinformationen und Credentials (Username & Passwort) lediglich an einem zentralen Ort (nämlich beim betroffenen Social Identity Provider) verwaltet und nicht bei PhysioConnect redundant gehalten. +
-Zudem ist der Login-Prozess über Social Identity Providers meist intuitiver, da die Benutzer meist denselben Account mit verschiedenen Services verknüpfen (z.B. Google-Account) und sich daher überall mit denselben Credentials und über dieselbe Login-Maske und Multi-factor authentication (MFA) authentifizieren können.
+a|Social Identity Providers wie Google, Microsoft oder Apple ermöglichen die Authentifizierung eines Benutzers/einer Benutzerin über bereits existierende (Social Media) Accounts. Auf diese Weise werden Benutzerinformationen und Credentials (Username & Passwort) lediglich an einem zentralen Ort (nämlich beim betroffenen Social Identity Provider) verwaltet und nicht bei PhysioConnect redundant gehalten. +
+Zudem ist der Login-Prozess über Social Identity Providers meist intuitiver, da die Benutzer*innen meist denselben Account mit verschiedenen Services verknüpfen (z.B. Google-Account) und sich daher überall mit denselben Credentials und über dieselbe Login-Maske und Multi-factor authentication (MFA) authentifizieren können.
 |**Voraussetzungen**
 a|
 __Allgemein__
@@ -195,9 +195,9 @@ __Vorteile:__
 
 __Nachteile:__
 
-* Redundante Datenhaltung, da ein Grossteil der Benutzer bereits einen Account bei einem (oder mehreren) Social Identity Providers besitzt
-* Eigene Login-Maske und Multi-factor authentication (MFA)-Prozess für alle Benutzer
-* Benutzer müssen sich mit dedizierten Credentials (Username & Passwort) anmelden
+* Redundante Datenhaltung, da ein Grossteil der Benutzer*innen bereits einen Account bei einem (oder mehreren) Social Identity Providers besitzt
+* Eigene Login-Maske und Multi-factor authentication (MFA)-Prozess für alle Benutzer*innen
+* Benutzer*innen müssen sich mit dedizierten Credentials (Username & Passwort) anmelden
 
 |**Alternative A2**
 a|
@@ -206,7 +206,7 @@ Authentifizierung über Google.
 
 __Vorteile:__
 
-* Einbezug von Benutzern, welche sich ausschliesslich im Google-Ökosystem befinden oder mehrheitlich Google-Produkte und -Services verwenden. +
+* Einbezug von Benutzer*innen, welche sich ausschliesslich im Google-Ökosystem befinden oder mehrheitlich Google-Produkte und -Services verwenden. +
 Beispielsweise ist hierbei der Grossteil aller Android User inkludiert.
 
 __Nachteile:__ +
@@ -219,7 +219,7 @@ Authentifizierung über Microsoft.
 
 __Vorteile:__
 
-* Einbezug von Benutzern, welche sich ausschliesslich im Microsoft-Ökosystem befinden oder mehrheitlich Microsoft-Produkte und -Services verwenden. +
+* Einbezug von Benutzer*innen, welche sich ausschliesslich im Microsoft-Ökosystem befinden oder mehrheitlich Microsoft-Produkte und -Services verwenden. +
 Beispielsweise ist hierbei der Grossteil aller Windows User inkludiert.
 
 __Nachteile:__ +
@@ -232,7 +232,7 @@ Authentifizierung über Apple.
 
 __Vorteile:__
 
-* Einbezug von Benutzern, welche sich ausschliesslich im Apple-Ökosystem befinden oder mehrheitlich Apple-Produkte und -Services verwenden. +
+* Einbezug von Benutzerinnen, welche sich ausschliesslich im Apple-Ökosystem befinden oder mehrheitlich Apple-Produkte und -Services verwenden. +
 Beispielsweise ist hierbei der Grossteil aller iOS & macOS User inkludiert.
 
 __Nachteile:__ +
@@ -246,10 +246,10 @@ Verwendung von
 * A2) Microsoft
 * A3) Apple
 
-Die Möglichkeit der Authentifizierung über die obigen Social Identity Provider soll in erster Linie den Patienten (= externen Benutzeraccounts) zur Verfügung stehen. Die Benutzeraccounts von Physiotherapeuten, Vorgesetzten und weiteren kundenseitig internen Benutzern werden im Rahmen des Systems "Benutzerverwaltung" mit der bestehenden Identity & Access Management-Lösung des Kunden (z.B. Active Directory) synchronisiert. +
-Eine Ausnahme bilden Kunden, welche ihre internen Benutzer bereits via Microsoft Accounts (z.B. via Office 365) authentifizieren.
-|**Begründung**|Die Verwendung von Social Identity Providers bietet eine hohe Flexibilität bei relativ geringem Integrationsaufwand. Mit der Kombination aus Google, Microsoft und Apple sollte das Angebot an Social Identity Providern eine klare Mehrheit der zukünftigen Benutzer abdecken. +
-Zudem kann auf diese Weise eine redundante Datenhaltung von Benutzeraccounts verhindert werden, da ein Grossteil der zukünftigen Benutzer bereits einen Account bei einem (oder mehreren) Social Identity Providers besitzt.
+Die Möglichkeit der Authentifizierung über die obigen Social Identity Provider soll in erster Linie den Patient*innen (= externen Benutzeraccounts) zur Verfügung stehen. Die Benutzeraccounts von Physiotherapeut*innen, Vorgesetzten und weiteren kundenseitig internen Benutzer*innen werden im Rahmen des Systems "Benutzerverwaltung" mit der bestehenden Identity & Access Management-Lösung der Kund*innen (z.B. Active Directory) synchronisiert. +
+Eine Ausnahme bilden Kund*innen, welche ihre internen Benutzer*innen bereits via Microsoft Accounts (z.B. via Office 365) authentifizieren.
+|**Begründung**|Die Verwendung von Social Identity Providers bietet eine hohe Flexibilität bei relativ geringem Integrationsaufwand. Mit der Kombination aus Google, Microsoft und Apple sollte das Angebot an Social Identity Providern eine klare Mehrheit der zukünftigen Benutzer*innen abdecken. +
+Zudem kann auf diese Weise eine redundante Datenhaltung von Benutzeraccounts verhindert werden, da ein Grossteil der zukünftigen Benutzer*innen bereits einen Account bei einem (oder mehreren) Social Identity Providers besitzt.
 
 **Hinweis:** +
 Diese Entscheidung führt zu entsprechenden Änderungen in PhysioConnect (Webapplikation, API) sowie dem System "Benutzerverwaltung" (Konfiguration der Social Identity Providers in Keycloak).
@@ -275,7 +275,7 @@ Die systemweite Authentifierung erfolgt über den vom Umsystem __Benutzerverwalt
 |**Anliegen (Concern)**|Welche Plattformen sollen unterstützt werden?
 
 |**Kontext**
-|Physiotherapeuten und Patienten verwenden das PhysioConnect-Frontend hauptsächlich für die Planung und Auswertung von Therapien.
+|Physiotherapeut*innen und Patient*innen verwenden das PhysioConnect-Frontend hauptsächlich für die Planung und Auswertung von Therapien.
 
 |**Alternative A1**
 a|
@@ -360,9 +360,9 @@ Kann:
 
 |**Begründung**
 a|
-Da wir keinen Einfluss auf das System unserer Kunden haben, schliesst dies eine Desktop-Applikation aus. Webapplikationen genügen ausserdem für die für unser System benötigte Performance.
+Da wir keinen Einfluss auf das System unserer Kund*innen haben, schliesst dies eine Desktop-Applikation aus. Webapplikationen genügen ausserdem für die für unser System benötigte Performance.
 
-Da Physiotherapeuten oft nicht im Büro sind und trotzdem Zugriff auf die Therapiedaten haben müssen, müssen mobile Browser ebenfalls unterstützt werden.
+Da Physiotherapeut*innen oft nicht im Büro sind und trotzdem Zugriff auf die Therapiedaten haben müssen, müssen mobile Browser ebenfalls unterstützt werden.
 
 Es wurden bereits Funktionalitäten gewünscht wie die Aufnahme von Fotos und Videos für Übungsbeschreibungen. Dies hätte eine höhere Usability in Mobile Apps als im Browser. Da der Implementationsaufwand minimal gehalten werden sollte und nur eine Codebase verwendet werden muss, wird dieser Entscheid bei der Analyse der zu verwendenden Technologien getroffen.
 
@@ -384,7 +384,7 @@ Bei der Auslieferung (Deployment) von Modifikationen / Erweiterungen muss keine 
 * SZ-MOD-5
 
 **Scalability** +
-Durch die Skalierung der Infrastrukturkomponenten, auf welchen das Frontend als Webapplikation gehostet wird, kann eine hohe und dynamische Anzahl gleichzeitiger Benutzer unterstützt werden.
+Durch die Skalierung der Infrastrukturkomponenten, auf welchen das Frontend als Webapplikation gehostet wird, kann eine hohe und dynamische Anzahl gleichzeitiger Benutzer*innen unterstützt werden.
 
 * SZ-CAP-1
 
@@ -408,7 +408,7 @@ Welcher Architekturstil soll für das PhysioConnect-Frontend verwendet werden?
 |**Anliegen (Concern)**|Welcher Architekturstil soll für das PhysioConnect-Frontend verwendet werden?
 
 |**Kontext**
-|Physiotherapeuten und Patienten verwenden das PhysioConnect-Frontend hauptsächlich für die Planung und Auswertung von Therapien. Mobile Browser müssen unterstützt werden.
+|Physiotherapeut*innen und Patient*innen verwenden das PhysioConnect-Frontend hauptsächlich für die Planung und Auswertung von Therapien. Mobile Browser müssen unterstützt werden.
 
 |**Alternative A1**
 a|
@@ -466,7 +466,7 @@ Mit Server-side Rendering wäre es sehr aufwändig, die gewünschte Usability um
 |link:10_quality_requirements.adoc#section-quality-requirements[**Qualitätsanforderungen**]
 a|
 **Modifiability** +
-Aktuelle Javascript-SPA-Frameworks wie Angular oder React unterstützen die Entwickler bei der Implementation von kompakten, wiederverwendbaren Komponenten und Modulen, welche massgeblich zur Optimierung der Modifizier- und Erweiterbarkeit des Frontends beitragen können.
+Aktuelle Javascript-SPA-Frameworks wie Angular oder React unterstützen die Entwickler*innen bei der Implementation von kompakten, wiederverwendbaren Komponenten und Modulen, welche massgeblich zur Optimierung der Modifizier- und Erweiterbarkeit des Frontends beitragen können.
 
 * SZ-MOD-1
 * SZ-MOD-5
@@ -491,7 +491,7 @@ Mit welcher Technologie soll die Single Page Application umgesetzt werden?
 |**Anliegen (Concern)**|Mit welcher Technologie soll die Single Page Application umgesetzt werden?
 
 |**Kontext**
-|Physiotherapeuten und Patienten verwenden das PhysioConnect-Frontend hauptsächlich für die Planung und Auswertung von Therapien. Mobile Browser müssen unterstützt werden. Es wurde entschieden, dass eine Single Page Application (SPA) verwendet werden soll.
+|Physiotherapeut*innen und Patient*innen verwenden das PhysioConnect-Frontend hauptsächlich für die Planung und Auswertung von Therapien. Mobile Browser müssen unterstützt werden. Es wurde entschieden, dass eine Single Page Application (SPA) verwendet werden soll.
 
 |**Alternative A1**
 a|
@@ -560,7 +560,7 @@ Vue.js und React sind beide für unser Projekt geeignet, React scheint jedoch ei
 |link:10_quality_requirements.adoc#section-quality-requirements[**Qualitätsanforderungen**]
 a|
 **Modifiability** +
-React unterstützt die Entwickler bei der Implementation von kompakten, wiederverwendbaren Komponenten und Modulen, welche massgeblich zur Optimierung der Modifizier- und Erweiterbarkeit des Frontends beitragen können. Die komponentenbasierte Architektur von React kann - wenn richtig angewendet - ebenfalls zu einer losen internen Kopplung führen, was Änderungen an bestimmten Stellen der Applikation zulässt, ohne den Rest der Codebasis zu beeinträchtigen. Dies erleichtert das Hinzufügen / Entfernen von Funktionen, die Behebung von Bugs oder die allgemeine Wartung der Applikation.
+React unterstützt die Entwickler*innen bei der Implementation von kompakten, wiederverwendbaren Komponenten und Modulen, welche massgeblich zur Optimierung der Modifizier- und Erweiterbarkeit des Frontends beitragen können. Die komponentenbasierte Architektur von React kann - wenn richtig angewendet - ebenfalls zu einer losen internen Kopplung führen, was Änderungen an bestimmten Stellen der Applikation zulässt, ohne den Rest der Codebasis zu beeinträchtigen. Dies erleichtert das Hinzufügen / Entfernen von Funktionen, die Behebung von Bugs oder die allgemeine Wartung der Applikation.
 
 * SZ-MOD-1
 * SZ-MOD-5
@@ -608,7 +608,7 @@ a|
 __Vorteile:__
 
 * Apps müssen nicht über einen Store veröffentlicht werden
-* Apps besitzen immer die gleiche Version wie der Server. Falls mehrere Systeme im Einsatz sind (self-hosted vom Kunden), passt die App automatisch mit der Kundenversion überein
+* Apps besitzen immer die gleiche Version wie der Server. Falls mehrere Systeme im Einsatz sind (self-hosted von Kund*innen), passt die App automatisch mit der Kundenversion überein
 * Relativ geringer Umsetzungsaufwand
 * Bietet eingeschränkte Offline-Funktionalitäten an
 * Da es sich weiterhin um ein Browser-App handelt und nicht auf die nativen Funktionalitäten zugreift, muss nicht mit einer Vielzahl von Devices getestet werden
@@ -839,7 +839,7 @@ Die Verwendung von Microservices wird in den meisten Fällen mit dem Einsatz von
 Betrifft alle diesbezüglichen Qualitätsszenarien (SZ-IOP-*).
 
 **Modifiability** +
-Etwaige Modifikationen oder Erweiterungen eines Microservices sind mit geringer Komplexität realisierbar, da sich die darin befindlichen Funktionalitäten nur in dem jeweils betroffenen Microservice befinden und nicht über mehrere Services aufgetrennt sind. Zudem lassen sich Anpassungen an unterschiedlichen Microservices parallel auf mehrere Entwickler / Entwicklungsteams aufteilen. +
+Etwaige Modifikationen oder Erweiterungen eines Microservices sind mit geringer Komplexität realisierbar, da sich die darin befindlichen Funktionalitäten nur in dem jeweils betroffenen Microservice befinden und nicht über mehrere Services aufgetrennt sind. Zudem lassen sich Anpassungen an unterschiedlichen Microservices parallel auf mehrere Entwickler*innen / Entwicklungsteams aufteilen. +
 Betrifft alle diesbezüglichen Qualitätsszenarien (SZ-MOD-*).
 
 **Capacity** +
@@ -902,7 +902,7 @@ Die Erweiterbarkeit ist ebenfalls gegeben, da neue Funktionen durch die Modifizi
 __Nachteile:__
 
 * Komplexität: +
-Aufgrund der Trennung von Businesslogik und externen Abhängigkeiten und der diesbezüglich eingesetzten Indirektionen / Abstraktionen (z.B. durch den Einsatz von Interfaces) kann dieser Stil schwierig zu verstehen und daher komplexer und aufwändiger zu implementieren sein - vor allem für Entwickler, welche noch wenig / keine Erfahrung mit dem Stil besitzen
+Aufgrund der Trennung von Businesslogik und externen Abhängigkeiten und der diesbezüglich eingesetzten Indirektionen / Abstraktionen (z.B. durch den Einsatz von Interfaces) kann dieser Stil schwierig zu verstehen und daher komplexer und aufwändiger zu implementieren sein - vor allem für Entwickler*innen, welche noch wenig / keine Erfahrung mit dem Stil besitzen
 
 |**Alternative A3**
 a|
@@ -932,7 +932,7 @@ a|
 __Nachteile:__
 
 * Komplexität: +
-Aufgrund der zahlreichen Layers und diesbezüglich eingesetzten Indirektionen / Abstraktionen (z.B. durch den Einsatz von Interfaces) kann dieser Stil schwierig zu verstehen und daher komplexer und aufwändiger zu implementieren sein - vor allem für Entwickler, welche noch wenig / keine Erfahrung mit dem Stil besitzen
+Aufgrund der zahlreichen Layers und diesbezüglich eingesetzten Indirektionen / Abstraktionen (z.B. durch den Einsatz von Interfaces) kann dieser Stil schwierig zu verstehen und daher komplexer und aufwändiger zu implementieren sein - vor allem für Entwickler*innen, welche noch wenig / keine Erfahrung mit dem Stil besitzen
 * Umfangreiche Codebase / Boilerplate-Code: +
 Die Verwendung von Layer-Abstraktionen und vordefinierten Mappings zwischen den Layern kann zu Boilerplate-Code und - darausfolgend - einer umfangreicheren Codebase führen
 
@@ -955,7 +955,7 @@ Betrifft alle diesbezüglichen Qualitätsszenarien (SZ-MOD-*).
 |**ID**|ADR-BAC-30
 |**Anliegen (Concern)**|Werden mehrere (unterschiedliche) Datenbanken für PhysioConnect eingesetzt?
 |**Kontext**
-a|PhysioConnect persistiert unterschiedlichste Daten zur Laufzeit. Beispielsweise werden einerseits stetig aufgezeichnete Messdaten des Patienten abgelegt, andererseits aber auch allgemeine Therapiedaten. Im Rahmen dieser Entscheidung soll analysiert werden, ob die Verwendung mehrerer (unterschiedlicher) Datenbanken für die Persistierung der Daten eingesetzt werden sollen.
+a|PhysioConnect persistiert unterschiedlichste Daten zur Laufzeit. Beispielsweise werden einerseits stetig aufgezeichnete Messdaten des Patienten/der Patientin abgelegt, andererseits aber auch allgemeine Therapiedaten. Im Rahmen dieser Entscheidung soll analysiert werden, ob die Verwendung mehrerer (unterschiedlicher) Datenbanken für die Persistierung der Daten eingesetzt werden sollen.
 |**Alternative A1**
 a|
 **Alle Daten in derselben Datenbank**
@@ -1013,7 +1013,7 @@ Welche Datenbankmodelle werden für PhysioConnect eingesetzt?
 |**ID**|ADR-BAC-31
 |**Anliegen (Concern)**|Welche Datenbankmodelle werden für PhysioConnect eingesetzt?
 |**Kontext**
-a|PhysioConnect persistiert unterschiedlichste Daten zur Laufzeit. Beispielsweise werden einerseits stetig aufgezeichnete Messdaten des Patienten abgelegt, andererseits aber auch allgemeine Therapiedaten. Im Rahmen dieser Entscheidung soll analysiert werden, welche Datenbankmodelle für die unterschiedlichen Datenarten und Anwendungsfälle von PhysioConnect passend sein könnten.
+a|PhysioConnect persistiert unterschiedlichste Daten zur Laufzeit. Beispielsweise werden einerseits stetig aufgezeichnete Messdaten des Patienten/der Patientin abgelegt, andererseits aber auch allgemeine Therapiedaten. Im Rahmen dieser Entscheidung soll analysiert werden, welche Datenbankmodelle für die unterschiedlichen Datenarten und Anwendungsfälle von PhysioConnect passend sein könnten.
 |**Alternative A1**
 a|
 **Relationale Datenbank**
@@ -1046,7 +1046,7 @@ __Nachteile:__
 * Komplexität: +
 Relationale Datenbanken können aufwändig in der Einrichtung und Wartung sein, insbesondere bei grossen und komplexen Systemen.
 * Performance: +
-Relationale Datenbanken können bei der Verarbeitung grosser Datenmengen oder einer hohen Anzahl gleichzeitiger Benutzer Performanceprobleme aufweisen.
+Relationale Datenbanken können bei der Verarbeitung grosser Datenmengen oder einer hohen Anzahl gleichzeitiger Benutzer*innen Performanceprobleme aufweisen.
 * Flexibilität: +
 Relationale Datenbanken sind nicht so flexibel wie einige NoSQL-Datenbanken, was die Speicherung komplexer oder unstrukturierter Daten erschweren kann.
 * Kosten: +
@@ -1084,7 +1084,7 @@ __Nachteile:__
 * Komplexität: +
 Objektorientierte Datenbanken können sehr komplex in der Einrichtung und Wartung sein, insbesondere bei grossen und komplexen Systemen.
 * Performance: +
-Bei objektorientierten Datenbanken kann es zu Performanceproblemen kommen, wenn grosse Datenmengen oder eine hohe Anzahl gleichzeitiger Benutzer verarbeitet werden.
+Bei objektorientierten Datenbanken kann es zu Performanceproblemen kommen, wenn grosse Datenmengen oder eine hohe Anzahl gleichzeitiger Benutzer*innen verarbeitet werden.
 * Kompatibilität: +
 Objektorientierte Datenbanken sind möglicherweise nicht mit allen Anwendungen und Programmiersprachen kompatibel.
 * Kosten: +
@@ -1099,7 +1099,7 @@ __Verwendungszwecke:__
 * Verwaltung unstrukturierter oder halbstrukturierter Daten, welche nicht gut in ein traditionelles relationales Schema passen
 * Verwaltung grosser Datenmengen
 * Eignet sich für Anwendungen, welche ein hohes Mass an Flexibilität und die Fähigkeit erfordern, Daten schnell und effizient zu speichern und abzurufen
-* Eignet sich für Anwendungen, welche ein hohes Mass an Skalierbarkeit und die Fähigkeit erfordern, eine grosse Anzahl gleichzeitiger Benutzer zu verarbeiten
+* Eignet sich für Anwendungen, welche ein hohes Mass an Skalierbarkeit und die Fähigkeit erfordern, eine grosse Anzahl gleichzeitiger Benutzer*innen zu verarbeiten
 
 __Vorteile:__
 
@@ -1110,7 +1110,7 @@ Dokumentdatenbanken sind in der Lage, grosse Datenmengen zu verarbeiten und lass
 * Performance: +
 Dokumentdatenbanken sind im Allgemeinen performanter und effizienter als relationale Datenbanken, wenn es um das Lesen und Schreiben von Daten geht.
 * Benutzerfreundlichkeit: +
-Dokumentdatenbanken sind im Vergleich zu relationalen Datenbanken oft einfacher einzurichten und zu pflegen - insbesondere für Entwickler, die mit dem JSON-Datenformat vertraut sind.
+Dokumentdatenbanken sind im Vergleich zu relationalen Datenbanken oft einfacher einzurichten und zu pflegen - insbesondere für Entwickler*innen, die mit dem JSON-Datenformat vertraut sind.
 
 |**Alternative A3** +
 (Platzbedingte Fortsetzung)
@@ -1137,7 +1137,7 @@ __Verwendungszwecke:__
 * Verwaltung komplexer, miteinander verknüpfter Daten und deren Beziehungen untereinander
 * Verwaltung grosser Mengen von Echtzeitdaten
 * Eignet sich für Anwendungen, welche ein hohes Mass an Flexibilität und die Fähigkeit erfordern, Datenbeziehungen schnell und effizient abzufragen und zu analysieren
-* Eignet sich für Anwendungen, welche ein hohes Mass an Skalierbarkeit und die Fähigkeit erfordern, eine grosse Anzahl gleichzeitiger Benutzer zu verarbeiten
+* Eignet sich für Anwendungen, welche ein hohes Mass an Skalierbarkeit und die Fähigkeit erfordern, eine grosse Anzahl gleichzeitiger Benutzer*innen zu verarbeiten
 
 __Vorteile:__
 
@@ -1175,7 +1175,7 @@ __Verwendungszwecke:__
 * Verwaltung von Daten mit Zeitstempel wie z.B. Sensor-, Finanz- oder Protokolldaten
 * Verwaltung grosser Datenmengen
 * Eignet sich für Anwendungen, welche ein hohes Mass an Performance und die Fähigkeit zur schnellen und effizienten Abfrage und Analyse von zeitbasierten Daten erfordern
-* Eignet sich für Anwendungen, welche ein hohes Mass an Skalierbarkeit und die Fähigkeit erfordern, eine grosse Anzahl gleichzeitiger Benutzer zu verarbeiten
+* Eignet sich für Anwendungen, welche ein hohes Mass an Skalierbarkeit und die Fähigkeit erfordern, eine grosse Anzahl gleichzeitiger Benutzer*innen zu verarbeiten
 
 __Vorteile:__
 
@@ -1237,7 +1237,7 @@ Dokumentdatenbanken erlauben eine hohe Anzahl paralleler Verbindungen und lassen
 |**ID**|ADR-BAC-40
 |**Anliegen (Concern)**|Wie wird das Backend-Messaging innerhalb von Physio Connect umgesetzt?
 |**Kontext**
-|Sowohl Requests von Physiotherapeuten als auch von Patienten werden vom PhysioConnect-Backend gehandhabt. Zu Peak-Zeiten kann es sich dabei um eine hohe Anzahl von Requests bzw. eine hohe eingehende Datenmenge handeln. Da das PhysioConnect-Backend gemäss Architekturentscheid __ADR-BAC-10__ aus mehreren Microservices bestehen wird, soll überprüft werden, ob eine Messaging-Komponente eingesetzt werden soll und falls ja, welche.
+|Sowohl Requests von Physiotherapeut*innen als auch von Patient*innen werden vom PhysioConnect-Backend gehandhabt. Zu Peak-Zeiten kann es sich dabei um eine hohe Anzahl von Requests bzw. eine hohe eingehende Datenmenge handeln. Da das PhysioConnect-Backend gemäss Architekturentscheid __ADR-BAC-10__ aus mehreren Microservices bestehen wird, soll überprüft werden, ob eine Messaging-Komponente eingesetzt werden soll und falls ja, welche.
 |**Alternative A1**
 a|
 **HTTPS (SSL / TLS)**
@@ -1293,7 +1293,7 @@ a|
 
 * Kommunikation mit HTTPS (SSL / TLS) hat die geringste Komplexität
 * Time-to-Market ist in einem ersten Schritt wichtiger als die Performance
-* Für eine geringe Anzahl Benutzer wird es einfach sein, eine gute Performance mittels Skalierung zu erreichen
+* Für eine geringe Anzahl Benutzer*innen wird es einfach sein, eine gute Performance mittels Skalierung zu erreichen
 * Es ist einfacher, Bottlenecks zu erkennen und zu optimieren, wenn das System bereits produktiv im Einsatz ist
 
 Es soll jedoch bei Design und Implementation darauf geachtet werden, dass die Möglichkeit der zukünftig gezielten Verwendung von gRPC oder einer Message Queue erhalten bleibt.
@@ -1358,7 +1358,7 @@ Durch die direkte Anbindung der API besteht das Risiko, dass sich die Domäne de
 a|
 **Verwendung einer Wrapper Library**
 
-Die REST APIs der Umsysteme __Übungskatalog__ und __Benutzerverwaltung__ werden als Bestandteil einer systemweit verfügbaren Wrapper Library gekapselt und in alle betroffenen Physio Connect-Services und -Komponenten direkt eingebunden. Die Library beinhaltet unter anderem die gesamte Verbindungs-, Mapping-, Exception Handling- und (De-)Serialisierungslogik und abstrahiert die API Endpoints der Umsysteme in public-facing Methoden, welche von den Konsumenten der Library aufgerufen werden können.
+Die REST APIs der Umsysteme __Übungskatalog__ und __Benutzerverwaltung__ werden als Bestandteil einer systemweit verfügbaren Wrapper Library gekapselt und in alle betroffenen Physio Connect-Services und -Komponenten direkt eingebunden. Die Library beinhaltet unter anderem die gesamte Verbindungs-, Mapping-, Exception Handling- und (De-)Serialisierungslogik und abstrahiert die API Endpoints der Umsysteme in public-facing Methoden, welche von den Konsument*innen der Library aufgerufen werden können.
 
 __Vorteile:__
 
@@ -1471,7 +1471,7 @@ Verbindungsunterbrüche, Ausfälle und / oder fehlerhaftes Antwortverhalten der 
 |===
 |**ID**|ADR-HST-10
 |**Anliegen (Concern)**|Wie wird Physio Connect gehosted?
-|**Kontext**|Physio Connect ist eine Unterstützungs- und Integrationssoftware und zielt nicht darauf ab, kundenseitig bereits eingesetzte Systeme und Prozesse abzulösen, sondern nimmt eine komplementäre Rolle ein. Deshalb stellt sich die Frage, welches Hosting-Modell den Kunden das ideale Verhältnis zwischen (Integrations- / Betriebs-)Aufwand, Komplexität, Effizienz und Kompatibilität zur Verfügung stellt.
+|**Kontext**|Physio Connect ist eine Unterstützungs- und Integrationssoftware und zielt nicht darauf ab, kundenseitig bereits eingesetzte Systeme und Prozesse abzulösen, sondern nimmt eine komplementäre Rolle ein. Deshalb stellt sich die Frage, welches Hosting-Modell den Kund*innen das ideale Verhältnis zwischen (Integrations- / Betriebs-)Aufwand, Komplexität, Effizienz und Kompatibilität zur Verfügung stellt.
 |**Alternative A1**
 a|
 **Hosting bei etabliertem Cloud-Provider**
@@ -1509,12 +1509,12 @@ Einige Gesundheitsinstitute besitzen (nicht-gesetzliche) Vorlagen, dass Daten in
 
 |**Alternative A2**
 a|
-**On-premises beim Kunden**
+**On-premises bei den Kund*innen**
 
 __Vorteile:__
 
 * Vollständige Kontrolle: +
-Bei einem on-premises-Hosting besitzt man (bzw. in diesem Fall der Kunde) die vollständige Kontrolle über die Hardware, Software und Infrastruktur. Dies kann von Vorteil sein, wenn spezielle Sicherheits- oder Compliance-Anforderungen vorliegen, welche von einem Cloud-Provider nicht (oder nur eingeschränkt) erfüllt werden können.
+Bei einem on-premises-Hosting besitzt man (bzw. in diesem Fall die Kund*innen) die vollständige Kontrolle über die Hardware, Software und Infrastruktur. Dies kann von Vorteil sein, wenn spezielle Sicherheits- oder Compliance-Anforderungen vorliegen, welche von einem Cloud-Provider nicht (oder nur eingeschränkt) erfüllt werden können.
 * Vorhersehbare Kosten: +
 Bei einem on-premises-Hosting können die Kosten in der Regel genauer und verlässlicher prognostiziert werden, da sie nicht an die Nutzung ("Pay as you go") gebunden sind.
 * (Potenziell) Bessere Performance: +
@@ -1525,14 +1525,14 @@ __Nachteile:__
 * Höhere Vorabkosten: +
 Ein on-premises-Hosting erfordert grössere vorgängige Investitionen in Hardware, Software und Infrastruktur.
 * Wartung und Support: +
-Bei einem on-premises-Hosting ist der Kunde selbst für die Wartung und Unterstützung der Infrastruktur verantwortlich. Dies kann ressourcenaufwändig sein und spezielles technisches Know-How erfordern.
+Bei einem on-premises-Hosting sind die Kund*innen selbst für die Wartung und Unterstützung der Infrastruktur verantwortlich. Dies kann ressourcenaufwändig sein und spezielles technisches Know-How erfordern.
 * Eingeschränkte Skalierbarkeit: +
 Es kann komplex und kostenaufwändig sein, eine on-premises betriebene Infrastruktur nach Bedarf horizontal oder vertikal zu skalieren.
 * Kleinere, selbstgewartete IT Infrastrukturen besitzen häufiger Sicherheitslücken als die von grossen Cloud Anbietern.
 
 |**Entscheidung**|A1) Hosting bei etabliertem Cloud-Provider
 
-Die Möglichkeit, dass - je nach Kunde - die Alternative __A2) On-premises beim Kunden__ zum Einsatz kommen kann, wird nicht ausgeschlossen, sollte jedoch ein Ausnahmefall bleiben.
+Die Möglichkeit, dass - je nach Kund*in - die Alternative __A2) On-premises bei den Kund*innen__ zum Einsatz kommen kann, wird nicht ausgeschlossen, sollte jedoch ein Ausnahmefall bleiben.
 |**Begründung**
 a|
 Das definierte link:04_solution_strategy.adoc#section-solution-strategy[Architekturprinzip AP-6] gibt bereits die Richtlinie vor, im Rahmen von Physio Connect grundsätzlich das https://aws.amazon.com/what-is/cloud-native/[Cloud Native-Prinzip] zu befolgen. Auf diese Weise bleibt Physio Connect skalierbar, flexibel, resilient und kann effizient auf neue Kundenbedürfnisse angepasst werden.
@@ -1555,14 +1555,14 @@ Beim Design und der Implementation von Physio Connect wird ebenfalls darauf geac
 |**Follow-up Entscheidungen**
 a|
 * **ADR-HST-11** +
-Hosten wir eine einzige Physio Connect Instanz oder eine pro Kunde? 
+Hosten wir eine einzige Physio Connect Instanz oder eine pro Kund*in? 
 |===
 
 [cols="2,6"]
 |===
 |**ID**|ADR-HST-11
-|**Anliegen (Concern)**|Hosten wir eine einzelne Physio Connect-Instanz oder eine Instanz pro Kunde? 
-|**Kontext**|Gemäss __ADR-HST-10__ hosten wir PhysioConnect bei einem etablierten Cloud-Provider (Microsoft, Amazon, Google, IBM). Zu entscheiden gilt nun noch, ob eine einzelne, globale Instanz oder jeweils eine Instanz pro Kunde deployed und betrieben werden soll.
+|**Anliegen (Concern)**|Hosten wir eine einzelne Physio Connect-Instanz oder eine Instanz pro Kund*in? 
+|**Kontext**|Gemäss __ADR-HST-10__ hosten wir PhysioConnect bei einem etablierten Cloud-Provider (Microsoft, Amazon, Google, IBM). Zu entscheiden gilt nun noch, ob eine einzelne, globale Instanz oder jeweils eine Instanz pro Kund*in deployed und betrieben werden soll.
 |**Alternative A1**
 a|
 **Einzelne Instanz**
@@ -1572,32 +1572,32 @@ __Vorteile:__
 * Einzelne Produktivversion im Einsatz
 * Relativ einfache Implementation für CI/CD-Pipeline
 * Erhöhte User Experience durch einzelne, globale URL für das Planungsmanager Interface
-** Falls ein Patient das Physio Connect-System zuerst in der Rehabilitationsklinik verwendet und anschliessend in einer privaten Praxis, hätten diese unterschiedliche URLs
+** Falls ein Patient/eine Patientin das Physio Connect-System zuerst in der Rehabilitationsklinik verwendet und anschliessend in einer privaten Praxis, hätten diese unterschiedliche URLs
 * Skalierbarkeit kann gemäss Gesetz der grossen Zahlen optimiert werden
 * Einfachere Implementation für Fallback-System
 * Einfachere Implementation für Backups
 
 __Nachteile:__
 
-* Falls ein Upgrade eine Datenmigration benötigt, muss dies bei allen Kunden gleichzeitig gemacht werden
-* Falls das System abstürzen sollte, ist es für alle Kunden nicht verfügbar
+* Falls ein Upgrade eine Datenmigration benötigt, muss dies bei allen Kund*innen gleichzeitig gemacht werden
+* Falls das System abstürzen sollte, ist es für alle Kund*innen nicht verfügbar
 * Keine direkte Abrechnung bezüglich der Infrastrukturkosten möglich
 
 |**Alternative A2**
 a|
-**Eine Instanz pro Kunde**
+**Eine Instanz pro Kund*in**
 
 __Vorteile:__
 
-* Einfachere Individualisierbarkeit und Konfigurierbarkeit pro Kunde.
+* Einfachere Individualisierbarkeit und Konfigurierbarkeit pro Kund*in.
 * Möglichkeit für das Hosting bei verschiedenen Cloud-Providern.
-* Infrastrukturkosten pro Kunde können genau abgerechnet werden.
-* Deploymentprozess wäre besser darauf ausgerichtet, ein on-premises-Hosting beim Kunden zusätzlich zu unterstützen.
+* Infrastrukturkosten pro Kund*in können genau abgerechnet werden.
+* Deploymentprozess wäre besser darauf ausgerichtet, ein on-premises-Hosting bei den Kund*innen zusätzlich zu unterstützen.
 * Versionsupgrades können phasenweise ausgerollt werden.
 
 __Nachteile:__
 
-* System muss für jeden Kunden neu aufgesetzt werden.
+* System muss für alle Kund*innen neu aufgesetzt werden.
 * Pro eingesetzte Version müssen Patches geliefert werden können.
 * Verschiedene Versionen des Physio Connect-Systems müssen mit der Benutzerverwaltung und dem Übungskatalog kompatibel sein.
 * Automatisierte Tests müssen regelmässig auf allen Versionen ausgeführt werden.
@@ -1606,10 +1606,10 @@ __Nachteile:__
  
 |**Entscheidung**|A1) Einzelne Instanz
 
-Da die Alternative __A2) On-premises beim Kunden__ des Entscheids __ADR-HST-10__ potenziell zum Einsatz kommen kann, wird es trotzdem möglich sein, eine einzelne Instanz für einen Kunden in der Cloud zu deployen.
+Da die Alternative __A2) On-premises bei den Kund*innen__ des Entscheids __ADR-HST-10__ potenziell zum Einsatz kommen kann, wird es trotzdem möglich sein, eine einzelne Instanz für Kund*innen in der Cloud zu deployen.
 |**Begründung**
 a|
-Für den Verkauf von PhysioConnect sind tiefe Einführungskosten essenziell. Zusätzlich können wir uns als Startup keinen Support für eine Vielzahl von Versionen leisten. Falls einzelne Instanzen für Kunden gepflegt werden müssen, sollen diese auf der gleichen Version wie unsere "Hauptinstanz" gehalten werden.
+Für den Verkauf von PhysioConnect sind tiefe Einführungskosten essenziell. Zusätzlich können wir uns als Startup keinen Support für eine Vielzahl von Versionen leisten. Falls einzelne Instanzen für Kund*innen gepflegt werden müssen, sollen diese auf der gleichen Version wie unsere "Hauptinstanz" gehalten werden.
 
 |link:10_quality_requirements.adoc#section-quality-requirements[**Qualitätsanforderungen**]
 a|
@@ -1623,7 +1623,7 @@ Die Skalierbarkeit einer globalen Instanz kann gemäss dem Gesetz der grossen Za
 
 **Installability** +
 Die Installation und Konfiguration einer globalen Instanz wird einmalig durchgeführt und kann durch die Verwendung einer CI/CD-Pipeline effizient durchgeführt werden. +
-Zu beachten ist jedoch, dass die Alternative __A2) On-premises beim Kunden__ des Entscheids __ADR-HST-10__ potenziell zum Einsatz kommen kann, was in der Installation und dem Betrieb weiterer Physio Connect-Instanzen resultieren würde.
+Zu beachten ist jedoch, dass die Alternative __A2) On-premises bei den Kund*innen__ des Entscheids __ADR-HST-10__ potenziell zum Einsatz kommen kann, was in der Installation und dem Betrieb weiterer Physio Connect-Instanzen resultieren würde.
 
 * SZ-INT-1
 

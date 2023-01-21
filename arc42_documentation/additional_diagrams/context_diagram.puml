@@ -69,7 +69,7 @@ rectangle "==Benutzerverwaltung\n<size:10>[Software System]</size>\n\nAuthentifi
 skinparam PackageBorderColor<<group:Patient>> #589fd8
 skinparam PackageFontColor<<group:Patient>> #589fd8
 
-person "==Patient: in\n<size:10>[Person]</size>\n\nPatient der jeweiligen Physio Organisation" <<Patientin>> as Patientin
+person "==Patient*in\n<size:10>[Person]</size>\n\nPatient*in der jeweiligen Physio Organisation" <<Patientin>> as Patientin
 rectangle "==Fitness Tracker\n<size:10>[Software System]</size>" <<FitnessTracker>> as FitnessTracker
 
 

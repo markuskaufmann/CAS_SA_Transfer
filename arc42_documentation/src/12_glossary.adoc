@@ -7,13 +7,13 @@ Im Rahmen dieses Kapitels werden die wichtigsten fachlichen und technischen Begr
 |===
 |Deutsche Bezeichnung|Englische Bezeichnung|Definition
 
-|Physiotherapeut
+|Physiotherapeut*in
 |Physical therapist
-|Physiotherapeut:innen sind Experten für körperliche Funktionsstörungen und Schmerzen. Als eigenständige Disziplin der Schulmedizin bilden diese einen Teil der Grundversorgung. Die Autonomie des Patienten zu unterstützen, ihn auf dem Weg zu besserer Gesundheit anzuleiten oder den Erhalt seines Gesundheitszustandes zu fördern, sind Teile des Alltags in der Physiotherapie. Das Ziel ist es, die Lebensqualität der Patienten zu steigern. Physiotherapeut:innen verbessern dazu die körperlichen Funktionsfähigkeiten (z.B. Aufstehen, Gehen, Treppen steigen, Laufen), mobilisieren steife Gelenke und lindern Schmerzen. https://www.physioswiss.ch/de/profession/profession2
+|Physiotherapeut*innen sind Experten für körperliche Funktionsstörungen und Schmerzen. Als eigenständige Disziplin der Schulmedizin bilden diese einen Teil der Grundversorgung. Die Autonomie von Patient*innen zu unterstützen, ihn/sie auf dem Weg zu besserer Gesundheit anzuleiten oder den Erhalt seines Gesundheitszustandes zu fördern, sind Teile des Alltags in der Physiotherapie. Das Ziel ist es, die Lebensqualität der Patient*innen zu steigern. Physiotherapeut*innen verbessern dazu die körperlichen Funktionsfähigkeiten (z.B. Aufstehen, Gehen, Treppen steigen, Laufen), mobilisieren steife Gelenke und lindern Schmerzen. https://www.physioswiss.ch/de/profession/profession2
 
+|Patient*in
 |Patient
-|Patient
-|Im Bezug zum System Physio Connect sind Patienten als Personen definiert, die an Physiotherapien teilnehmen oder teilgenommen haben. Diese Therapien können von Physiotherapeuten verwaltet werden oder von den Patienten selbst definiert werden. Genesene Personen werden weiterhin als Patienten bezeichnet.
+|Im Bezug zum System Physio Connect sind Patient*innen als Personen definiert, die an Physiotherapien teilnehmen oder teilgenommen haben. Diese Therapien können von Physiotherapeut*innen verwaltet werden oder von den Patient*innen selbst definiert werden. Genesene Personen werden weiterhin als Patient*innen bezeichnet.
 
 |Hospitalisiert
 |hospitalized
@@ -21,29 +21,29 @@ Im Rahmen dieses Kapitels werden die wichtigsten fachlichen und technischen Begr
 
 |(stationäre) Rehabilitation
 |(Inpatient) Rehabilitation
-|Ziel einer Rehabilitation ist die Wiederherstellung, Kompensation, Verhinderung oder Verlangsamung der Verschlechterung von (sensorischen, körperlichen, intellektuellen, mentalen, kognitiven oder sozialen) Funktionen, um dem Einzelnen zu helfen, sein optimales Niveau zu erreichen https://www.physio-pedia.com/Introduction_to_Rehabilitation. Patienten, welche in Rehabilitation sind, befinden sich in einer speziell dafür ausgerichteten Klinik. In diesen Kliniken erhalten Patienten täglich geführte Therapie-Sessions. Für mehr Informationen zum Patientenzyklus siehe <<Abbildung: Patientenzyklus>>. Ambulante Rehabilitationen werden im Rahmen dieses Dokumentes nicht einzeln untersucht, da diese die gleichen Anforderungen wie andere ambulante Behandlungen besitzen.
+|Ziel einer Rehabilitation ist die Wiederherstellung, Kompensation, Verhinderung oder Verlangsamung der Verschlechterung von (sensorischen, körperlichen, intellektuellen, mentalen, kognitiven oder sozialen) Funktionen, um dem Einzelnen zu helfen, sein optimales Niveau zu erreichen https://www.physio-pedia.com/Introduction_to_Rehabilitation. Patient*innen, welche in Rehabilitation sind, befinden sich in einer speziell dafür ausgerichteten Klinik. In diesen Kliniken erhalten Patient*innen täglich geführte Therapie-Sessions. Für mehr Informationen zum Patientenzyklus siehe <<Abbildung: Patientenzyklus>>. Ambulante Rehabilitationen werden im Rahmen dieses Dokumentes nicht einzeln untersucht, da diese die gleichen Anforderungen wie andere ambulante Behandlungen besitzen.
 
 |Ambulante Behandlung
 |Outpatient treatment
-|Im Gegensatz zur stationären Behandlung bleibt der Patient bei der ambulanten Behandlung nicht über Nacht in Betreuung. Im Normalfall befindet sich ein Patient pro Therapieeinheit nur 30 Minuten vor Ort in Behandlung. Das heisst: Sie können am selben Tag wieder nach Hause. https://www.comparis.ch/krankenkassen/leistungen/ambulante-behandlung 
+|Im Gegensatz zur stationären Behandlung bleiben Patient*innen bei der ambulanten Behandlung nicht über Nacht in Betreuung. Im Normalfall befinden sich Patient*innen pro Therapieeinheit nur 30 Minuten vor Ort in Behandlung. Das heisst: Sie können am selben Tag wieder nach Hause. https://www.comparis.ch/krankenkassen/leistungen/ambulante-behandlung 
 
-Im Rahmen der Physiotherapie erhalten Patienten eine Verordnung zur Teilnahme an Physiotherapien. Diese Therapien werden in Praxen oder Spitälern ausgeführt. Für mehr Informationen zum Patientenzyklus siehe <<Abbildung: Patientenzyklus>>.
+Im Rahmen der Physiotherapie erhalten Patient*innen eine Verordnung zur Teilnahme an Physiotherapien. Diese Therapien werden in Praxen oder Spitälern ausgeführt. Für mehr Informationen zum Patientenzyklus siehe <<Abbildung: Patientenzyklus>>.
 
 |Therapie
 |Therapy
-|Als Therapie wird sowohl die Gesamttherapie für einen Patienten als auch eine einzelne Therapiesitzung bezeichnet. Normalerweise ist im Kontext erkennbar, über welche der beiden Therapien gesprochen wird. Um Missverständnissen vorzubeugen, werden im System Physio Connect die Bezeichnungen "Gesamttherapie" und "Therapie-Session" verwendet.
+|Als Therapie wird sowohl die Gesamttherapie für einen Patient*innen als auch eine einzelne Therapiesitzung bezeichnet. Normalerweise ist im Kontext erkennbar, über welche der beiden Therapien gesprochen wird. Um Missverständnissen vorzubeugen, werden im System Physio Connect die Bezeichnungen "Gesamttherapie" und "Therapie-Session" verwendet.
 
 |Gesamttherapie
 |Complete therapy
-|Als Gesamttherapie wird eine zusammenhängende Serie von Therapie-Sessions bezeichnet, welche von einem Patienten durchgeführt werden. Eine Gesamttherapie kann von mehreren Wochen bis zu mehreren Jahren dauern. Gesamttherapien werden nach deren vollständiger Absolvierung als abgeschlossen markiert. Patienten können an mehreren Gesamttherapien teilnehmen, im Normalfall jedoch nicht zeitgleich.
+|Als Gesamttherapie wird eine zusammenhängende Serie von Therapie-Sessions bezeichnet, welche von Patient*innen durchgeführt werden. Eine Gesamttherapie kann von mehreren Wochen bis zu mehreren Jahren dauern. Gesamttherapien werden nach deren vollständiger Absolvierung als abgeschlossen markiert. Patient*innen können an mehreren Gesamttherapien teilnehmen, im Normalfall jedoch nicht zeitgleich.
 
 |Therapie-Session
 |Therapy session
-|Als Therapie-Session bezeichnet man eine einzelne Therapieeinheit / -sitzung, welche von einem Patienten durchgeführt wird. Diese kann von einem Physiotherapeuten geleitet oder selbst ausgeführt werden.
+|Als Therapie-Session bezeichnet man eine einzelne Therapieeinheit / -sitzung, welche von Patient*innen durchgeführt werden. Diese kann von Physiotherapeut*innen geleitet oder selbst ausgeführt werden.
 
 |Übung
 |Exercise
-|Übungen werden im Rahmen von Therapie-Sessions von Patienten ausgeführt oder sind generische Definitionen von möglichen Übungen. Um Missverständnissen vorzubeugen, werden im System Physio Connect die Bezeichnungen "Übungsdefinition" und "Therapieübung" verwendet.
+|Übungen werden im Rahmen von Therapie-Sessions von Patient*innen ausgeführt oder sind generische Definitionen von möglichen Übungen. Um Missverständnissen vorzubeugen, werden im System Physio Connect die Bezeichnungen "Übungsdefinition" und "Therapieübung" verwendet.
 
 |Übungsdefinition
 |Exercise definition
@@ -51,7 +51,7 @@ Im Rahmen der Physiotherapie erhalten Patienten eine Verordnung zur Teilnahme an
 
 |Therapieübung
 |Therapy exercise
-|Therapieübungen werden von Patienten während einzelner Therapie-Sessions ausgeführt. Therapieübungen basieren auf Übungsdefinitionen und enthalten exakte Angaben zur Ausführung inklusive Zeitangaben, Serien und Repetitionen. Zusätzlich sind Therapieübungen einem Patienten und einer Therapie zugeordnet und besitzen einen Lebenszyklus.
+|Therapieübungen werden von Patient*innen während einzelner Therapie-Sessions ausgeführt. Therapieübungen basieren auf Übungsdefinitionen und enthalten exakte Angaben zur Ausführung inklusive Zeitangaben, Serien und Repetitionen. Zusätzlich sind Therapieübungen einem Patienten/einer Patientin und einer Therapie zugeordnet und besitzen einen Lebenszyklus.
 
 |Repetitionen / Reps
 |Repetitions / Reps
@@ -79,19 +79,19 @@ Im Rahmen der Physiotherapie erhalten Patienten eine Verordnung zur Teilnahme an
 
 |Therapiefortschritt
 |Progress of therapy
-|Der generelle Fortschritt eines Patienten im Rahmen einer Gesamttherapie (sprich über mehrere Therapie-Sessions hinweg). Der Therapiefortschritt ist patientenspezifisch und steht in relativem Verhältnis zu den Therapiezielen. Beispielsweise kann sich der Fortschritt auf den Heilungsprozess einer bestehenden Verletzung oder die Optimierung des allgemeinen Fitness-Levels beziehen.
+|Der generelle Fortschritt von Patient*innen im Rahmen einer Gesamttherapie (sprich über mehrere Therapie-Sessions hinweg). Der Therapiefortschritt ist patientenspezifisch und steht in relativem Verhältnis zu den Therapiezielen. Beispielsweise kann sich der Fortschritt auf den Heilungsprozess einer bestehenden Verletzung oder die Optimierung des allgemeinen Fitness-Levels beziehen.
 
 |Dokumentationssystem
 |Documentation system
-|Mittels der Verwendung einer Dokumentationssoftware dokumentieren Physiotherapeuten die ausgeführten Therapie-Sessions und planen auszuführende Therapie-Sessions. Es kann sich bei Dokumentationssystemen sowohl über digitale als auch auf Papier basierende Systeme handeln.
+|Mittels der Verwendung einer Dokumentationssoftware dokumentieren Physiotherapeut*innen die ausgeführten Therapie-Sessions und planen auszuführende Therapie-Sessions. Es kann sich bei Dokumentationssystemen sowohl über digitale als auch auf Papier basierende Systeme handeln.
 
 |Planungssoftware
 |Scheduling software
-|Software zur Planung von Terminen für Therapie-Sessions mit Patienten.
+|Software zur Planung von Terminen für Therapie-Sessions mit Patient*innen.
 
 |Gesundheitseinrichtung
 |Healthcare facility
-|Gesundheitseinrichtungen sind Organisationen, deren Hauptzweck in der Versorgung oder Behandlung von Patient:innen oder der Förderung der öffentlichen Gesundheit besteht. Im System Physio Connect wird der Begriff "Gesundheitseinrichtung" verwendet, wenn es sich entweder um ein Spital, eine Rehabilitationsklinik oder eine private Physio-Praxis handeln kann. https://www.swissmedic.ch/swissmedic/de/home/medizinprodukte/wiederaufbereitung---instandhaltung.html
+|Gesundheitseinrichtungen sind Organisationen, deren Hauptzweck in der Versorgung oder Behandlung von Patient*innen oder der Förderung der öffentlichen Gesundheit besteht. Im System Physio Connect wird der Begriff "Gesundheitseinrichtung" verwendet, wenn es sich entweder um ein Spital, eine Rehabilitationsklinik oder eine private Physio-Praxis handeln kann. https://www.swissmedic.ch/swissmedic/de/home/medizinprodukte/wiederaufbereitung---instandhaltung.html
 
 |Container
 |Container

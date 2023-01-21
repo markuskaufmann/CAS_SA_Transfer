@@ -26,7 +26,7 @@ plantuml::structurizr_diagrams/generated/structurizr-Containers-key.puml[format=
 |Gerichtete Beziehung zwischen Elementen
 
 |Person
-|Repräsentiert eine bestimmte Art von Endbenutzer
+|Repräsentiert eine bestimmte Art von Endbenutzer*in
 
 |Software System
 |System, welches aus Sicht der Container eine Blackbox darstellt
@@ -151,7 +151,7 @@ __Qualitäts- / Performancecharakteristiken__
 |Charakteristik / Qualitätsattribut|Beschreibung
 
 |Usability / Operability
-|Durch die Verwendung einer PWA kann der Endbenutzer diejenigen Use Cases einfacher realisieren, welche auf die nativen Funktionalitäten eines Smartphones zurückgreifen (z.B. Aufnahme von Fotos / Videos via eingebauter Kamera, welche als Teil einer Übungsdefinition hochgeladen werden können).
+|Durch die Verwendung einer PWA können Endbenutzer*innen diejenigen Use Cases einfacher realisieren, welche auf die nativen Funktionalitäten eines Smartphones zurückgreifen (z.B. Aufnahme von Fotos / Videos via eingebauter Kamera, welche als Teil einer Übungsdefinition hochgeladen werden können).
 
 |===
 
@@ -249,7 +249,7 @@ HTTP Response abhängig von Situation:
 * Code 200 / 201 / 204 wenn die Verarbeitung erfolgreich war
 * Code 401 wenn der mitgelieferte Access Token ungültig ist +
 (= Authentifizierung fehlgeschlagen)
-* Code 403 wenn der aufrufende Benutzer gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
+* Code 403 wenn der aufrufende Benutzer/die aufrufende Benutzerin gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
 (= unzureichende Berechtigung)
 * Code 404 wenn eine notwendige Ressource intern nicht gefunden wurde
 * Code 500 wenn ein interner Fehler auftritt (inkl. zusätzlicher Beschreibung des Fehlers)
@@ -262,7 +262,7 @@ HTTP Response abhängig von Situation:
 * Code 200 / 201 / 204 wenn die Verarbeitung erfolgreich war
 * Code 401 wenn der mitgelieferte Access Token ungültig ist +
 (= Authentifizierung fehlgeschlagen)
-* Code 403 wenn der aufrufende Benutzer gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
+* Code 403 wenn der aufrufende Benutzer/die aufrufende Benutzerin gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
 (= unzureichende Berechtigung)
 * Code 404 wenn eine notwendige Ressource intern nicht gefunden wurde
 * Code 500 wenn ein interner Fehler auftritt (inkl. zusätzlicher Beschreibung des Fehlers)
@@ -275,7 +275,7 @@ HTTP Response abhängig von Situation:
 * Code 200 / 201 / 204 wenn die Verarbeitung erfolgreich war
 * Code 401 wenn der mitgelieferte Access Token ungültig ist +
 (= Authentifizierung fehlgeschlagen)
-* Code 403 wenn der aufrufende Benutzer gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
+* Code 403 wenn der aufrufende Benutzer/die aufrufende Benutzerin gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
 (= unzureichende Berechtigung)
 * Code 404 wenn eine notwendige Ressource intern nicht gefunden wurde
 * Code 500 wenn ein interner Fehler auftritt (inkl. zusätzlicher Beschreibung des Fehlers)
@@ -464,7 +464,7 @@ Hierbei handelt es sich lediglich um eine logische Gruppierung der Komponenten, 
 
 __Zweck / Verantwortlichkeiten__
 
-Dieser Service ist für die Verarbeitung der Daten verantwortlich, welche von den Patienten während der Ausführung einer Therapie-Session aufgezeichnet werden. Einerseits gehören hierzu Messdaten wie Puls oder Blutdruck, andererseits aber auch übungsspezifische Ausführungsinformationen wie effektive Sets / Reps oder Patienten- / Therapeutenrückmeldungen zu durchgeführten Übungen.
+Dieser Service ist für die Verarbeitung der Daten verantwortlich, welche von den Patient*innen während der Ausführung einer Therapie-Session aufgezeichnet werden. Einerseits gehören hierzu Messdaten wie Puls oder Blutdruck, andererseits aber auch übungsspezifische Ausführungsinformationen wie effektive Sets / Reps oder Patienten- / Therapeutenrückmeldungen zu durchgeführten Übungen.
 
 __Schnittstellen__
 
@@ -480,7 +480,7 @@ HTTP Response abhängig von Situation:
 * Code 200 / 201 / 204 wenn die Verarbeitung erfolgreich war
 * Code 401 wenn der mitgelieferte Access Token ungültig ist +
 (= Authentifizierung fehlgeschlagen)
-* Code 403 wenn der aufrufende Benutzer gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
+* Code 403 wenn der aufrufende Benutzer/die aufrufende Benutzerin gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
 (= unzureichende Berechtigung)
 * Code 404 wenn eine notwendige Ressource intern nicht gefunden wurde
 * Code 500 wenn ein interner Fehler auftritt (inkl. zusätzlicher Beschreibung des Fehlers)
@@ -493,7 +493,7 @@ HTTP Response abhängig von Situation:
 * Code 200 / 201 / 204 wenn die Verarbeitung erfolgreich war
 * Code 401 wenn der mitgelieferte Access Token ungültig ist +
 (= Authentifizierung fehlgeschlagen)
-* Code 403 wenn der aufrufende Benutzer gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
+* Code 403 wenn der aufrufende Benutzer/die aufrufende Benutzerin gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
 (= unzureichende Berechtigung)
 * Code 404 wenn eine notwendige Ressource intern nicht gefunden wurde
 * Code 500 wenn ein interner Fehler auftritt (inkl. zusätzlicher Beschreibung des Fehlers)
@@ -560,13 +560,13 @@ Massnahmen gemäss __RTD-AUS-10__:
 ** Therapie-Sessions ohne das Sammeln von Ausführungsdaten durchzuführen
 
 |Messdaten-Traffic führt zu hohen Betriebskosten
-|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-TRA-10] beschreibt die Gefahr, dass die kontinuierliche Übermittlung und Verarbeitung der Patienten-Messdaten je nach Anzahl Patienten und parallel ausgeführter Therapie-Sessions zu einem beachtlichen Netzwerk-Traffic führen kann. In Kombination mit einem "Pay as you go"-Kostenmodell, welches bei aktuellen Cloud-Providern standardmässig verwendet wird, kann dies zu hohen Betriebskosten führen, welche dem Kunden schlussendlich weiterverrechnet werden.
+|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-TRA-10] beschreibt die Gefahr, dass die kontinuierliche Übermittlung und Verarbeitung der Patienten-Messdaten je nach Anzahl Patient*innen und parallel ausgeführter Therapie-Sessions zu einem beachtlichen Netzwerk-Traffic führen kann. In Kombination mit einem "Pay as you go"-Kostenmodell, welches bei aktuellen Cloud-Providern standardmässig verwendet wird, kann dies zu hohen Betriebskosten führen, welche dem Kunden/der Kundin schlussendlich weiterverrechnet werden.
 a|
 Massnahmen gemäss __RTD-TRA-10__:
 
 * Verwendung der Preisrechner, welche von den jeweiligen Cloud-Providern zur Verfügung gestellt werden
 * Definition von Kosten-Thresholds und Einrichtung von Benachrichtigungen im Falle der Erreichung kritischer Kostenwerte
-* Periodisches Monitoring des aktuellen Ressourcenverbrauchs und der prognostizierten Kosten sowie entsprechend transparente Kommunikation mit dem betroffenen Kunden
+* Periodisches Monitoring des aktuellen Ressourcenverbrauchs und der prognostizierten Kosten sowie entsprechend transparente Kommunikation mit den betroffenen Kund*innen
 
 |===
 
@@ -638,13 +638,13 @@ Massnahmen gemäss __RTD-AUS-20__:
 * User Access Control (Zugriffskontrolle, Autorisierung)
 
 |Messdaten-Traffic führt zu hohen Betriebskosten
-|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-TRA-10] beschreibt die Gefahr, dass die kontinuierliche Übermittlung und Verarbeitung der Patienten-Messdaten je nach Anzahl Patienten und parallel ausgeführter Therapie-Sessions zu einem beachtlichen Netzwerk-Traffic und Ressourcenverbrauch seitens Datenbank führen kann. In Kombination mit einem "Pay as you go"-Kostenmodell, welches bei aktuellen Cloud-Providern standardmässig verwendet wird, kann dies zu hohen Betriebskosten führen, welche dem Kunden schlussendlich weiterverrechnet werden.
+|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-TRA-10] beschreibt die Gefahr, dass die kontinuierliche Übermittlung und Verarbeitung der Patienten-Messdaten je nach Anzahl Patient*innen und parallel ausgeführter Therapie-Sessions zu einem beachtlichen Netzwerk-Traffic und Ressourcenverbrauch seitens Datenbank führen kann. In Kombination mit einem "Pay as you go"-Kostenmodell, welches bei aktuellen Cloud-Providern standardmässig verwendet wird, kann dies zu hohen Betriebskosten führen, welche den Kundinnen schlussendlich weiterverrechnet werden.
 a|
 Massnahmen gemäss __RTD-TRA-10__:
 
 * Verwendung der Preisrechner, welche von den jeweiligen Cloud-Providern zur Verfügung gestellt werden
 * Definition von Kosten-Thresholds und Einrichtung von Benachrichtigungen im Falle der Erreichung kritischer Kostenwerte
-* Periodisches Monitoring des aktuellen Ressourcenverbrauchs und der prognostizierten Kosten sowie entsprechend transparente Kommunikation mit dem betroffenen Kunden
+* Periodisches Monitoring des aktuellen Ressourcenverbrauchs und der prognostizierten Kosten sowie entsprechend transparente Kommunikation mit dem betroffenen Kund*innen
 
 |===
 
@@ -678,7 +678,7 @@ HTTP Response abhängig von Situation:
 * Code 200 / 201 / 204 wenn die Verarbeitung erfolgreich war
 * Code 401 wenn der mitgelieferte Access Token ungültig ist +
 (= Authentifizierung fehlgeschlagen)
-* Code 403 wenn der aufrufende Benutzer gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
+* Code 403 wenn der aufrufende Benutzer/die aufrufende Benutzerin gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
 (= unzureichende Berechtigung)
 * Code 404 wenn eine notwendige Ressource intern nicht gefunden wurde
 * Code 500 wenn ein interner Fehler auftritt (inkl. zusätzlicher Beschreibung des Fehlers)
@@ -752,9 +752,9 @@ __Zweck / Verantwortlichkeiten__
 
 * Container zur generellen Abstraktion und Kapselung der Funktionalitäten, welche im Rahmen der Kommunikation zwischen Physio Connect und der Benutzerverwaltung relevant sind
 ** Abholen von Benutzerinformationen
-** Verwaltung von Benutzern: +
-Physiotherapeuten, Vorgesetzte der Physiotherapeuten, Patienten, Administratoren, weitere (technische) Benutzer
-** Verknüpfung von Patienten-Benutzern in Gesamttherapien, Therapie-Sessions und Therapieübungen
+** Verwaltung von Benutzer*innen: +
+Physiotherapeut*innen, Vorgesetzte der Physiotherapeut*innen, Patient*innen, Administrator*innen, weitere (technische) Benutzer*innen
+** Verknüpfung von Patienten-Benutzer*innen in Gesamttherapien, Therapie-Sessions und Therapieübungen
 * Dient grundsätzlich als Abstraktionsschicht und https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer[anti-corruption layer (ACL)] zwischen Physio Connect und der Benutzerverwaltung +
 (siehe link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-50])
 
@@ -764,7 +764,7 @@ __Schnittstellen__
 |===
 |Schnittstelle|Input|Output
 
-|REST API für die Verwaltung und Verknüpfung von Benutzern und -informationen
+|REST API für die Verwaltung und Verknüpfung von Benutzer*innen und -informationen
 |HTTP Request mit Bearer Access Token (JWT) und Payload (notwendig je nach Request)
 a|
 HTTP Response abhängig von Situation:
@@ -772,7 +772,7 @@ HTTP Response abhängig von Situation:
 * Code 200 / 201 / 204 wenn die Verarbeitung erfolgreich war
 * Code 401 wenn der mitgelieferte Access Token ungültig ist +
 (= Authentifizierung fehlgeschlagen)
-* Code 403 wenn der aufrufende Benutzer gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
+* Code 403 wenn der aufrufende Benutzer/die aufrufende Benutzerin gemäss Autorisierungsinformationen im Access Token nicht für die Aktion zugelassen ist +
 (= unzureichende Berechtigung)
 * Code 404 wenn eine notwendige Ressource intern nicht gefunden wurde
 * Code 500 wenn ein interner Fehler auftritt (inkl. zusätzlicher Beschreibung des Fehlers)
@@ -957,7 +957,7 @@ Die interne Struktur des __Ausführungsservice__ basiert auf der getroffenen lin
 
 |Ausführungs Domänenlogik
 |Domäne
-|Implementiert den Bestandteil der Businesslogik gemäss dem definierten link:08_concepts.adoc#section-concepts[Domänenmodell], welcher für die Verarbeitung der Daten verantwortlich ist, die von den Patienten während der Ausführung einer Therapie-Session aufgezeichnet werden.
+|Implementiert den Bestandteil der Businesslogik gemäss dem definierten link:08_concepts.adoc#section-concepts[Domänenmodell], welcher für die Verarbeitung der Daten verantwortlich ist, die von den Patient*innen während der Ausführung einer Therapie-Session aufgezeichnet werden.
 
 Beinhaltet die aus dem Domain-Driven Design (DDD) (**TBD Link zu Evans Buch**) bekannten Elemente wie Aggregate, Entitäten, Value Objects oder Domain Services.
 

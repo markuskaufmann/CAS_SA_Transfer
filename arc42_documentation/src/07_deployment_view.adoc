@@ -37,7 +37,7 @@ plantuml::structurizr_diagrams/generated/structurizr-deployment-singulaere-physi
 
 |Therapie Planungs Service
 |Managed Kubernetes Cluster
-|Die Skalierung des __Therapie Planungs Service__ soll auf die Arbeitszeiten der Therapeuten Rücksicht nehmen.
+|Die Skalierung des __Therapie Planungs Service__ soll auf die Arbeitszeiten der Therapeut*innen Rücksicht nehmen.
 
 |Ausführungsservice
 |Managed Kubernetes Cluster
@@ -81,15 +81,15 @@ Die Entscheidung, wo die Benutzerverwaltung gehosted wird, ist für uns zu diese
 
 ==== Patienten Infrastruktur
 
-Die Patienteninfrastruktur kann von uns nicht direkt beeinflusst werden. Gemäss des beschriebenen link:01_introduction_and_goals.adoc#section-introduction-and-goals[Architekturtreibers] *Mehrheitliche Verwendung des Smartphones* wird davon ausgegangen, dass der Grossteil aller Patienten ein Smartphone besitzt, welches mit der __mobilen Patientenapp__ kompatibel ist. Immer mehr Patienten besitzen __Fitness Tracker__, die Patientenapp funktioniert jedoch auch ohne Fitnesstracker.
+Die Patienteninfrastruktur kann von uns nicht direkt beeinflusst werden. Gemäss des beschriebenen link:01_introduction_and_goals.adoc#section-introduction-and-goals[Architekturtreibers] *Mehrheitliche Verwendung des Smartphones* wird davon ausgegangen, dass der Grossteil aller Patient*innen ein Smartphone besitzt, welches mit der __mobilen Patientenapp__ kompatibel ist. Immer mehr Patient*innen besitzen __Fitness Tracker__, die Patientenapp funktioniert jedoch auch ohne Fitnesstracker.
 
-In Ausnahmefällen können Patienten einen Fitnesstracker von ihrer jeweiligen Privatpraxis oder Rehabilitationsklinik erhalten. Dies hat jedoch keinen Einfluss auf unsere Infrastruktur.
+In Ausnahmefällen können Patient*innen einen Fitnesstracker von ihrer jeweiligen Privatpraxis oder Rehabilitationsklinik erhalten. Dies hat jedoch keinen Einfluss auf unsere Infrastruktur.
 
-==== SaaS Kunden Infrastruktur
+==== SaaS Kund*innen Infrastruktur
 
-Gemäss den *ADR-HST-11* wurde bestimmt, dass möglichst nur eine globale Instanz des Physio Connect-Systems produktiv eingesetzt werden sollte. Dies bedeutet, dass die Kunden __Physio Connect__ als https://www.ibm.com/topics/saas[System as a Service (SaaS)] beziehen.
+Gemäss den *ADR-HST-11* wurde bestimmt, dass möglichst nur eine globale Instanz des Physio Connect-Systems produktiv eingesetzt werden sollte. Dies bedeutet, dass die Kund*innen __Physio Connect__ als https://www.ibm.com/topics/saas[System as a Service (SaaS)] beziehen.
 
-Kunden können den __Therapien Manager__ mit den Geräten verwenden, welche sie bereits besitzen. Gemäss *ADR-FRO-10* und *ADR-FRO-13* werden die folgenden Platformen unterstützt:
+Kund*innen können den __Therapien Manager__ mit den Geräten verwenden, welche sie bereits besitzen. Gemäss *ADR-FRO-10* und *ADR-FRO-13* werden die folgenden Platformen unterstützt:
 
 * Web Browsers
 ** Chrome
@@ -106,7 +106,7 @@ Kunden können den __Therapien Manager__ mit den Geräten verwenden, welche sie 
 
 **Motivation**
 
-Gemäss *ADR-HST-10* muss die Möglichkeit offengehalten werden, dass Kunden eine eigene Instanz von Physio Connect in Betrieb haben. In diesem Kapitel werden die Konsequenzen dieser Eintscheidung hinsichtlich des Deployments aufgezeigt.
+Gemäss *ADR-HST-10* muss die Möglichkeit offengehalten werden, dass Kund*innen eine eigene Instanz von Physio Connect in Betrieb haben. In diesem Kapitel werden die Konsequenzen dieser Eintscheidung hinsichtlich des Deployments aufgezeigt.
 
 ==== Zusammenspiel mit der Patientenapp
 
@@ -125,7 +125,7 @@ Die folgenden Eigenschaften müssen beim Deployment und der Konfiguration eingeh
 * Therapiedaten einer Instanz A müssen getrennt von den Therapiedaten anderer Instanzen persistiert werden, vorzüglich in einer eigenen Datenbank pro Instanz 
 * Ausführungsdaten einer Instanz A müssen getrennt von den Ausführungsdaten anderer Instanzen persistiert werden, vorzüglich in einer eigenen Datenbank pro Instanz
 
-Da wir keinen direkten Einfluss auf die Infrastruktur eines Kunden besitzen, wurden hierbei Annahmen getroffen. Die Kunden sollen beim Aufbau der Infrastruktur unterstützt werden, sodass Sicherheits- und Performance-Qualitätsattribute eingehalten werden können. Schlussendlich sind jedoch die Kunden für die Angemessenheit der Infrastruktur verantwortlich.
+Da wir keinen direkten Einfluss auf die Infrastruktur von Kund*innen besitzen, wurden hierbei Annahmen getroffen. Die Kund*innen sollen beim Aufbau der Infrastruktur unterstützt werden, sodass Sicherheits- und Performance-Qualitätsattribute eingehalten werden können. Schlussendlich sind jedoch die Kund*innen für die Angemessenheit der Infrastruktur verantwortlich.
 
 ==== Verwendung des Therapien Managers
 
@@ -135,7 +135,7 @@ Der __Therapien Manager__ muss mit der Version der darunterliegenden __Physio Co
 
 **Qualitäts- und Performance-Eigenschaften**
 
-Alle deployten __Server Side Therapie Manager__-Instanzen werden eine dedizierte URL benötigen. Dies führt dazu, dass Therapeuten eines Spitals mit eigens gehosteter __Physio Connect__-Instanz eine andere URL verwenden als unsere SaaS Kunden. Da die Therapeuten immer mit der gleichen __Physio Connect__-Instanz arbeiten, hat dies keinen Einfluss auf die Usability. Falls Patienten an mehreren Therapien teilnehmen, kann es jedoch sein, dass sie unterschiedliche __Therapien Manager__ verwenden müssen. Die Verwendung von unterschiedlichen URLs und unterschiedlich hinterlegten Daten verschlechtern die User Experience (UX) für Patienten.
+Alle deployten __Server Side Therapie Manager__-Instanzen werden eine dedizierte URL benötigen. Dies führt dazu, dass Therapeut*innen eines Spitals mit eigens gehosteter __Physio Connect__-Instanz eine andere URL verwenden als unsere SaaS Kund*innen. Da die Therapeut*innen immer mit der gleichen __Physio Connect__-Instanz arbeiten, hat dies keinen Einfluss auf die Usability. Falls Patient*innen an mehreren Therapien teilnehmen, kann es jedoch sein, dass sie unterschiedliche __Therapien Manager__ verwenden müssen. Die Verwendung von unterschiedlichen URLs und unterschiedlich hinterlegten Daten verschlechtern die User Experience (UX) für Patient*innen.
 
 **Zuweisung von Bausteinen zur Infrastruktur**
 

@@ -47,7 +47,7 @@ Nachfolgend werden die effektiven Szenarien erläutert, welche sich auf das Qual
 |**Stimulus**|Request zum Speichern der übungsrelevanten Messdaten (z.B. Puls, Blutdruck) gesendet
 |**Umgebung**|Systeme, welche bereits vor der Laufzeit bekannt waren
 |**System / Artefakte**|PhysioConnect / API Request Handler für App
-|**Antwort / Verhalten**|Sind die enthaltenen Messdaten des eingehenden Requests formal korrekt, werden diese abgespeichert und mit dem Patienten sowie der aktuellen Therapie-Session und Übung verknüpft. +
+|**Antwort / Verhalten**|Sind die enthaltenen Messdaten des eingehenden Requests formal korrekt, werden diese abgespeichert und mit dem Patienten/der Patientin sowie der aktuellen Therapie-Session und Übung verknüpft. +
 Sind die Messdaten formal inkorrekt oder ein Fehler tritt bei der Persistierung auf, wird der Request geloggt und ein entsprechender Fehlercode wird als Response zurückgegeben.
 |**Metrik für Erfüllungsgrad**|99.99% aller eingehenden Requests mit formal korrekten Messdaten werden erwartungsgemäss abgespeichert. +
 0% der Requests mit formal inkorrekten Messdaten werden abgespeichert. +
@@ -171,11 +171,11 @@ Nachfolgend werden die effektiven Szenarien erläutert, welche sich auf das Qual
 [cols="2,6"]
 |===
 |**ID**|SZ-CNF-1
-|**Quelle des Stimulus**|Identifizierter Patient via Smartphone-App
+|**Quelle des Stimulus**|Identifizierter Patient/Identifizierte Patientin via Smartphone-App
 |**Stimulus**|Speichern der übungsrelevanten Messdaten (z.B. Puls, Blutdruck)
 |**Umgebung**|Voll einsatzfähiges System (online), Request von ausserhalb des PhysioConnect-Netzwerks
 |**System / Artefakte**|PhysioConnect / API Request Handler für App
-|**Antwort / Verhalten**|Die Messdaten werden verschlüsselt entgegengenommen (API ist nur via TLS / SSL verwendbar) und formal geprüft. Formal korrekte Messdaten werden direkt in einem verschlüsselten Datenspeicher abgelegt, wo sie nur innerhalb des internen Systemnetzwerks zugreif- / auslesbar sind. In betroffenem Datenspeicher sind die Messdaten nicht anonymisiert abgelegt, da sie zu Auswertungs- und Analysezwecken dem Patienten und der jeweiligen Übung / Therapie-Session zugeordnet werden müssen. +
+|**Antwort / Verhalten**|Die Messdaten werden verschlüsselt entgegengenommen (API ist nur via TLS / SSL verwendbar) und formal geprüft. Formal korrekte Messdaten werden direkt in einem verschlüsselten Datenspeicher abgelegt, wo sie nur innerhalb des internen Systemnetzwerks zugreif- / auslesbar sind. In betroffenem Datenspeicher sind die Messdaten nicht anonymisiert abgelegt, da sie zu Auswertungs- und Analysezwecken dem Patienten/der Patientin und der jeweiligen Übung / Therapie-Session zugeordnet werden müssen. +
 Sind die Messdaten formal inkorrekt oder ein Fehler tritt während der internen Verarbeitung oder Persistierung auf, wird der Request geloggt (ohne die konkreten Messdaten) und eine entsprechende Response mit Fehlercode zurückgegeben.
 |**Metrik für Erfüllungsgrad**|100% der verarbeiteten Requests zur Speicherung der Messdaten verlaufen über einen verschlüsselten Kommunikationskanal. +
 Der Datenspeicher mit den Messdaten ist ausserhalb des Systemnetzwerks nicht direkt erreichbar. +
@@ -185,11 +185,11 @@ Der Datenspeicher mit den Messdaten ist ausserhalb des Systemnetzwerks nicht dir
 [cols="2,6"]
 |===
 |**ID**|SZ-CNF-2
-|**Quelle des Stimulus**|Identifizierter Patient via Smartphone-App
-|**Stimulus**|Abrufen der Messdaten eines anderen Patienten
+|**Quelle des Stimulus**|Identifizierter Patient/Identifizierte Patientin via Smartphone-App
+|**Stimulus**|Abrufen der Messdaten anderer Patient*innen
 |**Umgebung**|Voll einsatzfähiges System (online), Request von ausserhalb des PhysioConnect-Netzwerks
 |**System / Artefakte**|PhysioConnect / API Request Handler für App
-|**Antwort / Verhalten**|Die Anfrage wird entgegengenommen und das darin enthaltene Access Token überprüft. Der Patient wird korrekt authentifiziert und es wird überprüft, ob der Patient Zugriff auf die angeforderten Daten besitzt. Da die Daten einem anderen Patienten zugewiesen sind, wird eine 403 Response (Forbidden) zurückgesendet und der Vorfall wird als potenzieller Angriffsversuch geloggt.
+|**Antwort / Verhalten**|Die Anfrage wird entgegengenommen und das darin enthaltene Access Token überprüft. Der Patient/Die Patientin wird korrekt authentifiziert und es wird überprüft, ob der Patient Zugriff auf die angeforderten Daten besitzt. Da die Daten einem anderen Patienten/einer anderen Patientin zugewiesen sind, wird eine 403 Response (Forbidden) zurückgesendet und der Vorfall wird als potenzieller Angriffsversuch geloggt.
 |**Metrik für Erfüllungsgrad**|Bei 100% der Requests werden keine Messdaten zurückgeliefert. +
 Bei 99.9% der Requests wird eine Response mit Fehlercode 403 (Forbidden) geliefert. +
 99.9% der Requests werden korrekt geloggt, als potenzielle Angriffe markiert und mit dem verwendeten Benutzeraccount verlinkt, sodass bei wiederholten Angriffsversuchen entsprechende Massnahmen ergriffen werden können.
@@ -202,7 +202,7 @@ Bei 99.9% der Requests wird eine Response mit Fehlercode 403 (Forbidden) geliefe
 |**Stimulus**|Abrufen der Messdaten mit einem ungültigen Access Token
 |**Umgebung**|Voll einsatzfähiges System (online), Request von ausserhalb des PhysioConnect-Netzwerks
 |**System / Artefakte**|PhysioConnect / API Request Handler für App
-|**Antwort / Verhalten**|Die Anfrage wird entgegengenommen und das darin enthaltene Access Token überprüft. Der Benutzername und die ID des Patienten sind dabei korrekt gesetzt. Das Token wird an die Security-Komponente weitergeleitet und validiert. Da das Token ungültig ist (z.B. abgelaufen), beantwortet Physio Connect den Request mit dem Fehlercode 401 (Unauthorized).
+|**Antwort / Verhalten**|Die Anfrage wird entgegengenommen und das darin enthaltene Access Token überprüft. Der Benutzername und die ID des Patienten/der Patientin sind dabei korrekt gesetzt. Das Token wird an die Security-Komponente weitergeleitet und validiert. Da das Token ungültig ist (z.B. abgelaufen), beantwortet Physio Connect den Request mit dem Fehlercode 401 (Unauthorized).
 |**Metrik für Erfüllungsgrad**|Bei 100% der Requests werden keine Messdaten zurückgeliefert. +
 Bei 99.9% der Requests wird eine Response mit Fehlercode 401 (Unauthorized) geliefert. +
 99.9% der Requests werded korrekt geloggt und als potenzielle Angriffe markiert, sodass bei wiederholten Angriffen entsprechende Massnahmen ergriffen werden können.
@@ -211,12 +211,12 @@ Bei 99.9% der Requests wird eine Response mit Fehlercode 401 (Unauthorized) geli
 [cols="2,6"]
 |===
 |**ID**|SZ-CNF-4 (Erweiterung)
-|**Quelle des Stimulus**|Identifizierter Physiotherapeut via PhysioConnect
-|**Stimulus**|Physiotherapeut markiert Therapie als abgeschlossen
+|**Quelle des Stimulus**|Identifizierter Physiotherapeut/Identifizierte Physiotherapeutin via PhysioConnect
+|**Stimulus**|Physiotherapeut*in markiert Therapie als abgeschlossen
 |**Umgebung**|Voll einsatzfähiges System (online), Request von innerhalb des PhysioConnect-Netzwerks
 |**System / Artefakte**|PhysioConnect / API Response Handler für EPD
-|**Antwort / Verhalten**|Alle patientenbezogenen Therapiedaten werden in aggregierter Form an das https://www.patientendossier.ch/[Elektronische Patientendossier (EPD)] weitergeleitet. Die Kommunikation verläuft dabei über vordefinierte Schnittstellen / Protokolle sowie über eine verschlüsselte Verbindung. Die Daten sind nicht anonymisiert, da sie Teil der persönlichen Dokumente eines Patienten darstellen. +
-Die Datenübermittlung erfolgt nur für diejenigen Patienten, welche der Weitergabe ihrer Gesundsheitsdaten zu Beginn der Therapie zugestimmt haben. 
+|**Antwort / Verhalten**|Alle patientenbezogenen Therapiedaten werden in aggregierter Form an das https://www.patientendossier.ch/[Elektronische Patientendossier (EPD)] weitergeleitet. Die Kommunikation verläuft dabei über vordefinierte Schnittstellen / Protokolle sowie über eine verschlüsselte Verbindung. Die Daten sind nicht anonymisiert, da sie Teil der persönlichen Dokumente eines Patienten/einer Patientin darstellen. +
+Die Datenübermittlung erfolgt nur für diejenigen Patient*innen, welche der Weitergabe ihrer Gesundsheitsdaten zu Beginn der Therapie zugestimmt haben. 
 |**Metrik für Erfüllungsgrad**|0% der Daten können während der Übermittlung aus dem Kommunikationskanal / -protokoll extrahiert oder entschlüsselt werden. +
 Das Initiieren und potentielle Fehlschlagen der Datenübermittlung wird geloggt, jedoch keine patientenbezogenen (Mess-)Daten.
 |===
@@ -228,7 +228,7 @@ Die Modifiability-Szenarien basieren jeweils auf der folgenden Definition:
 [cols="2,6"]
 |===
 |**ID**|SZ-MOD-X
-|**Quelle des Stimulus**|Endbenutzer, Entwickler, Systemadministrator
+|**Quelle des Stimulus**|Endbenutzer*in, Entwickler*in, Systemadministrator*in
 |**Stimulus**|Eine Richtlinie zum Hinzufügen / Ändern / Löschen einer Funktionalität oder zum Ändern eines Qualitätsattributs, einer Kapazität oder einer Technologie
 |**Umgebung**|Laufzeit, Zeitpunkt des Kompiliervorgangs, Entwicklungszeit, Initiierungszeit, Entwurfszeit
 |**System / Artefakte**|Code, Daten, Schnittstellen, Komponenten, Ressourcen, Konfigurationen, ...
@@ -256,7 +256,7 @@ Nachfolgend werden die effektiven Szenarien erläutert, welche sich auf das Qual
 [cols="2,6"]
 |===
 |**ID**|SZ-MOD-1
-|**Quelle des Stimulus**|Physiotherapeut
+|**Quelle des Stimulus**|Physiotherapeut*in
 |**Stimulus**|Will Unterstützung für einen neuen Messdatentyp zur besseren Auswertung von Therapien (z.B. Körpertemperatur)
 |**Umgebung**|Entwicklungszeit
 |**System / Artefakte**|PhysioConnect / API für App, interne Layer (bis hin zur Persistenzschicht)
@@ -270,7 +270,7 @@ Die Erweiterung ist rückwärtskompatibel - Übungen, welche den neuen Messdaten
 [cols="2,6"]
 |===
 |**ID**|SZ-MOD-2
-|**Quelle des Stimulus**|Entwickler
+|**Quelle des Stimulus**|Entwickler*in
 |**Stimulus**|Will ein alternatives Datenformat / -protokoll für eine ressourcenoptimierte Übermittlung der Messdaten unterstützen (z.B. JSON anstelle von XML)
 |**Umgebung**|Entwicklungszeit
 |**System / Artefakte**|PhysioConnect / API für App
@@ -278,13 +278,13 @@ Die Erweiterung ist rückwärtskompatibel - Übungen, welche den neuen Messdaten
 |**Metrik für Erfüllungsgrad**|Die Erweiterung ist innerhalb von 1 Personenwoche realisierbar (Design, Implement, Test, Deploy). +
 100% der bisherigen Tests (Unit, Integration, E2E) können fehlerfrei ausgeführt werden. +
 Im Rahmen von Smoke Tests auf einer deployten Umgebung kommen keine Bugs zum Vorschein, welche mit den gemachten Änderungen korrelieren. +
-Konsumenten der ursprünglichen Version der App-API müssen keinerlei Anpassungen vornehmen, da die neue API-Version parallel und unabhängig dazu betrieben wird.
+Konsument*innen der ursprünglichen Version der App-API müssen keinerlei Anpassungen vornehmen, da die neue API-Version parallel und unabhängig dazu betrieben wird.
 |===
 
 [cols="2,6"]
 |===
 |**ID**|SZ-MOD-3
-|**Quelle des Stimulus**|Entwickler
+|**Quelle des Stimulus**|Entwickler*in
 |**Stimulus**|Ändert / Erweitert die API des Übungskatalogs
 |**Umgebung**|Entwicklungszeit
 |**System / Artefakte**|PhysioConnect / API Connector für Übungskatalog
@@ -297,7 +297,7 @@ Im Rahmen von Smoke Tests auf einer deployten Umgebung kommen keine Bugs zum Vor
 [cols="2,6"]
 |===
 |**ID**|SZ-MOD-4
-|**Quelle des Stimulus**|Entwickler
+|**Quelle des Stimulus**|Entwickler*in
 |**Stimulus**|Ändert / Erweitert die API der Benutzerverwaltung
 |**Umgebung**|Entwicklungszeit
 |**System / Artefakte**|PhysioConnect / API Connector für Benutzerverwaltung
@@ -310,7 +310,7 @@ Im Rahmen von Smoke Tests auf einer deployten Umgebung kommen keine Bugs zum Vor
 [cols="2,6"]
 |===
 |**ID**|SZ-MOD-5 (Erweiterung)
-|**Quelle des Stimulus**|Kunde / Physiotherapeut
+|**Quelle des Stimulus**|Kund*in / Physiotherapeut*in
 |**Stimulus**|Will Daten aus einem bestehenden Dokumentationssystem via API importieren
 |**Umgebung**|Entwicklungszeit
 |**System / Artefakte**|PhysioConnect / API für Dokumentationssystem, interne Layer
@@ -355,11 +355,11 @@ Es kann sichergestellt werden, dass 100% der bereitgestellten Gesundheitsdaten m
 [cols="2,6"]
 |===
 |**ID**|SZ-TIB-1
-|**Quelle des Stimulus**|Patient via Fitnesstracker-App
+|**Quelle des Stimulus**|Patient*in via Fitnesstracker-App
 |**Stimulus**|Verarbeitung parallel eingehender Messdaten-Requests
 |**Umgebung**|Normalbetrieb
 |**System / Artefakte**|PhysioConnect / API Request Handler für App, interne Layer
-|**Antwort / Verhalten**|Gleichzeitig eingehende Messdaten (ausgehend von verschiedenen Patienten) werden in unabhängigen Threads verarbeitet und zuverlässig persistiert. Gemeinsam genutzte Ressourcen (z.B. Datenspeicher) sind mit entsprechenden Synchronisationsmechanismen (z.B. Semaphoren) abgesichert, um Concurrency Exceptions und inkonsistenten Datenständen vorzubeugen.
+|**Antwort / Verhalten**|Gleichzeitig eingehende Messdaten (ausgehend von verschiedenen Patient*innen) werden in unabhängigen Threads verarbeitet und zuverlässig persistiert. Gemeinsam genutzte Ressourcen (z.B. Datenspeicher) sind mit entsprechenden Synchronisationsmechanismen (z.B. Semaphoren) abgesichert, um Concurrency Exceptions und inkonsistenten Datenständen vorzubeugen.
 |**Metrik für Erfüllungsgrad**|99% der API-Requests zum Ablegen eingehender Messdaten werden intern (sprich abzüglich der Netzwerk-Latenzzeit) innerhalb von 100 Millisekunden verarbeitet (Eingang des Requests, formale Prüfung, Persistierung, Response).
 |===
 
@@ -368,12 +368,12 @@ Es kann sichergestellt werden, dass 100% der bereitgestellten Gesundheitsdaten m
 [cols="2,6"]
 |===
 |**ID**|SZ-CAP-1
-|**Quelle des Stimulus**|Benutzer von PhysioConnect
-|**Stimulus**|Parallele Verwendung von PhysioConnect durch mehrere Benutzer (z.B. Physiotherapeuten + Vorgesetzte + Patienten)
+|**Quelle des Stimulus**|Benutzer*in von PhysioConnect
+|**Stimulus**|Parallele Verwendung von PhysioConnect durch mehrere Benutzer*innen (z.B. Physiotherapeut*innen + Vorgesetzte + Patient*innen)
 |**Umgebung**|Spitzenbelastung
 |**System / Artefakte**|PhysioConnect / Gesamtsystem
 |**Antwort / Verhalten**|PhysioConnect verarbeitet verschiedenste Request-Typen (z.B. Verarbeitung eingehender Messdaten, Monitoring, Reporting, Erstellung einer neuen Therapie) in unabhängigen Threads und ermöglicht somit mehreren Parteien, das System gleichzeitig zu verwenden.
-|**Metrik für Erfüllungsgrad**|Das System ermöglicht den einwandfreien Betrieb mit 100 gleichzeitigen Benutzern. Einwandfrei bedeutet in dem Fall: +
+|**Metrik für Erfüllungsgrad**|Das System ermöglicht den einwandfreien Betrieb mit 100 gleichzeitigen Benutzer*innen. Einwandfrei bedeutet in dem Fall: +
 95% aller Requests, deren Response zu einem sichtbaren Ergebnis auf Benutzerseite führen, dauern weniger als 1 Sekunde.
 |===
 
@@ -410,12 +410,12 @@ Request-unabhängige Fehlermeldungen der Benutzerverwaltung werden geloggt und f
 [cols="2,6"]
 |===
 |**ID**|SZ-INT-1 (Erweiterung)
-|**Quelle des Stimulus**|Kunde, Technische Integratoren von PhysioConnect (z.B. IT-Abteilung des Kunden)
+|**Quelle des Stimulus**|Kund*in, Technische Integratoren von PhysioConnect (z.B. IT-Abteilung von Kund*innen)
 |**Stimulus**|Einrichtung von PhysioConnect on-premises
 |**Umgebung**|Installationszeit, Konfigurationszeit
 |**System / Artefakte**|PhysioConnect / Gesamtsystem
 |**Antwort / Verhalten**|PhysioConnect ist in einer kundenspezifischen System- und Applikationslandschaft, welche on-premises läuft, mit vertretbarem Aufwand und Komplexität integrierbar (beinhaltet Installation und Konfiguration).
-|**Metrik für Erfüllungsgrad**|PhysioConnect soll unter Einbezug und Verfügbarkeit aller relevanten Parteien (Entwickler / Architekt seitens PhysioConnect, Entwickler / Integratoren seitens IT-Abteilung des Kunden) innerhalb von 1 Personenwoche auf einer beliebigen on-premises-Umgebung, welche die System- und Ressourcenanforderungen erfüllt, installiert und initial konfiguriert sein. +
+|**Metrik für Erfüllungsgrad**|PhysioConnect soll unter Einbezug und Verfügbarkeit aller relevanten Parteien (Entwickler*in / Architekt*in seitens PhysioConnect, Entwickler*in / Integratoren seitens IT-Abteilung von Kund*innen) innerhalb von 1 Personenwoche auf einer beliebigen on-premises-Umgebung, welche die System- und Ressourcenanforderungen erfüllt, installiert und initial konfiguriert sein. +
 Der Aufwand und die Komplexität bezüglich der einwandfreien Kommunikation mit bestehenden Umsystemen ist dabei nicht Teil dieses Szenarios und muss individuell evaluiert und szenariotechnisch quantifiziert werden.
 |===
 
@@ -540,9 +540,9 @@ a|
 Für jeden Request werden die folgenden Überprüfungen vorgenommen:
 
 * Token wird mittels eines IDPs validiert.
-* Es wird überprüft, ob der Benutzer die korrekte Identität hat, um entsprechende Requests auszuführen. +
+* Es wird überprüft, ob der Benutzer/die Benutzerin die korrekte Identität hat, um entsprechende Requests auszuführen. +
 (z.B. eigene Messdaten abrufen)
-* Es wird überprüft, ob der Benutzer die benötigten Sicherheitsrollen zugewiesen hat, um die entsprechenden Requests auszuführen. +
+* Es wird überprüft, ob der Benutzer/die Benutzerin die benötigten Sicherheitsrollen zugewiesen hat, um die entsprechenden Requests auszuführen. +
 (z.B. Physiotherapeuten- und Patientenrollen)
 
 |===
@@ -569,8 +569,8 @@ Beim Implementieren von neuen API Endpoints muss das folgende beachtet werden:
 * Ohne Begründung und Absprache ist kein Request ohne Autorisierung durch mindestens eine Rolle verwendbar
 * Der Zugang zu allen Endpoints wird standardmässig verweigert und nur via Zugehörigkeit zu Rollen erlaubt. +
 (__Deny all__-Prinzip)
-* Endpoints dürfen nicht für Benutzer offen sein, welche diesen Zugriff nicht benötigen. +
-Falls zum Beispiel nur ein Teil der Physiotherapeuten einen Request verwendet, soll eine spezifische Benutzerrolle für diese Untergruppe erstellt werden.
+* Endpoints dürfen nicht für Benutzer*innen offen sein, welche diesen Zugriff nicht benötigen. +
+Falls zum Beispiel nur ein Teil der Physiotherapeut*innen einen Request verwendet, soll eine spezifische Benutzerrolle für diese Untergruppe erstellt werden.
 
 |===
 

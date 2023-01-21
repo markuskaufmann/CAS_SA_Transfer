@@ -9,8 +9,8 @@ Nachfolgend werden die aktuell geltenden Randbedingungen genauer erläutert.
 [options="header",cols="1,2,4"]
 |===
 |ID|Bedingung|Beschreibung
-|CS-REC-10|Datenschutzverordnungen im Umgang mit Messdaten|Die Aufzeichnung, Ablage und etwaige Weitergabe von gesundheitsbezogenen Messdaten unterliegt strengen Datenschutzverordnungen, welche die explizite Zustimmung der Patienten erfordern. Der Patient muss zu jeder Zeit darüber informiert sein, welche Daten im Rahmen einer therapierelevanten Übung aufgezeichnet, abgelegt und vom Physiotherapeuten eingesehen und analysiert werden können. +
-Des Weiteren muss eine Weitergabe der anonymisierten Messdaten an Drittparteien (z.B. an die medizinische Forschung) ebenfalls durch den Patienten genehmigt werden. +
+|CS-REC-10|Datenschutzverordnungen im Umgang mit Messdaten|Die Aufzeichnung, Ablage und etwaige Weitergabe von gesundheitsbezogenen Messdaten unterliegt strengen Datenschutzverordnungen, welche die explizite Zustimmung der Patient*innen erfordern. Die Patient*innen müssen zu jeder Zeit darüber informiert sein, welche Daten im Rahmen einer therapierelevanten Übung aufgezeichnet, abgelegt und von Physiotherapeut*innen eingesehen und analysiert werden können. +
+Des Weiteren muss eine Weitergabe der anonymisierten Messdaten an Drittparteien (z.B. an die medizinische Forschung) ebenfalls durch den Patienten/die Patientin genehmigt werden. +
 Bezüglich dieser Thematik sind Konzepte wie https://www2.deloitte.com/ch/en/pages/risk/articles/gdpr-privacy-by-design-and-by-default.html["Privacy by Design" und "Privacy by Default"] zu berücksichtigen.
 |===
 
@@ -42,7 +42,7 @@ Abhängigkeiten zu Umsystemen können konfiguriert werden, sodass PhysioConnect 
 [options="header",cols="1,2,4"]
 |===
 |ID|Bedingung|Beschreibung
-|CS-KON-10|Sprache (Deutsch, Englisch)|Die Architekturdokumentation ist in deutscher Sprache verfasst, um sie allen betroffenen Zielgruppen und Stakeholdern leichter zugänglich und verständlich zu machen. Sämtlicher Quellcode ist jedoch in englischer Sprache zu verfassen, um dessen Kompatibilität mit internationalen Entwicklern (deren Muttersprache nicht Deutsch ist) zu gewährleisten. +
+|CS-KON-10|Sprache (Deutsch, Englisch)|Die Architekturdokumentation ist in deutscher Sprache verfasst, um sie allen betroffenen Zielgruppen und Stakeholdern leichter zugänglich und verständlich zu machen. Sämtlicher Quellcode ist jedoch in englischer Sprache zu verfassen, um dessen Kompatibilität mit internationalen Entwickler*innen (deren Muttersprache nicht Deutsch ist) zu gewährleisten. +
 Damit eine __ubiquitous language__ über die Sprachgrenzen hinaus eingehalten werden kann, muss ein entsprechendes Glossar aktiv gepflegt werden.
 |CS-KON-20|Clean Code|Zu den grundlegend einzuhaltenden Coding guidelines gehören diejenigen Richtlinien, welche im literarischen Werk https://gist.github.com/wojteklu/73c6914cc446146b8b533c0988cf8d29[Clean Code (Robert C. Martin)] verfasst wurden.
 |===

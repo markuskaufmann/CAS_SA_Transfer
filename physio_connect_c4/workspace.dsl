@@ -2,16 +2,16 @@ workspace "Physio integration layer project" {
 
     model {
         group "Physiounternehmung" {
-            therapeut = person "Therapeut: in" "Person, welche Physiotherapien leitet" "therapeut"
-            admin = person "Administrator: in" 
+            therapeut = person "Therapeut*in" "Person, welche Physiotherapien leitet" "therapeut"
+            admin = person "Administrator*in" 
             dokumentationsSoftware = softwareSystem "Dokumentationssoftware"
             therapieFile = element "Therapie File" {
                 tags "file"
             }
         }
 
-        group "Patient" {
-            patient = person "Patient: in" "Patient der jeweiligen Physio Organisation" "Patient"
+        group "Patient*in" {
+            patient = person "Patient*in" "Patient*in der jeweiligen Physio Organisation" "Patient"
             fitnessTracker = softwareSystem "Fitness Tracker"
         }
 
@@ -61,7 +61,7 @@ workspace "Physio integration layer project" {
 
                 group "Ausführung" {
                     ausfuehrungsService = container "Ausführungsservice" {
-                        description "Handhabt alle Requests, welche von Patienten während der Ausführung der Therapie-Sessions abgesetzt werden. Validiert Requests, beinhaltet Applikations und Domänenlogik für die Ausführungsdaten."
+                        description "Handhabt alle Requests, welche von Patient*innen während der Ausführung der Therapie-Sessions abgesetzt werden. Validiert Requests, beinhaltet Applikations und Domänenlogik für die Ausführungsdaten."
                         technology "Spring Boot"
 
                         ausfuehrungsApiController = component "Ausführungs API Controller" "Verwaltet die bereitgestellten API Endpoints des Services, z.B. Verifiziert die eingehenden Requests."
@@ -185,12 +185,12 @@ workspace "Physio integration layer project" {
                 }
             }
 
-            deploymentNode "Patienten Infrastruktur" {
+            deploymentNode "Patient*innen Infrastruktur" {
                 deploymentNode "Fitness Tracker" {
                     fitnessTrackerInstanz = softwareSystemInstance fitnessTracker
                 }
 
-                deploymentNode "Patient Mobile Device" {
+                deploymentNode "Mobile Device" {
                     patientenAppInstanz = softwareSystemInstance patientenApp
                     containerInstance singlePageTherapieManager
                 }
@@ -245,7 +245,7 @@ workspace "Physio integration layer project" {
                 }
             }
             
-            infPatient = deploymentNode "Patienten Infrastruktur" {
+            infPatient = deploymentNode "Patient*innen Infrastruktur" {
                 infFitnessTracker = deploymentNode "Fitness Tracker" {
                     fitnessTrackerInstanz2 = softwareSystemInstance fitnessTracker mainDeployment,spitalDeployement
                 }
@@ -409,7 +409,7 @@ workspace "Physio integration layer project" {
             element "Group:Planung" {
                 color #444444
             }
-            element "Group:Patient" {
+            element "Group:Patient*in" {
                 color #589FD8
             }
             element "Group:Moegliche zukünftige Abhängigkeiten" {

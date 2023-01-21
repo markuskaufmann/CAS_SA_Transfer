@@ -21,13 +21,13 @@ plantuml::domain_model/not_generated_gesamttherapie.puml[format=svg]
 **Aggregat: GesamtTherapie**
 
 Definition vom Glossar: +
-__Als Gesamttherapie wird eine zusammenhängende Serie von Therapie-Sessions bezeichnet, welche von einem Patienten durchgeführt werden. Eine Gesamttherapie kann von mehreren Wochen bis zu mehreren Jahren dauern. Gesamttherapien werden nach deren vollständiger Absolvierung als abgeschlossen markiert. Patienten können an mehreren Gesamttherapien teilnehmen, im Normalfall jedoch nicht zeitgleich.__
+__Als Gesamttherapie wird eine zusammenhängende Serie von Therapie-Sessions bezeichnet, welche von einem Patienten/von einer Patientin durchgeführt werden. Eine Gesamttherapie kann von mehreren Wochen bis zu mehreren Jahren dauern. Gesamttherapien werden nach deren vollständiger Absolvierung als abgeschlossen markiert. Patient*innen können an mehreren Gesamttherapien teilnehmen, im Normalfall jedoch nicht zeitgleich.__
 
-Im Normallfall wird eine Gesamttherapie von einem __hauptTherapeut__ geleitet. Falls ein Patient die Gesamttherapie selbst verwaltet, bleibt dieses Attribut leer.
+Im Normallfall wird eine Gesamttherapie von einem __hauptTherapeut__ geleitet. Falls Patient*innen die Gesamttherapie selbst verwalten, bleibt dieses Attribut leer.
 
 In vielen Fällen werden Gesamttherapien im Rahmen von Verordnungen erstellt und durchgeführt. Da dies keinen Einfluss auf unsere Applikation hat, wurde dieser Fall auch nicht im Modell abgebildet. Eine zukünftige Erweiterung wird jedoch nicht ausgeschlossen.
 
-Um Typen von Gesamttherapien zu unterscheiden und Filterfunktionen zu ermöglichen, wurde der __TherapieTyp__ im Modell abgebildet. __Eigenständige__ Therapien werden vom Patienten selbst verwaltet. Die anderen Therapietypen wurden im Glossar definiert.
+Um Typen von Gesamttherapien zu unterscheiden und Filterfunktionen zu ermöglichen, wurde der __TherapieTyp__ im Modell abgebildet. __Eigenständige__ Therapien werden von Patient*innen selbst verwaltet. Die anderen Therapietypen wurden im Glossar definiert.
 
 [options="header"]
 |===
@@ -37,23 +37,23 @@ Um Typen von Gesamttherapien zu unterscheiden und Filterfunktionen zu ermöglich
 | Die Gesamttherapie wurde erstellt, aber noch nicht alle benötigten Therapiedaten erfasst.
 
 | WartenAufPatient 
-| Eine Einladung wurde an den oder die Patient:in gesendet. Sobald dieser oder diese der Therapie beigetreten ist, wechselt der Status auf __Bereit__.
+| Eine Einladung wurde an den Patienten/die Patientin gesendet. Sobald dieser oder diese der Therapie beigetreten ist, wechselt der Status auf __Bereit__.
 
 | Bereit
-| Alle benötigten Therapiedaten wurden erfasst und der oder die Patient:in wurde zugewiesen.
+| Alle benötigten Therapiedaten wurden erfasst und der Patient/die Patientin wurde zugewiesen.
 
 | Gestartet
 | Mindestens eine der definierten Therapie-Sessions wurde ausgeführt.
 
 | Unterbrochen
-| Die Gesamttherapie wird für eine längere Zeit unterbrochen. Unvorhergesehene Ereignisse wie die Hospitalisierung des Patienten können Grund für einen Unterbruch sein. Kürzere Pausen wie beispielsweise Ferienabwesenheiten gelten nicht als Unterbruch.
+| Die Gesamttherapie wird für eine längere Zeit unterbrochen. Unvorhergesehene Ereignisse wie eine Hospitalisierung können Grund für einen Unterbruch sein. Kürzere Pausen wie beispielsweise Ferienabwesenheiten gelten nicht als Unterbruch.
 
 | Abgebrochen
-| Die Gesamttherapie wurde beendet, bevor alle geplanten Therapie-Sessions durchgeführt wurden. Ein Abbruch wird explizit von einem oder einer Therapeut:in gemacht und kann nicht direkt aus den Therapiedaten (z.B. offene Therapie-Sessions) gelesen werden.
+| Die Gesamttherapie wurde beendet, bevor alle geplanten Therapie-Sessions durchgeführt wurden. Ein Abbruch wird explizit von Therapeut*innen gemacht und kann nicht direkt aus den Therapiedaten (z.B. offene Therapie-Sessions) gelesen werden.
 
 |
 | Abgeschlossen
-| Alle geplanten Therapie-Sessions wurden durchgeführt und der Patient entlassen. Das Abschliessen einer Gesamttherapie wird explizit von einem oder einer Therapeut:in gemacht und kann nicht direkt aus den Therapiedaten gelesen werden.
+| Alle geplanten Therapie-Sessions wurden durchgeführt und der Patient/die Patientin entlassen. Das Abschliessen einer Gesamttherapie wird explizit von Therapeut*innen gemacht und kann nicht direkt aus den Therapiedaten gelesen werden.
 
 |
 | Archiviert
@@ -64,9 +64,9 @@ Um Typen von Gesamttherapien zu unterscheiden und Filterfunktionen zu ermöglich
 **Aggregat: TherapieSession**
 
 Definition vom Glossar: +
-__Als Therapie-Session bezeichnet man eine einzelne Therapieeinheit / -sitzung, welche von einem Patienten durchgeführt wird. Diese kann von einem Physiotherapeuten geleitet oder selbst ausgeführt werden.__
+__Als Therapie-Session bezeichnet man eine einzelne Therapieeinheit / -sitzung, welche von einem Patienten/einer Patientin durchgeführt wird. Diese kann von einem Physiotherapeut*innen geleitet oder selbst ausgeführt werden.__
 
-Therapie-Sessions werden hauptsächlich als Kollektionen von Übungen verwendet. Zusätzlich werden Rückmeldungen der Patienten auf die Therapie-Session (nicht die einzelnen Übungen) gespeichert und der Fortschritt im entsprechenden Lebenszyklus __TherapieSessionsStatus__ abgebildet.
+Therapie-Sessions werden hauptsächlich als Kollektionen von Übungen verwendet. Zusätzlich werden Rückmeldungen von Patient*innen auf die Therapie-Session (nicht die einzelnen Übungen) gespeichert und der Fortschritt im entsprechenden Lebenszyklus __TherapieSessionsStatus__ abgebildet.
 
 plantuml::additional_diagrams/therapiesession_lifecycle.puml[format=svg]
 
@@ -78,22 +78,22 @@ plantuml::additional_diagrams/therapiesession_lifecycle.puml[format=svg]
 | Die Therapie-Session wurde erstellt, aber noch nicht zur Ausführung freigegeben.
 
 | NachtraeglichErfasst
-| Die Therapie-Session wurde zu Dokumentationszwecken erfasst, nachdem diese bereits vom Patienten durchgeführt wurde. Nachträglich erfasste Therapie-Sessions enthalten keine Patienten-Messdaten.
+| Die Therapie-Session wurde zu Dokumentationszwecken erfasst, nachdem diese bereits von dem Patienten/der Patientin durchgeführt wurde. Nachträglich erfasste Therapie-Sessions enthalten keine Patienten-Messdaten.
 
 | Startbereit
-| Die Therapie-Session kann vom Patienten ausgeführt werden.
+| Die Therapie-Session kann von dem Patienten/der Patientin ausgeführt werden.
 
 | Uebersprungen
-| Die Therapie-Session wurde nicht vom Patienten durchgeführt. Grund dafür kann das Verpassen des Zeitfensters oder ein explizites Überspringen der Session durch den Patienten sein.
+| Die Therapie-Session wurde nicht von dem Patienten/der Patientin durchgeführt. Grund dafür kann das Verpassen des Zeitfensters oder ein explizites Überspringen der Session durch den Patienten/die Patientin sein.
 
 | Gestartet
-| Die Therapie-Session wird aktuell vom Patienten durchgeführt.
+| Die Therapie-Session wird aktuell von dem Patienten/der Patientin durchgeführt.
 
 | Unterbrochen
-| Die Therapie-Session wurde vom Patienten unterbrochen und kann zu einem späteren Zeitpunkt wieder fortgesetzt werden, was die Session in den Status __Gestartet__ versetzt.
+| Die Therapie-Session wurde von dem Patienten/der Patientin unterbrochen und kann zu einem späteren Zeitpunkt wieder fortgesetzt werden, was die Session in den Status __Gestartet__ versetzt.
 
 | Abgebrochen
-| Die Therapie-Session wurde vom Patienten explizit abgebrochen.
+| Die Therapie-Session wurde von dem Patienten/der Patientin explizit abgebrochen.
 
 | Abgeschlossen
 | Alle als Teil der Therapie-Session definierten Therapieübungen wurden abgearbeitet und die benötigten Rückmeldungen ausgefüllt. +
@@ -106,17 +106,17 @@ plantuml::domain_model/not_generated_therapieuebung.puml[format=svg]
 **Aggregat: TherapieUebung**
 
 Definition vom Glossar: +
-__Therapieübungen werden von Patienten während einzelner Therapie-Sessions ausgeführt. Therapieübungen basieren auf Übungsdefinitionen und enthalten exakte Angaben zur Ausführung inklusive Zeitangaben, Serien und Repetitionen. Zusätzlich sind Therapieübungen einem Patienten und einer Therapie zugeordnet und besitzen einen Lebenszyklus.__
+__Therapieübungen werden von Patient*innen während einzelner Therapie-Sessions ausgeführt. Therapieübungen basieren auf Übungsdefinitionen und enthalten exakte Angaben zur Ausführung inklusive Zeitangaben, Serien und Repetitionen. Zusätzlich sind Therapieübungen einem Patienten/einer Patientin und einer Therapie zugeordnet und besitzen einen Lebenszyklus.__
 
 Die Abbildung der Messdaten wurde absichtlich abstrakt gehalten. Wie unterschiedliche Messdaten auswertbar und erweiterbar implementiert werden können, muss zu einem späteren Zeitpunkt definiert werden.
 
 In den Therapieübungs-Durchführungen (Value Object __TherapieUebungsDurchfuehrung__) wird angegeben, wie viele Repetitionen, Serien oder für welche Dauer eine Übung durchgeführt werden soll und wie oft diese effektiv durchgeführt wurde.
 
-Der Lebenszyklus einer Therapieübung (Enum __UebungsStatus__) ist sehr ähnlich wie derjenige einer Therapie-Session. Der einzige Unterschied hierbei ist, dass darauf verzichtet wurde, den Status __Startbereit__ zu verwenden. Dies würde zu unnötig komplexen Abhängigkeiten zwischen den Übungen führen, welche weder den Entwickler:innen noch den Endbenutzer:innen einen Mehrwert erbringen würden.
+Der Lebenszyklus einer Therapieübung (Enum __UebungsStatus__) ist sehr ähnlich wie derjenige einer Therapie-Session. Der einzige Unterschied hierbei ist, dass darauf verzichtet wurde, den Status __Startbereit__ zu verwenden. Dies würde zu unnötig komplexen Abhängigkeiten zwischen den Übungen führen, welche weder den Entwickler*innen noch den Endbenutzer*innen einen Mehrwert erbringen würden.
 
 plantuml::additional_diagrams/therapieuebung_lifecycle.puml[format=svg]
 
-Alle Therapieübungen besitzen eine Übungsbeschreibung, deren Format vom Aggregat __UebungsKatalog__ vorgegeben ist. Übungsbeschreibungen können für Therapieübungen modifiziert werden, indem von einer Vorlage eine abgeänderte Version der Übungsbeschreibung erstellt wird. So können die Therapeuten gewisse Übungen auf individuelle Patientenbedürfnisse zuschneiden.
+Alle Therapieübungen besitzen eine Übungsbeschreibung, deren Format vom Aggregat __UebungsKatalog__ vorgegeben ist. Übungsbeschreibungen können für Therapieübungen modifiziert werden, indem von einer Vorlage eine abgeänderte Version der Übungsbeschreibung erstellt wird. So können Therapeut*innen gewisse Übungen auf individuelle Patientenbedürfnisse zuschneiden.
 
 plantuml::domain_model/domain_BC_TherapieContext_UebungsKatalog.puml[format=svg]
 
@@ -124,11 +124,11 @@ plantuml::domain_model/domain_BC_TherapieContext_UebungsKatalog.puml[format=svg]
 
 Patientenrückmeldungen sind zentral für eine erfolgreiche Physiotherapie. Anhand dieser Rückmeldungen werden Therapien kontinuierlich angepasst und verbessert.
 
-Die gewünschten Rückmeldungen variieren stark zwischen Patienten. Für Schmerzpatienten werden so zum Beispiel Rückmeldungen für den verspürten Schmerz eingeholt, während bei einer Rehabilitation darauf geschaut wird, dass Patienten körperlich optimal ausgelastet sind.
+Die gewünschten Rückmeldungen variieren stark zwischen Patient*innen. Für Schmerzpatient*innen werden so zum Beispiel Rückmeldungen für den verspürten Schmerz eingeholt, während bei einer Rehabilitation darauf geschaut wird, dass Patient*innen körperlich optimal ausgelastet sind.
 
 Patientenrückmeldungen basieren auf einem Rückmeldungstyp (Value Object __PatientenRueckmeldungsTyp__). Gesundheitseinrichtungen sammeln Rückmeldungen sowohl in standardisierten Formen wie international annerkannten Schmerzskalen als auch mittels individuell definierten Fragen. Aus diesem Grund müssen Rückmeldungstypen abstrakt und einfach erweiterbar implementiert werden.
 
-Um eine bidirektionale Kommunikation zu ermöglichen, können Therapeut:innen wiederum auf Rückmeldungen antworten. Da es nur in Randfällen nötig ist, dass Patienten wiederum auf Therapeutenrückmeldungen antworten, wird dies vom Domänenmodell nicht unterstützt und die Komplexität somit verringert.
+Um eine bidirektionale Kommunikation zu ermöglichen, können Therapeut*innen wiederum auf Rückmeldungen antworten. Da es nur in Randfällen nötig ist, dass Patient*innen wiederum auf Therapeutenrückmeldungen antworten, wird dies vom Domänenmodell nicht unterstützt und die Komplexität somit verringert.
 
 **Aggregat: UebungsKollektion**
 
@@ -136,7 +136,7 @@ plantuml::domain_model/domain_BC_TherapieContext_UebungsKollektion.puml[format=s
 
 Übungskollektionen sind unabhängig von Gesamttherapien und stellen eine unkomplizierte Alternative zu geführten Therapien dar.
 
-Therapeut:innen geben Patienten, welche ihre Therapien abgeschlossen haben, oft ausgedruckte Unterlagen oder Broschüren mit, in denen einige Übungen zur selbstständigen Ausführung enthalten sind. Übungskollektionen sollen diese Funktionalitäten im Domänenmodell abdecken.
+Therapeut*innen geben Patient*innen, welche ihre Therapien abgeschlossen haben, oft ausgedruckte Unterlagen oder Broschüren mit, in denen einige Übungen zur selbstständigen Ausführung enthalten sind. Übungskollektionen sollen diese Funktionalitäten im Domänenmodell abdecken.
 
 Zusätzlich zu Übungen können Beispiel-Therapie-Sessions (Value Object __BeispielSession__) erstellt werden, welche jeweils aus mehreren Übungsbeschreibungen bestehen. Beispiel-Therapie-Sessions können nicht ausgeführt werden und sammeln somit auch keine Messdaten. Die einzelnen Übungsbeschreibungen sind generisch und enthalten keine Wiederholungen und Serien. Die Applikationsschicht wird die Möglichkeit anbieten, aus Beispiel-Therapie-Sessions effektive Therapie-Sessions zu erstellen. Dies wird jedoch nicht im Rahmen des Domänenmodells beschrieben.
 
@@ -174,7 +174,7 @@ Im Zentrum der Umsetzung einer hexagonalen Architektur ist das Adapter Pattern. 
 * Adapter
 * Adaptee
 
-Als einfaches Beispiel kann die Kommunikation mit einer Datenbank genommen werden. Eine Klasse benutzt das Interface __PersistUserPort__ um Benutzer zu persistieren. Die Klasse __DbBridge__ existiert bereits, um Benutzer in eine Datenbank (z.B. MongoDB) abzuspeichern. Da die Klasse __DbBridge__ inkompatibel mit dem Interface __PersistUserPort__ ist und nicht angepasst werden soll, wird der *Adapter* __DbPersistenceAdapter__ implementiert, welcher das *Target* Interface __PersistUserPort__ implementiert und den *Adaptee* __DbBridge__ verwendet.
+Als einfaches Beispiel kann die Kommunikation mit einer Datenbank genommen werden. Eine Klasse benutzt das Interface __PersistUserPort__ um Benutzer*innen zu persistieren. Die Klasse __DbBridge__ existiert bereits, um Benutzer*innen in eine Datenbank (z.B. MongoDB) abzuspeichern. Da die Klasse __DbBridge__ inkompatibel mit dem Interface __PersistUserPort__ ist und nicht angepasst werden soll, wird der *Adapter* __DbPersistenceAdapter__ implementiert, welcher das *Target* Interface __PersistUserPort__ implementiert und den *Adaptee* __DbBridge__ verwendet.
 
 plantuml::additional_diagrams/adapter_pattern.puml[format=svg]
 
@@ -184,7 +184,7 @@ https://sbcode.net/typescript/adapter/[Anleitung zur Implementation des Adapter 
 
 ==== Treibende / Getriebene Seite
 
-Hexagonale Architekturen werden in eine treibende (__driving__) linke Seite und eine getriebene (__driven__) rechte Seite aufgeteilt. Die folgende Abbildung ist ein generisches Beispiel einer hexagonalen Architektur und bezieht sich nicht auf das Physio Connect-System. Die Seiten bestehen jeweils aus Akteuren, Adaptern und Ports. Komponenten innerhalb des Hexagons werden von den treibenden Adaptern aufgerufen und lösen so die intern definierten Use Cases aus. Getriebene Adapter werden von den Komponenten innerhalb des Hexagons aufgerufen und kommunizieren mit getriebenen Akteuren wie beispielsweise einer Datenbank.
+Hexagonale Architekturen werden in eine treibende (__driving__) linke Seite und eine getriebene (__driven__) rechte Seite aufgeteilt. Die folgende Abbildung ist ein generisches Beispiel einer hexagonalen Architektur und bezieht sich nicht auf das Physio Connect-System. Die Seiten bestehen jeweils aus Akteur*innen, Adaptern und Ports. Komponenten innerhalb des Hexagons werden von den treibenden Adaptern aufgerufen und lösen so die intern definierten Use Cases aus. Getriebene Adapter werden von den Komponenten innerhalb des Hexagons aufgerufen und kommunizieren mit getriebenen Akteur*innen wie beispielsweise einer Datenbank.
 
 image::not_generated/hexagon_detail.webp["Hexagonale Architektur"]
 
@@ -212,17 +212,17 @@ Die wichtigsten Komponenten des Physio Connect-Systems wurden bereits innerhalb 
 
 **Treibende Seite**
 
-Folgend sind die häufigsten Akteure und Adapter der treibenden Seite aufgeführt. Die Definitionen wurden absichtlich abstrakt gehalten, sodass diese auf mehrere Komponenten zutreffen können.
+Folgend sind die häufigsten Akteur*innen und Adapter der treibenden Seite aufgeführt. Die Definitionen wurden absichtlich abstrakt gehalten, sodass diese auf mehrere Komponenten zutreffen können.
 
 |===
 
 |Akteur|Adapter|Zweck
 
-|Therapeut:in via Therapie Manager (SPA)
+|Therapeut*in via Therapie Manager (SPA)
 |API Controller
 |Produktive Verwendung von Physio Connect
 
-|Patient:in via Therapie Manager (SPA)
+|Patient*in via Therapie Manager (SPA)
 |API Controller
 |Produktive Verwendung von Physio Connect
 
@@ -280,7 +280,7 @@ __Mögliche zukünftige Erweiterungen__
 
 |Benutzerverwaltungsadapter
 |Benutzerverwaltung
-|Authentifizierung, Autorisierung und Abfrage / Verwaltung von Benutzern
+|Authentifizierung, Autorisierung und Abfrage / Verwaltung von Benutzer*innen
 
 |===
 
