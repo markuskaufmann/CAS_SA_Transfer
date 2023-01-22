@@ -1,5 +1,5 @@
 @startuml Therapie Lifecicle
-title Patient Lifecicle Version 1
+title Zuweisungsstatus Patient
 
 State Gesund
 State Hospitalisiert #Orange

@@ -315,6 +315,7 @@ workspace "Physio integration layer project" {
 
     views {
         systemlandscape "Gesamtuebersicht" {
+            title "Erweiterte Systemlandschaft von Physio Connect"
             include *
             autoLayout
         }
@@ -337,31 +338,37 @@ workspace "Physio integration layer project" {
         }
 
         container physioConnect "Containers" {
+            title "Container Sicht von Physio Connect"
             include *
             autoLayout
         }
 
         component planungsService "PlanungsServiceDetails" {
+            title "Komponentensicht des Planungsservices"
             include *
             autoLayout
         }
 
         component ausfuehrungsService "AusfuehrungsServiceDetails" {
+            title "Komponentensicht des Ausführungsservices"
             include *
             autoLayout
         }
 
         deployment physioConnect "Cloud Deployment singuläre Physio Connect Instanz" "deployment-singulaere-physioconnect" {
+            title "Deployment singulärer Physio Connect Instanz"
             include *
             autoLayout
         }
 
         deployment * "Mehrere Physio Connect Instanzen" "deployment-mehrere-physioconnect-komplett" {
+            title "Deployment mehrerer Physio Connect Instanzen"
             include *
             autoLayout
         }
 
         deployment * "Mehrere Physio Connect Instanzen" "deployment-sicht-therapiemanager" {
+            title "Sicht Therapiemanager - Deployment mehrerer Physio Connect Instanzen"
             include *
             exclude planungsService ausfuehrungsService
             exclude planungsDatenbank ausfuehrungsDatenbank
@@ -371,6 +378,7 @@ workspace "Physio integration layer project" {
         }
 
         deployment * "Mehrere Physio Connect Instanzen" "deployment-sicht-patientenapp" {
+            title "Sicht Patientenapp - Deployment mehrerer Physio Connect Instanzen"
             include *
             exclude serverSideTherapieManager
             exclude singlePageTherapieManager
