@@ -1,3 +1,4 @@
 from asciidoctor/docker-asciidoctor:latest
 RUN apk add graphicsmagick-dev ruby-dev musl-dev gcc
 RUN gem install prawn-gmagick
+RUN gem install asciidoctor-lists
