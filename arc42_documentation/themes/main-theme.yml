@@ -19,7 +19,7 @@ title-page:
   authors:
     margin-top: 40
 running-content:
-  start-at: body
+  start-at: after-toc
 header:
   height: 0.55in
   line-height: 1

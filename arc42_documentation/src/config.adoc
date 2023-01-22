@@ -2,7 +2,7 @@
 :toc-title: Inhaltsverzeichnis
 
 // enable table-of-contents
-:toc:
+// :toc:
 
 // where are images located?
 :imagesdir: ./images

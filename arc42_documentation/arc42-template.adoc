@@ -1,11 +1,12 @@
 // configure settings for asciidoc
 include::src/config.adoc[]
 
-:title-page:
 = Physio Connect: HSLU Transferarbeit I.CAS-SA.2201
 Cyrille Ulmi, Markus Kaufmann
 v1.0, 22.01.2023
+:title-page:
 :title-logo-image: image:title_logo.svg[Static,500]
+:toc: macro
 
 [role="arc42help"]
 ****
@@ -14,6 +15,18 @@ v1.0, 22.01.2023
 Ein spezielles Dankeschön an unsere Domänenexpertin Sophie Caroline Irrgang - Masterstudentin im Bereich Health Sciences, Wissenschaftliche Mitarbeiterin im Paraplegiker-Zentrum Nottwil und Physiotherapeutin in der Klinik Barmelweid. Dank Ihrer wertvollen Einsichten fanden wir den Weg zum Ziel.
 ****
 
+[role="arc42help"]
+****
+*Ablage der Dokumentation*
+
+Die vorliegende Architekturdokumentation wurde mit https://asciidoc.org/[AsciiDoc] bzw. auf der Basis des entsprechenden https://github.com/arc42/arc42-template/tree/master/DE/asciidoc[arc42-Templates] erfasst und steht daher als offener Quellcode zur freien Verfügung:
+
+https://github.com/markuskaufmann/CAS_SA_Transfer
+****
+
+<<<
+
+toc::[]
 
 // numbering from here on
 :numbered:
