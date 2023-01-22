@@ -38,7 +38,8 @@ Eine genaue Auflistung der konkreten funktionalen Anforderungen ist im entsprech
 Im Rahmen dieses Abschnitts sind die zentralen Qualitätsziele gemäss https://iso25000.com/index.php/en/iso-25000-standards/iso-25010[ISO 25010] definiert, welche hinsichtlich der Ausarbeitung von fundamentalen Architekturentscheidungen von erhöhter Priorität sind.
 Die Qualitätsziele werden von den nicht-funktionalen Requirements der relevanten <<#stakeholder,Stakeholder>> abgeleitet.
 
-image::01_02_iso-25010.png["Quality attributes (ISO 25010)"]
+.Qualitätsattribute gemäss ISO 25010
+image::01_02_iso-25010.png[]
 
 In der nachfolgenden Tabelle sind die primären Qualitätsziele absteigend nach ihrer Wichtigkeit sortiert.
 
@@ -184,6 +185,7 @@ __Optional__
 
 Für die erweiterte Analyse und Verwaltung der bestehenden Stakeholder werden diese im Nachfolgenden im Rahmen eines Powergrids eingestuft.
 
+.Stakeholder Powergrid
 image::01_03_stakeholder-powergrid.drawio.svg[Static,width=100%]
 
 ==== Priorisierung der Stakeholder

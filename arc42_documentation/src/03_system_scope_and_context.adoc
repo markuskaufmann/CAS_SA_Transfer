@@ -9,6 +9,7 @@ Im Rahmen des fachlichen Kontexts soll allen relevanten Stakeholdern verständli
 
 ==== Legende
 
+.Systemkontext: Legende
 plantuml::structurizr_diagrams/generated/structurizr-Gesamtuebersicht-key.puml[format=svg]
 
 [options="header",cols="2,6"]
@@ -24,12 +25,14 @@ plantuml::structurizr_diagrams/generated/structurizr-Gesamtuebersicht-key.puml[f
 [#system-context]
 ==== Kontext
 
-Im folgenden Kontextdiagram sind die Umsysteme und Benutzer*innen inklusive deren Interaktion mit dem Physio Connect System visualisiert.
+Im folgenden Kontextdiagramm sind die Umsysteme und Benutzer*innen inklusive deren Interaktion mit dem Physio Connect System visualisiert.
 
+.Systemkontext
 plantuml::additional_diagrams/context_diagram.puml[format=svg]
 
-Die folgende Abbildung ist eine Systemlandschaft gemäss dem C4 Modell. Das Diagram erweitert das Kontextdiagram durch Unternehmungsgrenzen und Gruppierungen.
+Die folgende Abbildung ist eine Systemlandschaft gemäss dem C4 Modell. Dieses Diagramm erweitert den grundlegenden Systemkontext durch Unternehmungsgrenzen und Gruppierungen.
 
+.Systemkontext mit Unternehmungsgrenzen und Gruppierungen
 plantuml::structurizr_diagrams/generated/structurizr-SystemLandscape.puml[format=svg]
 
 [options="header",cols="3,6"]
@@ -90,6 +93,7 @@ a|
 
 Der Systemkontext einer zukünftigen, erweiterten Version von Physio Connect könnte folgendermassen aussehen:
 
+.Vision des erweiterten Systemkontexts
 plantuml::structurizr_diagrams/generated/structurizr-Gesamtuebersicht.puml[format=svg]
 
 [.portrait]

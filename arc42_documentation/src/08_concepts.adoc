@@ -17,6 +17,7 @@ Weitere Elemente wie __Repositories__ und __Services__ wurden nicht modelliert u
 
 Um das Messaging zu entlasten und ein einfacheres Aufteilen der User Stories zu ermöglichen, wurde sich grundsätzlich dafür entschieden, Aggregate klein zu halten. So wurde das initiale Hauptaggregat __GesamtTherapie__ in die nachfolgend aufgeführten Aggregate aufgeteilt. Einige daraus entstandenen Aggregate Roots besitzen nur banale Lebenszyklen, welche dementsprechend nicht modelliert wurden. Informationen zur initialen Version des Domänenmodells sind innerhalb des https://github.com/markuskaufmann/CAS_SA_Transfer/tree/main/arc42_documentation/expert_meetings/v1[Git-Repositories] vorzufinden.
 
+.Domänenmodell: Gesamttherapie
 plantuml::domain_model/not_generated_gesamttherapie.puml[format=svg]
 
 **Aggregat: GesamtTherapie**
@@ -33,7 +34,10 @@ Um Typen von Gesamttherapien zu unterscheiden und Filterfunktionen zu ermöglich
 [options="header"]
 |===
 | Diagramm | Status | Beschreibung
-.6+a| plantuml::additional_diagrams/gesamttherapie_lifecycle.puml[format=svg]
+.6+a|
+.Domänenmodell: Lebenszyklus einer Gesamttherapie
+plantuml::additional_diagrams/gesamttherapie_lifecycle.puml[format=svg]
+
 | Entwurf 
 | Die Gesamttherapie wurde erstellt, aber noch nicht alle benötigten Therapiedaten erfasst.
 
@@ -69,6 +73,7 @@ __Als Therapie-Session bezeichnet man eine einzelne Therapieeinheit / -sitzung, 
 
 Therapie-Sessions werden hauptsächlich als Kollektionen von Übungen verwendet. Zusätzlich werden Rückmeldungen von Patient*innen auf die Therapie-Session (nicht die einzelnen Übungen) gespeichert und der Fortschritt im entsprechenden Lebenszyklus __TherapieSessionsStatus__ abgebildet.
 
+.Domänenmodell: Lebenszyklus einer Therapie-Session
 plantuml::additional_diagrams/therapiesession_lifecycle.puml[format=svg]
 
 [options="header"]
@@ -102,6 +107,7 @@ Wichtig: Therapie-Sessions gelten auch als abgeschlossen, wenn beinhaltete Thera
 
 |===
 
+.Domänenmodell: Therapieübung
 plantuml::domain_model/not_generated_therapieuebung.puml[format=svg]
 
 **Aggregat: TherapieUebung**
@@ -115,10 +121,12 @@ In den Therapieübungs-Durchführungen (Value Object __TherapieUebungsDurchfuehr
 
 Der Lebenszyklus einer Therapieübung (Enum __UebungsStatus__) ist sehr ähnlich wie derjenige einer Therapie-Session. Der einzige Unterschied hierbei ist, dass darauf verzichtet wurde, den Status __Startbereit__ zu verwenden. Dies würde zu unnötig komplexen Abhängigkeiten zwischen den Übungen führen, welche weder den Entwickler*innen noch den Endbenutzer*innen einen Mehrwert erbringen würden.
 
+.Domänenmodell: Lebenszyklus einer Therapieübung
 plantuml::additional_diagrams/therapieuebung_lifecycle.puml[format=svg]
 
 Alle Therapieübungen besitzen eine Übungsbeschreibung, deren Format vom Aggregat __UebungsKatalog__ vorgegeben ist. Übungsbeschreibungen können für Therapieübungen modifiziert werden, indem von einer Vorlage eine abgeänderte Version der Übungsbeschreibung erstellt wird. So können Therapeut*innen gewisse Übungen auf individuelle Patientenbedürfnisse zuschneiden.
 
+.Domänenmodell: Übungskatalog
 plantuml::domain_model/domain_BC_TherapieContext_UebungsKatalog.puml[format=svg]
 
 **Aggregat: PatientenRueckmeldung**
@@ -133,6 +141,7 @@ Um eine bidirektionale Kommunikation zu ermöglichen, können Therapeut*innen wi
 
 **Aggregat: UebungsKollektion**
 
+.Domänenmodell: Übungskollektion
 plantuml::domain_model/domain_BC_TherapieContext_UebungsKollektion.puml[format=svg]
 
 Übungskollektionen sind unabhängig von Gesamttherapien und stellen eine unkomplizierte Alternative zu geführten Therapien dar.
@@ -147,8 +156,11 @@ Die nachfolgenden Diagramme stellen eine Gesamtübersicht des Domänenmodells da
 
 [.landscape]
 <<<
+
+.Domänenmodell: Gesamtübersicht (Fokus Gesamttherapie)
 plantuml::domain_model/domain_BC_TherapieContext_PhysioConnectV2.puml[format=svg]
 
+.Domänenmodell: Gesamtübersicht (Vollständig)
 plantuml::domain_model/domain_BC_TherapieContext.puml[format=svg]
 
 [.portrait]
@@ -164,7 +176,8 @@ Zusätzlich zu der in der hexagonalen Architektur vorgegebenen __Ports & Adapter
 * Die Businesslogik soll in zwei Komponenten aufgetrennt werden: Applikationslogik und Domänenlogik.
 * Für die Kommunikation mit externen Services soll immer die Ports & Adapter-Architektur eingehalten werden.
 
-image::not_generated/hexagon_arch1.png["Hexagonale Architektur"]
+.Hexagonale Architektur
+image::not_generated/hexagon_arch1.png[]
 
 https://vaadin.com/blog/ddd-part-3-domain-driven-design-and-the-hexagonal-architecture
 
@@ -178,6 +191,7 @@ Im Zentrum der Umsetzung einer hexagonalen Architektur ist das Adapter Pattern. 
 
 Als einfaches Beispiel kann die Kommunikation mit einer Datenbank genommen werden. Eine Klasse benutzt das Interface __PersistUserPort__ um Benutzer*innen zu persistieren. Die Klasse __DbBridge__ existiert bereits, um Benutzer*innen in eine Datenbank (z.B. MongoDB) abzuspeichern. Da die Klasse __DbBridge__ inkompatibel mit dem Interface __PersistUserPort__ ist und nicht angepasst werden soll, wird der *Adapter* __DbPersistenceAdapter__ implementiert, welcher das *Target* Interface __PersistUserPort__ implementiert und den *Adaptee* __DbBridge__ verwendet.
 
+.Adapter Pattern (Beispiel)
 plantuml::additional_diagrams/adapter_pattern.puml[format=svg]
 
 https://www.baeldung.com/java-adapter-pattern[Anleitung zur Implementation des Adapter Patterns in Java]
@@ -188,7 +202,8 @@ https://sbcode.net/typescript/adapter/[Anleitung zur Implementation des Adapter 
 
 Hexagonale Architekturen werden in eine treibende (__driving__) linke Seite und eine getriebene (__driven__) rechte Seite aufgeteilt. Die folgende Abbildung ist ein generisches Beispiel einer hexagonalen Architektur und bezieht sich nicht auf das Physio Connect-System. Die Seiten bestehen jeweils aus Akteur*innen, Adaptern und Ports. Komponenten innerhalb des Hexagons werden von den treibenden Adaptern aufgerufen und lösen so die intern definierten Use Cases aus. Getriebene Adapter werden von den Komponenten innerhalb des Hexagons aufgerufen und kommunizieren mit getriebenen Akteur*innen wie beispielsweise einer Datenbank.
 
-image::not_generated/hexagon_detail.webp["Hexagonale Architektur"]
+.Hexagonale Architektur mit treibender / getriebener Seite
+image::not_generated/hexagon_detail.webp[]
 
 https://herbertograca.com/2017/11/16/explicit-architecture-01-ddd-hexagonal-onion-clean-cqrs-how-i-put-it-all-together/
 
@@ -208,6 +223,7 @@ Die Ports werden hauptsächlich vom Applikationslayer zur Verfügung gestellt, k
 
 Das vorherige Beispiel bezüglich der Kommunikation mit einer Datenbank kann durch eine treibende Seite und eine Abgrenzung des Hexagons folgendermassen erweitert werden, um alle Qualifikationen einer hexagonalen Architektur einzuhalten:
 
+.Treibende / Getriebene Seite (Beispiel)
 plantuml::additional_diagrams/hexagon_adapter_pattern.puml[format=svg]
 
 Die wichtigsten Komponenten des Physio Connect-Systems wurden bereits innerhalb der <<#building-block-view,Bausteinsicht>> als treibende und getriebene Adapter markiert.

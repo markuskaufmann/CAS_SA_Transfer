@@ -7,6 +7,7 @@ v1.0, 22.01.2023
 :title-page:
 :title-logo-image: image:title_logo.svg[Static,500]
 :toc: macro
+:figure-caption: Abbildung
 
 [role="arc42help"]
 ****
@@ -27,6 +28,11 @@ https://github.com/markuskaufmann/CAS_SA_Transfer
 <<<
 
 toc::[]
+
+[.list-of-figures]
+Abbildungsverzeichnis
+
+list-of::image[]
 
 // numbering from here on
 :numbered:

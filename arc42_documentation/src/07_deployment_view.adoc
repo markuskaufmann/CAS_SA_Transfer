@@ -29,6 +29,7 @@ Zusätzlich soll die Skalierung zeitbasiert optimiert werden, um auf Spitzenbela
 
 Die Zuweisung der Bausteine ist in der Abbildung *Referenz Abbildung* visualisiert.
 
+.Verteilungssicht: Singuläre Physio Connect-Instanz
 plantuml::structurizr_diagrams/generated/structurizr-deployment-singulaere-physioconnect.puml[format=svg]
 
 [cols="1,1,2"]
@@ -116,6 +117,7 @@ Die Patientenapp muss die Möglichkeit besitzen, die Therapiedaten von mehreren 
 
 **Zuweisung von Bausteinen zur Infrastruktur**
 
+.Verteilungssicht: Mehrere Physio Connect-Instanzen aus Sicht Patientenapp
 plantuml::structurizr_diagrams/generated/structurizr-deployment-sicht-patientenapp.puml[format=svg]
 
 Die folgenden Eigenschaften müssen beim Deployment und der Konfiguration eingehalten werden:
@@ -144,6 +146,7 @@ Zu diesem Zeitpunkt ist es noch nicht bekannt, ob alle __Physio Connect__-Instan
 [.landscape]
 <<<
 
+.Verteilungssicht: Mehrere Physio Connect-Instanzen aus Sicht Therapien Manager (SPA)
 plantuml::structurizr_diagrams/generated/structurizr-deployment-sicht-therapiemanager.puml[format=svg]
 
 [.portrait]
@@ -156,8 +159,8 @@ Das folgende Diagramm repräsentiert die Gesamtübersicht eines Deployments mit 
 [.landscape]
 <<<
 
+.Verteilungssicht: Mehrere Physio Connect-Instanzen (Gesamtübersicht)
 plantuml::structurizr_diagrams/generated/structurizr-deployment-mehrere-physioconnect-komplett.puml[format=svg]
-
 
 [.portrait]
 <<<

@@ -1,6 +1,9 @@
 extends: default
 base:
   font-size: 10
+toc:
+  title:
+    font-size: 24
 page:
   margin: [0.8in, 0.67in, 0.8in, 0.67in]
 title-page:
@@ -19,7 +22,7 @@ title-page:
   authors:
     margin-top: 40
 running-content:
-  start-at: after-toc
+  start-at: 5
 header:
   height: 0.55in
   line-height: 1
@@ -48,3 +51,7 @@ footer:
     right:
       content: '{page-number} / {page-count}'
   verso: *shared_footer
+role:
+  list-of-figures:
+    font-size: 24
+    font-style: bold
