@@ -8,14 +8,14 @@ Dieses Kapitel repräsentiert eine Zusammenfassung der übergreifenden Prinzipie
 
 Physio Connect implementiert die fachspezifische Logik der Geschäftsdomäne mittels eines Domänenmodells. Das Domänenmodell wurde mit der Hilfe einer Domänenexpertin ausgearbeitet und verfeinert. Bei zusätzlichen Erweiterungen / Anpassungen sollen wenn möglich weitere Domänenexperten hinzugezogen werden.
 
-Die Aufteilung der Domänenelemente sowie die Vorgehensweise bei der Entwicklung des Domänenmodells basiert auf __Domain Driven Design (DDD)__ (**TBD LINK AUF BUCH EVANS**). 
+Die Aufteilung der Domänenelemente sowie die Vorgehensweise bei der Entwicklung des Domänenmodells basiert auf https://martinfowler.com/bliki/DomainDrivenDesign.html[Domain Driven Design (DDD)]. 
 
 Elemente, welche sowohl einen eindeutigen Identifikator (ID) als auch einen Lebenszyklus besitzen, wurden als __Entities__ definiert. Die zugehörigen Staten der Lebenszyklen sind als __Enumeration (Enum)__ definiert. Elemente mit zusätzlichen Informationen, aber ohne Identifikator wurden als __Value Objects__ definiert. +
 Elemente, welche konzeptionell zusammengehörende Entities und Value Objects als logische Einheit kapseln und deren Konsistenz sicherstellen, werden als __Aggregate__ definiert. Pro Aggregat gibt es zudem ein __Aggregate Root__ - eine dem Aggregat zugehörige Entity, welche als externer Zugriffs- und Referenzpunkt des Aggregats gilt und somit die Integrität und Konsistenz des gesamten Aggregats gewährleistet.
 
 Weitere Elemente wie __Repositories__ und __Services__ wurden nicht modelliert und sollen während der Implementationsphase kontinuierlich erarbeitet werden.
 
-Um das Messaging zu entlasten und ein einfacheres Aufteilen der User Stories zu ermöglichen, wurde sich grundsätzlich dafür entschieden, Aggregate klein zu halten. So wurde das initiale Hauptaggregat __GesamtTherapie__ in die nachfolgend aufgeführten Aggregate aufgeteilt. Einige daraus entstandenen Aggregate Roots besitzen nur banale Lebenszyklen, welche dementsprechend nicht modelliert wurden. Informationen zur initialen Version des Domänenmodell sind innerhalb des Git-Repositories **TBD Link** vorzufinden.
+Um das Messaging zu entlasten und ein einfacheres Aufteilen der User Stories zu ermöglichen, wurde sich grundsätzlich dafür entschieden, Aggregate klein zu halten. So wurde das initiale Hauptaggregat __GesamtTherapie__ in die nachfolgend aufgeführten Aggregate aufgeteilt. Einige daraus entstandenen Aggregate Roots besitzen nur banale Lebenszyklen, welche dementsprechend nicht modelliert wurden. Informationen zur initialen Version des Domänenmodells sind innerhalb des https://github.com/markuskaufmann/CAS_SA_Transfer/tree/main/arc42_documentation/expert_meetings/v1[Git-Repositories] vorzufinden.
 
 plantuml::domain_model/not_generated_gesamttherapie.puml[format=svg]
 

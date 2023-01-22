@@ -903,7 +903,7 @@ Die interne Struktur des __Therapie Planungs Service__ basiert auf der getroffen
 |Domäne
 |Implementiert den Bestandteil der Businesslogik gemäss dem definierten <<#domain-model,Domänenmodell>>, welcher für die Planung und Verwaltung von Gesamttherapien, Therapie-Sessions und Therapieübungen verantwortlich ist.
 
-Beinhaltet die aus dem Domain-Driven Design (DDD) (**TBD Link zu Evans Buch**) bekannten Elemente wie Aggregate, Entitäten, Value Objects oder Domain Services.
+Beinhaltet die aus dem https://martinfowler.com/bliki/DomainDrivenDesign.html[Domain-Driven Design (DDD)] bekannten Elemente wie Aggregate, Entitäten, Value Objects oder Domain Services.
 
 Stellt die Domänenelemente den darüberliegenden Schichten (Applikation, Infrastruktur) zur Verfügung.
 
@@ -979,7 +979,7 @@ Die interne Struktur des __Ausführungsservice__ basiert auf der getroffenen <<#
 |Domäne
 |Implementiert den Bestandteil der Businesslogik gemäss dem definierten <<#domain-model,Domänenmodell>>, welcher für die Verarbeitung der Daten verantwortlich ist, die von den Patient*innen während der Ausführung einer Therapie-Session aufgezeichnet werden.
 
-Beinhaltet die aus dem Domain-Driven Design (DDD) (**TBD Link zu Evans Buch**) bekannten Elemente wie Aggregate, Entitäten, Value Objects oder Domain Services.
+Beinhaltet die aus dem https://martinfowler.com/bliki/DomainDrivenDesign.html[Domain-Driven Design (DDD)] bekannten Elemente wie Aggregate, Entitäten, Value Objects oder Domain Services.
 
 Stellt die Domänenelemente den darüberliegenden Schichten (Applikation, Infrastruktur) zur Verfügung.
 
