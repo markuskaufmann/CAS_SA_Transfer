@@ -21,6 +21,7 @@ plantuml::structurizr_diagrams/generated/structurizr-Gesamtuebersicht-key.puml[f
 |Relationship|Einfache, gerichtete Beziehung. Jede Beziehung muss mit einem Beschreibungstext genauer erläutert werden. 
 |===
 
+[#system-context]
 ==== Kontext
 
 Im folgenden Kontextdiagram sind die Umsysteme und Benutzer*innen inklusive deren Interaktion mit dem Physio Connect System visualisiert.

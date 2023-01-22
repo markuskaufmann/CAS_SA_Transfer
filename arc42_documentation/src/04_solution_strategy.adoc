@@ -32,7 +32,7 @@ Die folgenden Prinzipien müssen bestmöglich während dem Design und der Umsetz
 |Programmiersprachen
 |Verwendete Programmiersprachen müssen plattformunabhängig, etabliert und wenn möglich statisch typisiert (= zur Kompilierzeit) sein. Zusätzlich sollen bereits im Projekt verwendete Sprachen präferiert werden, um den Technologiestack klein und einfach zu halten.
 
-|AP-6
+|[[ap-6]]AP-6
 |Cloud Native
 |Alle umzusetzenden Komponenten sollen dem https://aws.amazon.com/what-is/cloud-native/[Cloud Native-Prinzip] entsprechen und in einem lokalen Kubernetes-Cluster ausführbar sein. Clusterweite Standards für Logging, Überwachbarkeit (Monitoring) und Sicherheit müssen eingehalten werden.
 

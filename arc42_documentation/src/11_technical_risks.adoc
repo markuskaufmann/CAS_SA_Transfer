@@ -7,7 +7,7 @@ Dieses Kapitel gibt Aufschluss über die bekannten Probleme, Risiken und technis
 
 [cols="2,6"]
 |===
-|**ID**|RTD-USR-10
+|**ID**|[[rtd-usr-10]]RTD-USR-10
 |**Risiko**|Benutzerverwaltung ist über eine bestimmte Zeit nicht erreichbar
 |**Kontext**|Die Benutzerverwaltung ist ein laufzeitkritisches Umsystem von PhysioConnect, welches für die systemweite Authentifizierung und Autorisierung verantwortlich ist. Dies bedeutet, dass Physiotherapeut*innen, Vorgesetzte der Therapeut*innen, Patient*innen, Administrator*innen und weitere relevante (technische) Benutzer*innen und Benutzergruppen, Rollen und Berechtigungen über die Benutzerverwaltung verwaltet werden. Funktionalitäten wie Registrierung, Login, Ausstellung und Validierung von Tokens setzen den Betrieb der Benutzerverwaltung voraus. +
 Die obigen Punkte stellen ein hohes potenzielles Betriebsrisiko dar, falls die Benutzerverwaltung für eine bestimmte Zeit (also nicht transient) gar nicht oder nur sehr eingeschränkt verfügbar ist. Hierbei ist anzumerken, dass das Risiko auf der Situation von unerwarteten Konnektivitätsproblemen basiert - die Systemreaktion auf geplante Verbindungsabbrüche (z.B. innerhalb eines definierten Wartungsfensters) kann vordefiniert und entsprechend kontrolliert ausgeführt werden (z.B. Aufschalten einer systemweiten Maintenance Page).
@@ -21,7 +21,7 @@ Im Rahmen von PhysioConnect können wir ein zuverlässiges Monitoring als Massna
 
 [cols="2,6"]
 |===
-|**ID**|RTD-UEB-10
+|**ID**|[[rtd-ueb-10]]RTD-UEB-10
 |**Risiko**|Übungskatalog ist über eine bestimmte Zeit nicht erreichbar
 |**Kontext**|Der Übungskatalog ist ein laufzeitkritisches Umsystem von PhysioConnect, welches für die Verwaltung (Erstellung, Modifikation, Wiederverwendung) der generell zur Verfügung stehenden (Standard-)Übungsdefinitionen zuständig ist. Dementsprechend referenziert jede im Rahmen einer Therapie-Session ausgeführte (Therapie-)Übung indirekt auf die zugrundeliegende Übungsdefinition im Übungskatalog. +
 Die obigen Punkte stellen ein hohes potenzielles Betriebsrisiko dar, falls der Übungskatalog für eine bestimmte Zeit (also nicht transient) gar nicht oder nur sehr eingeschränkt verfügbar ist. Hierbei ist anzumerken, dass das Risiko auf der Situation von unerwarteten Konnektivitätsproblemen basiert - die Systemreaktion auf geplante Verbindungsabbrüche (z.B. innerhalb eines definierten Wartungsfensters) kann vordefiniert und entsprechend kontrolliert ausgeführt werden (z.B. Aufschalten einer systemweiten Maintenance Page).
@@ -35,7 +35,7 @@ Im Rahmen von PhysioConnect können wir ein zuverlässiges Monitoring als Massna
 
 [cols="2,6"]
 |===
-|**ID**|RTD-AUS-10
+|**ID**|[[rtd-aus-10]]RTD-AUS-10
 |**Risiko**|Ausführungsservice / -Datenbank ist über eine bestimmte Zeit nicht erreichbar
 |**Kontext**|Der PhysioConnect-Ausführungsservice ist eine laufzeitkritische Komponente von PhysioConnect, welche für die Verarbeitung und Ablage aller Daten verantwortlich ist, welche von den Patient*innen während der Ausführung der Therapie-Sessions abgesetzt werden. Hierzu zählen unter anderem Messdaten, Rückmeldungen und effektive Sets / Reps pro Übung. Die Daten werden schlussendlich in der Ausführungsdatenbank persistiert.
 |**Worst Case**|Der Ausführungsservice oder die -Datenbank ist über mehrere Stunden nicht erreichbar. Jeder interne Request zum Ausführungsservice oder die Kommunikation zwischen Ausführungsservice und -Datenbank endet in einem Timeout oder der Rückgabe eines Fehler-Response Codes. Alle in dieser Zeit eingehenden Patienten-Messdaten können nicht ordnungsgemäss abgelegt werden. Die den Therapeut*innen zur Verfügung stehende Anzeige, Analyse und Auswertung der Ausführungsdaten (Monitoring / Reporting) ist nicht verfügbar. +
@@ -45,7 +45,7 @@ Zusammengefasst ist PhysioConnect für die Planung weiterer Therapien, -Sessions
 
 [cols="2,6"]
 |===
-|**ID**|RTD-AUS-20
+|**ID**|[[rtd-aus-20]]RTD-AUS-20
 |**Risiko**|Technischer Fehler oder Cyber-Attacke führt zu Datenverlust / -korruption in Ausführungsdatenbank
 |**Kontext**|In der Ausführungsdatenbank werden diejenigen Daten abgelegt, welche von den Patient*innen während der Ausführung der Therapie-Sessions abgesetzt werden. Hierzu zählen unter anderem Messdaten, Rückmeldungen und effektive Sets / Reps pro Übung. +
 Im Falle eines technischen Fehlers oder einer Cyber-Attacke besteht das Risiko, dass die Datenkonsistenz / -integrität durch deren Korruption beeinträchtigt wird, oder dass Daten gänzlich verloren gehen. Im Falle von korrupten Daten muss ebenfalls mit unerwarteten side-effects seitens der Applikationslogik von PhysioConnect gerechnet werden.
@@ -71,7 +71,7 @@ Durch die aktive Kontrolle und Einschränkung, welche Benutzer(-gruppen) Zugriff
 
 [cols="2,6"]
 |===
-|**ID**|RTD-TRA-10
+|**ID**|[[rtd-tra-10]]RTD-TRA-10
 |**Risiko**|Messdaten-Traffic führt zu hohen Betriebskosten
 |**Kontext**|Die während der Ausführung der Therapie-Sessions aufgezeichneten Patienten-Messdaten werden kontinuierlich an PhysioConnect übermittelt und in der Verantwortung des Ausführungssservice verarbeitet und abgelegt. Dies kann - je nach Anzahl Patient*innen und parallel ausgeführter Therapie-Sessions - zu einem beachtlichen Netzwerk-Traffic führen. In Kombination mit einem "Pay as you go"-Kostenmodell, welches bei aktuellen Cloud-Providern standardmässig verwendet wird, kann dies zu teils hohen Betriebskosten führen, welche den Kund*innen schlussendlich weiterverrechnet werden.
 |**Worst Case**|Ein konstant hoher Netzwerk-Traffic (basierend auf der Menge übermittelter Patienten-Messdaten) führt zu ungeplant hohen Betriebskosten, welche den Kund*innen gegenüber begründet werden müssen. Je nach vorab getätigten, kundenspezifischen Kostenvereinbarungen kann dies zu negativer Resonanz und - schlimmstenfalls - der Kündigung unseres Produkts führen.

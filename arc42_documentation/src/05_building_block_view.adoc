@@ -39,7 +39,7 @@ plantuml::structurizr_diagrams/generated/structurizr-Containers.puml[format=svg]
 
 ==== Motivation
 
-Die aktuelle Gesamtstruktur von Physio Connect resultiert aus der Kombination mehrerer link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidungen]:
+Die aktuelle Gesamtstruktur von Physio Connect resultiert aus der Kombination mehrerer <<#architecture-decisions,Architekturentscheidungen>>:
 
 * **ADR-FRO-11** +
 Wir verwenden eine Single Page Application (SPA) als Frontend inkl. separatem Deployment.
@@ -54,7 +54,7 @@ Die Ablage der Therapieverwaltungsdaten und Therapie-Session-Ausführungsdaten g
 * **ADR-BAC-50** +
 Die Abhängigkeiten zwischen Physio Connect und den APIs der Umsysteme __Übungskatalog__ und __Benutzerverwaltung__ werden mittels dedizierten Wrapper Services im Physio Connect-Backend gekapselt, welche als Abstraktionsschicht und anti-corruption layer (ACL) dienen.
 
-Des Weiteren wurde die System-Dekomposition sowohl durch das ausgearbeitete link:08_concepts.adoc#section-concepts[Domänenmodell] als auch durch die logische Zusammengehörigkeit / Gruppierung der link:../requirements_engineering/functional_requirements.adoc#section-functional-requirements[funktionalen Anforderungen] massgeblich beeinflusst. Dabei boten die Prinzipien https://blog.cleancoder.com/uncle-bob/2014/05/08/SingleReponsibilityPrinciple.html[Single Responsibility Principle (SRP)] und https://deviq.com/principles/separation-of-concerns[Separation of Concerns (SoC)] eine gute Hilfestellung.
+Des Weiteren wurde die System-Dekomposition sowohl durch das ausgearbeitete <<#domain-model,Domänenmodell>> als auch durch die logische Zusammengehörigkeit / Gruppierung der <<#functional-requirements,funktionalen Anforderungen>> massgeblich beeinflusst. Dabei boten die Prinzipien https://blog.cleancoder.com/uncle-bob/2014/05/08/SingleReponsibilityPrinciple.html[Single Responsibility Principle (SRP)] und https://deviq.com/principles/separation-of-concerns[Separation of Concerns (SoC)] eine gute Hilfestellung.
 
 ==== Beinhaltete Bausteine
 
@@ -122,9 +122,9 @@ a|
 __Zweck / Verantwortlichkeiten__
 
 * Physio Connect-Frontend in Form einer Single Page Application (SPA) +
-(gemäss link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-FRO-11])
+(gemäss <<#adr-fro-11,Architekturentscheidung __ADR-FRO-11__>>)
 * Kann auf mobilen Plattformen als Progressive Web Application (PWA) verwendet werden +
-(gemäss link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-FRO-13])
+(gemäss <<#adr-fro-13,Architekturentscheidung __ADR-FRO-13__>>)
 
 __Schnittstellen__
 
@@ -339,7 +339,7 @@ __Qualitäts- / Performancecharakteristiken__
 
 |Compatibility / Interoperability
 a|
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+Betrifft die folgenden <<#scenarios-interoperability,Qualitätsszenarien>>:
 
 * SZ-IOP-2
 * SZ-IOP-3
@@ -349,20 +349,20 @@ Betrifft die folgenden link:10_quality_requirements#section-quality-requirements
 
 |Security / Confidentiality
 a|
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+Betrifft die folgenden <<#scenarios-confidentiality,Qualitätsszenarien>>:
 
 * SZ-CNF-4
 
 |Maintainability / Modifiability
 a|
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+Betrifft die folgenden <<#scenarios-modifiability,Qualitätsszenarien>>:
 
 * SZ-MOD-1
 * SZ-MOD-5
 
 |Reliability / Fault tolerance
 a|
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+Betrifft die folgenden <<#scenarios-fault-tolerance,Qualitätsszenarien>>:
 
 * SZ-FLT-1
 * SZ-FLT-2
@@ -392,7 +392,7 @@ Diese Datenbank dient zur Persistierung der Daten, welche im Kontext des __Thera
 
 __Schnittstellen__
 
-Die Art und Anzahl der Schnittstellen hängt vom verwendeten Datenbankmodell ab. Im Falle der __Therapie Planungs Datenbank__ fiel die Wahl gemäss link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-31] auf eine Dokumentdatenbank (NoSQL).
+Die Art und Anzahl der Schnittstellen hängt vom verwendeten Datenbankmodell ab. Im Falle der __Therapie Planungs Datenbank__ fiel die Wahl gemäss <<#adr-bac-31,Architekturentscheidung __ADR-BAC-31__>> auf eine Dokumentdatenbank (NoSQL).
 
 Eine Dokumentdatenbank stellt typischerweise folgende Schnittstellen bereit:
 
@@ -418,7 +418,7 @@ a|Dokumentdatenbanken lassen sich bei Bedarf vertikal sowie horizontal skalieren
 
 |Performance Efficiency / Capacity
 a|Dokumentdatenbanken sind auf grosse Datenmengen und die Performance-Optimierung bei Abfragen und Speichervorgängen ausgelegt. Ebenso lassen sich parallele Datenzugriffe und die diesbezügliche Sicherstellung der Datenintegrität und -konsistenz via Transaktionsmanagement sicherstellen. +
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+Betrifft die folgenden <<#scenarios-capacity,Qualitätsszenarien>>:
 
 * SZ-CAP-1
 
@@ -431,7 +431,7 @@ __Risiken__
 |Risiko|Beschreibung|Mitigation
 
 |Ausfall / Nichterreichbarkeit
-|Analog zu dem definierten link:11_technical_risks#section-technical-risks[technischen Risiko RTD-AUS-10] besteht auch für die __Therapie Planungs Datenbank__ die grundsätzliche Gefahr eines unerwarteten Ausfalls, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
+|Analog zu dem definierten <<#rtd-aus-10,technischen Risiko __RTD-AUS-10__>> besteht auch für die __Therapie Planungs Datenbank__ die grundsätzliche Gefahr eines unerwarteten Ausfalls, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
 a|
 Generell können identische Massnahmen wie für __RTD-AUS-10__ in Betracht gezogen werden:
 
@@ -440,7 +440,7 @@ Generell können identische Massnahmen wie für __RTD-AUS-10__ in Betracht gezog
 * Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn eine Datenbank-Instanz nicht mehr erreichbar ist (kontinuierlich abgesetzter Heartbeat)
 
 |Datenverlust / -korruption infolge eines technischen Fehlers oder einer Cyber-Attacke
-|Analog zu dem definierten link:11_technical_risks#section-technical-risks[technischen Risiko RTD-AUS-20] besteht auch für die __Therapie Planungs Datenbank__ die grundsätzliche Gefahr, dass die Datenkonsistenz / -integrität durch deren Korruption beeinträchtigt wird, oder dass Daten gänzlich verloren gehen. Im Falle von korrupten Daten muss ebenfalls mit unerwarteten side-effects seitens der Applikationslogik von PhysioConnect gerechnet werden, welche die allgemeine Funktionstüchtigkeit des Systems beeinträchtigen können.
+|Analog zu dem definierten <<#rtd-aus-20,technischen Risiko __RTD-AUS-20__>> besteht auch für die __Therapie Planungs Datenbank__ die grundsätzliche Gefahr, dass die Datenkonsistenz / -integrität durch deren Korruption beeinträchtigt wird, oder dass Daten gänzlich verloren gehen. Im Falle von korrupten Daten muss ebenfalls mit unerwarteten side-effects seitens der Applikationslogik von PhysioConnect gerechnet werden, welche die allgemeine Funktionstüchtigkeit des Systems beeinträchtigen können.
 a|
 Generell können identische Massnahmen wie für __RTD-AUS-20__ in Betracht gezogen werden:
 
@@ -516,13 +516,13 @@ __Qualitäts- / Performancecharakteristiken__
 
 |Compatibility / Interoperability
 a|
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+Betrifft die folgenden <<#scenarios-interoperability,Qualitätsszenarien>>:
 
 * SZ-IOP-1
 
 |Security / Confidentiality
 a|
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+Betrifft die folgenden <<#scenarios-confidentiality,Qualitätsszenarien>>:
 
 * SZ-CNF-1
 * SZ-CNF-2
@@ -530,7 +530,7 @@ Betrifft die folgenden link:10_quality_requirements#section-quality-requirements
 
 |Maintainability / Modifiability
 a|
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+Betrifft die folgenden <<#scenarios-modifiability,Qualitätsszenarien>>:
 
 * SZ-MOD-1
 * SZ-MOD-2
@@ -539,7 +539,7 @@ Betrifft die folgenden link:10_quality_requirements#section-quality-requirements
 
 |Performance Efficiency / Time behaviour
 a|
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+Betrifft die folgenden <<#scenarios-time-behaviour,Qualitätsszenarien>>:
 
 * SZ-TIB-1
 
@@ -552,7 +552,7 @@ __Risiken__
 |Risiko|Beschreibung|Mitigation
 
 |Ausfall / Nichterreichbarkeit
-|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-AUS-10] beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls des __Ausführungsservice__, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
+|Das <<#rtd-aus-10,technische Risiko __RTD-AUS-10__>> beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls des __Ausführungsservice__, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
 a|
 Massnahmen gemäss __RTD-AUS-10__:
 
@@ -564,7 +564,7 @@ Massnahmen gemäss __RTD-AUS-10__:
 ** Therapie-Sessions ohne das Sammeln von Ausführungsdaten durchzuführen
 
 |Messdaten-Traffic führt zu hohen Betriebskosten
-|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-TRA-10] beschreibt die Gefahr, dass die kontinuierliche Übermittlung und Verarbeitung der Patienten-Messdaten je nach Anzahl Patient*innen und parallel ausgeführter Therapie-Sessions zu einem beachtlichen Netzwerk-Traffic führen kann. In Kombination mit einem "Pay as you go"-Kostenmodell, welches bei aktuellen Cloud-Providern standardmässig verwendet wird, kann dies zu hohen Betriebskosten führen, welche dem Kunden/der Kundin schlussendlich weiterverrechnet werden.
+|Das <<#rtd-tra-10,technische Risiko __RTD-TRA-10__>> beschreibt die Gefahr, dass die kontinuierliche Übermittlung und Verarbeitung der Patienten-Messdaten je nach Anzahl Patient*innen und parallel ausgeführter Therapie-Sessions zu einem beachtlichen Netzwerk-Traffic führen kann. In Kombination mit einem "Pay as you go"-Kostenmodell, welches bei aktuellen Cloud-Providern standardmässig verwendet wird, kann dies zu hohen Betriebskosten führen, welche dem Kunden/der Kundin schlussendlich weiterverrechnet werden.
 a|
 Massnahmen gemäss __RTD-TRA-10__:
 
@@ -582,7 +582,7 @@ Diese Datenbank dient zur Persistierung der Daten, welche im Kontext des __Ausf�
 
 __Schnittstellen__
 
-Die Art und Anzahl der Schnittstellen hängt vom verwendeten Datenbankmodell ab. Im Falle der __Ausführungs Datenbank__ fiel die Wahl gemäss link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-31] auf eine Dokumentdatenbank (NoSQL).
+Die Art und Anzahl der Schnittstellen hängt vom verwendeten Datenbankmodell ab. Im Falle der __Ausführungs Datenbank__ fiel die Wahl gemäss <<#adr-bac-31,Architekturentscheidung __ADR-BAC-31__>> auf eine Dokumentdatenbank (NoSQL).
 
 Eine Dokumentdatenbank stellt typischerweise folgende Schnittstellen bereit:
 
@@ -608,7 +608,7 @@ a|Dokumentdatenbanken lassen sich bei Bedarf vertikal sowie horizontal skalieren
 
 |Performance Efficiency / Time behaviour, Capacity
 a|Dokumentdatenbanken sind auf grosse Datenmengen und die Performance-Optimierung bei Abfragen und Speichervorgängen ausgelegt. Ebenso lassen sich parallele Datenzugriffe und die diesbezügliche Sicherstellung der Datenintegrität und -konsistenz via Transaktionsmanagement sicherstellen. +
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+Betrifft die folgenden <<#scenarios-time-behaviour,Qualitätsszenarien>>:
 
 * SZ-TIB-1
 * SZ-CAP-1
@@ -622,7 +622,7 @@ __Risiken__
 |Risiko|Beschreibung|Mitigation
 
 |Ausfall / Nichterreichbarkeit
-|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-AUS-10] beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls der __Ausführungs Datenbank__, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
+|Das <<#rtd-aus-10,technische Risiko __RTD-AUS-10__>> beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls der __Ausführungs Datenbank__, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
 a|
 Massnahmen gemäss __RTD-AUS-10__:
 
@@ -631,7 +631,7 @@ Massnahmen gemäss __RTD-AUS-10__:
 * Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn eine Datenbank-Instanz nicht mehr erreichbar ist (kontinuierlich abgesetzter Heartbeat)
 
 |Datenverlust / -korruption infolge eines technischen Fehlers oder einer Cyber-Attacke
-|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-AUS-20] beschreibt die grundsätzliche Gefahr für die __Ausführungs Datenbank__, dass die Datenkonsistenz / -integrität durch deren Korruption beeinträchtigt wird, oder dass Daten gänzlich verloren gehen. Im Falle von korrupten Daten muss ebenfalls mit unerwarteten side-effects seitens der Applikationslogik von PhysioConnect gerechnet werden, welche die allgemeine Funktionstüchtigkeit des Systems beeinträchtigen können.
+|Das <<#rtd-aus-20,technische Risiko __RTD-AUS-20__>> beschreibt die grundsätzliche Gefahr für die __Ausführungs Datenbank__, dass die Datenkonsistenz / -integrität durch deren Korruption beeinträchtigt wird, oder dass Daten gänzlich verloren gehen. Im Falle von korrupten Daten muss ebenfalls mit unerwarteten side-effects seitens der Applikationslogik von PhysioConnect gerechnet werden, welche die allgemeine Funktionstüchtigkeit des Systems beeinträchtigen können.
 a|
 Massnahmen gemäss __RTD-AUS-20__:
 
@@ -642,7 +642,7 @@ Massnahmen gemäss __RTD-AUS-20__:
 * User Access Control (Zugriffskontrolle, Autorisierung)
 
 |Messdaten-Traffic führt zu hohen Betriebskosten
-|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-TRA-10] beschreibt die Gefahr, dass die kontinuierliche Übermittlung und Verarbeitung der Patienten-Messdaten je nach Anzahl Patient*innen und parallel ausgeführter Therapie-Sessions zu einem beachtlichen Netzwerk-Traffic und Ressourcenverbrauch seitens Datenbank führen kann. In Kombination mit einem "Pay as you go"-Kostenmodell, welches bei aktuellen Cloud-Providern standardmässig verwendet wird, kann dies zu hohen Betriebskosten führen, welche den Kundinnen schlussendlich weiterverrechnet werden.
+|Das <<#rtd-tra-10,technische Risiko __RTD-TRA-10__>> beschreibt die Gefahr, dass die kontinuierliche Übermittlung und Verarbeitung der Patienten-Messdaten je nach Anzahl Patient*innen und parallel ausgeführter Therapie-Sessions zu einem beachtlichen Netzwerk-Traffic und Ressourcenverbrauch seitens Datenbank führen kann. In Kombination mit einem "Pay as you go"-Kostenmodell, welches bei aktuellen Cloud-Providern standardmässig verwendet wird, kann dies zu hohen Betriebskosten führen, welche den Kundinnen schlussendlich weiterverrechnet werden.
 a|
 Massnahmen gemäss __RTD-TRA-10__:
 
@@ -666,7 +666,7 @@ __Zweck / Verantwortlichkeiten__
 ** Verwendung / Verknüpfung von Übungsdefinitionen in Therapie-Sessions 
 ** Verwaltung von Übungskollektionen
 * Dient grundsätzlich als Abstraktionsschicht und https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer[anti-corruption layer (ACL)] zwischen Physio Connect und dem Übungskatalog +
-(siehe link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-50])
+(siehe <<#adr-bac-50,Architekturentscheidung __ADR-BAC-50__>>)
 
 [.landscape]
 <<<
@@ -717,26 +717,26 @@ __Qualitäts- / Performancecharakteristiken__
 
 |Compatibility / Interoperability
 a|
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+Betrifft die folgenden <<#scenarios-interoperability,Qualitätsszenarien>>:
 
 * SZ-IOP-3
 * SZ-IOP-4
 
 |Maintainability / Modifiability
 a|Da der __Übungskatalogwrapper__ als anti-corruption layer (ACL) zwischen den internen PhysioConnect-Komponenten und dem Übungskatalog sitzt, können API-Änderungen an letzterem System mittels dedizierter Anpassung der Wrapper-Komponente umgesetzt und gegen die internen PhysioConnect-Komponenten abstrahiert werden, sodass die interne API des Wrappers kompatibel zum definierten Domänenmodell sowie möglichst stabil und rückwärtskompatibel gehalten werden kann. +
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+Betrifft die folgenden <<#scenarios-modifiability,Qualitätsszenarien>>:
 
 * SZ-MOD-3
 
 |Reliability / Fault tolerance
 a|Der __Übungskatalogwrapper__ dient als interner Kommunikationsadapter zwischen PhysioConnect und dem Übungskatalog. Dementsprechend kann die Komponente auch auftretende Verbindungsprobleme mit dem Übungskatalog gegen aussen abstrahieren und den internen Umsystemen eine Antwort zurückgeben, welche zu einem kontrollierten und resilienten Verhalten des Gesamtsystems führen. +
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+Betrifft die folgenden <<#scenarios-fault-tolerance,Qualitätsszenarien>>:
 
 * SZ-FLT-1
 
 |Performance Efficiency / Capacity
 a|Der __Übungskatalogwrapper__ soll einfach und zustandslos (stateless) gehalten werden, sodass der Container mit minimalem Aufwand / minimaler Komplexität horizontal skaliert werden kann. +
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+Betrifft die folgenden <<#scenarios-capacity,Qualitätsszenarien>>:
 
 * SZ-CAP-1
 
@@ -749,7 +749,7 @@ __Risiken__
 |Risiko|Beschreibung|Mitigation
 
 |Ausfall / Nichterreichbarkeit des Übungskatalogs
-|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-UEB-10] beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls des Übungskatalogs, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
+|Das <<#rtd-ueb-10,technische Risiko __RTD-UEB-10__>> beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls des Übungskatalogs, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
 a|
 Massnahmen gemäss __RTD-UEB-10__:
 
@@ -768,7 +768,7 @@ __Zweck / Verantwortlichkeiten__
 Physiotherapeut*innen, Vorgesetzte der Physiotherapeut*innen, Patient*innen, Administrator*innen, weitere (technische) Benutzer*innen
 ** Verknüpfung von Patienten-Benutzer*innen in Gesamttherapien, Therapie-Sessions und Therapieübungen
 * Dient grundsätzlich als Abstraktionsschicht und https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer[anti-corruption layer (ACL)] zwischen Physio Connect und der Benutzerverwaltung +
-(siehe link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-50])
+(siehe <<#adr-bac-50,Architekturentscheidung __ADR-BAC-50__>>)
 
 [.landscape]
 <<<
@@ -819,25 +819,25 @@ __Qualitäts- / Performancecharakteristiken__
 
 |Compatibility / Interoperability
 a|
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+Betrifft die folgenden <<#scenarios-interoperability,Qualitätsszenarien>>:
 
 * SZ-IOP-5
 
 |Maintainability / Modifiability
 a|Da der __Benutzerverwaltungswrapper__ als anti-corruption layer (ACL) zwischen den internen PhysioConnect-Komponenten und der Benutzerverwaltung sitzt, können API-Änderungen an letzterem System mittels dedizierter Anpassung der Wrapper-Komponente umgesetzt und gegen die internen PhysioConnect-Komponenten abstrahiert werden, sodass die interne API des Wrappers kompatibel zum definierten Domänenmodell sowie möglichst stabil und rückwärtskompatibel gehalten werden kann. +
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+Betrifft die folgenden <<#scenarios-modifiability,Qualitätsszenarien>>:
 
 * SZ-MOD-4
 
 |Reliability / Fault tolerance
 a|Der __Benutzerverwaltungswrapper__ dient als interner Kommunikationsadapter zwischen PhysioConnect und der Benutzerverwaltung. Dementsprechend kann die Komponente auch auftretende Verbindungsprobleme mit der Benutzerverwaltung gegen aussen abstrahieren und den internen Umsystemen eine Antwort zurückgeben, welche zu einem kontrollierten und resilienten Verhalten des Gesamtsystems führen. +
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+Betrifft die folgenden <<#scenarios-fault-tolerance,Qualitätsszenarien>>:
 
 * SZ-FLT-2
 
 |Performance Efficiency / Capacity
 a|Der __Benutzerverwaltungswrapper__ soll einfach und zustandslos (stateless) gehalten werden, sodass der Container mit minimalem Aufwand / minimaler Komplexität horizontal skaliert werden kann. +
-Betrifft die folgenden link:10_quality_requirements#section-quality-requirements[Qualitätsszenarien]:
+Betrifft die folgenden <<#scenarios-capacity,Qualitätsszenarien>>:
 
 * SZ-CAP-1
 
@@ -850,7 +850,7 @@ __Risiken__
 |Risiko|Beschreibung|Mitigation
 
 |Ausfall / Nichterreichbarkeit der Benutzerverwaltung
-|Das link:11_technical_risks#section-technical-risks[technische Risiko RTD-USR-10] beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls der Benutzerverwaltung, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
+|Das <<#rtd-usr-10,technische Risiko __RTD-USR-10__>> beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls der Benutzerverwaltung, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
 a|
 Massnahmen gemäss __RTD-USR-10__:
 
@@ -891,7 +891,7 @@ plantuml::structurizr_diagrams/generated/structurizr-PlanungsServiceDetails.puml
 
 **Begründung der Struktur**
 
-Die interne Struktur des __Therapie Planungs Service__ basiert auf der getroffenen link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-20], welche den zu verwendenden Architekturstil innerhalb eines Backend Containers bestimmt. Dabei haben wir uns für die Verwendung einer link:08_concepts.adoc#section-concepts[hexagonalen Architektur (Ports & Adapters)] entschieden, da die Vorteile (Flexibilität, Testbarkeit, Modifizier- / Erweiterbarkeit) am besten zur Erfüllung unseres definierten link:01_introduction_and_goals.adoc#section-quality-goals[Qualitätsziels QG-3 (Modifiability)] beitragen.
+Die interne Struktur des __Therapie Planungs Service__ basiert auf der getroffenen <<#adr-bac-20,Architekturentscheidung __ADR-BAC-20__>>, welche den zu verwendenden Architekturstil innerhalb eines Backend Containers bestimmt. Dabei haben wir uns für die Verwendung einer <<#hexagonal-architecture,hexagonalen Architektur (Ports & Adapters)>> entschieden, da die Vorteile (Flexibilität, Testbarkeit, Modifizier- / Erweiterbarkeit) am besten zur Erfüllung unseres definierten <<#qg-3,Qualitätsziels __QG-3 (Modifiability)__>> beitragen.
 
 **Beinhaltete Blackbox-Bausteine / -Komponenten**
 
@@ -901,7 +901,7 @@ Die interne Struktur des __Therapie Planungs Service__ basiert auf der getroffen
 
 |Therapie Domänenlogik
 |Domäne
-|Implementiert den Bestandteil der Businesslogik gemäss dem definierten link:08_concepts.adoc#section-concepts[Domänenmodell], welcher für die Planung und Verwaltung von Gesamttherapien, Therapie-Sessions und Therapieübungen verantwortlich ist.
+|Implementiert den Bestandteil der Businesslogik gemäss dem definierten <<#domain-model,Domänenmodell>>, welcher für die Planung und Verwaltung von Gesamttherapien, Therapie-Sessions und Therapieübungen verantwortlich ist.
 
 Beinhaltet die aus dem Domain-Driven Design (DDD) (**TBD Link zu Evans Buch**) bekannten Elemente wie Aggregate, Entitäten, Value Objects oder Domain Services.
 
@@ -967,7 +967,7 @@ plantuml::structurizr_diagrams/generated/structurizr-AusfuehrungsServiceDetails.
 
 **Begründung der Struktur**
 
-Die interne Struktur des __Ausführungsservice__ basiert auf der getroffenen link:09_architecture_decisions.adoc#section-design-decisions[Architekturentscheidung ADR-BAC-20], welche den zu verwendenden Architekturstil innerhalb eines Backend Containers bestimmt. Dabei haben wir uns für die Verwendung einer link:08_concepts.adoc#section-concepts[hexagonalen Architektur (Ports & Adapters)] entschieden, da die Vorteile (Flexibilität, Testbarkeit, Modifizier- / Erweiterbarkeit) am Besten für die Erfüllung unseres definierten link:01_introduction_and_goals.adoc#section-quality-goals[Qualitätsziels QG-3 (Modifiability)] geeignet sind.
+Die interne Struktur des __Ausführungsservice__ basiert auf der getroffenen <<#adr-bac-20,Architekturentscheidung __ADR-BAC-20__>>, welche den zu verwendenden Architekturstil innerhalb eines Backend Containers bestimmt. Dabei haben wir uns für die Verwendung einer <<#hexagonal-architecture,hexagonalen Architektur (Ports & Adapters)>> entschieden, da die Vorteile (Flexibilität, Testbarkeit, Modifizier- / Erweiterbarkeit) am Besten für die Erfüllung unseres definierten <<#qg-3,Qualitätsziels __QG-3 (Modifiability)__>> geeignet sind.
 
 **Beinhaltete Blackbox-Bausteine / -Komponenten**
 
@@ -977,7 +977,7 @@ Die interne Struktur des __Ausführungsservice__ basiert auf der getroffenen lin
 
 |Ausführungs Domänenlogik
 |Domäne
-|Implementiert den Bestandteil der Businesslogik gemäss dem definierten link:08_concepts.adoc#section-concepts[Domänenmodell], welcher für die Verarbeitung der Daten verantwortlich ist, die von den Patient*innen während der Ausführung einer Therapie-Session aufgezeichnet werden.
+|Implementiert den Bestandteil der Businesslogik gemäss dem definierten <<#domain-model,Domänenmodell>>, welcher für die Verarbeitung der Daten verantwortlich ist, die von den Patient*innen während der Ausführung einer Therapie-Session aufgezeichnet werden.
 
 Beinhaltet die aus dem Domain-Driven Design (DDD) (**TBD Link zu Evans Buch**) bekannten Elemente wie Aggregate, Entitäten, Value Objects oder Domain Services.
 
