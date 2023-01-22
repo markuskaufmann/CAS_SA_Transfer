@@ -2,3 +2,7 @@
 == Anhang
 
 include::../requirements_engineering/functional_requirements.adoc[]
+
+include::../expert_meetings/v1/expert_meeting_v1.adoc[]
+
+include::../expert_meetings/v2/expert_meeting_v2.adoc[]
