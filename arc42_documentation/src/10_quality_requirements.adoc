@@ -5,11 +5,13 @@ In diesem Kapitel werden die nicht-funktionalen bzw. Qualitätsanforderungen an 
 
 Die primären Qualitätsziele von PhysioConnect sind im Kapitel <<#quality-goals,Qualitätsziele>> vorzufinden.
 
+[#quality-scenarios]
 === Qualitätsszenarien
 
 Gemäss den primären <<#quality-goals,Qualitätszielen>> werden die aus Sicht der <<#stakeholder,Stakeholder>> erwarteten Qualitätsattribute der Systemarchitektur in Form von messbaren Szenarien nachfolgend erläutert. +
 Die mit __(Erweiterung)__ gekennzeichneten Szenarien sind ein potenzieller Bestandteil zukünftiger Versionen / Iterationen der Systemarchitektur.
 
+[#scenarios-interoperability]
 ==== Interoperability (Compatibility)
 
 Die Interoperability-Szenarien basieren jeweils auf der folgenden Definition:
@@ -127,6 +129,7 @@ Sind die Daten formal inkorrekt oder ein Fehler tritt während der internen Vera
 99.99% der formal inkorrekten Requests oder auftretenden Fehler werden geloggt und führen zu einer Response mit Fehlercode.
 |===
 
+[#scenarios-confidentiality]
 ==== Confidentiality (Security)
 
 Die Confidentiality-Szenarien basieren jeweils auf der folgenden Definition:
@@ -221,6 +224,7 @@ Die Datenübermittlung erfolgt nur für diejenigen Patient*innen, welche der Wei
 Das Initiieren und potentielle Fehlschlagen der Datenübermittlung wird geloggt, jedoch keine patientenbezogenen (Mess-)Daten.
 |===
 
+[#scenarios-modifiability]
 ==== Modifiability (Maintainability)
 
 Die Modifiability-Szenarien basieren jeweils auf der folgenden Definition:

@@ -3,6 +3,7 @@
 
 Dieses Kapitel repräsentiert eine Zusammenfassung der übergreifenden Prinzipien und Lösungsansätze, welche im Rahmen der Systemarchitektur von Physio Connect an mehreren Stellen einheitlich verwendet werden und somit einen direkten Einfluss auf die Architektur besitzen.
 
+[#domain-model]
 === Domänenmodell
 
 Physio Connect implementiert die fachspezifische Logik der Geschäftsdomäne mittels eines Domänenmodells. Das Domänenmodell wurde mit der Hilfe einer Domänenexpertin ausgearbeitet und verfeinert. Bei zusätzlichen Erweiterungen / Anpassungen sollen wenn möglich weitere Domänenexperten hinzugezogen werden.
@@ -153,6 +154,7 @@ plantuml::domain_model/domain_BC_TherapieContext.puml[format=svg]
 [.portrait]
 <<<
 
+[#hexagonal-architecture]
 === Hexagonale Architektur
 
 Gemäss der <<#adr-bac-20,Architekturentscheidung __ADR-BAC-20__>> soll die Mikroarchitektur der deploybaren Einheiten den hexagonalen Architekturstil befolgen. In diesem Kapitel werden die dabei einzuhaltenden Richtlinien definiert. In Ausnahmefällen kann von diesem Architekturstil abgewichen werden, z.B. falls die Komplexität einer Einheit zu niedrig ist, um den Aufwand der Implementation im hexagonalen Architekturstil zu rechtfertigen.

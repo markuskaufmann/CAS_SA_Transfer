@@ -25,7 +25,7 @@ a|
 * Beschreibung der eventuellen Konsequenzen (positiv oder negativ), welche beim Einsatz der Alternative x speziell zu beachten sind
 
 |**Qualitätsanforderungen**
-|Referenzierung der link:10_quality_requirements.adoc#section-quality-requirements[Qualitätsanforderungen], welche mit dieser Entscheidung adressiert werden.
+|Referenzierung der <<#quality-requirements,Qualitätsanforderungen>>, welche mit dieser Entscheidung adressiert werden.
 |**Follow-up Entscheidungen** +
 (falls vorhanden)
 |Auflistung der benötigten Folgeentscheidungen, welche aus dieser Entscheidung resultieren und zusätzlich getroffen werden müssen.
@@ -140,13 +140,13 @@ OAuth 2.0 & OpenID Connect wird zudem von allen gängigen (Social) Identity Prov
 
 Des Weiteren ist der supplementäre Einsatz von Multi-factor authentication (MFA) ein relevanter Bestandteil aktueller Authentifizierungsmechanismen und wird daher als notwendig angesehen. Hierbei wird auf die unterstützten MFA-Faktoren von Keycloak sowie den angebotenen Social Identity Providern (ADR-SEC-11) zurückgegriffen.
 
-|link:10_quality_requirements.adoc#section-quality-requirements[**Qualitätsanforderungen**]
+|**Qualitätsanforderungen**
 a|
-**Interoperability** +
+<<#scenarios-interoperability,**Interoperability**>> +
 Der korrekte Informationsaustausch sowie die Verarbeitung der eingehenden Daten kann nur stattfinden, wenn eine ordnungsgemässe Authentifizierungs- und Autorisierungsschicht die entsprechenden Kommunikationsschnittstellen / APIs vor unbefugtem Zugriff schützt. +
 Betrifft alle diesbezüglichen Qualitätsszenarien (SZ-IOP-*).
 
-**Confidentiality** +
+<<#scenarios-confidentiality,**Confidentiality**>> +
 Die Kommunikation mit Physio Connect erfolgt stets über eine verschlüsselte Verbindung. Zudem ist eine aktive Benutzerauthentifizierung mittels Access Token-Validierung zwingend notwendig. Die Gültigkeitsprüfung erfolgt dabei über den systemweit eingesetzten Identity Provider (Keycloak), welcher ebenso für die initiale Ausstellung der Identity / Access / Refresh Tokens zuständig ist. Der Identity Provider ist Bestandteil des Umsystems __Benutzerverwaltung__.
 
 * SZ-CNF-1
@@ -254,9 +254,9 @@ Zudem kann auf diese Weise eine redundante Datenhaltung von Benutzeraccounts ver
 **Hinweis:** +
 Diese Entscheidung führt zu entsprechenden Änderungen in PhysioConnect (Webapplikation, API) sowie dem System "Benutzerverwaltung" (Konfiguration der Social Identity Providers in Keycloak).
 
-|link:10_quality_requirements.adoc#section-quality-requirements[**Qualitätsanforderungen**]
+|**Qualitätsanforderungen**
 a|
-**Confidentiality** +
+<<#scenarios-confidentiality,**Confidentiality**>> +
 Die systemweite Authentifierung erfolgt über den vom Umsystem __Benutzerverwaltung__ bereitgestellten Identity Provider (Keycloak), welcher ebenso für die initiale Ausstellung der Identity / Access / Refresh Tokens zuständig ist. Mittels der Verknüpfung existierender Social Identity Provider wie Google, Microsoft und Apple kann die Token-Ausstellung und -Validierung an die Authentifizierungsinfrastruktur jener Anbieter delegiert werden.
 
 * SZ-CNF-1
@@ -366,9 +366,9 @@ Da Physiotherapeut*innen oft nicht im Büro sind und trotzdem Zugriff auf die Th
 
 Es wurden bereits Funktionalitäten gewünscht wie die Aufnahme von Fotos und Videos für Übungsbeschreibungen. Dies hätte eine höhere Usability in Mobile Apps als im Browser. Da der Implementationsaufwand minimal gehalten werden sollte und nur eine Codebase verwendet werden muss, wird dieser Entscheid bei der Analyse der zu verwendenden Technologien getroffen.
 
-|link:10_quality_requirements.adoc#section-quality-requirements[**Qualitätsanforderungen**]
+|**Qualitätsanforderungen**
 a|
-**Interoperability** +
+<<#scenarios-interoperability,**Interoperability**>> +
 Durch die primäre Unterstützung von (Mobile) Web Browsern lässt sich ein einfacher Informationsaustausch realisieren, da auf bewährte Kommunikationsprotokolle (z.B. HTTPS) und Datenformate (z.B. JSON) gesetzt werden kann, welche out-of-the-box von den aktuellen Web Browsern unterstützt werden. +
 
 * SZ-IOP-3
@@ -376,19 +376,19 @@ Durch die primäre Unterstützung von (Mobile) Web Browsern lässt sich ein einf
 * SZ-IOP-5
 * SZ-IOP-6
 
-**Modifiability** +
+<<#scenarios-modifiability,**Modifiability**>> +
 Bei der Auslieferung (Deployment) von Modifikationen / Erweiterungen muss keine Client-spezifische Software ausgerollt werden, sondern lediglich eine neue Version der Applikation / API auf dem entsprechenden (Web-)Server oder Applikationscontainer bereitgestellt werden.
 
 * SZ-MOD-3
 * SZ-MOD-4
 * SZ-MOD-5
 
-**Scalability** +
+<<#scenarios-capacity,**Capacity**>> +
 Durch die Skalierung der Infrastrukturkomponenten, auf welchen das Frontend als Webapplikation gehostet wird, kann eine hohe und dynamische Anzahl gleichzeitiger Benutzer*innen unterstützt werden.
 
 * SZ-CAP-1
 
-**Installability** +
+<<#scenarios-installability,**Installability**>> +
 Da Physio Connect keine Provisionierung von systemabhängiger Software für das Frontend voraussetzt, sondern primär als Webapplikation verwendet werden kann, verringert sich die Komplexität sowie der Aufwand für die Installation des Systems.
 
 * SZ-INT-1
@@ -404,7 +404,7 @@ Welcher Architekturstil soll für das PhysioConnect-Frontend verwendet werden?
 
 [cols="2,6"]
 |===
-|**ID**|ADR-FRO-11
+|**ID**|[[adr-fro-11]]ADR-FRO-11
 |**Anliegen (Concern)**|Welcher Architekturstil soll für das PhysioConnect-Frontend verwendet werden?
 
 |**Kontext**
@@ -463,15 +463,15 @@ Mit Static Site Generation können nicht alle benötigten Funktionalitäten für
 
 Mit Server-side Rendering wäre es sehr aufwändig, die gewünschte Usability umzusetzen.
 
-|link:10_quality_requirements.adoc#section-quality-requirements[**Qualitätsanforderungen**]
+|**Qualitätsanforderungen**
 a|
-**Modifiability** +
+<<#scenarios-modifiability,**Modifiability**>> +
 Aktuelle Javascript-SPA-Frameworks wie Angular oder React unterstützen die Entwickler*innen bei der Implementation von kompakten, wiederverwendbaren Komponenten und Modulen, welche massgeblich zur Optimierung der Modifizier- und Erweiterbarkeit des Frontends beitragen können.
 
 * SZ-MOD-1
 * SZ-MOD-5
 
-**Capacity** +
+<<#scenarios-capacity,**Capacity**>> +
 Da eine Single Page Application meist die Ressourcen des betroffenen Clients (Browser) verwendet, fällt die Menge benötigter Ressourcen seitens Backend geringer aus. Dies führt dazu, dass das Backend eine höhere Anzahl (paralleler) Requests bewältigen kann. 
 
 * SZ-CAP-1
@@ -557,15 +557,15 @@ Für Angular gab es in den letzten Jahren viele schlechte Rückmeldungen.
 
 Vue.js und React sind beide für unser Projekt geeignet, React scheint jedoch eine aktivere Community zu besitzen und hat eine höhere Anzahl an direkt unterstützten Features, was den Implementationsaufwand senken sollte. Aus diesem Grund haben wir uns für React entschieden.
 
-|link:10_quality_requirements.adoc#section-quality-requirements[**Qualitätsanforderungen**]
+|**Qualitätsanforderungen**
 a|
-**Modifiability** +
+<<#scenarios-modifiability,**Modifiability**>> +
 React unterstützt die Entwickler*innen bei der Implementation von kompakten, wiederverwendbaren Komponenten und Modulen, welche massgeblich zur Optimierung der Modifizier- und Erweiterbarkeit des Frontends beitragen können. Die komponentenbasierte Architektur von React kann - wenn richtig angewendet - ebenfalls zu einer losen internen Kopplung führen, was Änderungen an bestimmten Stellen der Applikation zulässt, ohne den Rest der Codebasis zu beeinträchtigen. Dies erleichtert das Hinzufügen / Entfernen von Funktionen, die Behebung von Bugs oder die allgemeine Wartung der Applikation.
 
 * SZ-MOD-1
 * SZ-MOD-5
 
-**Time behaviour** +
+<<#scenarios-time-behaviour,**Time behaviour**>> +
 Durch die Verwendung eines https://reactjs.org/docs/faq-internals.html[virtuellen DOM] sowie Techniken wie https://reactjs.org/docs/code-splitting.html[Code-Splitting] und https://web.dev/code-splitting-suspense/[Lazy Loading] können sich sowohl Lade- (durch kleinere Bundles) als auch Verarbeitungszeiten optimieren lassen, was die allgemeine Performance des Frontends begünstigt.
 
 |**Follow-up Entscheidungen**
@@ -581,7 +581,7 @@ Sollen Micro Frontends verwendet werden?
 
 [cols="2,6"]
 |===
-|**ID**|ADR-FRO-13
+|**ID**|[[adr-fro-13]]ADR-FRO-13
 |**Anliegen (Concern)**|Soll eine iOS und Android App aus der React App generiert werden? Falls ja, mit welcher Technologie?
 
 |**Kontext**
@@ -652,15 +652,15 @@ __Nachteile:__
 |**Begründung**
 a|Der Entscheid fiel auf die Verwendung einer Progressive Web App, da dies einen relativ geringen Umsetzungsaufwand benötigt und gleichzeitig alle Usability Requirements erfüllt. Der Vorteil von nativen Apps kann mit dem Physio Connect-Vorteil kaum ausgenutzt werden, da hauptsächlich die Kamera verwendet wird und ansonsten nur begrenzt Offline Content benötigt wird. Der Usability-Vorteil, eine PWA umzusetzen, übertrifft den geringeren Implementationsaufwand für die Alternative __A1) Keine App__.
 
-|link:10_quality_requirements.adoc#section-quality-requirements[**Qualitätsanforderungen**]
+|**Qualitätsanforderungen**
 a|
-**Modifiability** +
+<<#scenarios-modifiability,**Modifiability**>> +
 Durch die Verwendung einer gemeinsamen Codebase können Modifikationen und / oder Erweiterungen an einem zentralen Ort implementiert werden.
 
 **Fault tolerance** +
 Da eine Progressive Web App ebenfalls die Möglichkeit einer (eingeschränkten) Offline-Funktionalität bietet, können spezifische Daten im Falle von transienten Verbindungsunterbrüchen zum Physio Connect-Backend lokal zwischengespeichert und bei der Wiederherstellung der Verbindung nachträglich gesendet werden.
 
-**Installability** +
+<<#scenarios-installability,**Installability**>> +
 Eine Progressive Web App kann je nach Implementation ebenfalls in Form einer __Mobile App__ https://web.dev/learn/pwa/installation/[installiert] werden. Dabei wird die PWA beispielsweise mittels einem Prompt dem Homescreen hinzugefügt und kann - ähnlich wie eine normale App - von dort gestartet werden.
 
 |===
@@ -702,12 +702,12 @@ Umkehrung der Alternative __A1) Micro Frontends__.
 a|
 Die Vorteile von Micro Frontends können in Physio Connect kaum verwendet werden. Um die Komplexität gering zu halten, fiel der schlussendliche Entscheid gegen die Verwendung von Micro Frontends.
 
-|link:10_quality_requirements.adoc#section-quality-requirements[**Qualitätsanforderungen**]
+|**Qualitätsanforderungen**
 a|
-**Modifiability** +
+<<#scenarios-modifiability,**Modifiability**>> +
 Da Micro Frontends in der Regel relativ kompakt und unabhängig von anderen Komponenten sind, können Modifikationen und / oder Erweiterungen an einer zentralen Stelle implementiert werden.
 
-**Capacity** +
+<<#scenarios-capacity,**Capacity**>> +
 Micro Frontends können einfacher skaliert werden als vollwertige Webapplikationen.
 
 * SZ-CAP-1
@@ -832,17 +832,17 @@ Die Implementierung einer Lambda-Architektur auf Basis von Open Source-Technolog
 |**Begründung**|Der Einsatz von Microservices deckt die erhöhte Priorität betreffend den Punkten Wiederverwendbarkeit, Modifizierbarkeit / Erweiterbarkeit und Skalierbarkeit optimal ab. +
 Funktionalitäten können optimal auf einzelne Services aufgeteilt und Letztere mit möglichst loser Kopplung entwickelt, betrieben und gewartet werden. Des Weiteren können einzelne Services je nach anfallender Last dynamisch / automatisiert skaliert werden.
 
-|link:10_quality_requirements.adoc#section-quality-requirements[**Qualitätsanforderungen**]
+|**Qualitätsanforderungen**
 a|
-**Interoperability** +
+<<#scenarios-interoperability,**Interoperability**>> +
 Die Verwendung von Microservices wird in den meisten Fällen mit dem Einsatz von standardisierten Kommunikationsprotokollen (HTTPS), Datenformaten (JSON) und Architekturstilen (REST) kombiniert, was die Interoperabilität mit anderen Services und Umsystemen begünstigen kann. +
 Betrifft alle diesbezüglichen Qualitätsszenarien (SZ-IOP-*).
 
-**Modifiability** +
+<<#scenarios-modifiability,**Modifiability**>> +
 Etwaige Modifikationen oder Erweiterungen eines Microservices sind mit geringer Komplexität realisierbar, da sich die darin befindlichen Funktionalitäten nur in dem jeweils betroffenen Microservice befinden und nicht über mehrere Services aufgetrennt sind. Zudem lassen sich Anpassungen an unterschiedlichen Microservices parallel auf mehrere Entwickler*innen / Entwicklungsteams aufteilen. +
 Betrifft alle diesbezüglichen Qualitätsszenarien (SZ-MOD-*).
 
-**Capacity** +
+<<#scenarios-capacity,**Capacity**>> +
 Microservices können - aufgrund ihrer losen Kopplung - unabhängig voneinander horizontal skaliert werden, was wiederum die Kapazitätsanforderungen des Gesamtsystems begünstigen kann. Bei Microservices mit eigener Persistenz (= __stateful__) ist jedoch im Falle einer horizontalen Skalierung zu definieren, ob die Persistenz ebenfalls mitskaliert wird oder ob eine gemeinsame Datenbank für alle Service-Instanzen verwendet werden soll.
 
 * SZ-CAP-1
@@ -940,9 +940,9 @@ Die Verwendung von Layer-Abstraktionen und vordefinierten Mappings zwischen den 
 |**Begründung**|Die Verwendung einer hexagonalen Mikroarchitektur (Ports & Adapters) deckt die erhöhte Priorität betreffend Modifizierbarkeit / Erweiterbarkeit optimal ab. +
 Die Businesslogik wird mit definierten Abstraktionen (Ports) sauber von allen externen Abhängigkeiten (Adapters) separiert, was zu einer losen Kopplung führt. Für die innere Struktur der Businesslogik setzen wir nicht explizit auf Clean / Onion Architecture, da dieser Ansatz für unser Domänenmodell zu komplex und daher over-engineered wäre.
 
-|link:10_quality_requirements.adoc#section-quality-requirements[**Qualitätsanforderungen**]
+|**Qualitätsanforderungen**
 a|
-**Modifiability** +
+<<#scenarios-modifiability,**Modifiability**>> +
 Die Verwendung einer hexagonalen Architektur (Ports & Adapters) gewährleistet eine optimale Modifizier- und Erweiterbarkeit innerhalb einer deploybaren Einheit. Durch die Verwendung von abstrakten Ports kann die Businesslogik ohne Auswirkungen auf die externen Abhängigkeiten geändert werden. Änderungen innerhalb einer externen Abhängigkeit können lediglich mit der Anpassung des betroffenen Adapters nachgeführt werden, ohne die Businesslogik zu beeinflussen. Des Weiteren können sowohl die Businesslogik als auch die externen Abhängigkeiten einfach und effizient erweitert werden. +
 Betrifft alle diesbezüglichen Qualitätsszenarien (SZ-MOD-*).
 
@@ -989,14 +989,14 @@ __Nachteile:__
 |**Entscheidung**|A2) Separate Datenbank für die Patienten-Messdaten
 |**Begründung**|Wir erachten es als sinnvoll, die eingehenden Patienten-Messdaten in einer separaten Datenbank zu persistieren, da sie einerseits andere Sicherheitsanforderungen als die herkömmlichen Therapiedaten erfüllen müssen (Stichwort Datenschutz / Privacy) und andererseits viel frequentierter abgelegt werden, was zu einer beachtlich grösseren Datenmenge führen wird.
 
-|link:10_quality_requirements.adoc#section-quality-requirements[**Qualitätsanforderungen**]
+|**Qualitätsanforderungen**
 a|
-**Time behaviour** +
+<<#scenarios-time-behaviour,**Time behaviour**>> +
 Die Verteilung der Datenmengen auf mehrere Datenbanken kann zu einer generellen Reduktion der Verarbeitungszeiten (bzw. zu einer Erhöhung der Durchsatzrate) führen, da die eingehenden Daten-Requests und -Operationen auf die betroffenen Datenbanken aufgeteilt werden.
 
 * SZ-TIB-1
 
-**Capacity** +
+<<#scenarios-capacity,**Capacity**>> +
 Die Verteilung der Datenmengen auf mehrere Datenbanken kann deren (horizontale) Skalierbarkeit begünstigen.
 
 * SZ-CAP-1
@@ -1010,7 +1010,7 @@ Welche Datenbankmodelle werden für PhysioConnect eingesetzt?
 
 [cols="2,6"]
 |===
-|**ID**|ADR-BAC-31
+|**ID**|[[adr-bac-31]]ADR-BAC-31
 |**Anliegen (Concern)**|Welche Datenbankmodelle werden für PhysioConnect eingesetzt?
 |**Kontext**
 a|PhysioConnect persistiert unterschiedlichste Daten zur Laufzeit. Beispielsweise werden einerseits stetig aufgezeichnete Messdaten des Patienten/der Patientin abgelegt, andererseits aber auch allgemeine Therapiedaten. Im Rahmen dieser Entscheidung soll analysiert werden, welche Datenbankmodelle für die unterschiedlichen Datenarten und Anwendungsfälle von PhysioConnect passend sein könnten.
@@ -1177,14 +1177,14 @@ Für die Patienten-Messdaten
 
 |**Begründung**|Für die Ablage aller relevanten Daten wird eine Kombination zweier dedizierter Dokumentdatenbanken eingesetzt, da Letztere eine hohe Performance bezüglich Schreib- und Lesevorgängen vorweisen und bei Bedarf gut skaliert werden können.
 
-|link:10_quality_requirements.adoc#section-quality-requirements[**Qualitätsanforderungen**]
+|**Qualitätsanforderungen**
 a|
-**Time behaviour** +
+<<#scenarios-time-behaviour,**Time behaviour**>> +
 Dokumentdatenbanken weisen meist eine hohe Performance bezüglich der auszuführenden Schreib- und Leseoperationen auf, was zu einer generellen Reduktion der Verarbeitungszeiten (bzw. zu einer Erhöhung der Durchsatzrate) führen kann.
 
 * SZ-TIB-1
 
-**Capacity** +
+<<#scenarios-capacity,**Capacity**>> +
 Dokumentdatenbanken erlauben eine hohe Anzahl paralleler Verbindungen und lassen sich bei Bedarf horizontal skalieren.
 
 * SZ-CAP-1
@@ -1259,13 +1259,13 @@ a|
 
 Es soll jedoch bei Design und Implementation darauf geachtet werden, dass die Möglichkeit der zukünftig gezielten Verwendung von gRPC oder einer Message Queue erhalten bleibt.
 
-|link:10_quality_requirements.adoc#section-quality-requirements[**Qualitätsanforderungen**]
+|**Qualitätsanforderungen**
 a|
-**Interoperability** +
+<<#scenarios-interoperability,**Interoperability**>> +
 Durch die Verwendung von HTTPS als Kommunikationsprotokoll wird auf einen etablierten und interoperablen Standard gesetzt, welcher einen einfachen und zuverlässigen Informationsaustausch - zumindest auf technischer Ebene - gewährleistet. +
 Betrifft alle diesbezüglichen Qualitätsszenarien (SZ-IOP-*).
 
-**Confidentiality** +
+<<#scenarios-confidentiality,**Confidentiality**>> +
 Durch die Sicherstellung von systemweit verschlüsselten HTTPS-Verbindungen werden sensitive Daten jederzeit auch zwischen den Backend-Services sicher übertragen.
 
 |===
@@ -1274,11 +1274,11 @@ Durch die Sicherstellung von systemweit verschlüsselten HTTPS-Verbindungen werd
 
 [cols="2,6"]
 |===
-|**ID**|ADR-BAC-50
+|**ID**|[[adr-bac-50]]ADR-BAC-50
 |**Anliegen (Concern)**|Wie können die Abhängigkeiten zu den APIs externer Umsysteme optimal gekapselt werden?
 |**Kontext**
 a|
-Aus Sicht des definierten link:03_system_scope_and_context.adoc#section-system-scope-and-context[Systemkontexts von Physio Connect] besteht eine Abhängigkeit zu zwei externen Umsystemen, welche sich jedoch innerhalb der Unternehmungsgrenze befinden:
+Aus Sicht des definierten <<#system-context,Systemkontexts von Physio Connect>> besteht eine Abhängigkeit zu zwei externen Umsystemen, welche sich jedoch innerhalb der Unternehmungsgrenze befinden:
 
 * **Übungskatalog** +
 System, welches für die Verwaltung (Erstellung, Modifikation, Wiederverwendung) der generell zur Verfügung stehenden (Standard-)Übungsdefinitionen zuständig ist. +
@@ -1389,7 +1389,7 @@ Jeder Wrapper Service ist ein eigener Microservice, welcher als zusätzliche Inf
 
 |**Entscheidung**|A3) Verwendung dedizierter Wrapper Services
 |**Begründung**
-a|Der Entscheid für die Verwendung dedizierter Wrapper Services basiert auf deren Vorteilen, welche im Rahmen der bestehenden link:10_quality_requirements.adoc#section-quality-requirements[Qualitätsanforderungen] als besonders relevant erachtet werden:
+a|Der Entscheid für die Verwendung dedizierter Wrapper Services basiert auf deren Vorteilen, welche im Rahmen der bestehenden <<#quality-requirements,Qualitätsanforderungen>> als besonders relevant erachtet werden:
 
 * Modifizierbar- / Erweiterbarkeit
 * Skalierbarkeit
@@ -1398,22 +1398,22 @@ a|Der Entscheid für die Verwendung dedizierter Wrapper Services basiert auf der
 * Lose Kopplung
 * Reliability / Fault Tolerance
 
-|link:10_quality_requirements.adoc#section-quality-requirements[**Qualitätsanforderungen**]
+|**Qualitätsanforderungen**
 a|
-**Interoperability** +
+<<#scenarios-interoperability,**Interoperability**>> +
 Durch die dedizierten Wrapper Services verläuft der Informationsaustausch zwischen Physio Connect und den Umsystemen __Übungskatalog__ und __Benutzerverwaltung__ über eine zentrale Stelle und kann daher optimal implementiert und überwacht werden.
 
 * SZ-IOP-3
 * SZ-IOP-4
 * SZ-IOP-5
 
-**Modifiability** +
+<<#scenarios-modifiability,**Modifiability**>> +
 Aufgrund der vollständigen Kapselung der APIs im Rahmen von dedizierten Wrapper Services können Änderungen / Erweiterungen der APIs effizient an einer zentralen Stelle angepasst werden. Alle konsumierenden Physio Connect-Komponenten / -Services benötigen keine Anpassungen, solange sich die internen APIs der Wrapper Services nicht ändern.
 
 * SZ-MOD-3
 * SZ-MOD-4
 
-**Capacity** +
+<<#scenarios-capacity,**Capacity**>> +
 Die Wrapper Services können unabhängig voneinander betrieben und vertikal / horizontal skaliert werden.
 
 * SZ-CAP-1
@@ -1497,18 +1497,18 @@ Es kann komplex und kostenaufwändig sein, eine on-premises betriebene Infrastru
 Die Möglichkeit, dass - je nach Kund*in - die Alternative __A2) On-premises bei den Kund*innen__ zum Einsatz kommen kann, wird nicht ausgeschlossen, sollte jedoch ein Ausnahmefall bleiben.
 |**Begründung**
 a|
-Das definierte link:04_solution_strategy.adoc#section-solution-strategy[Architekturprinzip AP-6] gibt bereits die Richtlinie vor, im Rahmen von Physio Connect grundsätzlich das https://aws.amazon.com/what-is/cloud-native/[Cloud Native-Prinzip] zu befolgen. Auf diese Weise bleibt Physio Connect skalierbar, flexibel, resilient und kann effizient auf neue Kundenbedürfnisse angepasst werden.
+Das definierte <<#ap-6,Architekturprinzip __AP-6__>> gibt bereits die Richtlinie vor, im Rahmen von Physio Connect grundsätzlich das https://aws.amazon.com/what-is/cloud-native/[Cloud Native-Prinzip] zu befolgen. Auf diese Weise bleibt Physio Connect skalierbar, flexibel, resilient und kann effizient auf neue Kundenbedürfnisse angepasst werden.
 
 Es soll jedoch bei Design und Implementation darauf geachtet werden, dass ein potenzielles on-premises-Hosting aus technischer Sicht nicht verbaut wird.
 
-|link:10_quality_requirements.adoc#section-quality-requirements[**Qualitätsanforderungen**]
+|**Qualitätsanforderungen**
 a|
-**Capacity** +
+<<#scenarios-capacity,**Capacity**>> +
 Bei den aktuellen Cloud-Providern kann die Leistung je nach Bedarf problemlos erhöht oder verringert werden. Bei einem plötzlichen Anstieg des Datenverkehrs können schnell weitere Ressourcen horizontal oder vertikal hinzugefügt werden, um die Last zu bewältigen. Hierbei ist zu beachten, dass die Komplexität und der Aufwand für eine horizontale Skalierung je nach betroffener Komponente variieren kann.
 
 * SZ-CAP-1
 
-**Installability** +
+<<#scenarios-installability,**Installability**>> +
 Der Aufwand und die Komplexität bezüglich Kauf, Einrichtung und Wartung physischer Server fallen weg. Die Erstellung der von Physio Connect benötigten Infrastrukturkomponenten wird mittels __Infrastructure as Code__-Scripts realisiert, welche direkt mit der API des betroffenen Cloud Providers kommunizieren. Die Installation und Konfiguration von Physio Connect erfolgt über automatisierte CI/CD-Pipelines. +
 Beim Design und der Implementation von Physio Connect wird ebenfalls darauf geachtet, dass das System mit vertretbarem Aufwand und Komplexität auch on-premises installiert und konfiguriert werden kann.
 
@@ -1573,17 +1573,17 @@ Da die Alternative __A2) On-premises bei den Kund*innen__ des Entscheids __ADR-H
 a|
 Für den Verkauf von PhysioConnect sind tiefe Einführungskosten essenziell. Zusätzlich können wir uns als Startup keinen Support für eine Vielzahl von Versionen leisten. Falls einzelne Instanzen für Kund*innen gepflegt werden müssen, sollen diese auf der gleichen Version wie unsere "Hauptinstanz" gehalten werden.
 
-|link:10_quality_requirements.adoc#section-quality-requirements[**Qualitätsanforderungen**]
+|**Qualitätsanforderungen**
 a|
-**Modifiability** +
+<<#scenarios-modifiability,**Modifiability**>> +
 Durch den Betrieb einer globalen Instanz müssen Modifikationen und / oder Erweiterungen lediglich für die aktuell produktive Version implementiert, getestet und deployed werden.
 
-**Capacity** +
+<<#scenarios-capacity,**Capacity**>> +
 Die Skalierbarkeit einer globalen Instanz kann gemäss dem Gesetz der grossen Zahlen optimiert werden.
 
 * SZ-CAP-1
 
-**Installability** +
+<<#scenarios-installability,**Installability**>> +
 Die Installation und Konfiguration einer globalen Instanz wird einmalig durchgeführt und kann durch die Verwendung einer CI/CD-Pipeline effizient durchgeführt werden. +
 Zu beachten ist jedoch, dass die Alternative __A2) On-premises bei den Kund*innen__ des Entscheids __ADR-HST-10__ potenziell zum Einsatz kommen kann, was in der Installation und dem Betrieb weiterer Physio Connect-Instanzen resultieren würde.
 
