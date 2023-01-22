@@ -7,6 +7,14 @@ Cyrille Ulmi, Markus Kaufmann
 v1.0, 22.01.2023
 :title-logo-image: image:title_logo.svg[Static,500]
 
+[role="arc42help"]
+****
+*Danksagung*
+
+Ein spezielles Dankeschön an unsere Domänenexpertin Sophie Caroline Irrgang - Masterstudentin im Bereich Health Sciences, Wissenschaftliche Mitarbeiterin im Paraplegiker-Zentrum Nottwil und Physiotherapeutin in der Klinik Barmelweid. Dank Ihrer wertvollen Einsichten fanden wir den Weg zum Ziel.
+****
+
+
 // numbering from here on
 :numbered:
 
