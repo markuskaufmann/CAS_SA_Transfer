@@ -1,9 +1,9 @@
 [#quality-requirements]
 == Qualitätsanforderungen
 
-In diesem Kapitel werden die nicht-funktionalen bzw. Qualitätsanforderungen an PhysioConnect anhand der Definition expliziter Szenarien konkretisiert. Die wichtigsten Szenarien werden in Form eines Quality Trees gemäss ATAM (Architecture Tradeoff Analysis Method) ihrer Relevanz entsprechend priorisiert / gewichtet.
+In diesem Kapitel werden die nicht-funktionalen bzw. Qualitätsanforderungen an Physio Connect anhand der Definition expliziter Szenarien konkretisiert. Die wichtigsten Szenarien werden in Form eines Quality Trees gemäss ATAM (Architecture Tradeoff Analysis Method) ihrer Relevanz entsprechend priorisiert / gewichtet.
 
-Die primären Qualitätsziele von PhysioConnect sind im Kapitel <<#quality-goals,Qualitätsziele>> vorzufinden.
+Die primären Qualitätsziele von Physio Connect sind im Kapitel <<#quality-goals,Qualitätsziele>> vorzufinden.
 
 [#quality-scenarios]
 === Qualitätsszenarien
@@ -48,7 +48,7 @@ Nachfolgend werden die effektiven Szenarien erläutert, welche sich auf das Qual
 |**Quelle des Stimulus**|Smartphone-App sendet API Request
 |**Stimulus**|Request zum Speichern der übungsrelevanten Messdaten (z.B. Puls, Blutdruck) gesendet
 |**Umgebung**|Systeme, welche bereits vor der Laufzeit bekannt waren
-|**System / Artefakte**|PhysioConnect / API Request Handler für App
+|**System / Artefakte**|Physio Connect / API Request Handler für App
 |**Antwort / Verhalten**|Sind die enthaltenen Messdaten des eingehenden Requests formal korrekt, werden diese abgespeichert und mit dem Patienten/der Patientin sowie der aktuellen Therapie-Session und Übung verknüpft. +
 Sind die Messdaten formal inkorrekt oder ein Fehler tritt bei der Persistierung auf, wird der Request geloggt und ein entsprechender Fehlercode wird als Response zurückgegeben.
 |**Metrik für Erfüllungsgrad**|99.99% aller eingehenden Requests mit formal korrekten Messdaten werden erwartungsgemäss abgespeichert. +
@@ -62,7 +62,7 @@ Sind die Messdaten formal inkorrekt oder ein Fehler tritt bei der Persistierung 
 |**Quelle des Stimulus**|Smartphone-App sendet API Request
 |**Stimulus**|Request zur Ausführung einer Operation bezüglich einer Therapie-Session gesendet
 |**Umgebung**|Systeme, welche bereits vor der Laufzeit bekannt waren
-|**System / Artefakte**|PhysioConnect / API Request Handler für App
+|**System / Artefakte**|Physio Connect / API Request Handler für App
 |**Antwort / Verhalten**|Ist der eingehende Request formal korrekt, wird die entsprechende Operation intern verarbeitet und allfällige Zustandsänderungen persistiert (z.B. Start der Therapie-Session ändert deren Status). +
 Ist der eingehende Request formal inkorrekt oder ein Fehler tritt während der internen Verarbeitung auf, wird der Request geloggt und ein entsprechender Fehlercode wird als Response zurückgegeben.
 |**Metrik für Erfüllungsgrad**|99.99% aller eingehenden, formal korrekten Requests werden intern verarbeitet und etwaige Zustandsänderungen abgespeichert. +
@@ -73,13 +73,13 @@ Ist der eingehende Request formal inkorrekt oder ein Fehler tritt während der i
 [cols="2,6"]
 |===
 |**ID**|SZ-IOP-3
-|**Quelle des Stimulus**|Smartphone-App oder PhysioConnect sendet API Request
+|**Quelle des Stimulus**|Smartphone-App oder Physio Connect sendet API Request
 |**Stimulus**|Request zum Verwalten von Übungen (Create, Read, Update, Archive) gesendet
 |**Umgebung**|Systeme, welche bereits vor der Laufzeit bekannt waren
-|**System / Artefakte**|PhysioConnect / API Response Handler für Übungskatalog, interne Layer
+|**System / Artefakte**|Physio Connect / API Response Handler für Übungskatalog, interne Layer
 |**Antwort / Verhalten**|Die Operation für das Lesen, Erstellen, Aktualisieren oder Archivieren einer Übung wird inkl. Payload an den Übungskatalog weitergeleitet. +
-Eine erfolgreiche Response des Übungskatalogs wird in eine entsprechende Antwort gemäss PhysioConnect-API Contract transformiert und zurückgegeben. +
-Eine fehlerhafte Response des Übungskatalogs wird geloggt und führt zu einer Antwort der PhysioConnect-API mit entsprechendem Fehlercode.
+Eine erfolgreiche Response des Übungskatalogs wird in eine entsprechende Antwort gemäss Physio Connect API Contract transformiert und zurückgegeben. +
+Eine fehlerhafte Response des Übungskatalogs wird geloggt und führt zu einer Antwort der Physio Connect API mit entsprechendem Fehlercode.
 |**Metrik für Erfüllungsgrad**|100% aller betroffenen Requests werden an den Übungskatalog weitergeleitet. +
 99.99% der erfolgreichen Responses vom Übungskatalog führen wiederum zu einer Response mit erfolgreichem Status. +
 99.99% der fehlerhaften Responses vom Übungskatalog werden geloggt und führen wiederum zu einer Response mit Fehlercode.
@@ -88,13 +88,13 @@ Eine fehlerhafte Response des Übungskatalogs wird geloggt und führt zu einer A
 [cols="2,6"]
 |===
 |**ID**|SZ-IOP-4
-|**Quelle des Stimulus**|Smartphone-App oder PhysioConnect sendet API Request
+|**Quelle des Stimulus**|Smartphone-App oder Physio Connect sendet API Request
 |**Stimulus**|Request zum Upload von Detailinformationen (Text, Bilder, Video, Audio) zu einer bestehenden Übung gesendet
 |**Umgebung**|Systeme, welche bereits vor der Laufzeit bekannt waren
-|**System / Artefakte**|PhysioConnect / API Response Handler für Übungskatalog, interne Layer
+|**System / Artefakte**|Physio Connect / API Response Handler für Übungskatalog, interne Layer
 |**Antwort / Verhalten**|Die Operation für den Upload von Detailinformation zu einer Übung wird inkl. Payload an den Übungskatalog weitergeleitet. +
-Eine erfolgreiche Response des Übungskatalogs wird in eine entsprechende Antwort gemäss PhysioConnect-API Contract transformiert und zurückgegeben. +
-Eine fehlerhafte Response des Übungskatalogs wird geloggt und führt zu einer Antwort der PhysioConnect-API mit entsprechendem Fehlercode.
+Eine erfolgreiche Response des Übungskatalogs wird in eine entsprechende Antwort gemäss Physio Connect API Contract transformiert und zurückgegeben. +
+Eine fehlerhafte Response des Übungskatalogs wird geloggt und führt zu einer Antwort der Physio Connect API mit entsprechendem Fehlercode.
 |**Metrik für Erfüllungsgrad**|100% aller betroffenen Requests werden an den Übungskatalog weitergeleitet. +
 99.99% der erfolgreichen Responses vom Übungskatalog führen wiederum zu einer Response mit erfolgreichem Status. +
 99.99% der fehlerhaften Responses vom Übungskatalog werden geloggt und führen wiederum zu einer Response mit Fehlercode.
@@ -103,13 +103,13 @@ Eine fehlerhafte Response des Übungskatalogs wird geloggt und führt zu einer A
 [cols="2,6"]
 |===
 |**ID**|SZ-IOP-5
-|**Quelle des Stimulus**|Smartphone-App oder PhysioConnect sendet API Request
+|**Quelle des Stimulus**|Smartphone-App oder Physio Connect sendet API Request
 |**Stimulus**|Request zum Laden von Benutzerinformationen gesendet
 |**Umgebung**|Systeme, welche bereits vor der Laufzeit bekannt waren
-|**System / Artefakte**|PhysioConnect / API Response Handler für Benutzerverwaltung, interne Layer
+|**System / Artefakte**|Physio Connect / API Response Handler für Benutzerverwaltung, interne Layer
 |**Antwort / Verhalten**|Requests bzw. interne Funktionen, welche Benutzerinformationen benötigen, setzen einen entsprechenden Request an die Benutzerverwaltung ab. +
-Eine erfolgreiche Response der Benutzerverwaltung wird zur weiteren Verarbeitung verwendet und - falls definiert - als Teil der entsprechenden Response der PhysioConnect-API zurückgegeben. +
-Eine fehlerhafte Response der Benutzerverwaltung wird geloggt und führt zu einer Antwort der PhysioConnect-API mit entsprechendem Fehlercode.
+Eine erfolgreiche Response der Benutzerverwaltung wird zur weiteren Verarbeitung verwendet und - falls definiert - als Teil der entsprechenden Response der Physio Connect API zurückgegeben. +
+Eine fehlerhafte Response der Benutzerverwaltung wird geloggt und führt zu einer Antwort der Physio Connect API mit entsprechendem Fehlercode.
 |**Metrik für Erfüllungsgrad**|100% aller betroffenen Requests werden an die Benutzerverwaltung weitergeleitet. +
 99.99% der erfolgreichen Responses von der Benutzerverwaltung können intern weiterverwendet werden (= ohne auftretende Fehler). +
 99.99% der fehlerhaften Responses von der Benutzerverwaltung werden geloggt und führen wiederum zu einer Response mit Fehlercode.
@@ -118,12 +118,12 @@ Eine fehlerhafte Response der Benutzerverwaltung wird geloggt und führt zu eine
 [cols="2,6"]
 |===
 |**ID**|SZ-IOP-6 (Erweiterung)
-|**Quelle des Stimulus**|Dokumentationssystem oder PhysioConnect sendet API Request
+|**Quelle des Stimulus**|Dokumentationssystem oder Physio Connect sendet API Request
 |**Stimulus**|Request für Datenimport aus dem Dokumentationssystem (API oder File Upload) gesendet
 |**Umgebung**|Systeme, welche bereits vor der Laufzeit bekannt waren
-|**System / Artefakte**|PhysioConnect / API Request Handler für Dokumentationssystem, interne Layer
-|**Antwort / Verhalten**|Die zu importierenden Daten werden gemäss der vorgegebenen API / Upload File-Struktur eingelesen und formal geprüft. Sind die Daten formal korrekt, werden sie intern verarbeitet und persistiert. Die PhysioConnect-API gibt einen erfolgreichen Response-Status zurück. +
-Sind die Daten formal inkorrekt oder ein Fehler tritt während der internen Verarbeitung oder Persistierung auf, wird der fehlgeschlagene Import-Versuch geloggt und eine entsprechende Antwort der PhysioConnect-API mit Fehlercode zurückgegeben.
+|**System / Artefakte**|Physio Connect / API Request Handler für Dokumentationssystem, interne Layer
+|**Antwort / Verhalten**|Die zu importierenden Daten werden gemäss der vorgegebenen API / Upload File-Struktur eingelesen und formal geprüft. Sind die Daten formal korrekt, werden sie intern verarbeitet und persistiert. Die Physio Connect API gibt einen erfolgreichen Response-Status zurück. +
+Sind die Daten formal inkorrekt oder ein Fehler tritt während der internen Verarbeitung oder Persistierung auf, wird der fehlgeschlagene Import-Versuch geloggt und eine entsprechende Antwort der Physio Connect API mit Fehlercode zurückgegeben.
 |**Metrik für Erfüllungsgrad**|99.99% aller eingehenden, formal korrekten Requests werden intern verarbeitet und schlussendlich abgespeichert. +
 0% der formal inkorrekten Requests verlassen den Request Handler zur internen Verarbeitung. +
 99.99% der formal inkorrekten Requests oder auftretenden Fehler werden geloggt und führen zu einer Response mit Fehlercode.
@@ -176,8 +176,8 @@ Nachfolgend werden die effektiven Szenarien erläutert, welche sich auf das Qual
 |**ID**|SZ-CNF-1
 |**Quelle des Stimulus**|Identifizierter Patient/Identifizierte Patientin via Smartphone-App
 |**Stimulus**|Speichern der übungsrelevanten Messdaten (z.B. Puls, Blutdruck)
-|**Umgebung**|Voll einsatzfähiges System (online), Request von ausserhalb des PhysioConnect-Netzwerks
-|**System / Artefakte**|PhysioConnect / API Request Handler für App
+|**Umgebung**|Voll einsatzfähiges System (online), Request von ausserhalb des Physio Connect-Netzwerks
+|**System / Artefakte**|Physio Connect / API Request Handler für App
 |**Antwort / Verhalten**|Die Messdaten werden verschlüsselt entgegengenommen (API ist nur via TLS / SSL verwendbar) und formal geprüft. Formal korrekte Messdaten werden direkt in einem verschlüsselten Datenspeicher abgelegt, wo sie nur innerhalb des internen Systemnetzwerks zugreif- / auslesbar sind. In betroffenem Datenspeicher sind die Messdaten nicht anonymisiert abgelegt, da sie zu Auswertungs- und Analysezwecken dem Patienten/der Patientin und der jeweiligen Übung / Therapie-Session zugeordnet werden müssen. +
 Sind die Messdaten formal inkorrekt oder ein Fehler tritt während der internen Verarbeitung oder Persistierung auf, wird der Request geloggt (ohne die konkreten Messdaten) und eine entsprechende Response mit Fehlercode zurückgegeben.
 |**Metrik für Erfüllungsgrad**|100% der verarbeiteten Requests zur Speicherung der Messdaten verlaufen über einen verschlüsselten Kommunikationskanal. +
@@ -190,8 +190,8 @@ Der Datenspeicher mit den Messdaten ist ausserhalb des Systemnetzwerks nicht dir
 |**ID**|SZ-CNF-2
 |**Quelle des Stimulus**|Identifizierter Patient/Identifizierte Patientin via Smartphone-App
 |**Stimulus**|Abrufen der Messdaten anderer Patient*innen
-|**Umgebung**|Voll einsatzfähiges System (online), Request von ausserhalb des PhysioConnect-Netzwerks
-|**System / Artefakte**|PhysioConnect / API Request Handler für App
+|**Umgebung**|Voll einsatzfähiges System (online), Request von ausserhalb des Physio Connect Netzwerks
+|**System / Artefakte**|Physio Connect / API Request Handler für App
 |**Antwort / Verhalten**|Die Anfrage wird entgegengenommen und das darin enthaltene Access Token überprüft. Der Patient/Die Patientin wird korrekt authentifiziert und es wird überprüft, ob der Patient Zugriff auf die angeforderten Daten besitzt. Da die Daten einem anderen Patienten/einer anderen Patientin zugewiesen sind, wird eine 403 Response (Forbidden) zurückgesendet und der Vorfall wird als potenzieller Angriffsversuch geloggt.
 |**Metrik für Erfüllungsgrad**|Bei 100% der Requests werden keine Messdaten zurückgeliefert. +
 Bei 99.9% der Requests wird eine Response mit Fehlercode 403 (Forbidden) geliefert. +
@@ -203,8 +203,8 @@ Bei 99.9% der Requests wird eine Response mit Fehlercode 403 (Forbidden) geliefe
 |**ID**|SZ-CNF-3
 |**Quelle des Stimulus**|Unidentifizierte Person via Smartphone-App
 |**Stimulus**|Abrufen der Messdaten mit einem ungültigen Access Token
-|**Umgebung**|Voll einsatzfähiges System (online), Request von ausserhalb des PhysioConnect-Netzwerks
-|**System / Artefakte**|PhysioConnect / API Request Handler für App
+|**Umgebung**|Voll einsatzfähiges System (online), Request von ausserhalb des Physio Connect Netzwerks
+|**System / Artefakte**|Physio Connect / API Request Handler für App
 |**Antwort / Verhalten**|Die Anfrage wird entgegengenommen und das darin enthaltene Access Token überprüft. Der Benutzername und die ID des Patienten/der Patientin sind dabei korrekt gesetzt. Das Token wird an die Security-Komponente weitergeleitet und validiert. Da das Token ungültig ist (z.B. abgelaufen), beantwortet Physio Connect den Request mit dem Fehlercode 401 (Unauthorized).
 |**Metrik für Erfüllungsgrad**|Bei 100% der Requests werden keine Messdaten zurückgeliefert. +
 Bei 99.9% der Requests wird eine Response mit Fehlercode 401 (Unauthorized) geliefert. +
@@ -214,10 +214,10 @@ Bei 99.9% der Requests wird eine Response mit Fehlercode 401 (Unauthorized) geli
 [cols="2,6"]
 |===
 |**ID**|SZ-CNF-4 (Erweiterung)
-|**Quelle des Stimulus**|Identifizierter Physiotherapeut/Identifizierte Physiotherapeutin via PhysioConnect
+|**Quelle des Stimulus**|Identifizierter Physiotherapeut/Identifizierte Physiotherapeutin via Physio Connect
 |**Stimulus**|Physiotherapeut*in markiert Therapie als abgeschlossen
-|**Umgebung**|Voll einsatzfähiges System (online), Request von innerhalb des PhysioConnect-Netzwerks
-|**System / Artefakte**|PhysioConnect / API Response Handler für EPD
+|**Umgebung**|Voll einsatzfähiges System (online), Request von innerhalb des Physio Connect Netzwerks
+|**System / Artefakte**|Physio Connect / API Response Handler für EPD
 |**Antwort / Verhalten**|Alle patientenbezogenen Therapiedaten werden in aggregierter Form an das https://www.patientendossier.ch/[Elektronische Patientendossier (EPD)] weitergeleitet. Die Kommunikation verläuft dabei über vordefinierte Schnittstellen / Protokolle sowie über eine verschlüsselte Verbindung. Die Daten sind nicht anonymisiert, da sie Teil der persönlichen Dokumente eines Patienten/einer Patientin darstellen. +
 Die Datenübermittlung erfolgt nur für diejenigen Patient*innen, welche der Weitergabe ihrer Gesundsheitsdaten zu Beginn der Therapie zugestimmt haben. 
 |**Metrik für Erfüllungsgrad**|0% der Daten können während der Übermittlung aus dem Kommunikationskanal / -protokoll extrahiert oder entschlüsselt werden. +
@@ -263,7 +263,7 @@ Nachfolgend werden die effektiven Szenarien erläutert, welche sich auf das Qual
 |**Quelle des Stimulus**|Physiotherapeut*in
 |**Stimulus**|Will Unterstützung für einen neuen Messdatentyp zur besseren Auswertung von Therapien (z.B. Körpertemperatur)
 |**Umgebung**|Entwicklungszeit
-|**System / Artefakte**|PhysioConnect / API für App, interne Layer (bis hin zur Persistenzschicht)
+|**System / Artefakte**|Physio Connect / API für App, interne Layer (bis hin zur Persistenzschicht)
 |**Antwort / Verhalten**|Das Entwicklungsteam entwirft, implementiert, testet und deployed eine Erweiterung der technisch unterstützten Messdatentypen. Der Umfang der Änderung spannt sich von der App-API bis hin zur Persistenzschicht.
 |**Metrik für Erfüllungsgrad**|Die Erweiterung ist innerhalb von 3 Personentagen realisierbar (Design, Implement, Test, Deploy). +
 100% der bisherigen Tests (Unit, Integration, E2E) können fehlerfrei ausgeführt werden. +
@@ -277,7 +277,7 @@ Die Erweiterung ist rückwärtskompatibel - Übungen, welche den neuen Messdaten
 |**Quelle des Stimulus**|Entwickler*in
 |**Stimulus**|Will ein alternatives Datenformat / -protokoll für eine ressourcenoptimierte Übermittlung der Messdaten unterstützen (z.B. JSON anstelle von XML)
 |**Umgebung**|Entwicklungszeit
-|**System / Artefakte**|PhysioConnect / API für App
+|**System / Artefakte**|Physio Connect / API für App
 |**Antwort / Verhalten**|Das Entwicklungsteam enwirft, implementiert, testet und deployed eine parallel verwendbare Version der App-API, welche das gewünschte Datenformat / -protokoll unterstützt. Für die internen Layer sollten keine nennenswerten Änderungen resultieren.
 |**Metrik für Erfüllungsgrad**|Die Erweiterung ist innerhalb von 1 Personenwoche realisierbar (Design, Implement, Test, Deploy). +
 100% der bisherigen Tests (Unit, Integration, E2E) können fehlerfrei ausgeführt werden. +
@@ -291,8 +291,8 @@ Konsument*innen der ursprünglichen Version der App-API müssen keinerlei Anpass
 |**Quelle des Stimulus**|Entwickler*in
 |**Stimulus**|Ändert / Erweitert die API des Übungskatalogs
 |**Umgebung**|Entwicklungszeit
-|**System / Artefakte**|PhysioConnect / API Connector für Übungskatalog
-|**Antwort / Verhalten**|Das Entwicklungsteam implementiert, testet und deployed eine neue Version von PhysioConnect, welche die Änderungen an der Übungskatalog-API unterstützt. Je nach Änderung können seitens PhysioConnect nebst dem API Connector auch die internen Layer (bis hin zur Persistenzschicht) von Anpassungen betroffen sein.
+|**System / Artefakte**|Physio Connect / API Connector für Übungskatalog
+|**Antwort / Verhalten**|Das Entwicklungsteam implementiert, testet und deployed eine neue Version von Physio Connect, welche die Änderungen an der Übungskatalog-API unterstützt. Je nach Änderung können seitens Physio Connect nebst dem API Connector auch die internen Layer (bis hin zur Persistenzschicht) von Anpassungen betroffen sein.
 |**Metrik für Erfüllungsgrad**|Die Anpassung an die Änderungen der Übungskatalog-API ist innerhalb von 3 Personentagen realisierbar (Implement, Test, Deploy) sofern lediglich der API Connector davon betroffen ist, ansonsten innerhalb von 1-2 Personenwochen. +
 100% der bisherigen Tests (Unit, Integration, E2E) können fehlerfrei ausgeführt werden. +
 Im Rahmen von Smoke Tests auf einer deployten Umgebung kommen keine Bugs zum Vorschein, welche mit den gemachten Änderungen korrelieren.
@@ -304,8 +304,8 @@ Im Rahmen von Smoke Tests auf einer deployten Umgebung kommen keine Bugs zum Vor
 |**Quelle des Stimulus**|Entwickler*in
 |**Stimulus**|Ändert / Erweitert die API der Benutzerverwaltung
 |**Umgebung**|Entwicklungszeit
-|**System / Artefakte**|PhysioConnect / API Connector für Benutzerverwaltung
-|**Antwort / Verhalten**|Das Entwicklungsteam implementiert, testet und deployed eine neue Version von PhysioConnect, welche die Änderungen an der Benutzerverwaltung-API unterstützt. Je nach Änderung können seitens PhysioConnect nebst dem API Connector auch die internen Layer (bis hin zur Persistenzschicht) von Anpassungen betroffen sein.
+|**System / Artefakte**|Physio Connect / API Connector für Benutzerverwaltung
+|**Antwort / Verhalten**|Das Entwicklungsteam implementiert, testet und deployed eine neue Version von Physio Connect, welche die Änderungen an der Benutzerverwaltung-API unterstützt. Je nach Änderung können seitens Physio Connect nebst dem API Connector auch die internen Layer (bis hin zur Persistenzschicht) von Anpassungen betroffen sein.
 |**Metrik für Erfüllungsgrad**|Die Anpassung an die Änderungen der Benutzerverwaltung-API ist innerhalb von 3 Personentagen realisierbar (Implement, Test, Deploy) sofern lediglich der API Connector davon betroffen ist, ansonsten innerhalb von 1-2 Personenwochen. +
 100% der bisherigen Tests (Unit, Integration, E2E) können fehlerfrei ausgeführt werden. +
 Im Rahmen von Smoke Tests auf einer deployten Umgebung kommen keine Bugs zum Vorschein, welche mit den gemachten Änderungen korrelieren.
@@ -317,7 +317,7 @@ Im Rahmen von Smoke Tests auf einer deployten Umgebung kommen keine Bugs zum Vor
 |**Quelle des Stimulus**|Kund*in / Physiotherapeut*in
 |**Stimulus**|Will Daten aus einem bestehenden Dokumentationssystem via API importieren
 |**Umgebung**|Entwicklungszeit
-|**System / Artefakte**|PhysioConnect / API für Dokumentationssystem, interne Layer
+|**System / Artefakte**|Physio Connect / API für Dokumentationssystem, interne Layer
 |**Antwort / Verhalten**|Das Entwicklungsteam enwirft, implementiert, testet und deployed die initiale Version einer API, welche den Datenimport aus einem vordefinierten Dokumentationssystem ermöglichen soll. Der Umfang der Erweiterung spannt sich vom API Layer bis hin zur Persistenzschicht.
 |**Metrik für Erfüllungsgrad**|Die Bereitstellung einer initialen API ist innerhalb von 1-2 Personenwochen realisierbar (Design, Implement, Test, Deploy). +
 100% der bisherigen Tests (Unit, Integration, E2E) können fehlerfrei ausgeführt werden. +
@@ -328,9 +328,9 @@ Im Rahmen von Smoke Tests auf einer deployten Umgebung kommen keine Bugs zum Vor
 |===
 |**ID**|SZ-MOD-6 (Erweiterung)
 |**Quelle des Stimulus**|Medizinisches Forschungsteam
-|**Stimulus**|Will anonymisierte Gesundheitsdaten von PhysioConnect beziehen
+|**Stimulus**|Will anonymisierte Gesundheitsdaten von Physio Connect beziehen
 |**Umgebung**|Entwicklungszeit
-|**System / Artefakte**|PhysioConnect / API für Lesezugriff auf Daten, interne Layer (bis hin zu Persistenzschicht)
+|**System / Artefakte**|Physio Connect / API für Lesezugriff auf Daten, interne Layer (bis hin zu Persistenzschicht)
 |**Antwort / Verhalten**|Das Entwicklungsteam enwirft, implementiert, testet und deployed die initiale Version einer API, welche den Lesezugriff auf anonymisierte Gesundheits- / Messdaten ermöglichen soll. Der Umfang der Erweiterung spannt sich vom API Layer bis hin zur Persistenzschicht.
 |**Metrik für Erfüllungsgrad**|Die Bereitstellung einer initialen API ist innerhalb von 1-2 Personenwochen realisierbar (Design, Implement, Test, Deploy). +
 100% der bisherigen Tests (Unit, Integration, E2E) können fehlerfrei ausgeführt werden. +
@@ -344,7 +344,7 @@ Es kann sichergestellt werden, dass 100% der bereitgestellten Gesundheitsdaten a
 |**Quelle des Stimulus**|Medizinisches Forschungsteam
 |**Stimulus**|Will bereitgestellte Gesundheitsdaten mit Labels versehen, damit diese zum Training von https://www.ibm.com/cloud/learn/supervised-learning[Supervised / Semi-Supervised Learning] AI-Modellen verwendet werden können
 |**Umgebung**|Entwicklungszeit
-|**System / Artefakte**|PhysioConnect / API für Eingabe von Labeling-Vorschlägen, interne Layer (bis hin zur Persistenzschicht)
+|**System / Artefakte**|Physio Connect / API für Eingabe von Labeling-Vorschlägen, interne Layer (bis hin zur Persistenzschicht)
 |**Antwort / Verhalten**|Das Entwicklungsteam enwirft, implementiert, testet und deployed die initiale Version einer API, welche die Eingabe von Labeling-Vorschlägen ermöglichen soll. Die Labels sollen zusammen mit den bereits bestehenden, anonymisierten Gesundheitsdaten abgelegt werden. +
 Der Umfang der Erweiterung spannt sich vom API Layer bis hin zur Persistenzschicht.
 |**Metrik für Erfüllungsgrad**|Die Bereitstellung einer initialen API ist innerhalb von 1-2 Personenwochen realisierbar (Design, Implement, Test, Deploy). +
@@ -363,7 +363,7 @@ Es kann sichergestellt werden, dass 100% der bereitgestellten Gesundheitsdaten m
 |**Quelle des Stimulus**|Patient*in via Fitnesstracker-App
 |**Stimulus**|Verarbeitung parallel eingehender Messdaten-Requests
 |**Umgebung**|Normalbetrieb
-|**System / Artefakte**|PhysioConnect / API Request Handler für App, interne Layer
+|**System / Artefakte**|Physio Connect / API Request Handler für App, interne Layer
 |**Antwort / Verhalten**|Gleichzeitig eingehende Messdaten (ausgehend von verschiedenen Patient*innen) werden in unabhängigen Threads verarbeitet und zuverlässig persistiert. Gemeinsam genutzte Ressourcen (z.B. Datenspeicher) sind mit entsprechenden Synchronisationsmechanismen (z.B. Semaphoren) abgesichert, um Concurrency Exceptions und inkonsistenten Datenständen vorzubeugen.
 |**Metrik für Erfüllungsgrad**|99% der API-Requests zum Ablegen eingehender Messdaten werden intern (sprich abzüglich der Netzwerk-Latenzzeit) innerhalb von 100 Millisekunden verarbeitet (Eingang des Requests, formale Prüfung, Persistierung, Response).
 |===
@@ -374,11 +374,11 @@ Es kann sichergestellt werden, dass 100% der bereitgestellten Gesundheitsdaten m
 [cols="2,6"]
 |===
 |**ID**|[[sz-cap-1]]SZ-CAP-1
-|**Quelle des Stimulus**|Benutzer*in von PhysioConnect
-|**Stimulus**|Parallele Verwendung von PhysioConnect durch mehrere Benutzer*innen (z.B. Physiotherapeut*innen + Vorgesetzte + Patient*innen)
+|**Quelle des Stimulus**|Benutzer*in von Physio Connect
+|**Stimulus**|Parallele Verwendung von Physio Connect durch mehrere Benutzer*innen (z.B. Physiotherapeut*innen + Vorgesetzte + Patient*innen)
 |**Umgebung**|Spitzenbelastung
-|**System / Artefakte**|PhysioConnect / Gesamtsystem
-|**Antwort / Verhalten**|PhysioConnect verarbeitet verschiedenste Request-Typen (z.B. Verarbeitung eingehender Messdaten, Monitoring, Reporting, Erstellung einer neuen Therapie) in unabhängigen Threads und ermöglicht somit mehreren Parteien, das System gleichzeitig zu verwenden.
+|**System / Artefakte**|Physio Connect / Gesamtsystem
+|**Antwort / Verhalten**|Physio Connect verarbeitet verschiedenste Request-Typen (z.B. Verarbeitung eingehender Messdaten, Monitoring, Reporting, Erstellung einer neuen Therapie) in unabhängigen Threads und ermöglicht somit mehreren Parteien, das System gleichzeitig zu verwenden.
 |**Metrik für Erfüllungsgrad**|Das System ermöglicht den einwandfreien Betrieb mit 100 gleichzeitigen Benutzer*innen. Einwandfrei bedeutet in dem Fall: +
 95% aller Requests, deren Response zu einem sichtbaren Ergebnis auf Benutzerseite führen, dauern weniger als 1 Sekunde.
 |===
@@ -392,10 +392,10 @@ Es kann sichergestellt werden, dass 100% der bereitgestellten Gesundheitsdaten m
 |**Quelle des Stimulus**|Übungskatalog
 |**Stimulus**|Übungskatalog ist nicht / eingeschränkt erreichbar und / oder gibt Request-unabhängige Fehlermeldungen zurück
 |**Umgebung**|Gestörter Betrieb
-|**System / Artefakte**|PhysioConnect / Gesamtsystem
+|**System / Artefakte**|Physio Connect / Gesamtsystem
 |**Antwort / Verhalten**|Requests zum Übungskatalog werden nach Ablauf eines vordefinierten Timeouts (z.B. 5 Sekunden) auf Basis einer Retry-Policy mehrmals wiederholt (z.B. 2 Wiederholungen). Nach erfolglosem Ablauf aller Wiederholungen wird das Nichterreichen des Übungskatalogs geloggt und die interne Funktionslogik wird - sofern sinnvoll - ohne Fehler fortgesetzt. Alternativ wird eine entsprechende Response mit Fehlercode zurückgegeben. +
 Request-unabhängige Fehlermeldungen des Übungskatalogs werden geloggt und führen zu der Rückgabe einer entsprechenden Response mit Fehlercode.
-|**Metrik für Erfüllungsgrad**|Das Nichterreichen des Übungskatalogs oder Request-unabhängige Fehlermeldungen führen zu keiner Exception seitens PhysioConnect, sondern a) zu einer normalen Weiterführung der internen Funktionslogik (falls sinnvoll) oder b) zu einer Response mit Fehlercode und benutzerfreundlichen Fehlermeldung. +
+|**Metrik für Erfüllungsgrad**|Das Nichterreichen des Übungskatalogs oder Request-unabhängige Fehlermeldungen führen zu keiner Exception seitens Physio Connect, sondern a) zu einer normalen Weiterführung der internen Funktionslogik (falls sinnvoll) oder b) zu einer Response mit Fehlercode und benutzerfreundlichen Fehlermeldung. +
 100% der auftretenden Verbindungsprobleme zum Übungskatalog werden geloggt.
 |===
 
@@ -405,10 +405,10 @@ Request-unabhängige Fehlermeldungen des Übungskatalogs werden geloggt und füh
 |**Quelle des Stimulus**|Benutzerverwaltung
 |**Stimulus**|Benutzerverwaltung ist nicht / eingeschränkt erreichbar und / oder gibt Request-unabhängige Fehlermeldungen zurück
 |**Umgebung**|Gestörter Betrieb
-|**System / Artefakte**|PhysioConnect / Gesamtsystem
+|**System / Artefakte**|Physio Connect / Gesamtsystem
 |**Antwort / Verhalten**|Requests zur Benutzerverwaltung werden nach Ablauf eines vordefinierten Timeouts (z.B. 5 Sekunden) auf Basis einer Retry-Policy mehrmals wiederholt (z.B. 2 Wiederholungen). Nach erfolglosem Ablauf aller Wiederholungen wird das Nichterreichen der Benutzerverwaltung geloggt und die interne Funktionslogik wird - sofern sinnvoll - ohne Fehler fortgesetzt. Alternativ wird eine entsprechende Response mit Fehlercode zurückgegeben. +
 Request-unabhängige Fehlermeldungen der Benutzerverwaltung werden geloggt und führen zu der Rückgabe einer entsprechenden Response mit Fehlercode.
-|**Metrik für Erfüllungsgrad**|Das Nichterreichen der Benutzerverwaltung oder Request-unabhängige Fehlermeldungen führen zu keiner Exception seitens PhysioConnect, sondern a) zu einer normalen Weiterführung der internen Funktionslogik (falls sinnvoll) oder b) zu einer Response mit Fehlercode und benutzerfreundlichen Fehlermeldung. +
+|**Metrik für Erfüllungsgrad**|Das Nichterreichen der Benutzerverwaltung oder Request-unabhängige Fehlermeldungen führen zu keiner Exception seitens Physio Connect, sondern a) zu einer normalen Weiterführung der internen Funktionslogik (falls sinnvoll) oder b) zu einer Response mit Fehlercode und benutzerfreundlichen Fehlermeldung. +
 100% der auftretenden Verbindungsprobleme zu der Benutzerverwaltung werden geloggt.
 |===
 
@@ -418,12 +418,12 @@ Request-unabhängige Fehlermeldungen der Benutzerverwaltung werden geloggt und f
 [cols="2,6"]
 |===
 |**ID**|SZ-INT-1 (Erweiterung)
-|**Quelle des Stimulus**|Kund*in, Technische Integratoren von PhysioConnect (z.B. IT-Abteilung von Kund*innen)
-|**Stimulus**|Einrichtung von PhysioConnect on-premises
+|**Quelle des Stimulus**|Kund*in, Technische Integratoren von Physio Connect (z.B. IT-Abteilung von Kund*innen)
+|**Stimulus**|Einrichtung von Physio Connect on-premises
 |**Umgebung**|Installationszeit, Konfigurationszeit
-|**System / Artefakte**|PhysioConnect / Gesamtsystem
-|**Antwort / Verhalten**|PhysioConnect ist in einer kundenspezifischen System- und Applikationslandschaft, welche on-premises läuft, mit vertretbarem Aufwand und Komplexität integrierbar (beinhaltet Installation und Konfiguration).
-|**Metrik für Erfüllungsgrad**|PhysioConnect soll unter Einbezug und Verfügbarkeit aller relevanten Parteien (Entwickler*in / Architekt*in seitens PhysioConnect, Entwickler*in / Integratoren seitens IT-Abteilung von Kund*innen) innerhalb von 1 Personenwoche auf einer beliebigen on-premises-Umgebung, welche die System- und Ressourcenanforderungen erfüllt, installiert und initial konfiguriert sein. +
+|**System / Artefakte**|Physio Connect / Gesamtsystem
+|**Antwort / Verhalten**|Physio Connect ist in einer kundenspezifischen System- und Applikationslandschaft, welche on-premises läuft, mit vertretbarem Aufwand und Komplexität integrierbar (beinhaltet Installation und Konfiguration).
+|**Metrik für Erfüllungsgrad**|Physio Connect soll unter Einbezug und Verfügbarkeit aller relevanten Parteien (Entwickler*in / Architekt*in seitens Physio Connect, Entwickler*in / Integratoren seitens IT-Abteilung von Kund*innen) innerhalb von 1 Personenwoche auf einer beliebigen on-premises-Umgebung, welche die System- und Ressourcenanforderungen erfüllt, installiert und initial konfiguriert sein. +
 Der Aufwand und die Komplexität bezüglich der einwandfreien Kommunikation mit bestehenden Umsystemen ist dabei nicht Teil dieses Szenarios und muss individuell evaluiert und szenariotechnisch quantifiziert werden.
 |===
 
@@ -440,11 +440,11 @@ Aus dem obigen Quality Tree lassen sich die folgenden Erkenntnisse extrahieren:
 ** SZ-CNF-1 +
 Einhaltung der geltenden Datenschutzverordnungen und Sicherheitsstandards in Bezug auf die Ablage persönlicher Gesundheitsdaten.
 ** SZ-IOP-1 +
-Zuverlässige Interoperabilität zwischen Patienten-App (Smartphone / Fitnesstracker) und PhysioConnect bezüglich der Übermittlung von aufgezeichneten Gesundheitsdaten (z.B. Puls, Blutdruck).
+Zuverlässige Interoperabilität zwischen Patienten-App (Smartphone / Fitnesstracker) und Physio Connect bezüglich der Übermittlung von aufgezeichneten Gesundheitsdaten (z.B. Puls, Blutdruck).
 ** SZ-IOP-2 +
-Zuverlässige Interoperabilität zwischen Patienten-App (Smartphone / Fitnesstracker) und PhysioConnect bezüglich der Ausführung verschiedener Operationen (z.B. Start einer Therapie-Session).
+Zuverlässige Interoperabilität zwischen Patienten-App (Smartphone / Fitnesstracker) und Physio Connect bezüglich der Ausführung verschiedener Operationen (z.B. Start einer Therapie-Session).
 ** SZ-MOD-1 +
-Einfache und effiziente Erweiterung von PhysioConnect bezüglich der Unterstützung neuer Messdatentypen (z.B. Körpertemperatur) pro Übung.
+Einfache und effiziente Erweiterung von Physio Connect bezüglich der Unterstützung neuer Messdatentypen (z.B. Körpertemperatur) pro Übung.
 
 2. Die restlichen Szenarien (und damit verbundenen Quality Attributes) befinden sich mehrheitlich auf derselben Relevanzstufe, wodurch sie bei Architekturentscheidungen zu gleichen Teilen berücksichtigt werden müssen.
 
@@ -619,7 +619,7 @@ Bei der Implementation von Features soll jeweils das folgende überprüft werden
 |SZ-MOD-3, SZ-MOD-4
 
 |*Stimulus*
-|Änderung externer Systeme erfordert Anpassungen innerhalb PhysioConnect
+|Änderung externer Systeme erfordert Anpassungen innerhalb Physio Connect
 
 |*Taktik*
 a|

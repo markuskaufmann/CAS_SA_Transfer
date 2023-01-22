@@ -65,7 +65,7 @@ Die Qualitätsszenarien im Kapitel <<#quality-requirements,Qualitätsanforderung
 [#stakeholder]
 === Stakeholder
 
-Die nachfolgende Tabelle repräsentiert eine Zusammenfassung der bestehenden Stakeholder sowie der jeweiligen Systemaspekte und -komponenten, welche von ihnen im Kontext von PhysioConnect als relevant erachtet werden.
+Die nachfolgende Tabelle repräsentiert eine Zusammenfassung der bestehenden Stakeholder sowie der jeweiligen Systemaspekte und -komponenten, welche von ihnen im Kontext von Physio Connect als relevant erachtet werden.
 
 [options="header",cols="4,6"]
 |===
@@ -102,7 +102,7 @@ __Erforderlich__
 * Monitoring
 * Reporting
 
-|Kund*in (finanziert die Verwendung von PhysioConnect, z.B. Spitalleitung)
+|Kund*in (finanziert die Verwendung von Physio Connect, z.B. Spitalleitung)
 a|
 __Erforderlich__
 
@@ -152,21 +152,21 @@ __Optional__
 
 Die von staatlicher Seite gewünschte Schnittstelle an das https://www.patientendossier.ch/[Elektronische Patientendossier (EPD)] kann die Erwartungen dieses Stakeholders ebenfalls abdecken.
 
-|Anbieter / Product Owner von PhysioConnect
+|Anbieter / Product Owner von Physio Connect
 a|
 __Erforderlich__
 
 * Kurze Time-to-Market
 * Kostengünstige Entwicklung und Erweiterung
 
-|Entwickler*in von PhysioConnect
+|Entwickler*in von Physio Connect
 a|
 __Erforderlich__
 
 * Einfache Erweiterbarkeit bei neuen Features
 * Möglichst hoher Automatisierungsgrad (Entwicklung, Testing, CI/CD)
 
-|Technische Integratoren von PhysioConnect (z.B. IT-Abteilung von Kund*innen)
+|Technische Integratoren von Physio Connect (z.B. IT-Abteilung von Kund*innen)
 a|
 __Erforderlich__
 
@@ -176,7 +176,7 @@ __Erforderlich__
 
 __Optional__
 
-* Datenschnittstellen von PhysioConnect (bezüglich der externen Bereitstellung von Gesundheits- / Therapiedaten)
+* Datenschnittstellen von Physio Connect (bezüglich der externen Bereitstellung von Gesundheits- / Therapiedaten)
 * Programmierschnittstelle für den Datenimport aus dem verwendeten Dokumentationssystem
 |===
 
@@ -192,7 +192,7 @@ Basierend auf dem Verhältnis zwischen Einfluss (Power) und Interessensgrad (Lev
 
 __Wichtigste Akteur*innen__
 
-* Anbieter*in / Product Owner von PhysioConnect
+* Anbieter*in / Product Owner von Physio Connect
 * Kund*in
 * Physiotherapeut*in
 * Patient*in
@@ -203,9 +203,9 @@ __Zufriedenstellen__
 
 __Informiert halten__
 
-* Entwickler*in von PhysioConnect
+* Entwickler*in von Physio Connect
 * Vorgesetzte des Physiotherapeut*innen
-* Technische Integratoren von PhysioConnect
+* Technische Integratoren von Physio Connect
 
 [#forces]
 === Zusätzliche Architekturtreiber (Forces)

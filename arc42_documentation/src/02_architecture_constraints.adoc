@@ -19,10 +19,10 @@ Bezüglich dieser Thematik sind Konzepte wie https://www2.deloitte.com/ch/en/pag
 [options="header",cols="1,2,4"]
 |===
 |ID|Bedingung|Beschreibung
-|CS-TEC-10|Plattformunabhängigkeit|PhysioConnect wird auf Basis eines Technologiestacks entwickelt, welcher das Deployment und den Betrieb auf Windows, Linux, und macOS gewährleistet. +
+|CS-TEC-10|Plattformunabhängigkeit|Physio Connect wird auf Basis eines Technologiestacks entwickelt, welcher das Deployment und den Betrieb auf Windows, Linux, und macOS gewährleistet. +
 Beispiele: Java, .NET Core
-|CS-TEC-20|Lokale Entwicklungsumgebung|PhysioConnect kann auf dem lokalen Rechner ohne Abhängigkeiten zu deployten Systemen (z.B. auf der DEV Stage) betrieben werden. +
-Abhängigkeiten zu Umsystemen können konfiguriert werden, sodass PhysioConnect wahlweise mit einem Mock oder mit einer lokal gestarteten Instanz des jeweiligen Umsystems kommunizieren kann. 
+|CS-TEC-20|Lokale Entwicklungsumgebung|Physio Connect kann auf dem lokalen Rechner ohne Abhängigkeiten zu deployten Systemen (z.B. auf der DEV Stage) betrieben werden. +
+Abhängigkeiten zu Umsystemen können konfiguriert werden, sodass Physio Connect wahlweise mit einem Mock oder mit einer lokal gestarteten Instanz des jeweiligen Umsystems kommunizieren kann. 
 |CS-TEC-30|Versionsverwaltung|Sämtliche Bestandteile des Quellcodes werden unter der Verwendung von https://git-scm.com/[Git] als Versionskontrollsystem (VCS) verwaltet.
 |CS-TEC-40|Architekturdokumentation|Für die Architekturdokumentation kommt https://arc42.org/[arc42] und https://c4model.com/[C4] zum Einsatz. Die Terminologie und Gliederung der Dokumentation entspricht dem deutschen arc42-Template in der Version 8 (Release: Februar 2022).
 |===

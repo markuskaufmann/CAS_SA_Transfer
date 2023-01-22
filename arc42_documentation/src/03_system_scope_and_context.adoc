@@ -1,11 +1,11 @@
 [#scope-and-context]
 == Kontextabgrenzung
 
-Im Rahmen dieses Kapitel wird der Systemumfang (Scope) und -Kontext von PhysioConnect beschrieben. Das Ziel ist hierbei, die Abgrenzung zwischen dem System "PhysioConnect" und allen externen Kommunikationspartnern (Nachbarsysteme, Benutzer*innen) zu veranschaulichen. Dabei werden die externen Schnittstellen aus fachlicher Sicht spezifiziert. Eine zusätzliche Veranschaulichung aus technischer Sicht ist zu diesem Zeitpunkt nicht nötig.
+Im Rahmen dieses Kapitel wird der Systemumfang (Scope) und -Kontext von Physio Connect beschrieben. Das Ziel ist hierbei, die Abgrenzung zwischen dem System "Physio Connect" und allen externen Kommunikationspartnern (Nachbarsysteme, Benutzer*innen) zu veranschaulichen. Dabei werden die externen Schnittstellen aus fachlicher Sicht spezifiziert. Eine zusätzliche Veranschaulichung aus technischer Sicht ist zu diesem Zeitpunkt nicht nötig.
 
 === Fachlicher Kontext
 
-Im Rahmen des fachlichen Kontexts soll allen relevanten Stakeholdern verständlich aufgezeigt werden, welche Daten aus Sicht der Businessdomäne zwischen PhysioConnect und den bestehenden externen Kommunikationspartnern (Umsysteme, Benutzer*innen) ausgetauscht werden. Dabei werden sowohl die Kommunikationspartner als auch die definierten Schnittstellen inkl. deren Datenspezifikation genauer beschrieben.
+Im Rahmen des fachlichen Kontexts soll allen relevanten Stakeholdern verständlich aufgezeigt werden, welche Daten aus Sicht der Businessdomäne zwischen Physio Connect und den bestehenden externen Kommunikationspartnern (Umsysteme, Benutzer*innen) ausgetauscht werden. Dabei werden sowohl die Kommunikationspartner als auch die definierten Schnittstellen inkl. deren Datenspezifikation genauer beschrieben.
 
 ==== Legende
 

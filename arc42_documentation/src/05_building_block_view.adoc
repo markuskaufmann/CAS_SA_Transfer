@@ -431,7 +431,7 @@ __Risiken__
 |Risiko|Beschreibung|Mitigation
 
 |Ausfall / Nichterreichbarkeit
-|Analog zu dem definierten <<#rtd-aus-10,technischen Risiko __RTD-AUS-10__>> besteht auch für die __Therapie Planungs Datenbank__ die grundsätzliche Gefahr eines unerwarteten Ausfalls, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
+|Analog zu dem definierten <<#rtd-aus-10,technischen Risiko __RTD-AUS-10__>> besteht auch für die __Therapie Planungs Datenbank__ die grundsätzliche Gefahr eines unerwarteten Ausfalls, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von Physio Connect massgebend einschränkt.
 a|
 Generell können identische Massnahmen wie für __RTD-AUS-10__ in Betracht gezogen werden:
 
@@ -440,7 +440,7 @@ Generell können identische Massnahmen wie für __RTD-AUS-10__ in Betracht gezog
 * Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn eine Datenbank-Instanz nicht mehr erreichbar ist (kontinuierlich abgesetzter Heartbeat)
 
 |Datenverlust / -korruption infolge eines technischen Fehlers oder einer Cyber-Attacke
-|Analog zu dem definierten <<#rtd-aus-20,technischen Risiko __RTD-AUS-20__>> besteht auch für die __Therapie Planungs Datenbank__ die grundsätzliche Gefahr, dass die Datenkonsistenz / -integrität durch deren Korruption beeinträchtigt wird, oder dass Daten gänzlich verloren gehen. Im Falle von korrupten Daten muss ebenfalls mit unerwarteten side-effects seitens der Applikationslogik von PhysioConnect gerechnet werden, welche die allgemeine Funktionstüchtigkeit des Systems beeinträchtigen können.
+|Analog zu dem definierten <<#rtd-aus-20,technischen Risiko __RTD-AUS-20__>> besteht auch für die __Therapie Planungs Datenbank__ die grundsätzliche Gefahr, dass die Datenkonsistenz / -integrität durch deren Korruption beeinträchtigt wird, oder dass Daten gänzlich verloren gehen. Im Falle von korrupten Daten muss ebenfalls mit unerwarteten side-effects seitens der Applikationslogik von Physio Connect gerechnet werden, welche die allgemeine Funktionstüchtigkeit des Systems beeinträchtigen können.
 a|
 Generell können identische Massnahmen wie für __RTD-AUS-20__ in Betracht gezogen werden:
 
@@ -552,7 +552,7 @@ __Risiken__
 |Risiko|Beschreibung|Mitigation
 
 |Ausfall / Nichterreichbarkeit
-|Das <<#rtd-aus-10,technische Risiko __RTD-AUS-10__>> beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls des __Ausführungsservice__, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
+|Das <<#rtd-aus-10,technische Risiko __RTD-AUS-10__>> beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls des __Ausführungsservice__, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von Physio Connect massgebend einschränkt.
 a|
 Massnahmen gemäss __RTD-AUS-10__:
 
@@ -560,7 +560,7 @@ Massnahmen gemäss __RTD-AUS-10__:
 (damit zu jedem Zeitpunkt eine Service-Instanz erreichbar ist)
 * Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn eine Service-Instanz nicht mehr erreichbar ist (kontinuierlich abgesetzter Heartbeat)
 * Schadensausmass eines Ausfalls minimieren, indem die __Mobile Patientenapp__ die Möglichkeit besitzt
-** aufgezeichnete Ausführungsdaten lokal zwischenzuspeichern und nachgelagert an PhysioConnect weiterzuleiten oder
+** aufgezeichnete Ausführungsdaten lokal zwischenzuspeichern und nachgelagert an Physio Connect weiterzuleiten oder
 ** Therapie-Sessions ohne das Sammeln von Ausführungsdaten durchzuführen
 
 |Messdaten-Traffic führt zu hohen Betriebskosten
@@ -622,7 +622,7 @@ __Risiken__
 |Risiko|Beschreibung|Mitigation
 
 |Ausfall / Nichterreichbarkeit
-|Das <<#rtd-aus-10,technische Risiko __RTD-AUS-10__>> beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls der __Ausführungs Datenbank__, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
+|Das <<#rtd-aus-10,technische Risiko __RTD-AUS-10__>> beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls der __Ausführungs Datenbank__, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von Physio Connect massgebend einschränkt.
 a|
 Massnahmen gemäss __RTD-AUS-10__:
 
@@ -631,7 +631,7 @@ Massnahmen gemäss __RTD-AUS-10__:
 * Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn eine Datenbank-Instanz nicht mehr erreichbar ist (kontinuierlich abgesetzter Heartbeat)
 
 |Datenverlust / -korruption infolge eines technischen Fehlers oder einer Cyber-Attacke
-|Das <<#rtd-aus-20,technische Risiko __RTD-AUS-20__>> beschreibt die grundsätzliche Gefahr für die __Ausführungs Datenbank__, dass die Datenkonsistenz / -integrität durch deren Korruption beeinträchtigt wird, oder dass Daten gänzlich verloren gehen. Im Falle von korrupten Daten muss ebenfalls mit unerwarteten side-effects seitens der Applikationslogik von PhysioConnect gerechnet werden, welche die allgemeine Funktionstüchtigkeit des Systems beeinträchtigen können.
+|Das <<#rtd-aus-20,technische Risiko __RTD-AUS-20__>> beschreibt die grundsätzliche Gefahr für die __Ausführungs Datenbank__, dass die Datenkonsistenz / -integrität durch deren Korruption beeinträchtigt wird, oder dass Daten gänzlich verloren gehen. Im Falle von korrupten Daten muss ebenfalls mit unerwarteten side-effects seitens der Applikationslogik von Physio Connect gerechnet werden, welche die allgemeine Funktionstüchtigkeit des Systems beeinträchtigen können.
 a|
 Massnahmen gemäss __RTD-AUS-20__:
 
@@ -723,13 +723,13 @@ Betrifft die folgenden <<#scenarios-interoperability,Qualitätsszenarien>>:
 * SZ-IOP-4
 
 |Maintainability / Modifiability
-a|Da der __Übungskatalogwrapper__ als anti-corruption layer (ACL) zwischen den internen PhysioConnect-Komponenten und dem Übungskatalog sitzt, können API-Änderungen an letzterem System mittels dedizierter Anpassung der Wrapper-Komponente umgesetzt und gegen die internen PhysioConnect-Komponenten abstrahiert werden, sodass die interne API des Wrappers kompatibel zum definierten Domänenmodell sowie möglichst stabil und rückwärtskompatibel gehalten werden kann. +
+a|Da der __Übungskatalogwrapper__ als anti-corruption layer (ACL) zwischen den internen Physio Connect-Komponenten und dem Übungskatalog sitzt, können API-Änderungen an letzterem System mittels dedizierter Anpassung der Wrapper-Komponente umgesetzt und gegen die internen Physio Connect-Komponenten abstrahiert werden, sodass die interne API des Wrappers kompatibel zum definierten Domänenmodell sowie möglichst stabil und rückwärtskompatibel gehalten werden kann. +
 Betrifft die folgenden <<#scenarios-modifiability,Qualitätsszenarien>>:
 
 * SZ-MOD-3
 
 |Reliability / Fault tolerance
-a|Der __Übungskatalogwrapper__ dient als interner Kommunikationsadapter zwischen PhysioConnect und dem Übungskatalog. Dementsprechend kann die Komponente auch auftretende Verbindungsprobleme mit dem Übungskatalog gegen aussen abstrahieren und den internen Umsystemen eine Antwort zurückgeben, welche zu einem kontrollierten und resilienten Verhalten des Gesamtsystems führen. +
+a|Der __Übungskatalogwrapper__ dient als interner Kommunikationsadapter zwischen Physio Connect und dem Übungskatalog. Dementsprechend kann die Komponente auch auftretende Verbindungsprobleme mit dem Übungskatalog gegen aussen abstrahieren und den internen Umsystemen eine Antwort zurückgeben, welche zu einem kontrollierten und resilienten Verhalten des Gesamtsystems führen. +
 Betrifft die folgenden <<#scenarios-fault-tolerance,Qualitätsszenarien>>:
 
 * SZ-FLT-1
@@ -749,12 +749,12 @@ __Risiken__
 |Risiko|Beschreibung|Mitigation
 
 |Ausfall / Nichterreichbarkeit des Übungskatalogs
-|Das <<#rtd-ueb-10,technische Risiko __RTD-UEB-10__>> beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls des Übungskatalogs, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
+|Das <<#rtd-ueb-10,technische Risiko __RTD-UEB-10__>> beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls des Übungskatalogs, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von Physio Connect massgebend einschränkt.
 a|
 Massnahmen gemäss __RTD-UEB-10__:
 
 * Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn die Verbindung zwischen dem __Übungskatalogwrapper__ und dem Übungskatalog fehlerhaft ist (kontinuierlich abgesetzter Heartbeat)
-* Wrapper-Komponente möglichst resilient implementieren, sodass PhysioConnect zumindest noch eingeschränkt verwendet werden kann
+* Wrapper-Komponente möglichst resilient implementieren, sodass Physio Connect zumindest noch eingeschränkt verwendet werden kann
 
 |===
 
@@ -824,13 +824,13 @@ Betrifft die folgenden <<#scenarios-interoperability,Qualitätsszenarien>>:
 * SZ-IOP-5
 
 |Maintainability / Modifiability
-a|Da der __Benutzerverwaltungswrapper__ als anti-corruption layer (ACL) zwischen den internen PhysioConnect-Komponenten und der Benutzerverwaltung sitzt, können API-Änderungen an letzterem System mittels dedizierter Anpassung der Wrapper-Komponente umgesetzt und gegen die internen PhysioConnect-Komponenten abstrahiert werden, sodass die interne API des Wrappers kompatibel zum definierten Domänenmodell sowie möglichst stabil und rückwärtskompatibel gehalten werden kann. +
+a|Da der __Benutzerverwaltungswrapper__ als anti-corruption layer (ACL) zwischen den internen Physio Connect-Komponenten und der Benutzerverwaltung sitzt, können API-Änderungen an letzterem System mittels dedizierter Anpassung der Wrapper-Komponente umgesetzt und gegen die internen Physio Connect-Komponenten abstrahiert werden, sodass die interne API des Wrappers kompatibel zum definierten Domänenmodell sowie möglichst stabil und rückwärtskompatibel gehalten werden kann. +
 Betrifft die folgenden <<#scenarios-modifiability,Qualitätsszenarien>>:
 
 * SZ-MOD-4
 
 |Reliability / Fault tolerance
-a|Der __Benutzerverwaltungswrapper__ dient als interner Kommunikationsadapter zwischen PhysioConnect und der Benutzerverwaltung. Dementsprechend kann die Komponente auch auftretende Verbindungsprobleme mit der Benutzerverwaltung gegen aussen abstrahieren und den internen Umsystemen eine Antwort zurückgeben, welche zu einem kontrollierten und resilienten Verhalten des Gesamtsystems führen. +
+a|Der __Benutzerverwaltungswrapper__ dient als interner Kommunikationsadapter zwischen Physio Connect und der Benutzerverwaltung. Dementsprechend kann die Komponente auch auftretende Verbindungsprobleme mit der Benutzerverwaltung gegen aussen abstrahieren und den internen Umsystemen eine Antwort zurückgeben, welche zu einem kontrollierten und resilienten Verhalten des Gesamtsystems führen. +
 Betrifft die folgenden <<#scenarios-fault-tolerance,Qualitätsszenarien>>:
 
 * SZ-FLT-2
@@ -850,12 +850,12 @@ __Risiken__
 |Risiko|Beschreibung|Mitigation
 
 |Ausfall / Nichterreichbarkeit der Benutzerverwaltung
-|Das <<#rtd-usr-10,technische Risiko __RTD-USR-10__>> beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls der Benutzerverwaltung, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von PhysioConnect massgebend einschränkt.
+|Das <<#rtd-usr-10,technische Risiko __RTD-USR-10__>> beschreibt die grundsätzliche Gefahr eines unerwarteten Ausfalls der Benutzerverwaltung, welcher sich über einen kritischen Zeitrahmen spannt und somit die Funktionstüchtigkeit von Physio Connect massgebend einschränkt.
 a|
 Massnahmen gemäss __RTD-USR-10__:
 
 * Zuverlässiges Monitoring mit dem Auslösen von Benachrichtigungen, wenn die Verbindung zwischen dem __Benutzerverwaltungswrapper__ und der Benutzerverwaltung fehlerhaft ist (kontinuierlich abgesetzter Heartbeat)
-* Wrapper-Komponente möglichst resilient implementieren, sodass PhysioConnect zumindest noch eingeschränkt verwendet werden kann
+* Wrapper-Komponente möglichst resilient implementieren, sodass Physio Connect zumindest noch eingeschränkt verwendet werden kann
 
 |===
 

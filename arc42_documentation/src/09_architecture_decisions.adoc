@@ -37,7 +37,7 @@ a|
 |===
 |**ID**|ADR-SEC-10
 |**Anliegen (Concern)**|Wie werden Systemkonsument*innen sicher authentifiziert?
-|**Kontext**|Sowohl die bereitgestellte API als auch die Webapplikation (SPA, PWA) von PhysioConnect darf lediglich von Konsument*innen (Benutzer*innen oder Systeme) verwendet werden, welche in der Benutzerverwaltung als gültige Benutzer*innen registriert sind. Bei jedem Kommunikationsvorgang muss daher sichergestellt werden, dass die Identität der konsumierenden Partei erfolgreich verifiziert werden konnte.
+|**Kontext**|Sowohl die bereitgestellte API als auch die Webapplikation (SPA, PWA) von Physio Connect darf lediglich von Konsument*innen (Benutzer*innen oder Systeme) verwendet werden, welche in der Benutzerverwaltung als gültige Benutzer*innen registriert sind. Bei jedem Kommunikationsvorgang muss daher sichergestellt werden, dass die Identität der konsumierenden Partei erfolgreich verifiziert werden konnte.
 |**Voraussetzungen**
 a|
 Das System "Benutzerverwaltung" gibt bereits die folgenden Rahmenbedingungen vor:
@@ -165,7 +165,7 @@ Mit welchen Social Identity Providern kann sich ein Systembenutzer/eine Systembe
 |**ID**|ADR-SEC-11
 |**Anliegen (Concern)**|Mit welchen Social Identity Providern kann sich ein Systembenutzer/eine Systembenutzerin authentifizieren?
 |**Kontext**
-a|Social Identity Providers wie Google, Microsoft oder Apple ermöglichen die Authentifizierung eines Benutzers/einer Benutzerin über bereits existierende (Social Media) Accounts. Auf diese Weise werden Benutzerinformationen und Credentials (Username & Passwort) lediglich an einem zentralen Ort (nämlich beim betroffenen Social Identity Provider) verwaltet und nicht bei PhysioConnect redundant gehalten. +
+a|Social Identity Providers wie Google, Microsoft oder Apple ermöglichen die Authentifizierung eines Benutzers/einer Benutzerin über bereits existierende (Social Media) Accounts. Auf diese Weise werden Benutzerinformationen und Credentials (Username & Passwort) lediglich an einem zentralen Ort (nämlich beim betroffenen Social Identity Provider) verwaltet und nicht bei Physio Connect redundant gehalten. +
 Zudem ist der Login-Prozess über Social Identity Providers meist intuitiver, da die Benutzer*innen meist denselben Account mit verschiedenen Services verknüpfen (z.B. Google-Account) und sich daher überall mit denselben Credentials und über dieselbe Login-Maske und Multi-factor authentication (MFA) authentifizieren können.
 |**Voraussetzungen**
 a|
@@ -184,11 +184,11 @@ __ADR-SEC-10__
 |**Alternative A1**
 a|
 **Kein Social Identity Provider** +
-PhysioConnect bietet keine Authentifizierung via Social Identity Provider an.
+Physio Connect bietet keine Authentifizierung via Social Identity Provider an.
 
 __Vorteile:__
 
-* Kein Zusatzaufwand seitens PhysioConnect-Identity Provider (ADR-SEC-11) für die Einbindung externer Identity Providers
+* Kein Zusatzaufwand für die Einbindung externer Identity Providers
 * Vollständige Kontrolle über alle Benutzeraccounts, da alle Informationen innerhalb des Systemkontexts abgelegt sind
 * Keine zusätzlichen Datenschutz- / Privacy Concerns, da die Benutzerdaten nicht ausserhalb des Systemkontexts verwendet werden können
 * Bei der Verwendung von Social Identity Providers wird das potenzielle Schadensausmass im Falle eines Account-Hijackings vergrössert. Beispielsweise kann sich ein Angreifer bei der Übernahme eines Google Accounts auf allen Webseiten anmelden, welche sich mittels Verwendung des Google Accounts authentifizieren 
@@ -252,7 +252,7 @@ Eine Ausnahme bilden Kund*innen, welche ihre internen Benutzer*innen bereits via
 Zudem kann auf diese Weise eine redundante Datenhaltung von Benutzeraccounts verhindert werden, da ein Grossteil der zukünftigen Benutzer*innen bereits einen Account bei einem (oder mehreren) Social Identity Providers besitzt.
 
 **Hinweis:** +
-Diese Entscheidung führt zu entsprechenden Änderungen in PhysioConnect (Webapplikation, API) sowie dem System "Benutzerverwaltung" (Konfiguration der Social Identity Providers in Keycloak).
+Diese Entscheidung führt zu entsprechenden Änderungen in Physio Connect (Webapplikation, API) sowie dem System "Benutzerverwaltung" (Konfiguration der Social Identity Providers in Keycloak).
 
 |**Qualitätsanforderungen**
 a|
@@ -275,7 +275,7 @@ Die systemweite Authentifierung erfolgt über den vom Umsystem __Benutzerverwalt
 |**Anliegen (Concern)**|Welche Plattformen sollen unterstützt werden?
 
 |**Kontext**
-|Physiotherapeut*innen und Patient*innen verwenden das PhysioConnect-Frontend hauptsächlich für die Planung und Auswertung von Therapien.
+|Physiotherapeut*innen und Patient*innen verwenden das Physio Connect-Frontend hauptsächlich für die Planung und Auswertung von Therapien.
 
 |**Alternative A1**
 a|
@@ -396,7 +396,7 @@ Da Physio Connect keine Provisionierung von systemabhängiger Software für das 
 |**Follow-up Entscheidungen**
 a|
 * **ADR-FRO-11** +
-Welcher Architekturstil soll für das PhysioConnect-Frontend verwendet werden?
+Welcher Architekturstil soll für das Physio Connect-Frontend verwendet werden?
 
 |===
 
@@ -405,10 +405,10 @@ Welcher Architekturstil soll für das PhysioConnect-Frontend verwendet werden?
 [cols="2,6"]
 |===
 |**ID**|[[adr-fro-11]]ADR-FRO-11
-|**Anliegen (Concern)**|Welcher Architekturstil soll für das PhysioConnect-Frontend verwendet werden?
+|**Anliegen (Concern)**|Welcher Architekturstil soll für das Physio Connect-Frontend verwendet werden?
 
 |**Kontext**
-|Physiotherapeut*innen und Patient*innen verwenden das PhysioConnect-Frontend hauptsächlich für die Planung und Auswertung von Therapien. Mobile Browser müssen unterstützt werden.
+|Physiotherapeut*innen und Patient*innen verwenden das Physio Connect-Frontend hauptsächlich für die Planung und Auswertung von Therapien. Mobile Browser müssen unterstützt werden.
 
 |**Alternative A1**
 a|
@@ -491,7 +491,7 @@ Mit welcher Technologie soll die Single Page Application umgesetzt werden?
 |**Anliegen (Concern)**|Mit welcher Technologie soll die Single Page Application umgesetzt werden?
 
 |**Kontext**
-|Physiotherapeut*innen und Patient*innen verwenden das PhysioConnect-Frontend hauptsächlich für die Planung und Auswertung von Therapien. Mobile Browser müssen unterstützt werden. Es wurde entschieden, dass eine Single Page Application (SPA) verwendet werden soll.
+|Physiotherapeut*innen und Patient*innen verwenden das Physio Connect-Frontend hauptsächlich für die Planung und Auswertung von Therapien. Mobile Browser müssen unterstützt werden. Es wurde entschieden, dass eine Single Page Application (SPA) verwendet werden soll.
 
 |**Alternative A1**
 a|
@@ -673,7 +673,7 @@ Eine Progressive Web App kann je nach Implementation ebenfalls in Form einer __M
 |**Anliegen (Concern)**|Sollen Micro Frontends verwendet werden?
 
 |**Kontext**
-|Es wurde entschieden, das PhysioConnect-Frontend mit einer Single Page Application (SPA) umzusetzen. Nun soll entschieden werden, ob für die Umsetzung zusätzlich Micro Frontends verwendet werden sollen.
+|Es wurde entschieden, das Physio Connect-Frontend mit einer Single Page Application (SPA) umzusetzen. Nun soll entschieden werden, ob für die Umsetzung zusätzlich Micro Frontends verwendet werden sollen.
 
 |**Alternative A1**
 a|
@@ -724,12 +724,12 @@ Micro Frontends können einfacher skaliert werden als vollwertige Webapplikation
 |**Anliegen (Concern)**|Welche Architekturstile sollen aus Sicht einer deploybaren Einheit eingesetzt werden?
 |**Kontext**
 a|
-Das Backend von PhysioConnect besteht grundsätzlich aus den folgenden High Level-Komponenten:
+Das Backend von Physio Connect besteht grundsätzlich aus den folgenden High Level-Komponenten:
 
 * API Controllers / Request Handlers für die Entgegennahme und formale Kontrolle der eingehenden Requests
 ** Kommunikation mit Patienten-App +
 (z.B. Übertragung der Messdaten, Start einer Therapie-Session)
-** Kommunikation mit PhysioConnect-Webapplikation / -Frontend +
+** Kommunikation mit Physio Connect Webapplikation / -Frontend +
 (z.B. Erstellung einer Therapie)
 * Businesslogik für die fachliche Verarbeitung der Requests
 * https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer[Anti-corruption layers] für die Kommunikation mit den Systemen "Übungskatalog" und "Benutzerverwaltung"
@@ -953,9 +953,9 @@ Betrifft alle diesbezüglichen Qualitätsszenarien (SZ-MOD-*).
 [cols="2,6"]
 |===
 |**ID**|ADR-BAC-30
-|**Anliegen (Concern)**|Werden mehrere (unterschiedliche) Datenbanken für PhysioConnect eingesetzt?
+|**Anliegen (Concern)**|Werden mehrere (unterschiedliche) Datenbanken für Physio Connect eingesetzt?
 |**Kontext**
-a|PhysioConnect persistiert unterschiedlichste Daten zur Laufzeit. Beispielsweise werden einerseits stetig aufgezeichnete Messdaten des Patienten/der Patientin abgelegt, andererseits aber auch allgemeine Therapiedaten. Im Rahmen dieser Entscheidung soll analysiert werden, ob die Verwendung mehrerer (unterschiedlicher) Datenbanken für die Persistierung der Daten eingesetzt werden sollen.
+a|Physio Connect persistiert unterschiedlichste Daten zur Laufzeit. Beispielsweise werden einerseits stetig aufgezeichnete Messdaten des Patienten/der Patientin abgelegt, andererseits aber auch allgemeine Therapiedaten. Im Rahmen dieser Entscheidung soll analysiert werden, ob die Verwendung mehrerer (unterschiedlicher) Datenbanken für die Persistierung der Daten eingesetzt werden sollen.
 |**Alternative A1**
 a|
 **Alle Daten in derselben Datenbank**
@@ -1004,16 +1004,16 @@ Die Verteilung der Datenmengen auf mehrere Datenbanken kann deren (horizontale) 
 |**Follow-up Entscheidungen**
 a|
 * **ADR-BAC-31** +
-Welche Datenbankmodelle werden für PhysioConnect eingesetzt?
+Welche Datenbankmodelle werden für Physio Connect eingesetzt?
 
 |===
 
 [cols="2,6"]
 |===
 |**ID**|[[adr-bac-31]]ADR-BAC-31
-|**Anliegen (Concern)**|Welche Datenbankmodelle werden für PhysioConnect eingesetzt?
+|**Anliegen (Concern)**|Welche Datenbankmodelle werden für Physio Connect eingesetzt?
 |**Kontext**
-a|PhysioConnect persistiert unterschiedlichste Daten zur Laufzeit. Beispielsweise werden einerseits stetig aufgezeichnete Messdaten des Patienten/der Patientin abgelegt, andererseits aber auch allgemeine Therapiedaten. Im Rahmen dieser Entscheidung soll analysiert werden, welche Datenbankmodelle für die unterschiedlichen Datenarten und Anwendungsfälle von PhysioConnect passend sein könnten.
+a|Physio Connect persistiert unterschiedlichste Daten zur Laufzeit. Beispielsweise werden einerseits stetig aufgezeichnete Messdaten des Patienten/der Patientin abgelegt, andererseits aber auch allgemeine Therapiedaten. Im Rahmen dieser Entscheidung soll analysiert werden, welche Datenbankmodelle für die unterschiedlichen Datenarten und Anwendungsfälle von Physio Connect passend sein könnten.
 |**Alternative A1**
 a|
 **Relationale Datenbank**
@@ -1198,7 +1198,7 @@ Dokumentdatenbanken erlauben eine hohe Anzahl paralleler Verbindungen und lassen
 |**ID**|ADR-BAC-40
 |**Anliegen (Concern)**|Wie wird das Backend-Messaging innerhalb von Physio Connect umgesetzt?
 |**Kontext**
-|Sowohl Requests von Physiotherapeut*innen als auch von Patient*innen werden vom PhysioConnect-Backend gehandhabt. Zu Peak-Zeiten kann es sich dabei um eine hohe Anzahl von Requests bzw. eine hohe eingehende Datenmenge handeln. Da das PhysioConnect-Backend gemäss Architekturentscheid __ADR-BAC-10__ aus mehreren Microservices bestehen wird, soll überprüft werden, ob eine Messaging-Komponente eingesetzt werden soll und falls ja, welche.
+|Sowohl Requests von Physiotherapeut*innen als auch von Patient*innen werden vom Physio Connect Backend gehandhabt. Zu Peak-Zeiten kann es sich dabei um eine hohe Anzahl von Requests bzw. eine hohe eingehende Datenmenge handeln. Da das Physio Connect Backend gemäss Architekturentscheid __ADR-BAC-10__ aus mehreren Microservices bestehen wird, soll überprüft werden, ob eine Messaging-Komponente eingesetzt werden soll und falls ja, welche.
 |**Alternative A1**
 a|
 **HTTPS (SSL / TLS)**
@@ -1524,7 +1524,7 @@ Hosten wir eine einzige Physio Connect Instanz oder eine pro Kund*in?
 |===
 |**ID**|ADR-HST-11
 |**Anliegen (Concern)**|Hosten wir eine einzelne Physio Connect-Instanz oder eine Instanz pro Kund*in? 
-|**Kontext**|Gemäss __ADR-HST-10__ hosten wir PhysioConnect bei einem etablierten Cloud-Provider (Microsoft, Amazon, Google, IBM). Zu entscheiden gilt nun noch, ob eine einzelne, globale Instanz oder jeweils eine Instanz pro Kund*in deployed und betrieben werden soll.
+|**Kontext**|Gemäss __ADR-HST-10__ hosten wir Physio Connect bei einem etablierten Cloud-Provider (Microsoft, Amazon, Google, IBM). Zu entscheiden gilt nun noch, ob eine einzelne, globale Instanz oder jeweils eine Instanz pro Kund*in deployed und betrieben werden soll.
 |**Alternative A1**
 a|
 **Einzelne Instanz**
@@ -1571,7 +1571,7 @@ __Nachteile:__
 Da die Alternative __A2) On-premises bei den Kund*innen__ des Entscheids __ADR-HST-10__ potenziell zum Einsatz kommen kann, wird es trotzdem möglich sein, eine einzelne Instanz für Kund*innen in der Cloud zu deployen.
 |**Begründung**
 a|
-Für den Verkauf von PhysioConnect sind tiefe Einführungskosten essenziell. Zusätzlich können wir uns als Startup keinen Support für eine Vielzahl von Versionen leisten. Falls einzelne Instanzen für Kund*innen gepflegt werden müssen, sollen diese auf der gleichen Version wie unsere "Hauptinstanz" gehalten werden.
+Für den Verkauf von Physio Connect sind tiefe Einführungskosten essenziell. Zusätzlich können wir uns als Startup keinen Support für eine Vielzahl von Versionen leisten. Falls einzelne Instanzen für Kund*innen gepflegt werden müssen, sollen diese auf der gleichen Version wie unsere "Hauptinstanz" gehalten werden.
 
 |**Qualitätsanforderungen**
 a|
