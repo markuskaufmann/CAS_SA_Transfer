@@ -912,7 +912,7 @@ __Vorteile:__
 
 * Kombination mit Hexagonal Architecture (Ports & Adapters) +
 Die Schichten der Clean / Onion Architecture sorgen für eine konkrete Organisation der Businesslogik, dem Inneren des "Ports & Adapter-Hexagons"
-* Verwendung von Domain-driven design (DDD) +
+* Verwendung von https://martinfowler.com/bliki/DomainDrivenDesign.html[Domain-driven design (DDD)] +
 Clean / Onion Architecture baut auf einem gegebenen Domänenmodell auf und unterstützt daher die Verwendung von DDD inkl. dessen Layers (Domain, Application, Infrastructure, UI)
 * Separation of Concerns: +
 Durch die gezielte Trennung der Businesslogik in einzelne Layer wird eine klare Separation of Concerns geschaffen, was die Verständlichkeit des Codes erhöht
