@@ -1,9 +1,9 @@
 // configure settings for asciidoc
 include::src/config.adoc[]
 
-= Physio Connect: HSLU Transferarbeit I.CAS-SA.2201
+= Physio Connect: Transferarbeit HSLU I.CAS-SA.2201
 Cyrille Ulmi, Markus Kaufmann
-v1.0, 22.01.2023
+v1.0, 23.01.2023
 :title-page:
 :title-logo-image: image:title_logo.svg[Static,500]
 :toc: macro
