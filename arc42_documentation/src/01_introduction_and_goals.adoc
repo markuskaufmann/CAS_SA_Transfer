@@ -24,7 +24,7 @@ Anders als bestehende Physio-Gesamtlösungen und Dokumentationssysteme zielt Phy
 ** Therapie-Sessions inkl. der verordneten Übungen durchführen
 ** eine Rückmeldung (Kommentar / Bewertung) zu einer Therapie-Session oder Übung abgeben
 ** eigene Therapiedaten einsehen und weiterleiten
-** Therapie-Sessions in für eigene Therapien selbst erstellen inkl. eigener Übungen verwalten und durchführen ohne Physiotherapeut*innen. Diese eigenen Therapien werden von den Patient*innen selbst verwaltet und haben keine zugewisenen Physiotherapeut*innen
+** Therapie-Sessions für eigene Therapien erstellen (inkl. der Verwaltung eigener Übungen) und ohne Physiotherapeut*innen durchführen. Diese eigenen Therapien werden von den Patient*innen selbst verwaltet und haben keine zugewiesenen Physiotherapeut*innen
 
 * Vorgesetzte von Physiotherapeut*innen können
 ** den Fortschritt ihrer unterstellten Physiotherapeut*innen überwachen (Monitoring) und auswerten (Reporting)
