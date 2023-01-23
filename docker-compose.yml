@@ -30,6 +30,6 @@ services:
         condition: service_completed_successfully
       context-mapper:
         condition: service_completed_successfully
-    command: asciidoctor -b pdf -r asciidoctor-diagram -r asciidoctor-pdf -r asciidoctor-lists -a pdf-theme=main -a pdf-themesdir=themes arc42-template.adoc
+    command: asciidoctor -b pdf -r asciidoctor-diagram -r asciidoctor-pdf -r asciidoctor-lists -a pdf-theme=main -a pdf-themesdir=themes physio_connect.adoc
     volumes:
       - ./arc42_documentation:/documents/

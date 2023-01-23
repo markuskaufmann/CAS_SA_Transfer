@@ -16,6 +16,6 @@ jobs:
         with:
           image: asciidoctor/docker-asciidoctor:latest
           options: -v ${{ github.workspace }}/arc42_documentation:/documents/
-          run: asciidoctor-confluence --host https://physio-connect.atlassian.net/ --spaceKey PIL --title arc42 --username markus.kaufmann --password $CONFLUENCE_ACCESSTOKEN arc42-template.adoc
+          run: asciidoctor-confluence --host https://physio-connect.atlassian.net/ --spaceKey PIL --title arc42 --username markus.kaufmann --password $CONFLUENCE_ACCESSTOKEN physio_connect.adoc
         env:
           CONFLUENCE_ACCESSTOKEN: ${{ secrets.CONFLUENCE_ACCESSTOKEN }}
