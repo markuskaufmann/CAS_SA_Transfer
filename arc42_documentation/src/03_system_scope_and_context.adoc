@@ -33,7 +33,7 @@ plantuml::additional_diagrams/context_diagram.puml[format=svg]
 Die folgende Abbildung ist eine Systemlandschaft gemäss dem C4 Modell. Dieses Diagramm erweitert den grundlegenden Systemkontext durch Unternehmungsgrenzen und Gruppierungen.
 
 .Systemkontext mit Unternehmungsgrenzen und Gruppierungen
-plantuml::structurizr_diagrams/generated/structurizr-SystemLandscape.puml[format=svg]
+plantuml::additional_diagrams/landscape_diagram.puml[format=svg]
 
 [options="header",cols="3,6"]
 |===
