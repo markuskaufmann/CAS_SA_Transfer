@@ -13,7 +13,7 @@ v1.0, 22.01.2023
 ****
 *Danksagung*
 
-Ein spezielles Dankeschön an unsere Domänenexpertin Sophie Caroline Irrgang - Masterstudentin im Bereich Health Sciences, Wissenschaftliche Mitarbeiterin im Paraplegiker-Zentrum Nottwil und Physiotherapeutin in der Klinik Barmelweid. Dank ihrer wertvollen Einsichten fanden wir den Weg zum Ziel.
+Ein spezielles Dankeschön an unsere Domänenexpertin Sophie Caroline Irrgang - Masterstudentin im Bereich Health Sciences, wissenschaftliche Mitarbeiterin im Paraplegiker-Zentrum Nottwil und Physiotherapeutin in der Klinik Barmelweid. Dank ihrer wertvollen Einsichten fanden wir den Weg zum Ziel.
 ****
 
 [role="arc42help"]
