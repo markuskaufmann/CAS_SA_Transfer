@@ -1,7 +1,7 @@
 [#scope-and-context]
 == Kontextabgrenzung
 
-Im Rahmen dieses Kapitel wird der Systemumfang (Scope) und -Kontext von Physio Connect beschrieben. Das Ziel ist hierbei, die Abgrenzung zwischen dem System "Physio Connect" und allen externen Kommunikationspartnern (Nachbarsysteme, Benutzer*innen) zu veranschaulichen. Dabei werden die externen Schnittstellen aus fachlicher Sicht spezifiziert. Eine zusätzliche Veranschaulichung aus technischer Sicht ist zu diesem Zeitpunkt nicht nötig.
+Im Rahmen dieses Kapitel wird der Systemumfang (Scope) und -Kontext von Physio Connect beschrieben. Das Ziel ist hierbei, die Abgrenzung zwischen dem System __Physio Connect__ und allen externen Kommunikationspartnern (Nachbarsysteme, Benutzer*innen) zu veranschaulichen. Dabei werden die externen Schnittstellen aus fachlicher Sicht spezifiziert. Eine zusätzliche Veranschaulichung aus technischer Sicht ist zu diesem Zeitpunkt nicht nötig.
 
 === Fachlicher Kontext
 
@@ -25,7 +25,7 @@ plantuml::structurizr_diagrams/generated/structurizr-Gesamtuebersicht-key.puml[f
 [#system-context]
 ==== Kontext
 
-Im folgenden Kontextdiagramm sind die Umsysteme und Benutzer*innen inklusive deren Interaktion mit dem Physio Connect System visualisiert.
+Im folgenden Kontextdiagramm sind die Umsysteme und Benutzer*innen inklusive deren Interaktion mit dem Physio Connect-System visualisiert.
 
 .Systemkontext
 plantuml::additional_diagrams/context_diagram.puml[format=svg]
