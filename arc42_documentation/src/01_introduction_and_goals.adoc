@@ -181,12 +181,18 @@ __Optional__
 * Programmierschnittstelle für den Datenimport aus dem verwendeten Dokumentationssystem
 |===
 
+[.landscape]
+<<<
+
 ==== Stakeholder Powergrid
 
 Für die erweiterte Analyse und Verwaltung der bestehenden Stakeholder werden diese im Nachfolgenden im Rahmen eines Powergrids eingestuft.
 
 .Stakeholder Powergrid
-image::01_03_stakeholder-powergrid.drawio.svg[Static,width=100%]
+image::01_03_stakeholder-powergrid.drawio.svg[Static,width=80%,align="center"]
+
+[.portrait]
+<<<
 
 ==== Priorisierung der Stakeholder
 
