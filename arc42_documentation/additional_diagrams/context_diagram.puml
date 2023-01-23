@@ -76,8 +76,8 @@ rectangle "==Fitness Tracker\n<size:10>[Software System]</size>" <<FitnessTracke
 skinparam PackageBorderColor<<group:Physiounternehmung>> #b6862e
 skinparam PackageFontColor<<group:Physiounternehmung>> #b6862e
 
-person "==Therapeut: in\n<size:10>[Person]</size>\n\nPerson, welche Physiotherapien leitet" <<Therapeutin>> as Therapeutin
-person "==Administrator: in\n<size:10>[Person]</size>" <<Administratorin>> as Administratorin
+person "==Therapeut*in\n<size:10>[Person]</size>\n\nPerson, welche Physiotherapien leitet" <<Therapeutin>> as Therapeutin
+person "==Administrator*in\n<size:10>[Person]</size>" <<Administratorin>> as Administratorin
 
 
 
@@ -89,8 +89,8 @@ Patientin .[#707070,thickness=2].> FitnessTracker : "<color:#707070>Besitzt"
 Patientin .[#707070,thickness=2]> PhysioConnect : "<color:#707070>Verwaltet selbsterstellte Therapien"
 MobilePatientenapp .[#707070,thickness=2].> FitnessTracker : "<color:#707070>Verbindet sich mit"
 FitnessTracker .[#707070,thickness=2].> MobilePatientenapp : "<color:#707070>Sendet Messdaten"
-MobilePatientenapp .[#707070,thickness=2].> PhysioConnect : "<color:#707070>Sendet Session-Updates mit Messdaten,\nRegistrierung neuer Benutzer,\nAuthentifiziert Benutzer"
+MobilePatientenapp .[#707070,thickness=2].> PhysioConnect : "<color:#707070>Sendet Session-Updates mit Messdaten,\nRegistrierung neue Benutzer*innen,\nAuthentifiziert Benutzer*innen"
 PhysioConnect .[#707070,thickness=2].> MobilePatientenapp : "<color:#707070>Sendet Therapien, Sessions und Übungen"
 PhysioConnect .[#707070,thickness=2].> Übungskatalog : "<color:#707070>Importiert Übungen"
-PhysioConnect .[#707070,thickness=2].> Benutzerverwaltung : "<color:#707070>Authentifiziert und autorisiert Benutzer,\nErstellt neue Benutzer"
+PhysioConnect .[#707070,thickness=2].> Benutzerverwaltung : "<color:#707070>Authentifiziert und autorisiert Benutzer*innen,\nErstellt neue Benutzer*innen"
 @enduml
