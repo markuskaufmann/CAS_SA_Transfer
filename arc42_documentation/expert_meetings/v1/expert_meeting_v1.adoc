@@ -72,7 +72,7 @@ Dies hat Konsequenzen:
 
 
 
-==== Wünsche Funktionalitäten
+==== Wünsche / Funktionalitäten
 
 
 *Ausführliche Rückmeldungen von Patienten sind gewünscht*

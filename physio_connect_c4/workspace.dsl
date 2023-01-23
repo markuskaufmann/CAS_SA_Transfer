@@ -157,14 +157,14 @@ workspace "Physio integration layer project" {
         # relationships to/from components
         therapieApiController -> therapieApplikationsLogik "Führt Service Calls mit den verifizierten Daten aus"
         therapiePersistenzAdapter -> therapieApplikationsLogik "Implementiert Adapter für die Port Interfaces der Applikationslogik"
-        therapieApplikationsLogik -> therapieDomaenenLogik "Implementiert Adapter für die Port Interfaces der Domänenlogik"
+        therapieApplikationsLogik -> therapieDomaenenLogik "Verwendet Domänenelemente und -interfaces"
         therapieUebungsKatalogApiAdapter -> therapieApplikationsLogik "Implementiert Adapter für die Port Interfaces der Applikationslogik"
         therapieBenutzerverwaltungApiAdapter -> therapieApplikationsLogik "Implementiert Adapter für die Port Interfaces der Applikationslogik"
         therapieAusfuehrungsApiAdapter -> therapieApplikationsLogik "Implementiert Adapter für die Port Interfaces der Applikationslogik"
 
         ausfuehrungsApiController -> ausfuehrungsApplikationsLogik "Führt Service Calls mit den verifizierten Daten aus"
         ausfuehrungsPersistenzAdapter -> ausfuehrungsApplikationsLogik "Implementiert Adapter für die Port Interfaces der Applikationslogik"
-        ausfuehrungsApplikationsLogik -> ausfuehrungsDomaenenLogik "Implementiert Adapter für die Port Interfaces der Domänenlogik"
+        ausfuehrungsApplikationsLogik -> ausfuehrungsDomaenenLogik "Verwendet Domänenelemente und -interfaces"
                 
         deploymentEnvironment "Cloud Deployment singuläre Physio Connect Instanz" {
             deploymentNode "SaaS Kunden Infrastruktur" {

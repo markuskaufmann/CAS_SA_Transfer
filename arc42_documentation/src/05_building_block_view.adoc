@@ -888,10 +888,16 @@ plantuml::structurizr_diagrams/generated/structurizr-PlanungsServiceDetails-key.
 
 |===
 
+[.landscape]
+<<<
+
 ==== Therapie Planungs Service
 
 .Bausteinsicht - Ebene 2: Therapie Planungs Service
 plantuml::structurizr_diagrams/generated/structurizr-PlanungsServiceDetails.puml[format=svg]
+
+[.portrait]
+<<<
 
 **Begründung der Struktur**
 

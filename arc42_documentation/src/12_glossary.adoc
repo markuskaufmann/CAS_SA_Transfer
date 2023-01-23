@@ -17,17 +17,17 @@ Im Rahmen dieses Kapitels werden die wichtigsten fachlichen und technischen Begr
 
 |Hospitalisiert
 |hospitalized
-|Aufgrund von Erkrankung oder Unfall in ein Spital zugewiesen. Falls benötigt werden Physiotherapien mit hospitalisierten Personen ausgeführt. Für mehr Informationen zum Zuweisungsstatus siehe <<#patient-assignment-status,Abbildung: Zuweisungsstatus Patient>>.
+|Aufgrund von Erkrankung oder Unfall in ein Spital zugewiesen. Falls benötigt werden Physiotherapien mit hospitalisierten Personen ausgeführt. Für mehr Informationen zum Zuweisungsstatus siehe <<#patient-assignment-status,Abbildung: Zuweisungsstatus Patient*in>>.
 
 |(stationäre) Rehabilitation
 |(Inpatient) Rehabilitation
-|Ziel einer Rehabilitation ist die Wiederherstellung, Kompensation, Verhinderung oder Verlangsamung der Verschlechterung von (sensorischen, körperlichen, intellektuellen, mentalen, kognitiven oder sozialen) Funktionen, um dem Einzelnen zu helfen, sein optimales Niveau zu erreichen https://www.physio-pedia.com/Introduction_to_Rehabilitation. Patient*innen, welche in Rehabilitation sind, befinden sich in einer speziell dafür ausgerichteten Klinik. In diesen Kliniken erhalten Patient*innen täglich geführte Therapie-Sessions. Für mehr Informationen zum Zuweisungsstatus siehe <<#patient-assignment-status,Abbildung: Zuweisungsstatus Patient>>. Ambulante Rehabilitationen werden im Rahmen dieses Dokumentes nicht einzeln untersucht, da diese die gleichen Anforderungen wie andere ambulante Behandlungen besitzen.
+|Ziel einer Rehabilitation ist die Wiederherstellung, Kompensation, Verhinderung oder Verlangsamung der Verschlechterung von (sensorischen, körperlichen, intellektuellen, mentalen, kognitiven oder sozialen) Funktionen, um dem Einzelnen zu helfen, sein optimales Niveau zu erreichen https://www.physio-pedia.com/Introduction_to_Rehabilitation. Patient*innen, welche in Rehabilitation sind, befinden sich in einer speziell dafür ausgerichteten Klinik. In diesen Kliniken erhalten Patient*innen täglich geführte Therapie-Sessions. Für mehr Informationen zum Zuweisungsstatus siehe <<#patient-assignment-status,Abbildung: Zuweisungsstatus Patient*in>>. Ambulante Rehabilitationen werden im Rahmen dieses Dokumentes nicht einzeln untersucht, da diese die gleichen Anforderungen wie andere ambulante Behandlungen besitzen.
 
 |Ambulante Behandlung
 |Outpatient treatment
 |Im Gegensatz zur stationären Behandlung bleiben Patient*innen bei der ambulanten Behandlung nicht über Nacht in Betreuung. Im Normalfall befinden sich Patient*innen pro Therapieeinheit nur 30 Minuten vor Ort in Behandlung. Das heisst: Sie können am selben Tag wieder nach Hause. https://www.comparis.ch/krankenkassen/leistungen/ambulante-behandlung 
 
-Im Rahmen der Physiotherapie erhalten Patient*innen eine Verordnung zur Teilnahme an Physiotherapien. Diese Therapien werden in Praxen oder Spitälern ausgeführt. Für mehr Informationen zum Zuweisungsstatus siehe <<#patient-assignment-status,Abbildung: Zuweisungsstatus Patient>>.
+Im Rahmen der Physiotherapie erhalten Patient*innen eine Verordnung zur Teilnahme an Physiotherapien. Diese Therapien werden in Praxen oder Spitälern ausgeführt. Für mehr Informationen zum Zuweisungsstatus siehe <<#patient-assignment-status,Abbildung: Zuweisungsstatus Patient*in>>.
 
 |Therapie
 |Therapy
@@ -100,7 +100,7 @@ Im Rahmen der Physiotherapie erhalten Patient*innen eine Verordnung zur Teilnahm
 |===
 
 [#patient-assignment-status]
-=== Abbildung: Zuweisungsstatus Patient
+=== Abbildung: Zuweisungsstatus Patient*in
 
-.Zuweisungsstatus Patient
+.Zuweisungsstatus Patient*in
 plantuml::additional_diagrams/life_cycle_patient.puml[target=generated_lifecycle_patient,format=svg]

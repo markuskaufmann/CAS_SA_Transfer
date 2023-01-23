@@ -657,7 +657,7 @@ a|
 <<#scenarios-modifiability,**Modifiability**>> +
 Durch die Verwendung einer gemeinsamen Codebase können Modifikationen und / oder Erweiterungen an einem zentralen Ort implementiert werden.
 
-**Fault tolerance** +
+<<#scenarios-fault-tolerance,**Fault tolerance**>> +
 Da eine Progressive Web App ebenfalls die Möglichkeit einer (eingeschränkten) Offline-Funktionalität bietet, können spezifische Daten im Falle von transienten Verbindungsunterbrüchen zum Physio Connect-Backend lokal zwischengespeichert und bei der Wiederherstellung der Verbindung nachträglich gesendet werden.
 
 <<#scenarios-installability,**Installability**>> +
@@ -847,7 +847,7 @@ Microservices können - aufgrund ihrer losen Kopplung - unabhängig voneinander 
 
 * SZ-CAP-1
 
-**Fault tolerance** +
+<<#scenarios-fault-tolerance,**Fault tolerance**>> +
 Dank seiner losen Kopplung lässt sich jeder Microservice genau so resilient / fehlertolerant gestalten, wie es von den jeweiligen Qualitätsanforderungen vorgegeben wird.
 
 * SZ-FLT-1
@@ -1418,7 +1418,7 @@ Die Wrapper Services können unabhängig voneinander betrieben und vertikal / ho
 
 * SZ-CAP-1
 
-**Fault tolerance** +
+<<#scenarios-fault-tolerance,**Fault tolerance**>> +
 Verbindungsunterbrüche, Ausfälle und / oder fehlerhaftes Antwortverhalten der Umsystem-APIs können innerhalb der dedizierten Wrapper Services abgefangen, behandelt und kontrolliert an die internen Physio Connect-Komponenten weitergeleitet werden.
 
 * SZ-FLT-1

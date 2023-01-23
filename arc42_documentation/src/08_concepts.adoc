@@ -207,7 +207,7 @@ image::not_generated/hexagon_detail.webp[]
 
 https://herbertograca.com/2017/11/16/explicit-architecture-01-ddd-hexagonal-onion-clean-cqrs-how-i-put-it-all-together/
 
-Ports befinden sich immer innerhalb des Hexagons. Getriebene Adapter werden normalerweise innerhalb des Hexagons implementiert, treibende Adapter hingegen ausserhalb. Da es keine explizite Schichten- / Layer-Definition in der hexagonalen Architektur gibt, wird im Rahmen von Physio Connect die folgende Aufteilung verwendet:
+Ports befinden sich immer innerhalb des Hexagons. Treibende Adapter werden normalerweise innerhalb des Hexagons implementiert, getriebene Adapter hingegen ausserhalb. Da es keine explizite Schichten- / Layer-Definition in der hexagonalen Architektur gibt, wird im Rahmen von Physio Connect die folgende Aufteilung verwendet:
 
 *Innerhalb des Hexagons*
 
