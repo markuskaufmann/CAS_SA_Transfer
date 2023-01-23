@@ -1,5 +1,5 @@
 @startuml Therapie Lifecicle
-title Zuweisungsstatus Patient
+title Zuweisungsstatus Patient*in
 
 State Gesund
 State Hospitalisiert #Orange
@@ -8,8 +8,8 @@ State InRehabilitation #LightBlue
 
 [*] --> Gesund
 
-Gesund ---->  Hospitalisiert : --[ Zugewiesen via Hausarzt oder Facharzt\nvia Notfall
-Gesund ---->  InRehabilitation : --[ Zugewiesen via Hausarzt oder Facharzt
+Gesund ---->  Hospitalisiert : --[ Zugewiesen via Hausarzt/Hausärztin oder Facharzt/Fachärztin\nvia Notfall
+Gesund ---->  InRehabilitation : --[ Zugewiesen via Hausarzt/Hausärztin oder Facharzt/Fachärztin
 Gesund ---->  InAmbulanterBehandlung : --[ Verordnet
 
 Hospitalisiert --[#Red]--> InRehabilitation : --[ Umgeteilt in Reha
