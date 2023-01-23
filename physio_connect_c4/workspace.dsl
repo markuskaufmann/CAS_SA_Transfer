@@ -114,18 +114,18 @@ workspace "Physio integration layer project" {
 
         # relationships to/from software systems
         dokumentationsSoftware -> therapieFile "Exportiert"
-        patientenApp -> physioConnect "Sendet Session-Updates mit Messdaten,\nRegistrierung neuer Benutzer,\nAuthentifiziert Benutzer"
+        patientenApp -> physioConnect "Sendet Session-Updates mit Messdaten,\nRegistrierung neue Benutzer*innen,\nAuthentifiziert Benutzer*innen"
         physioConnect -> patientenApp "Sendet Therapien, Sessions und Übungen"
         physioConnect -> uebungsKatalog "Importiert Übungen"
         physioConnect -> therapieFile "Importiert Übungen"
         physioConnect -> dokumentationssoftware "Importiert Übungen"
-        physioConnect -> benutzerVerwaltung "Authentifiziert und autorisiert Benutzer,\nErstellt neue Benutzer"
+        physioConnect -> benutzerVerwaltung "Authentifiziert und autorisiert Benutzer*innen,\nErstellt neue Benutzer*innen"
         physioConnect -> patientenDossier "Automatischer Datenaustausch"
         physioConnect -> versicherungsSchnittstellen "Teilt Trainingsdaten"
         
         # relationships to/from containers
         patientenApp -> loadBalancer "Sendet Messdaten,\nSendet Requests für Informationen zu Therapien und Übungen"
-        singlePageTherapieManager -> loadBalancer  "Sendet Requests zum Verwalten der Gesamttherapien, Übungen und Benutzer"
+        singlePageTherapieManager -> loadBalancer  "Sendet Requests zum Verwalten der Gesamttherapien, Übungen und Benutzer*innen"
 
         loadBalancer -> planungsService "Leitet Requests weiter für Gesamttherapien"
         loadBalancer -> benutzerVerwaltungWrapper "Leitet Requests weiter für die Benutzerverwaltung"
