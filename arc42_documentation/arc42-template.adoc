@@ -85,6 +85,8 @@ include::src/11_technical_risks.adoc[]
 // 12. Glossary
 include::src/12_glossary.adoc[]
 
+:numbered!:
+
 <<<<
-// 13. Appendix
-include::src/13_appendix.adoc[]
+// Appendix
+include::src/appendix.adoc[]
