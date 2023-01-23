@@ -27,7 +27,7 @@ Zusätzlich soll die Skalierung zeitbasiert optimiert werden, um auf Spitzenbela
 
 **Zuweisung von Bausteinen zur Infrastruktur**
 
-Die Zuweisung der Bausteine ist in der Abbildung *Referenz Abbildung* visualisiert.
+Die Zuweisung der Bausteine ist in der nachfolgenden Abbildung visualisiert.
 
 .Verteilungssicht: Singuläre Physio Connect-Instanz
 plantuml::structurizr_diagrams/generated/structurizr-deployment-singulaere-physioconnect.puml[format=svg]
