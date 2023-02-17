@@ -1,6 +1,10 @@
 name: build
 run-name: Build Documentation
-on: workflow_dispatch
+on:
+  push:
+    branches:
+      - main
+  workflow_call:
 
 jobs:
   build:
@@ -16,15 +20,24 @@ jobs:
         run: |
           Write-Host $PWD
 
-          dir "$PWD/physio_connect_c4/generated"
-          dir "$PWD/arc42_documentation"
+          Get-ChildItem -Path "$PWD/arc42_documentation"
+          Get-ChildItem -Path "$PWD/arc42_documentation/structurizr_diagrams/generated"
+          Get-ChildItem -Path "$PWD/arc42_documentation/domain_model"
 
-          $diagramsExist = Test-Path -Path "$PWD/physio_connect_c4/generated/*.puml" -PathType leaf
-          $pdfExists = Test-Path -Path "$PWD/arc42_documentation/*.pdf*" -PathType leaf
+          $structurizrDiagramsExist = Test-Path -Path "$PWD/arc42_documentation/structurizr_diagrams/generated/*.puml" -PathType leaf
+          $domainModelDiagramsExist = Test-Path -Path "$PWD/arc42_documentation/domain_model/domain_*.puml" -PathType leaf
+          $pdfExists = Test-Path -Path "$PWD/arc42_documentation/physio_connect.pdf" -PathType leaf
 
-          Write-Host "Diagrams found: $diagramsExist"
+          Write-Host "C4 diagrams found: $structurizrDiagramsExist"
+          Write-Host "Domain model diagrams found: $domainModelDiagramsExist"
           Write-Host "Documentation (PDF) found: $pdfExists"
 
-          if (!$diagramsExist -or !$pdfExists) {
+          if (!$structurizrDiagramsExist -or !$domainModelDiagramsExist -or !$pdfExists) {
             Exit 1
           }
+      
+      - uses: actions/upload-artifact@v3
+        with:
+          name: documentation_pdf
+          path: "$PWD/arc42_documentation/physio_connect.pdf"
+        if: github.event_name == 'workflow_call'
