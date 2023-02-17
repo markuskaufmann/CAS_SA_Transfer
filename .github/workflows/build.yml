@@ -40,5 +40,5 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: documentation_pdf
-          path: "$PWD/arc42_documentation/physio_connect.pdf"
+          path: ${{ github.workspace }}/arc42_documentation/physio_connect.pdf
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
