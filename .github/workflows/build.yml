@@ -40,4 +40,4 @@ jobs:
         with:
           name: documentation_pdf
           path: "$PWD/arc42_documentation/physio_connect.pdf"
-        if: github.event_name == 'workflow_call'
+        if: ${{ github.event_name == 'workflow_call' }}
