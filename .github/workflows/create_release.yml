@@ -7,7 +7,7 @@ on:
 
 jobs:
   call-build:
-    uses: markuskaufmann/CAS_SA_Transfer/.github/workflows/build.yml@${{ github.ref_name }}
+    uses: ./.github/workflows/build.yml
 
   create-release:
     needs: call-build
